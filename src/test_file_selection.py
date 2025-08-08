@@ -1,14 +1,18 @@
-import ast
+import argparse
 import json
 import logging
 import os
-import sys
+from pathlib import Path
 
 from datasets import load_dataset
-
 from model_config import prompt_model
 from prompts import select_test_file_prompt
 from utils import parse_func_code, prepare_repo, read_json_file
+
+logging.basicConfig(
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
 
 
 def get_dataset(dataset_name):
@@ -16,147 +20,127 @@ def get_dataset(dataset_name):
 
 
 def get_instance_info(dataset_info, instance_id):
-    for instance in dataset_info:
-        if instance["instance_id"] == instance_id:
-            info = {
-                "repo": instance["repo"],
-                "base_commit": instance["base_commit"],
-                "problem_statement": instance["problem_statement"],
-                "hints_text": instance["hints_text"],
+    return next(
+        (
+            {
+                "repo": inst["repo"],
+                "base_commit": inst["base_commit"],
+                "problem_statement": inst["problem_statement"],
+                "hints_text": inst["hints_text"],
             }
-            return info
-    return None
+            for inst in dataset_info
+            if inst["instance_id"] == instance_id
+        ),
+        None
+    )
 
 
 def collect_all_test_files(local_repo_path):
-    test_files = []
-    for root, dirs, files in os.walk(local_repo_path):
-        for file in files:
-            file_path = os.path.join(root, file)
-            if file.endswith(".py") and "test" in file_path.lower():
-                test_files.append(file_path)
-    return test_files
-
-
-def get_suspicious_funcs(norm_funcs, instance_info, instance_id):
-    all_dict = {}
-    all_test_files = []
-    for file in norm_funcs:
-        funcs = norm_funcs[file]
-        funcs = [func for func in funcs if func != ""]
-        print(f"Processing file: {file} with functions: {funcs}")
-        func_dict, all_test_files = collect_repo_info(
-            instance_info["repo"], instance_info["base_commit"], file, funcs
-        )
-        # print(func_dict)
-        if func_dict:
-            all_dict.update(func_dict)
-        else:
-            print(f"No functions found in {file} for instance {instance_id}.")
-
-    return all_dict, all_test_files
+    """Return all Python test files in repo."""
+    return [
+        str(Path(root) / file)
+        for root, _, files in os.walk(local_repo_path)
+        for file in files
+        if file.endswith(".py") and "test" in file.lower()
+    ]
 
 
 def collect_repo_info(repo_name, base_commit, file, funcs, repo_base="temp_repos"):
+    """Clone/checkout repo, parse suspicious function code, and list test files."""
+    if not os.path.exists(repo_base):
+        os.makedirs(repo_base)
     local_repo_path = prepare_repo(repo_name, base_commit, base_dir=repo_base)
     func_dict = parse_func_code(local_repo_path, file, funcs)
-    all_test_files = collect_all_test_files(local_repo_path)
     all_test_files = [
-        os.path.relpath(test_file, local_repo_path) for test_file in all_test_files
+        os.path.relpath(test_file, local_repo_path)
+        for test_file in collect_all_test_files(local_repo_path)
     ]
     return func_dict, all_test_files
 
 
+def get_suspicious_funcs(norm_funcs, instance_info, instance_id):
+    """Extract suspicious function code for all files in one instance."""
+    all_dict = {}
+    all_test_files = []
+    for file, funcs in norm_funcs.items():
+        funcs = [f for f in funcs if f]
+        logging.info(f"  Processing file: {file} with {len(funcs)} functions")
+        func_dict, all_test_files = collect_repo_info(
+            instance_info["repo"], instance_info["base_commit"], file, funcs
+        )
+        if func_dict:
+            all_dict.update(func_dict)
+        else:
+            logging.warning(f"  No functions found in {file} for {instance_id}")
+    return all_dict, all_test_files
+
+
 def parse_response(response):
+    """Extract list of relevant test files from model response."""
     if not response:
         return []
-    if (
-        "---BEGIN RELEVANT TEST FILES---" in response
-        and "---END RELEVANT TEST FILES---" in response
-    ):
-        test_files = (
-            response.split("---BEGIN RELEVANT TEST FILES---")[1]
-            .split("---END RELEVANT TEST FILES---")[0]
-            .strip()
-        )
-        return [file.strip() for file in test_files.split("\n") if file.strip()]
-    else:
-        return []
+    if "---BEGIN RELEVANT TEST FILES---" in response and "---END RELEVANT TEST FILES---" in response:
+        section = response.split("---BEGIN RELEVANT TEST FILES---")[1].split("---END RELEVANT TEST FILES---")[0]
+        return [line.strip() for line in section.strip().splitlines() if line.strip()]
+    return []
 
 
-def main(
-    suspicious_info, all_results_json, test_selection_json, confirmed_suspicious_file, dataset_name
-):
-    all_results, test_selection_results = {}, {}
+def save_json(path, data):
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+
+
+def main(suspicious_info, all_results_json, test_selection_json, confirmed_suspicious_file, dataset_name, model_name):
+    all_results, test_selection_results, confirmed_suspicious_funcs = {}, {}, {}
     dataset_info = get_dataset(dataset_name)
-    confirmed_suspicious_funcs = {}
-    for instance_id in suspicious_info:
-        print(f"Processing instance {instance_id}...")
-        suspicious_funcs = suspicious_info[instance_id]
+
+    for instance_id, suspicious_funcs in suspicious_info.items():
+        logging.info("=" * 80)
+        logging.info(f"[START] Instance {instance_id}")
+        logging.info(f"Suspicious functions declared: {sum(len(funcs) for funcs in suspicious_funcs.values())}")
+
         instance_info = get_instance_info(dataset_info, instance_id)
-        func_dict, all_test_files = get_suspicious_funcs(
-            suspicious_funcs, instance_info, instance_id
-        )
-        if not func_dict:
-            print("Warning: func_dict is empty or None")
+        if not instance_info:
+            logging.error(f"No dataset info found for instance {instance_id}")
+            logging.info(f"[SKIP] Instance {instance_id}")
             continue
-        confirmed_sus = {}
-        for file_path, funcs in suspicious_funcs.items():
-            if file_path not in confirmed_sus:
-                confirmed_sus[file_path] = []
-            for func in funcs:
-                if func == "":
-                    continue
-                print(func)
-                if func not in confirmed_sus[file_path]:
-                    confirmed_sus[file_path].append(func)
 
-        for k in func_dict:
-            print(f"\n--- Function: {k} ---")
-            print(func_dict[k])
+        # extract suspicious function code
+        func_dict, all_test_files = get_suspicious_funcs(suspicious_funcs, instance_info, instance_id)
+        if not func_dict:
+            logging.warning(f"No extracted functions for {instance_id}, skipping.")
+            logging.info(f"[END] Instance {instance_id}")
+            continue
+        logging.info(f"Extracted {len(func_dict)} functions from repo {instance_info['repo']}")
 
-        original_count = sum(len(v) for v in suspicious_funcs.values())
-        extracted_count = len(func_dict)
+        # confirm suspicious functions
+        confirmed_sus = {fp: list(filter(None, funcs)) for fp, funcs in suspicious_funcs.items()}
+        confirmed_suspicious_funcs[instance_id] = confirmed_sus
 
-        print(f"\nOriginal suspicious functions: {original_count}")
-        print(f"Extracted functions:   {extracted_count}")
-
-        if original_count != extracted_count:
-            print("Mismatch between declared and extracted functions!")
-            # Flatten all suspicious function names (fully qualified)
-
-        expected_funcs = set()
-        for file_path, funcs in suspicious_funcs.items():
-            for func in funcs:
-                expected_funcs.add(func)
-
+        # compare declared vs extracted
+        expected_funcs = {func for funcs in suspicious_funcs.values() for func in funcs}
         extracted_funcs = set(func_dict.keys())
         missing_funcs = expected_funcs - extracted_funcs
-
         if missing_funcs:
-            print("\nMissing functions:", instance_id)
-            for func in sorted(missing_funcs):
-                print(f"  - {func}")
+            logging.warning(f"Missing functions ({len(missing_funcs)}): {sorted(missing_funcs)}")
 
-        if instance_id not in confirmed_suspicious_funcs:
-            confirmed_suspicious_funcs[instance_id] = confirmed_sus
-
+        # prompt model for test file selection
+        logging.info("Generating prompt for model...")
         prompt = select_test_file_prompt(
-            issue=f"{instance_info['problem_statement']}",
+            issue=instance_info['problem_statement'],
             suspicious_funcs=confirmed_sus,
             func_code_list=func_dict,
             all_test_files=all_test_files,
-            top_k=10,
+            top_k=10
         )
-        response = prompt_model(
-            model_name="GCP/claude-3-7-sonnet", prompt=prompt, temperature=0.7
-        )
+
+        logging.info(f"Sending prompt to model: {model_name}")
+        response = prompt_model(model_name, prompt=prompt, temperature=0.7)
+
+        # parse and store results
         test_files = parse_response(response)
-        print(json.dumps(func_dict, indent=2))
-        print(len(all_test_files))
-        print(prompt)
-        print(f"Response from model: {response}")
-        print(f"Selected test files for {instance_id}: {test_files}")
+        logging.info(f"Model selected {len(test_files)} test files")
+
         all_results[instance_id] = {
             "selected_test_files": test_files,
             "original_suspicious_funcs": suspicious_funcs,
@@ -170,42 +154,41 @@ def main(
             "selected_test_files": test_files,
             "suspicious_funcs": confirmed_sus,
         }
-        # save all_results, test_selection_results to json files
-        with open(all_results_json, "w") as f:
-            json.dump(all_results, f, indent=4)
-        with open(test_selection_json, "w") as f:
-            json.dump(test_selection_results, f, indent=4)
 
-        # save confirmed suspicious functions to a json file
+        logging.info(f"[END] Instance {instance_id}")
 
-        with open(confirmed_suspicious_file, "w") as f:
-            json.dump(confirmed_suspicious_funcs, f, indent=4)
+    # save outputs
+    save_json(all_results_json, all_results)
+    save_json(test_selection_json, test_selection_results)
+    save_json(confirmed_suspicious_file, confirmed_suspicious_funcs)
+    logging.info("All instances processed.")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Prompt model to return top 10 test files")
+    parser.add_argument("suspicious_func_json", help="Path to suspicious function JSON file")
+    parser.add_argument("output_dir_base", help="Base directory for output files")
+    parser.add_argument("dataset_name", choices=["princeton-nlp/SWE-bench_Verified", "princeton-nlp/SWE-bench_Lite"], help="Dataset to use")
+    parser.add_argument("model_name", help="Model name (e.g., GCP/claude-3-7-sonnet)")
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    args = sys.argv[1:]
-    suspicious_func_json = args[0]
-    output_dir_base = args[1]
-    dataset_name = args[2] #"princeton-nlp/SWE-bench_Verified", "princeton-nlp/SWE-bench_Lite""
+    args = parse_args()
+    suspicious_info = read_json_file(args.suspicious_func_json)
 
-    suspicious_info = read_json_file(suspicious_func_json)
+    output_dir = Path(args.output_dir_base) / "model_test_files" / args.dataset_name.split("/")[-1]
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    output_dir = f"{output_dir_base}/model_test_files/{dataset_name.split('/')[-1]}"
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    # outputs:
-    # all_results_json has all information; test selection json has only selected test files
-    # confirmed_suspicious_file has confirmed suspicious functions
-    all_results_json = f"{output_dir}/model_selected.json"
-    test_selection_json = f"{output_dir}/test_file_selection.json"
-    confirmed_suspicious_file = f"{output_dir}/confirmed_suspicious_funcs.json"
-    
+    all_results_json = output_dir / "model_selected.json"
+    test_selection_json = output_dir / "test_file_selection.json"
+    confirmed_suspicious_file = output_dir / "confirmed_suspicious_funcs.json"
 
     main(
         suspicious_info,
         all_results_json,
         test_selection_json,
         confirmed_suspicious_file,
-        dataset_name
+        args.dataset_name,
+        args.model_name
     )

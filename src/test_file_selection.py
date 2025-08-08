@@ -11,7 +11,7 @@ from prompts import select_test_file_prompt
 from utils import parse_func_code, prepare_repo, read_json_file
 
 
-def get_dataset(dataset_name="princeton-nlp/SWE-bench_Verified"):
+def get_dataset(dataset_name):
     return load_dataset(dataset_name, split="test")
 
 
@@ -85,14 +85,12 @@ def parse_response(response):
 
 
 def main(
-    suspicious_info, all_results_json, test_selection_json, confirmed_suspicious_file
+    suspicious_info, all_results_json, test_selection_json, confirmed_suspicious_file, dataset_name
 ):
     all_results, test_selection_results = {}, {}
-    dataset_info = get_dataset()
+    dataset_info = get_dataset(dataset_name)
     confirmed_suspicious_funcs = {}
     for instance_id in suspicious_info:
-        # if instance_id != "astropy__astropy-14369":
-        #     continue
         print(f"Processing instance {instance_id}...")
         suspicious_funcs = suspicious_info[instance_id]
         instance_info = get_instance_info(dataset_info, instance_id)
@@ -102,16 +100,16 @@ def main(
         if not func_dict:
             print("Warning: func_dict is empty or None")
             continue
-        comfirmed_sus = {}
+        confirmed_sus = {}
         for file_path, funcs in suspicious_funcs.items():
-            if file_path not in comfirmed_sus:
-                comfirmed_sus[file_path] = []
+            if file_path not in confirmed_sus:
+                confirmed_sus[file_path] = []
             for func in funcs:
                 if func == "":
                     continue
                 print(func)
-                if func not in comfirmed_sus[file_path]:
-                    comfirmed_sus[file_path].append(func)
+                if func not in confirmed_sus[file_path]:
+                    confirmed_sus[file_path].append(func)
 
         for k in func_dict:
             print(f"\n--- Function: {k} ---")
@@ -141,11 +139,11 @@ def main(
                 print(f"  - {func}")
 
         if instance_id not in confirmed_suspicious_funcs:
-            confirmed_suspicious_funcs[instance_id] = comfirmed_sus
+            confirmed_suspicious_funcs[instance_id] = confirmed_sus
 
         prompt = select_test_file_prompt(
-            issue=f"{instance_info['problem_statement']}\n{instance_info['hints_text']}",
-            suspicious_funcs=comfirmed_sus,
+            issue=f"{instance_info['problem_statement']}",
+            suspicious_funcs=confirmed_sus,
             func_code_list=func_dict,
             all_test_files=all_test_files,
             top_k=10,
@@ -162,7 +160,7 @@ def main(
         all_results[instance_id] = {
             "selected_test_files": test_files,
             "original_suspicious_funcs": suspicious_funcs,
-            "confirmed_suspicious_funcs": comfirmed_sus,
+            "confirmed_suspicious_funcs": confirmed_sus,
             "func_code": func_dict,
             "#all_test_files": len(all_test_files),
             "prompt": prompt,
@@ -170,7 +168,7 @@ def main(
         }
         test_selection_results[instance_id] = {
             "selected_test_files": test_files,
-            "suspicious_funcs": comfirmed_sus,
+            "suspicious_funcs": confirmed_sus,
         }
         # save all_results, test_selection_results to json files
         with open(all_results_json, "w") as f:
@@ -186,15 +184,28 @@ def main(
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    suspicious_json = args[0]
+    suspicious_func_json = args[0]
+    output_dir_base = args[1]
+    dataset_name = args[2] #"princeton-nlp/SWE-bench_Verified", "princeton-nlp/SWE-bench_Lite""
 
-    all_results_json = "result_files/test_file_selection_logs.json"
-    test_selection_json = "result_files/test_file_selection.json"
-    confirmed_suspicious_file = "result_files/confirmed_suspicious_funcs.json"
-    suspicious_info = read_json_file(suspicious_json)
+    suspicious_info = read_json_file(suspicious_func_json)
+
+    output_dir = f"{output_dir_base}/model_test_files/{dataset_name.split('/')[-1]}"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # outputs:
+    # all_results_json has all information; test selection json has only selected test files
+    # confirmed_suspicious_file has confirmed suspicious functions
+    all_results_json = f"{output_dir}/model_selected.json"
+    test_selection_json = f"{output_dir}/test_file_selection.json"
+    confirmed_suspicious_file = f"{output_dir}/confirmed_suspicious_funcs.json"
+    
+
     main(
         suspicious_info,
         all_results_json,
         test_selection_json,
         confirmed_suspicious_file,
+        dataset_name
     )

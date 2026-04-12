@@ -1,0 +1,87 @@
+{
+  "instance_id": "django__django-12915",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_0.jsonl",
+    "repro_fixes": 0,
+    "repro_total_considered": 0,
+    "regression_passed": 1,
+    "occurrence": 1,
+    "normalized_occurrence": 29
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_0.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 29
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_6.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 9,
+        "normalized_occurrence": 29
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_5.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 19,
+        "normalized_occurrence": 29
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_2.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_8.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_1.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_3.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_4.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12915/dedup_patch_7.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 0,
+        "regression_passed": 1,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

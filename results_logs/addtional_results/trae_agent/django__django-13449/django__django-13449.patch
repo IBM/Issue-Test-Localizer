@@ -1,0 +1,36 @@
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 90d90119d0..2a9c79a484 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -23,7 +23,8 @@ class SQLiteNumericMixin:
+     def as_sqlite(self, compiler, connection, **extra_context):
+         sql, params = self.as_sql(compiler, connection, **extra_context)
+         try:
+-            if self.output_field.get_internal_type() == 'DecimalField':
++            # Skip casting for window functions - the Window expression will handle it
++            if self.output_field.get_internal_type() == 'DecimalField' and not getattr(self, 'window_compatible', False):
+                 sql = 'CAST(%s AS NUMERIC)' % sql
+         except FieldError:
+             pass
+@@ -1331,6 +1332,21 @@ class Window(Expression):
+             'expression': expr_sql,
+             'window': ''.join(window_sql).strip()
+         }, params
++        
++    def as_sqlite(self, compiler, connection, **extra_context):
++        """
++        For SQLite, properly cast the entire window expression when the source
++        expression has a DecimalField output_field.
++        """
++        # For window functions with DecimalField output, we need to cast the entire expression
++        try:
++            if hasattr(self.source_expression, 'output_field') and \
++               self.source_expression.output_field.get_internal_type() == 'DecimalField':
++                sql, params = self.as_sql(compiler, connection)
++                return 'CAST(%s AS NUMERIC)' % sql, params
++        except FieldError:
++            pass
++        return self.as_sql(compiler, connection)
+ 
+     def __str__(self):
+         return '{} OVER ({}{}{})'.format(

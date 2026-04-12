@@ -1,0 +1,22 @@
+diff --git a/src/_pytest/skipping.py b/src/_pytest/skipping.py
+index 7bd975e5a..5baad796c 100644
+--- a/src/_pytest/skipping.py
++++ b/src/_pytest/skipping.py
+@@ -291,12 +291,14 @@ def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+             else:
+                 rep.outcome = "passed"
+                 rep.wasxfail = xfailed.reason
+-    elif (
+-        item._store.get(skipped_by_mark_key, True)
++
++    # Handle skip location reporting - this should work regardless of --runxfail
++    if (
++        item._store.get(skipped_by_mark_key, False)
+         and rep.skipped
+         and type(rep.longrepr) is tuple
+     ):
+-        # skipped by mark.skipif; change the location of the failure
++        # skipped by mark.skip/skipif; change the location of the failure
+         # to point to the item definition, otherwise it will display
+         # the location of where the skip exception was raised within pytest
+         _, _, reason = rep.longrepr

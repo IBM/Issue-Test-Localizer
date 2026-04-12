@@ -1,0 +1,17 @@
+diff --git a/lib/matplotlib/axis.py b/lib/matplotlib/axis.py
+index af0815d41d..e040ca8635 100644
+--- a/lib/matplotlib/axis.py
++++ b/lib/matplotlib/axis.py
+@@ -2021,6 +2021,12 @@ class Axis(martist.Artist):
+         other limits, you should set the limits explicitly after setting the
+         ticks.
+         """
++        # Validate kwargs are valid Text properties even when labels is None
++        if kwargs:
++            # Create a dummy Text object to validate the kwargs
++            dummy_text = mtext.Text()
++            dummy_text._internal_update(kwargs)
++        
+         result = self._set_tick_locations(ticks, minor=minor)
+         if labels is not None:
+             self.set_ticklabels(labels, minor=minor, **kwargs)

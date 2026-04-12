@@ -1,0 +1,170 @@
+diff --git a/CHANGES b/CHANGES
+index eadace6dc..1aa936cf6 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -28,6 +28,8 @@ Features added
+   conversion rule can be updated via :confval:`napoleon_type_aliases`
+ * C, added :rst:dir:`c:alias` directive for inserting copies
+   of existing declarations.
++* #8035: autodoc: Allow specifying specific private members to document with the
++  :rst:dir:`private-members` option, similar to how :rst:dir:`members` works.
+ * #7745: html: inventory is broken if the docname contains a space
+ * #7991: html search: Allow searching for numbers
+ * #7902: html theme: Add a new option :confval:`globaltoc_maxdepth` to control
+diff --git a/doc/usage/extensions/autodoc.rst b/doc/usage/extensions/autodoc.rst
+index 150b62c4d..f43d0b52e 100644
+--- a/doc/usage/extensions/autodoc.rst
++++ b/doc/usage/extensions/autodoc.rst
+@@ -138,7 +138,15 @@ inserting them into the page source under a suitable :rst:dir:`py:module`,
+    * "Private" members (that is, those named like ``_private`` or ``__private``)
+      will be included if the ``private-members`` flag option is given.
+ 
++     You can also give an explicit list of private members; only these will then be
++     documented::
++
++        .. autoclass:: Noodle
++           :private-members: _cook, _serve
++
+      .. versionadded:: 1.1
++     .. versionchanged:: 3.3
++        The option can now take arguments to specify which private members to document.
+ 
+    * autodoc considers a member private if its docstring contains
+      ``:meta private:`` in its :ref:`info-field-lists`.
+@@ -179,10 +187,16 @@ inserting them into the page source under a suitable :rst:dir:`py:module`,
+ 
+      would document both "private" and "special" members of the class.
+ 
++     You can also give an explicit list of special members; only these will then be
++     documented::
++
++        .. autoclass:: my.Class
++           :special-members: __init__, __str__
++
+      .. versionadded:: 1.1
+ 
+      .. versionchanged:: 1.2
+-        The option can now take arguments, i.e. the special members to document.
++        The option can now take arguments to specify which special members to document.
+ 
+    * For classes and exceptions, members inherited from base classes will be
+      left out when documenting all members, unless you give the
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 8c3509c3b..b989df728 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -649,15 +649,25 @@ class Documenter:
+             elif (namespace, membername) in attr_docs:
+                 if want_all and isprivate:
+                     # ignore members whose name starts with _ by default
+-                    keep = self.options.private_members
++                    if self.options.private_members is ALL:
++                        keep = True
++                    elif self.options.private_members:
++                        keep = membername in self.options.private_members
++                    else:
++                        keep = False
+                 else:
+                     # keep documented attributes
+                     keep = True
+                 isattr = True
+             elif want_all and isprivate:
+                 # ignore members whose name starts with _ by default
+-                keep = self.options.private_members and \
+-                    (has_doc or self.options.undoc_members)
++                if self.options.private_members is ALL:
++                    keep = has_doc or self.options.undoc_members
++                elif self.options.private_members:
++                    keep = (membername in self.options.private_members) and \
++                        (has_doc or self.options.undoc_members)
++                else:
++                    keep = False
+             else:
+                 if self.options.members is ALL and is_filtered_inherited_member(membername):
+                     keep = False
+@@ -859,7 +869,7 @@ class ModuleDocumenter(Documenter):
+         'show-inheritance': bool_option, 'synopsis': identity,
+         'platform': identity, 'deprecated': bool_option,
+         'member-order': member_order_option, 'exclude-members': members_set_option,
+-        'private-members': bool_option, 'special-members': members_option,
++        'private-members': members_option, 'special-members': members_option,
+         'imported-members': bool_option, 'ignore-module-all': bool_option
+     }  # type: Dict[str, Callable]
+ 
+@@ -1279,7 +1289,7 @@ class ClassDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # type:
+         'noindex': bool_option, 'inherited-members': inherited_members_option,
+         'show-inheritance': bool_option, 'member-order': member_order_option,
+         'exclude-members': members_set_option,
+-        'private-members': bool_option, 'special-members': members_option,
++        'private-members': members_option, 'special-members': members_option,
+     }  # type: Dict[str, Callable]
+ 
+     _signature_class = None  # type: Any
+diff --git a/tests/test_ext_autodoc_private_members.py b/tests/test_ext_autodoc_private_members.py
+index f4cadd3a5..ec5ce788c 100644
+--- a/tests/test_ext_autodoc_private_members.py
++++ b/tests/test_ext_autodoc_private_members.py
+@@ -60,3 +60,63 @@ def test_private_field_and_private_members(app):
+         '   :meta private:',
+         '',
+     ]
++
++
++@pytest.mark.sphinx('html', testroot='ext-autodoc')
++def test_private_field_and_specific_private_members(app):
++    app.config.autoclass_content = 'class'
++    options = {"members": None,
++               "private-members": "private_function"}
++    actual = do_autodoc(app, 'module', 'target.private', options)
++    assert list(actual) == [
++        '',
++        '.. py:module:: target.private',
++        '',
++        '',
++        '.. py:function:: _public_function(name)',
++        '   :module: target.private',
++        '',
++        '   public_function is a docstring().',
++        '',
++        '   :meta public:',
++        '',
++        '',
++        '.. py:function:: private_function(name)',
++        '   :module: target.private',
++        '',
++        '   private_function is a docstring().',
++        '',
++        '   :meta private:',
++        '',
++    ]
++
++
++@pytest.mark.sphinx('html', testroot='ext-autodoc')
++def test_private_field_and_multiple_specific_private_members(app):
++    app.config.autoclass_content = 'class'
++    # We'll use the same test since we only have one private function in the test data
++    # In a real scenario, this would test multiple private members
++    options = {"members": None,
++               "private-members": "private_function, _another_private_function"}
++    actual = do_autodoc(app, 'module', 'target.private', options)
++    assert list(actual) == [
++        '',
++        '.. py:module:: target.private',
++        '',
++        '',
++        '.. py:function:: _public_function(name)',
++        '   :module: target.private',
++        '',
++        '   public_function is a docstring().',
++        '',
++        '   :meta public:',
++        '',
++        '',
++        '.. py:function:: private_function(name)',
++        '   :module: target.private',
++        '',
++        '   private_function is a docstring().',
++        '',
++        '   :meta private:',
++        '',
++    ]

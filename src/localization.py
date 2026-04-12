@@ -13,17 +13,15 @@ from itertools import chain
 from multiprocessing import Process, Queue
 from typing import Dict, List, Set
 
-from call_graph_generation import get_pyan_callgraph
-from mistralai import Mistral
+from call_graph_generation import get_callgraph
 
 import prompts
-from extract import get_call_paths
-from filter_path import (get_all_forward_callees, related_mode,
-                         run_with_timeout_relatedmode)
+from call_graph_generation import (get_all_forward_callees, related_mode,
+                                   run_with_timeout_relatedmode)
 from locate_tests import locate_tests
 from model_config import generate_text, prompt_model
 from utils import (check_exact_string_in_file, check_if_def_used_in_file,
-                   check_substring_in_file, cleanup_logger, combine_json_files,
+                   check_substring_in_file, cleanup_logger,
                    count_statistics, dump_json, extract_function_defs,
                    find_def_paths, get_key_info_from_code, get_repo_structure,
                    prepare_repo, read_file, search_pyfiles_by_key_or_name,
@@ -173,28 +171,15 @@ class Inspector:
         }
 
     def generate_call_paths_json(self, call_path_dir="call_paths"):
-        repo_shotcut = self.repo_name.split("/")[-1]
+        repo_shortcut = self.repo_name.split("/")[-1]
         base_commit = self.base_commit
-        call_paths_json = (
-            f"{call_path_dir}/{repo_shotcut}_{base_commit}_call_paths.json"
-        )
-        final_paths_json = (
-            f"{call_path_dir}/{repo_shotcut}_{base_commit}_final_paths.json"
-        )
-        pyan_dir = f"{call_path_dir}/pyan/{repo_shotcut}_{base_commit}"
-        os.makedirs(pyan_dir, exist_ok=True)
-        os.makedirs(call_path_dir, exist_ok=True)
-        if not os.path.exists(final_paths_json):
-            print(
-                f"Generating call paths JSON for {self.local_repo_path} at commit {base_commit}"
-            )
-            repo_shortcut = self.repo_name.split("/")[-1]
-            get_call_paths(self.local_repo_path, call_paths_json, repo_shortcut)
-            pyan_json = get_pyan_callgraph(self.local_repo_path, pyan_dir)
-            combine_json_files(call_paths_json, pyan_json, final_paths_json)
-        else:
-            print(f"Call paths JSON already exists at {final_paths_json}")
-        return final_paths_json
+        ts_dir = f"{call_path_dir}/{repo_shortcut}_{base_commit}"
+        os.makedirs(ts_dir, exist_ok=True)
+
+        # get_callgraph() caches its output — returns immediately if already exists
+        callgraph_json = get_callgraph(self.local_repo_path, ts_dir)
+        print(f"Call graph JSON at {callgraph_json}")
+        return callgraph_json
 
     def get_call_graph_json(self):
         self.logger.info("Generating call graph JSON for the repository.")

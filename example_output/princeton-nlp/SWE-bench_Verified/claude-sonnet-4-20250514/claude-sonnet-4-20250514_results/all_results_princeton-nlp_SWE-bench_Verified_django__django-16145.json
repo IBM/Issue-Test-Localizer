@@ -1,0 +1,1132 @@
+{
+    "django__django-16145": {
+        "instance_id": "django__django-16145",
+        "dataset_name": "princeton-nlp/SWE-bench_Verified",
+        "relevant_files": [
+            "django/core/management/commands/runserver.py",
+            "django/contrib/staticfiles/management/commands/runserver.py",
+            "django/core/servers/basehttp.py",
+            "django/core/management/base.py",
+            "django/utils/http.py"
+        ],
+        "relevant_info": {
+            "django/core/management/commands/runserver.py": {
+                "imports": [
+                    "import errno",
+                    "import os",
+                    "import re",
+                    "import socket",
+                    "import sys",
+                    "from datetime import datetime",
+                    "from django.conf import settings",
+                    "from django.core.management.base import BaseCommand, CommandError",
+                    "from django.core.servers.basehttp import WSGIServer, get_internal_wsgi_application, run",
+                    "from django.utils import autoreload",
+                    "from django.utils.regex_helper import _lazy_re_compile"
+                ],
+                "classes": [
+                    {
+                        "name": "Command",
+                        "decorators": [],
+                        "docstring": null,
+                        "methods": [
+                            {
+                                "name": "add_arguments",
+                                "args": [
+                                    "self",
+                                    "parser"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "execute",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "get_handler",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Return the default WSGI handler for the runner.",
+                                "returns": [
+                                    "get_internal_wsgi_application()"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "run",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Run the server, using the autoreloader if needed.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "inner_run",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    }
+                ],
+                "functions": []
+            },
+            "django/contrib/staticfiles/management/commands/runserver.py": {
+                "imports": [
+                    "from django.conf import settings",
+                    "from django.contrib.staticfiles.handlers import StaticFilesHandler",
+                    "from django.core.management.commands.runserver import Command as RunserverCommand"
+                ],
+                "classes": [
+                    {
+                        "name": "Command",
+                        "decorators": [],
+                        "docstring": null,
+                        "methods": [
+                            {
+                                "name": "add_arguments",
+                                "args": [
+                                    "self",
+                                    "parser"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "get_handler",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Return the static files serving handler wrapping the default handler,\nif static files should be served. Otherwise return the default handler.",
+                                "returns": [
+                                    "handler",
+                                    "StaticFilesHandler(handler)"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    }
+                ],
+                "functions": []
+            },
+            "django/core/servers/basehttp.py": {
+                "imports": [
+                    "import logging",
+                    "import socket",
+                    "import socketserver",
+                    "import sys",
+                    "from wsgiref import simple_server",
+                    "from django.core.exceptions import ImproperlyConfigured",
+                    "from django.core.handlers.wsgi import LimitedStream",
+                    "from django.core.wsgi import get_wsgi_application",
+                    "from django.db import connections",
+                    "from django.utils.module_loading import import_string"
+                ],
+                "classes": [
+                    {
+                        "name": "WSGIServer",
+                        "decorators": [],
+                        "docstring": "BaseHTTPServer that implements the Python WSGI protocol",
+                        "methods": [
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle_error",
+                                "args": [
+                                    "self",
+                                    "request",
+                                    "client_address"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ThreadedWSGIServer",
+                        "decorators": [],
+                        "docstring": "A threaded version of the WSGIServer",
+                        "methods": [
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "process_request_thread",
+                                "args": [
+                                    "self",
+                                    "request",
+                                    "client_address"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "_close_connections",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "close_request",
+                                "args": [
+                                    "self",
+                                    "request"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "ServerHandler",
+                        "decorators": [],
+                        "docstring": null,
+                        "methods": [
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self",
+                                    "stdin",
+                                    "stdout",
+                                    "stderr",
+                                    "environ"
+                                ],
+                                "docstring": "Use a LimitedStream so that unread request data will be ignored at\nthe end of the request. WSGIRequest uses a LimitedStream but it\nshouldn't discard the data since the upstream servers usually do this.\nThis fix applies only for testserver/runserver.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "cleanup_headers",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "close",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "WSGIRequestHandler",
+                        "decorators": [],
+                        "docstring": null,
+                        "methods": [
+                            {
+                                "name": "address_string",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "self.client_address[0]"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "log_message",
+                                "args": [
+                                    "self",
+                                    "format"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "return"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "get_environ",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "super().get_environ()"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle_one_request",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Copy of WSGIRequestHandler.handle() but with different ServerHandler",
+                                "returns": [
+                                    "return",
+                                    "return"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    }
+                ],
+                "functions": [
+                    {
+                        "name": "get_internal_wsgi_application",
+                        "args": [],
+                        "docstring": "Load and return the WSGI application as configured by the user in\n``settings.WSGI_APPLICATION``. With the default ``startproject`` layout,\nthis will be the ``application`` object in ``projectname/wsgi.py``.\n\nThis function, and the ``WSGI_APPLICATION`` setting itself, are only useful\nfor Django's internal server (runserver); external WSGI servers should just\nbe configured to point to the correct application object directly.\n\nIf settings.WSGI_APPLICATION is not set (is ``None``), return\nwhatever ``django.core.wsgi.get_wsgi_application`` returns.",
+                        "returns": [
+                            "get_wsgi_application()",
+                            "import_string(app_path)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "is_broken_pipe_error",
+                        "args": [],
+                        "docstring": null,
+                        "returns": [
+                            "issubclass(exc_type, (BrokenPipeError, ConnectionAbortedError, ConnectionResetError))"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "run",
+                        "args": [
+                            "addr",
+                            "port",
+                            "wsgi_handler",
+                            "ipv6",
+                            "threading",
+                            "server_cls"
+                        ],
+                        "docstring": null,
+                        "returns": [],
+                        "caller": [],
+                        "callee": []
+                    }
+                ]
+            },
+            "django/core/management/base.py": {
+                "imports": [
+                    "import argparse",
+                    "import os",
+                    "import sys",
+                    "from argparse import ArgumentParser, HelpFormatter",
+                    "from io import TextIOBase",
+                    "import django",
+                    "from django.core import checks",
+                    "from django.core.exceptions import ImproperlyConfigured",
+                    "from django.core.management.color import color_style, no_style",
+                    "from django.db import DEFAULT_DB_ALIAS, connections"
+                ],
+                "classes": [
+                    {
+                        "name": "CommandError",
+                        "decorators": [],
+                        "docstring": "Exception class indicating a problem while executing a management\ncommand.\n\nIf this exception is raised during the execution of a management\ncommand, it will be caught and turned into a nicely-printed error\nmessage to the appropriate output stream (i.e., stderr); as a\nresult, raising this exception (with a sensible description of the\nerror) is the preferred way to indicate that something has gone\nwrong in the execution of a command.",
+                        "methods": [
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "SystemCheckError",
+                        "decorators": [],
+                        "docstring": "The system check framework detected unrecoverable errors.",
+                        "methods": []
+                    },
+                    {
+                        "name": "CommandParser",
+                        "decorators": [],
+                        "docstring": "Customized ArgumentParser class to improve some error messages and prevent\nSystemExit in several occasions, as SystemExit is unacceptable when a\ncommand is called programmatically.",
+                        "methods": [
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "parse_args",
+                                "args": [
+                                    "self",
+                                    "args",
+                                    "namespace"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "super().parse_args(args, namespace)"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "error",
+                                "args": [
+                                    "self",
+                                    "message"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "DjangoHelpFormatter",
+                        "decorators": [],
+                        "docstring": "Customized formatter so that command-specific arguments appear in the\n--help output before arguments common to all commands.",
+                        "methods": [
+                            {
+                                "name": "_reordered_actions",
+                                "args": [
+                                    "self",
+                                    "actions"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "sorted(actions, key=lambda a: set(a.option_strings) & self.show_last != set())"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "add_usage",
+                                "args": [
+                                    "self",
+                                    "usage",
+                                    "actions"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "add_arguments",
+                                "args": [
+                                    "self",
+                                    "actions"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "OutputWrapper",
+                        "decorators": [],
+                        "docstring": "Wrapper around stdout/stderr",
+                        "methods": [
+                            {
+                                "name": "style_func",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "self._style_func"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "style_func",
+                                "args": [
+                                    "self",
+                                    "style_func"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self",
+                                    "out",
+                                    "ending"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "__getattr__",
+                                "args": [
+                                    "self",
+                                    "name"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "getattr(self._out, name)"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "flush",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "isatty",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "hasattr(self._out, 'isatty') and self._out.isatty()"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "write",
+                                "args": [
+                                    "self",
+                                    "msg",
+                                    "style_func",
+                                    "ending"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "BaseCommand",
+                        "decorators": [],
+                        "docstring": "The base class from which all management commands ultimately\nderive.\n\nUse this class if you want access to all of the mechanisms which\nparse the command-line arguments and work out what code to call in\nresponse; if you don't need to change any of that behavior,\nconsider using one of the subclasses defined in this file.\n\nIf you are interested in overriding/customizing various aspects of\nthe command-parsing and -execution behavior, the normal flow works\nas follows:\n\n1. ``django-admin`` or ``manage.py`` loads the command class\n   and calls its ``run_from_argv()`` method.\n\n2. The ``run_from_argv()`` method calls ``create_parser()`` to get\n   an ``ArgumentParser`` for the arguments, parses them, performs\n   any environment changes requested by options like\n   ``pythonpath``, and then calls the ``execute()`` method,\n   passing the parsed arguments.\n\n3. The ``execute()`` method attempts to carry out the command by\n   calling the ``handle()`` method with the parsed arguments; any\n   output produced by ``handle()`` will be printed to standard\n   output and, if the command is intended to produce a block of\n   SQL statements, will be wrapped in ``BEGIN`` and ``COMMIT``.\n\n4. If ``handle()`` or ``execute()`` raised any exception (e.g.\n   ``CommandError``), ``run_from_argv()`` will  instead print an error\n   message to ``stderr``.\n\nThus, the ``handle()`` method is typically the starting point for\nsubclasses; many built-in commands and command types either place\nall of their logic in ``handle()``, or perform some additional\nparsing work in ``handle()`` and then delegate from it to more\nspecialized methods as needed.\n\nSeveral attributes affect behavior at various steps along the way:\n\n``help``\n    A short description of the command, which will be printed in\n    help messages.\n\n``output_transaction``\n    A boolean indicating whether the command outputs SQL\n    statements; if ``True``, the output will automatically be\n    wrapped with ``BEGIN;`` and ``COMMIT;``. Default value is\n    ``False``.\n\n``requires_migrations_checks``\n    A boolean; if ``True``, the command prints a warning if the set of\n    migrations on disk don't match the migrations in the database.\n\n``requires_system_checks``\n    A list or tuple of tags, e.g. [Tags.staticfiles, Tags.models]. System\n    checks registered in the chosen tags will be checked for errors prior\n    to executing the command. The value '__all__' can be used to specify\n    that all system checks should be performed. Default value is '__all__'.\n\n    To validate an individual application's models\n    rather than all applications' models, call\n    ``self.check(app_configs)`` from ``handle()``, where ``app_configs``\n    is the list of application's configuration provided by the\n    app registry.\n\n``stealth_options``\n    A tuple of any options the command uses which aren't defined by the\n    argument parser.",
+                        "methods": [
+                            {
+                                "name": "__init__",
+                                "args": [
+                                    "self",
+                                    "stdout",
+                                    "stderr",
+                                    "no_color",
+                                    "force_color"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "get_version",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Return the Django version, which should be correct for all built-in\nDjango commands. User-supplied commands can override this method to\nreturn their own version.",
+                                "returns": [
+                                    "django.get_version()"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "create_parser",
+                                "args": [
+                                    "self",
+                                    "prog_name",
+                                    "subcommand"
+                                ],
+                                "docstring": "Create and return the ``ArgumentParser`` which will be used to\nparse the arguments to this command.",
+                                "returns": [
+                                    "parser"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "add_arguments",
+                                "args": [
+                                    "self",
+                                    "parser"
+                                ],
+                                "docstring": "Entry point for subclassed commands to add custom arguments.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "add_base_argument",
+                                "args": [
+                                    "self",
+                                    "parser"
+                                ],
+                                "docstring": "Call the parser's add_argument() method, suppressing the help text\naccording to BaseCommand.suppressed_base_arguments.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "print_help",
+                                "args": [
+                                    "self",
+                                    "prog_name",
+                                    "subcommand"
+                                ],
+                                "docstring": "Print the help message for this command, derived from\n``self.usage()``.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "run_from_argv",
+                                "args": [
+                                    "self",
+                                    "argv"
+                                ],
+                                "docstring": "Set up any environment changes requested (e.g., Python path\nand Django settings), then run this command. If the\ncommand raises a ``CommandError``, intercept it and print it sensibly\nto stderr. If the ``--traceback`` option is present or the raised\n``Exception`` is not ``CommandError``, raise it.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "execute",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Try to execute this command, performing system checks if needed (as\ncontrolled by the ``requires_system_checks`` attribute, except if\nforce-skipped).",
+                                "returns": [
+                                    "output"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "check",
+                                "args": [
+                                    "self",
+                                    "app_configs",
+                                    "tags",
+                                    "display_num_errors",
+                                    "include_deployment_checks",
+                                    "fail_level",
+                                    "databases"
+                                ],
+                                "docstring": "Use the system check framework to validate entire Django project.\nRaise CommandError for any serious message (error or critical errors).\nIf there are only light messages (like warnings), print them to stderr\nand don't raise an exception.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "check_migrations",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "Print a warning if the set of migrations on disk don't match the\nmigrations in the database.",
+                                "returns": [
+                                    "return"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": "The actual logic of the command. Subclasses must implement\nthis method.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AppCommand",
+                        "decorators": [],
+                        "docstring": "A management command which takes one or more installed application labels\nas arguments, and does something with each of them.\n\nRather than implementing ``handle()``, subclasses must implement\n``handle_app_config()``, which will be called once for each application.",
+                        "methods": [
+                            {
+                                "name": "add_arguments",
+                                "args": [
+                                    "self",
+                                    "parser"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "'\\n'.join(output)"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle_app_config",
+                                "args": [
+                                    "self",
+                                    "app_config"
+                                ],
+                                "docstring": "Perform the command's actions for app_config, an AppConfig instance\ncorresponding to an application label given on the command line.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "LabelCommand",
+                        "decorators": [],
+                        "docstring": "A management command which takes one or more arbitrary arguments\n(labels) on the command line, and does something with each of\nthem.\n\nRather than implementing ``handle()``, subclasses must implement\n``handle_label()``, which will be called once for each label.\n\nIf the arguments should be names of installed applications, use\n``AppCommand`` instead.",
+                        "methods": [
+                            {
+                                "name": "add_arguments",
+                                "args": [
+                                    "self",
+                                    "parser"
+                                ],
+                                "docstring": null,
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle",
+                                "args": [
+                                    "self"
+                                ],
+                                "docstring": null,
+                                "returns": [
+                                    "'\\n'.join(output)"
+                                ],
+                                "caller": [],
+                                "callee": []
+                            },
+                            {
+                                "name": "handle_label",
+                                "args": [
+                                    "self",
+                                    "label"
+                                ],
+                                "docstring": "Perform the command's actions for ``label``, which will be the\nstring as given on the command line.",
+                                "returns": [],
+                                "caller": [],
+                                "callee": []
+                            }
+                        ]
+                    }
+                ],
+                "functions": [
+                    {
+                        "name": "handle_default_options",
+                        "args": [
+                            "options"
+                        ],
+                        "docstring": "Include any default options that all commands should accept here\nso that ManagementUtility can handle them before searching for\nuser commands.",
+                        "returns": [],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "no_translations",
+                        "args": [
+                            "handle_func"
+                        ],
+                        "docstring": "Decorator that forces a command to run with translations deactivated.",
+                        "returns": [
+                            "wrapper",
+                            "res"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    }
+                ]
+            },
+            "django/utils/http.py": {
+                "imports": [
+                    "import base64",
+                    "import datetime",
+                    "import re",
+                    "import unicodedata",
+                    "from binascii import Error as BinasciiError",
+                    "from email.utils import formatdate",
+                    "from urllib.parse import ParseResult, SplitResult, _coerce_args, _splitnetloc, _splitparams, scheme_chars, unquote",
+                    "from urllib.parse import urlencode as original_urlencode",
+                    "from urllib.parse import uses_params",
+                    "from django.utils.datastructures import MultiValueDict",
+                    "from django.utils.regex_helper import _lazy_re_compile"
+                ],
+                "classes": [],
+                "functions": [
+                    {
+                        "name": "urlencode",
+                        "args": [
+                            "query",
+                            "doseq"
+                        ],
+                        "docstring": "A version of Python's urllib.parse.urlencode() function that can operate on\nMultiValueDict and non-string values.",
+                        "returns": [
+                            "original_urlencode(query_params, doseq)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "http_date",
+                        "args": [
+                            "epoch_seconds"
+                        ],
+                        "docstring": "Format the time to match the RFC1123 date format as specified by HTTP\nRFC7231 section 7.1.1.1.\n\n`epoch_seconds` is a floating point number expressed in seconds since the\nepoch, in UTC - such as that outputted by time.time(). If set to None, it\ndefaults to the current time.\n\nOutput a string in the format 'Wdy, DD Mon YYYY HH:MM:SS GMT'.",
+                        "returns": [
+                            "formatdate(epoch_seconds, usegmt=True)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "parse_http_date",
+                        "args": [
+                            "date"
+                        ],
+                        "docstring": "Parse a date format as specified by HTTP RFC7231 section 7.1.1.1.\n\nThe three formats allowed by the RFC are accepted, even if only the first\none is still in widespread use.\n\nReturn an integer expressed in seconds since the epoch, in UTC.",
+                        "returns": [
+                            "int(result.timestamp())"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "parse_http_date_safe",
+                        "args": [
+                            "date"
+                        ],
+                        "docstring": "Same as parse_http_date, but return None if the input is invalid.",
+                        "returns": [
+                            "parse_http_date(date)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "base36_to_int",
+                        "args": [
+                            "s"
+                        ],
+                        "docstring": "Convert a base 36 string to an int. Raise ValueError if the input won't fit\ninto an int.",
+                        "returns": [
+                            "int(s, 36)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "int_to_base36",
+                        "args": [
+                            "i"
+                        ],
+                        "docstring": "Convert an integer to a base36 string.",
+                        "returns": [
+                            "b36",
+                            "char_set[i]"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "urlsafe_base64_encode",
+                        "args": [
+                            "s"
+                        ],
+                        "docstring": "Encode a bytestring to a base64 string for use in URLs. Strip any trailing\nequal signs.",
+                        "returns": [
+                            "base64.urlsafe_b64encode(s).rstrip(b'\\n=').decode('ascii')"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "urlsafe_base64_decode",
+                        "args": [
+                            "s"
+                        ],
+                        "docstring": "Decode a base64 encoded string. Add back any trailing equal signs that\nmight have been stripped.",
+                        "returns": [
+                            "base64.urlsafe_b64decode(s.ljust(len(s) + len(s) % 4, b'='))"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "parse_etags",
+                        "args": [
+                            "etag_str"
+                        ],
+                        "docstring": "Parse a string of ETags given in an If-None-Match or If-Match header as\ndefined by RFC 7232. Return a list of quoted ETags, or ['*'] if all ETags\nshould be matched.",
+                        "returns": [
+                            "['*']",
+                            "[match[1] for match in etag_matches if match]"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "quote_etag",
+                        "args": [
+                            "etag_str"
+                        ],
+                        "docstring": "If the provided string is already a quoted ETag, return it. Otherwise, wrap\nthe string in quotes, making it a strong ETag.",
+                        "returns": [
+                            "etag_str",
+                            "'\"%s\"' % etag_str"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "is_same_domain",
+                        "args": [
+                            "host",
+                            "pattern"
+                        ],
+                        "docstring": "Return ``True`` if the host is either an exact match or a match\nto the wildcard pattern.\n\nAny pattern beginning with a period matches a domain and all of its\nsubdomains. (e.g. ``.example.com`` matches ``example.com`` and\n``foo.example.com``). Anything else is an exact string match.",
+                        "returns": [
+                            "pattern[0] == '.' and (host.endswith(pattern) or host == pattern[1:]) or pattern == host",
+                            "False"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "url_has_allowed_host_and_scheme",
+                        "args": [
+                            "url",
+                            "allowed_hosts",
+                            "require_https"
+                        ],
+                        "docstring": "Return ``True`` if the url uses an allowed host and a safe scheme.\n\nAlways return ``False`` on an empty url.\n\nIf ``require_https`` is ``True``, only 'https' will be considered a valid\nscheme, as opposed to 'http' and 'https' with the default, ``False``.\n\nNote: \"True\" doesn't entail that a URL is \"safe\". It may still be e.g.\nquoted incorrectly. Ensure to also use django.utils.encoding.iri_to_uri()\non the path component of untrusted URLs.",
+                        "returns": [
+                            "_url_has_allowed_host_and_scheme(url, allowed_hosts, require_https=require_https) and _url_has_allowed_host_and_scheme(url.replace('\\\\', '/'), allowed_hosts, require_https=require_https)",
+                            "False"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "_urlparse",
+                        "args": [
+                            "url",
+                            "scheme",
+                            "allow_fragments"
+                        ],
+                        "docstring": "Parse a URL into 6 components:\n<scheme>://<netloc>/<path>;<params>?<query>#<fragment>\nReturn a 6-tuple: (scheme, netloc, path, params, query, fragment).\nNote that we don't break the components up in smaller bits\n(e.g. netloc is a single string) and we don't expand % escapes.",
+                        "returns": [
+                            "_coerce_result(result)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "_remove_unsafe_bytes_from_url",
+                        "args": [
+                            "url"
+                        ],
+                        "docstring": null,
+                        "returns": [
+                            "url"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "_urlsplit",
+                        "args": [
+                            "url",
+                            "scheme",
+                            "allow_fragments"
+                        ],
+                        "docstring": "Parse a URL into 5 components:\n<scheme>://<netloc>/<path>?<query>#<fragment>\nReturn a 5-tuple: (scheme, netloc, path, query, fragment).\nNote that we don't break the components up in smaller bits\n(e.g. netloc is a single string) and we don't expand % escapes.",
+                        "returns": [
+                            "_coerce_result(v)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "_url_has_allowed_host_and_scheme",
+                        "args": [
+                            "url",
+                            "allowed_hosts",
+                            "require_https"
+                        ],
+                        "docstring": null,
+                        "returns": [
+                            "(not url_info.netloc or url_info.netloc in allowed_hosts) and (not scheme or scheme in valid_schemes)",
+                            "False",
+                            "False",
+                            "False",
+                            "False"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "escape_leading_slashes",
+                        "args": [
+                            "url"
+                        ],
+                        "docstring": "If redirecting to an absolute path (two leading slashes), a slash must be\nescaped to prevent browsers from handling the path as schemaless and\nredirecting to another host.",
+                        "returns": [
+                            "url"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "_parseparam",
+                        "args": [
+                            "s"
+                        ],
+                        "docstring": null,
+                        "returns": [],
+                        "caller": [],
+                        "callee": []
+                    },
+                    {
+                        "name": "parse_header_parameters",
+                        "args": [
+                            "line"
+                        ],
+                        "docstring": "Parse a Content-type like header.\nReturn the main content-type and a dictionary of options.",
+                        "returns": [
+                            "(key, pdict)"
+                        ],
+                        "caller": [],
+                        "callee": []
+                    }
+                ]
+            }
+        },
+        "call_paths_json": "call_paths/django_93d4c9ea1de24eb391cb2b3561b6703fd46374df/callgraph.json",
+        "suspicious_func_results": {
+            "django/core/management/commands/runserver.py": [
+                "Command.inner_run",
+                "Command.handle",
+                "Command.run"
+            ],
+            "django/core/servers/basehttp.py": [
+                "run"
+            ]
+        },
+        "normalized_funcs": {
+            "django/core/management/commands/runserver.py": [
+                "django.core.management.commands.runserver.Command.inner_run",
+                "django.core.management.commands.runserver.Command.handle",
+                "django.core.management.commands.runserver.Command.run"
+            ],
+            "django/core/servers/basehttp.py": [
+                "django.core.servers.basehttp.run"
+            ]
+        }
+    }
+}

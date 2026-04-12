@@ -1,0 +1,14 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 83f3a12..c67dffe 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1814,7 +1814,8 @@ class Query(BaseExpression):
+         for join in path:
+             if join.filtered_relation:
+                 filtered_relation = join.filtered_relation.clone()
+-                table_alias = filtered_relation.alias
++                # Use the original table alias for the filtered relation
++                table_alias = None if reuse_with_filtered_relation else filtered_relation.alias
+             else:
+                 filtered_relation = None
+                 table_alias = None

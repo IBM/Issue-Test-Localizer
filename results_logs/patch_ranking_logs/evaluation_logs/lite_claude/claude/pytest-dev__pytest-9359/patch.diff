@@ -1,0 +1,17 @@
+diff --git a/src/_pytest/assertion/rewrite.py b/src/_pytest/assertion/rewrite.py
+index 9657da0..f42fc98 100644
+--- a/src/_pytest/assertion/rewrite.py
++++ b/src/_pytest/assertion/rewrite.py
+@@ -936,10 +936,10 @@ class AssertionRewriter(ast.NodeVisitor):
+             self.statements.append(ast.If(negation, body, []))
+             if assert_.msg:
+                 assertmsg = self.helper("_format_assertmsg", assert_.msg)
+-                explanation = "\n>assert " + explanation
++                explanation = "\n>assert " + explanation.split('\n')[0]  # Only take the first line
+             else:
+                 assertmsg = ast.Str("")
+-                explanation = "assert " + explanation
++                explanation = "assert " + explanation.split('\n')[0]  # Only take the first line
+             template = ast.BinOp(assertmsg, ast.Add(), ast.Str(explanation))
+             msg = self.pop_format_context(template)
+             fmt = self.helper("_format_explanation", msg)

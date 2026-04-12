@@ -1,0 +1,28 @@
+diff --git a/sympy/printing/mathml.py b/sympy/printing/mathml.py
+index 85af872..e60db0a 100644
+--- a/sympy/printing/mathml.py
++++ b/sympy/printing/mathml.py
+@@ -772,10 +772,19 @@ class MathMLPresentationPrinter(MathMLPrinterBase):
+             else:
+                 return s
+ 
+-        name, supers, subs = split_super_sub(sym.name)
+-        name = translate(name)
+-        supers = [translate(sup) for sup in supers]
+-        subs = [translate(sub) for sub in subs]
++        # Check if the symbol name ends with digits
++        import re
++        if re.match(r'^[a-zA-Z]+\d+$', sym.name):
++            # If it's a simple symbol with numeric suffix, treat it as a single name
++            name = sym.name
++            supers = []
++            subs = []
++        else:
++            # Otherwise split as usual
++            name, supers, subs = split_super_sub(sym.name)
++            name = translate(name)
++            supers = [translate(sup) for sup in supers]
++            subs = [translate(sub) for sub in subs]
+ 
+         mname = self.dom.createElement('mi')
+         mname.appendChild(self.dom.createTextNode(name))

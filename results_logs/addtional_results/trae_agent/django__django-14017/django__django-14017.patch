@@ -1,0 +1,84 @@
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index ffc3a7fda5..b3c7648215 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1150,6 +1150,7 @@ class Subquery(Expression):
+ class Exists(Subquery):
+     template = 'EXISTS(%(subquery)s)'
+     output_field = fields.BooleanField()
++    conditional = True  # Mark as conditional for __and__ and __or__ operations
+ 
+     def __init__(self, queryset, negated=False, **kwargs):
+         self.negated = negated
+@@ -1159,6 +1160,12 @@ class Exists(Subquery):
+         clone = self.copy()
+         clone.negated = not self.negated
+         return clone
++        
++    def __rand__(self, other):
++        # Handle the case when a Q object is on the right side
++        if isinstance(other, Q):
++            return other & self
++        return NotImplemented
+ 
+     def as_sql(self, compiler, connection, template=None, **extra_context):
+         query = self.query.exists(using=connection.alias)
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index c957ffa564..3a20eee751 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -40,15 +40,17 @@ class Q(tree.Node):
+         super().__init__(children=[*args, *sorted(kwargs.items())], connector=_connector, negated=_negated)
+ 
+     def _combine(self, other, conn):
+-        if not isinstance(other, Q):
++        from django.db.models.expressions import Exists
++        
++        if not isinstance(other, Q) and not isinstance(other, Exists):
+             raise TypeError(other)
+ 
+         # If the other Q() is empty, ignore it and just use `self`.
+-        if not other:
++        if not other and not isinstance(other, Exists):
+             _, args, kwargs = self.deconstruct()
+             return type(self)(*args, **kwargs)
+         # Or if this Q is empty, ignore it and just use `other`.
+-        elif not self:
++        elif not self and not isinstance(other, Exists):
+             _, args, kwargs = other.deconstruct()
+             return type(other)(*args, **kwargs)
+ 
+diff --git a/tests/expressions/tests.py b/tests/expressions/tests.py
+index 08ea0a51d3..bfca7df36d 100644
+--- a/tests/expressions/tests.py
++++ b/tests/expressions/tests.py
+@@ -1768,6 +1768,29 @@ class ExistsTests(TestCase):
+             captured_sql,
+         )
+         self.assertNotIn('ORDER BY', captured_sql)
++        
++    def test_exists_q_combination(self):
++        # Test that both combinations of Exists and Q work
++        exists_obj = Exists(Experiment.objects.all())
++        q_obj = Q()
++
++        # This should work (already worked before the fix)
++        exists_and_q = exists_obj & q_obj
++        self.assertIsNotNone(exists_and_q)
++
++        # This should work too (fixed by the patch)
++        q_and_exists = q_obj & exists_obj
++        self.assertIsNotNone(q_and_exists)
++
++        # Test with non-empty Q objects
++        q_with_condition = Q(name__startswith='Experiment')
++        
++        # Both of these should work
++        exists_and_q_with_condition = exists_obj & q_with_condition
++        self.assertIsNotNone(exists_and_q_with_condition)
++        
++        q_with_condition_and_exists = q_with_condition & exists_obj
++        self.assertIsNotNone(q_with_condition_and_exists)
+ 
+ 
+ class FieldTransformTests(TestCase):

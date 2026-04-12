@@ -1,0 +1,114 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-12585",
+  "container_id": "bee11671f0b2d2b84cb807bf6c518c954b0763ff431a55509f61bbdd80c1293f",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-12585",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_1.jsonl",
+        "inst": "scikit-learn__scikit-learn-12585",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_2.jsonl",
+        "inst": "scikit-learn__scikit-learn-12585",
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "top_passed": 3,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "sklearn/tests/test_base.py::test_clone_2#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_base.py::test_clone_2#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_base.py::test_clone#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_base.py::test_clone_2#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_base.py::test_clone_pandas_dataframe#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_base.py::test_clone_pandas_dataframe#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_2.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_2.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-12585/dedup_patch_2.jsonl",
+          "inst": "scikit-learn__scikit-learn-12585",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

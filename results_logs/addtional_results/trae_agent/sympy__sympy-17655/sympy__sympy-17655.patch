@@ -1,0 +1,124 @@
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 7c978c47be..56e980c933 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -32,8 +32,10 @@
+ from sympy.core.numbers import Float
+ from sympy.core.evaluate import global_evaluate
+ from sympy.core.add import Add
++from sympy.core.mul import Mul
+ from sympy.utilities.iterables import uniq
+ from sympy.utilities.misc import filldedent, func_name, Undecidable
++from sympy.core.decorators import call_highest_priority
+ 
+ from .entity import GeometryEntity
+ 
+@@ -104,6 +106,7 @@ class Point(GeometryEntity):
+     """
+ 
+     is_Point = True
++    _op_priority = 10.1  # Higher priority than Expr (10.0)
+ 
+     def __new__(cls, *args, **kwargs):
+         evaluate = kwargs.get('evaluate', global_evaluate[0])
+@@ -213,6 +216,22 @@ def __add__(self, other):
+         sympy.geometry.point.Point.translate
+ 
+         """
++        # Handle the case when other is a Mul object with a Point as one of its args
++        if isinstance(other, Mul):
++            point_args = [arg for arg in other.args if hasattr(arg, 'is_Point') and arg.is_Point]
++            if len(point_args) == 1:
++                point = point_args[0]
++                # Extract the scalar coefficient (all args except the point)
++                scalar_args = [arg for arg in other.args if arg != point]
++                if scalar_args:
++                    # Rebuild the scalar coefficient
++                    scalar = scalar_args[0]
++                    for arg in scalar_args[1:]:
++                        scalar *= arg
++                    # Create a new point with the scalar applied
++                    scaled_point = Point([simplify(x*scalar) for x in point.args], evaluate=False)
++                    return self + scaled_point
++        
+         try:
+             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))
+         except TypeError:
+@@ -247,6 +266,7 @@ def __iter__(self):
+     def __len__(self):
+         return len(self.args)
+ 
++    @call_highest_priority('__rmul__')
+     def __mul__(self, factor):
+         """Multiply point's coordinates by a factor.
+ 
+@@ -277,6 +297,25 @@ def __mul__(self, factor):
+         factor = sympify(factor)
+         coords = [simplify(x*factor) for x in self.args]
+         return Point(coords, evaluate=False)
++        
++    @call_highest_priority('__mul__')
++    def __rmul__(self, factor):
++        """Multiply point's coordinates by a factor (from the right).
++        
++        This allows expressions like ``factor * point`` to work the same as
++        ``point * factor``.
++        
++        Examples
++        ========
++        
++        >>> from sympy.geometry.point import Point
++        >>> from sympy import sympify
++        >>> 2 * Point(1, 2)
++        Point2D(2, 4)
++        >>> sympify(2.0) * Point(1, 2)
++        Point2D(2.0, 4.0)
++        """
++        return self.__mul__(factor)
+ 
+     def __neg__(self):
+         """Negate the point."""
+diff --git a/sympy/geometry/tests/test_point.py b/sympy/geometry/tests/test_point.py
+index 475d1d403f..9bb1590e68 100644
+--- a/sympy/geometry/tests/test_point.py
++++ b/sympy/geometry/tests/test_point.py
+@@ -381,6 +381,39 @@ def test__normalize_dimension():
+         Point(1, 2, 0), Point(3, 4, 0)]
+ 
+ 
++def test_rmul():
++    """Test that multiplying a Point by a scalar works in both directions."""
++    from sympy import sympify
++    
++    point = Point(1, 2)
++    
++    # Test regular multiplication (point * scalar)
++    assert point * 2 == Point(2, 4)
++    
++    # Test reverse multiplication (scalar * point)
++    assert 2 * point == Point(2, 4)
++    
++    # Test with sympify
++    assert point * sympify(2.0) == Point(2.0, 4.0)
++    
++    # Test reverse multiplication with sympify
++    assert sympify(2.0) * point == Point(2.0, 4.0)
++    
++    # Verify that the results are equal
++    assert point * sympify(2.0) == sympify(2.0) * point
++    
++    # Test addition with multiplication
++    point1 = Point(0, 0)
++    point2 = Point(1, 1)
++    
++    # These two expressions should be equivalent
++    result1 = point1 + point2 * sympify(2.0)
++    result2 = point1 + sympify(2.0) * point2
++    
++    assert result1 == result2
++    assert result1 == Point(2.0, 2.0)
++
++
+ def test_direction_cosine():
+     p1 = Point3D(0, 0, 0)
+     p2 = Point3D(1, 1, 1)

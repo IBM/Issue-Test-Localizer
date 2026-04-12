@@ -1,0 +1,91 @@
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 626b8ab..79403c2 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -737,6 +737,14 @@ class Value(SQLiteNumericMixin, Expression):
+     # instances to be compiled until a decision is taken in #25425.
+     for_save = False
+ 
++    def deconstruct(self):
++        path = 'django.db.models.Value'
++        args = [self.value]
++        kwargs = {}
++        if self.output_field is not None:
++            kwargs['output_field'] = self.output_field
++        return path, args, kwargs
++
+     def __init__(self, value, output_field=None):
+         """
+         Arguments:
+@@ -990,6 +998,16 @@ class When(Expression):
+     # This isn't a complete conditional expression, must be used in Case().
+     conditional = False
+ 
++    def deconstruct(self):
++        path = 'django.db.models.When'
++        args = []
++        kwargs = {}
++        if self.condition is not None:
++            kwargs['condition'] = self.condition
++        if self.result is not None:
++            kwargs['then'] = self.result
++        return path, args, kwargs
++
+     def __init__(self, condition=None, then=None, **lookups):
+         if lookups:
+             if condition is None:
+@@ -1064,6 +1082,18 @@ class Case(SQLiteNumericMixin, Expression):
+             ELSE 'zero'
+         END
+     """
++
++    def deconstruct(self):
++        path = 'django.db.models.Case'
++        args = [*self.cases]
++        kwargs = {}
++        if self.default is not None:
++            kwargs['default'] = self.default
++        if self.output_field is not None:
++            kwargs['output_field'] = self.output_field
++        if self.extra:
++            kwargs.update(self.extra)
++        return path, args, kwargs
+     template = 'CASE %(cases)s ELSE %(default)s END'
+     case_joiner = ' '
+ 
+@@ -1194,6 +1224,14 @@ class Exists(Subquery):
+     template = 'EXISTS(%(subquery)s)'
+     output_field = fields.BooleanField()
+ 
++    def deconstruct(self):
++        path = 'django.db.models.Exists'
++        args = [self.query]
++        kwargs = {}
++        if self.negated:
++            kwargs['negated'] = True
++        return path, args, kwargs
++
+     def __init__(self, queryset, negated=False, **kwargs):
+         self.negated = negated
+         super().__init__(queryset, **kwargs)
+@@ -1312,6 +1350,20 @@ class Window(SQLiteNumericMixin, Expression):
+     # Although the main expression may either be an aggregate or an
+     # expression with an aggregate function, the GROUP BY that will
+     # be introduced in the query as a result is not desired.
++
++    def deconstruct(self):
++        path = 'django.db.models.Window'
++        args = [self.source_expression]
++        kwargs = {}
++        if self.partition_by is not None:
++            kwargs['partition_by'] = self.partition_by
++        if self.order_by is not None:
++            kwargs['order_by'] = self.order_by
++        if self.frame is not None:
++            kwargs['frame'] = self.frame
++        if self.output_field is not None:
++            kwargs['output_field'] = self.output_field
++        return path, args, kwargs
+     contains_aggregate = False
+     contains_over_clause = True
+     filterable = False

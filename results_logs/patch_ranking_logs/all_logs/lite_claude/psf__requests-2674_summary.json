@@ -1,0 +1,96 @@
+{
+  "instance_id": "psf__requests-2674",
+  "container_id": "8f8a4f1010c49ad84d3ee785b0e7de064cd74699dcfc11f6420d56dcf77adc40",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_0.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_1.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_2.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_3.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_4.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_6.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_7.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_8.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_9.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/psf__requests-2674/dedup_patch_5.jsonl",
+        "inst": "psf__requests-2674",
+        "passed": 8,
+        "failed": 1
+      }
+    ],
+    "top_passed": 9,
+    "top_subset_size": 9
+  },
+  "reproduction": {
+    "test_requests.py::test_urllib3_retries#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "test_requests.py::test_urllib3_retries#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "test_requests.py::test_vendor_aliases#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "test_requests.py::test_urllib3_retries#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "test_requests.py::test_vendor_aliases#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "test_requests.py::test_vendor_aliases#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

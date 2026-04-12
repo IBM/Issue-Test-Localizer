@@ -1,0 +1,21 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a26bee7..3afa464 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -501,6 +501,16 @@ class SQLCompiler:
+                 if not getattr(features, 'supports_select_{}'.format(combinator)):
+                     raise NotSupportedError('{} is not supported on this database backend.'.format(combinator))
+                 result, params = self.get_combinator_sql(combinator, self.query.combinator_all)
++                # Wrap the combined query in a subquery if DISTINCT is used
++                if self.query.distinct:
++                    distinct_fields, distinct_params = self.get_distinct()
++                    if distinct_fields:
++                        distinct_result, distinct_params = self.connection.ops.distinct_sql(
++                            distinct_fields,
++                            distinct_params,
++                        )
++                        result = ['SELECT'] + distinct_result + ['FROM ({}) AS wrapped_query'.format(result[0])]
++                        params = distinct_params + params
+             else:
+                 distinct_fields, distinct_params = self.get_distinct()
+                 # This must come after 'select', 'ordering', and 'distinct'

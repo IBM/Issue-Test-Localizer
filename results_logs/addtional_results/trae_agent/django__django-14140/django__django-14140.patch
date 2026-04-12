@@ -1,0 +1,18 @@
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index ae0f886107..16a36ea3ae 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -87,7 +87,12 @@ class Q(tree.Node):
+         args, kwargs = (), {}
+         if len(self.children) == 1 and not isinstance(self.children[0], Q):
+             child = self.children[0]
+-            kwargs = {child[0]: child[1]}
++            # Check if the child is a tuple-like object with at least 2 items
++            if hasattr(child, '__getitem__') and len(child) >= 2:
++                kwargs = {child[0]: child[1]}
++            else:
++                # If not subscriptable or not a key-value pair, treat as a positional arg
++                args = (child,)
+         else:
+             args = tuple(self.children)
+             if self.connector != self.default:

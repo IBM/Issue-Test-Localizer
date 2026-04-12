@@ -1,0 +1,31 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14496",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_0.jsonl",
+    "repro_fixes": 1,
+    "repro_total_considered": 1,
+    "regression_passed": 6,
+    "occurrence": 39,
+    "normalized_occurrence": 40
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_0.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 6,
+        "occurrence": 39,
+        "normalized_occurrence": 40
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_1.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 6,
+        "occurrence": 1,
+        "normalized_occurrence": 40
+      }
+    ]
+  }
+}

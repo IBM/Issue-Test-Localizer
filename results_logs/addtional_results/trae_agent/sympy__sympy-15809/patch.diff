@@ -1,0 +1,83 @@
+diff --git a/sympy/functions/elementary/miscellaneous.py b/sympy/functions/elementary/miscellaneous.py
+index 5f9fe73c5..9fbf0263e 100644
+--- a/sympy/functions/elementary/miscellaneous.py
++++ b/sympy/functions/elementary/miscellaneous.py
+@@ -340,7 +340,7 @@ def real_root(arg, n=None, evaluate=None):
+ class MinMaxBase(Expr, LatticeOp):
+     def __new__(cls, *args, **assumptions):
+         if not args:
+-            raise ValueError("The Max/Min functions must have arguments.")
++            return cls.identity
+ 
+         args = (sympify(arg) for arg in args)
+ 
+@@ -652,6 +652,8 @@ class Max(MinMaxBase, Application):
+     When number of arguments is equal two, then
+     return, if possible, the value from (a, b) that is >= the other.
+ 
++    When number of arguments is zero, return negative infinity.
++
+     In common case, when the length of list greater than 2, the task
+     is more complicated. Return only the arguments, which are greater
+     than others, if it is possible to determine directional relation.
+@@ -675,6 +677,8 @@ class Max(MinMaxBase, Application):
+     >>> p = Symbol('p', positive=True)
+     >>> n = Symbol('n', negative=True)
+ 
++    >>> Max()
++    -oo
+     >>> Max(x, -2)                  #doctest: +SKIP
+     Max(x, -2)
+     >>> Max(x, -2).subs(x, 3)
+@@ -765,6 +769,9 @@ def _eval_is_negative(self):
+ class Min(MinMaxBase, Application):
+     """
+     Return, if possible, the minimum value of the list.
++    
++    When number of arguments is zero, return positive infinity.
++    
+     It is named ``Min`` and not ``min`` to avoid conflicts
+     with the built-in function ``min``.
+ 
+@@ -776,6 +783,8 @@ class Min(MinMaxBase, Application):
+     >>> p = Symbol('p', positive=True)
+     >>> n = Symbol('n', negative=True)
+ 
++    >>> Min()
++    oo
+     >>> Min(x, -2)                  #doctest: +SKIP
+     Min(x, -2)
+     >>> Min(x, -2).subs(x, 3)
+diff --git a/sympy/functions/elementary/tests/test_miscellaneous.py b/sympy/functions/elementary/tests/test_miscellaneous.py
+index 00dc94600..2bfc62ec3 100644
+--- a/sympy/functions/elementary/tests/test_miscellaneous.py
++++ b/sympy/functions/elementary/tests/test_miscellaneous.py
+@@ -28,6 +28,7 @@ def test_Min():
+     np_ = Symbol('np_', nonpositive=True)
+     r = Symbol('r', real=True)
+ 
++    assert Min() == S.Infinity
+     assert Min(5, 4) == 4
+     assert Min(-oo, -oo) == -oo
+     assert Min(-oo, n) == -oo
+@@ -85,7 +86,6 @@ def test_Min():
+     assert Min(p, p_).func is Min
+ 
+     # lists
+-    raises(ValueError, lambda: Min())
+     assert Min(x, y) == Min(y, x)
+     assert Min(x, y, z) == Min(z, y, x)
+     assert Min(x, Min(y, z)) == Min(z, y, x)
+@@ -152,11 +152,11 @@ def test_Max():
+     np_ = Symbol('np_', nonpositive=True)
+     r = Symbol('r', real=True)
+ 
++    assert Max() == S.NegativeInfinity
+     assert Max(5, 4) == 5
+ 
+     # lists
+ 
+-    raises(ValueError, lambda: Max())
+     assert Max(x, y) == Max(y, x)
+     assert Max(x, y, z) == Max(z, y, x)
+     assert Max(x, Max(y, z)) == Max(z, y, x)

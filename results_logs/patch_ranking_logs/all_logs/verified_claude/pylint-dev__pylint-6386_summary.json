@@ -1,0 +1,169 @@
+{
+  "instance_id": "pylint-dev__pylint-6386",
+  "container_id": "48aaca3d67a8c03288ed3d69510fc16ee73ff2b535554cc0ac4545468b17c083",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_0.jsonl",
+        "inst": "pylint-dev__pylint-6386",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_1.jsonl",
+        "inst": "pylint-dev__pylint-6386",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_2.jsonl",
+        "inst": "pylint-dev__pylint-6386",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_3.jsonl",
+        "inst": "pylint-dev__pylint-6386",
+        "passed": 2,
+        "failed": 1
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 4
+  },
+  "reproduction": {
+    "tests/test_self.py::TestCallbackOptions::test_short_verbose_option#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_self.py::TestCallbackOptions::test_verbose#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_self.py::TestCallbackOptions::test_verbose#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_self.py::TestCallbackOptions::test_short_verbose_option#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_self.py::TestCallbackOptions::test_verbose#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_self.py::TestCallbackOptions::test_verbose#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": false
+        }
+      ]
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-6386/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-6386",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,75 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 1f4c98284..2b6a8305c 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -1797,12 +1797,19 @@ class GenericAliasMixin(DataDocumenterMixinBase):
+                 super().should_suppress_directive_header())
+ 
+     def update_content(self, more_content: StringList) -> None:
++        # First call the parent's update_content to ensure docstrings are processed
++        super().update_content(more_content)
++        
++        # Only append 'alias of...' if we have a generic alias
+         if inspect.isgenericalias(self.object):
++            # Add a blank line if there's content and the last line isn't blank
++            if len(more_content) > 0 and more_content[-1]:
++                more_content.append('', '')
++            
++            # Add the 'alias of...' line
+             more_content.append(_('alias of %s') % restify(self.object), '')
+             more_content.append('', '')
+ 
+-        super().update_content(more_content)
+-
+ 
+ class NewTypeMixin(DataDocumenterMixinBase):
+     """
+@@ -1815,13 +1822,20 @@ class NewTypeMixin(DataDocumenterMixinBase):
+                 super().should_suppress_directive_header())
+ 
+     def update_content(self, more_content: StringList) -> None:
++        # First call the parent's update_content to ensure docstrings are processed
++        super().update_content(more_content)
++        
++        # Only append 'alias of...' if we have a NewType
+         if inspect.isNewType(self.object):
++            # Add a blank line if there's content and the last line isn't blank
++            if len(more_content) > 0 and more_content[-1]:
++                more_content.append('', '')
++            
++            # Add the 'alias of...' line
+             supertype = restify(self.object.__supertype__)
+             more_content.append(_('alias of %s') % supertype, '')
+             more_content.append('', '')
+ 
+-        super().update_content(more_content)
+-
+ 
+ class TypeVarMixin(DataDocumenterMixinBase):
+     """
+@@ -1848,7 +1862,16 @@ class TypeVarMixin(DataDocumenterMixinBase):
+             return super().get_doc()  # type: ignore
+ 
+     def update_content(self, more_content: StringList) -> None:
++        # First call the parent's update_content to ensure docstrings are processed
++        super().update_content(more_content)
++        
++        # Only append 'alias of...' if we have a TypeVar
+         if isinstance(self.object, TypeVar):
++            # Add a blank line if there's content and the last line isn't blank
++            if len(more_content) > 0 and more_content[-1]:
++                more_content.append('', '')
++            
++            # Add the 'alias of TypeVar...' line
+             attrs = [repr(self.object.__name__)]
+             for constraint in self.object.__constraints__:
+                 attrs.append(stringify_typehint(constraint))
+@@ -1862,8 +1885,6 @@ class TypeVarMixin(DataDocumenterMixinBase):
+             more_content.append(_('alias of TypeVar(%s)') % ", ".join(attrs), '')
+             more_content.append('', '')
+ 
+-        super().update_content(more_content)
+-
+ 
+ class UninitializedGlobalVariableMixin(DataDocumenterMixinBase):
+     """

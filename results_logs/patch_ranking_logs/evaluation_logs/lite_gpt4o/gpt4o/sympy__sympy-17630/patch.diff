@@ -1,0 +1,31 @@
+diff --git a/sympy/matrices/expressions/blockmatrix.py b/sympy/matrices/expressions/blockmatrix.py
+index 5a4ea29..3ac705d 100644
+--- a/sympy/matrices/expressions/blockmatrix.py
++++ b/sympy/matrices/expressions/blockmatrix.py
+@@ -162,9 +162,23 @@ class BlockMatrix(MatrixExpr):
+             and self.colblocksizes == other.colblocksizes)
+ 
+     def _blockmul(self, other):
+-        if (isinstance(other, BlockMatrix) and
+-                self.colblocksizes == other.rowblocksizes):
+-            return BlockMatrix(self.blocks*other.blocks)
++        if isinstance(other, BlockMatrix) and self.colblocksizes == other.rowblocksizes:
++            new_blocks = []
++            for i in range(self.blockshape[0]):
++                new_row = []
++                for j in range(other.blockshape[1]):
++                    sum_block = ZeroMatrix(self.rowblocksizes[i], other.colblocksizes[j])
++                    for k in range(self.blockshape[1]):
++                        prod_block = self.blocks[i, k] * other.blocks[k, j]
++                        if isinstance(prod_block, ZeroMatrix):
++                            continue
++                        if isinstance(sum_block, ZeroMatrix):
++                            sum_block = prod_block
++                        else:
++                            sum_block += prod_block
++                    new_row.append(sum_block)
++                new_blocks.append(new_row)
++            return BlockMatrix(new_blocks)
+ 
+         return self * other
+ 

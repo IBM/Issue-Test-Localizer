@@ -1,0 +1,633 @@
+{
+  "instance_id": "pytest-dev__pytest-6116",
+  "container_id": "d4d2d6fe4ac3c49d768b23e7e3eff2447df57d08ee9da4852e659e6258b1d91c",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+        "inst": "pytest-dev__pytest-6116",
+        "passed": 0,
+        "failed": 3
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 14
+  },
+  "reproduction": {
+    "testing/test_terminal.py::TestTerminal::test_collectonly_basic#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_parseopt.py::TestParser::test_collect_only_shortcut#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_terminal.py::test_collecterror#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_parseopt.py::TestParser::test_collect_only_shortcut#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_terminal.py::test_collecterror#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_terminal.py::test_collecterror#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_terminal.py::TestCollectonly::test_collectonly_shortcut#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_parseopt.py::TestParser::test_collect_only_shortcut#8": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_parseopt.py::TestParser::test_collect_only_shortcut#9": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    },
+    "testing/reproduce_bug_new.py#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-6116/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-6116",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

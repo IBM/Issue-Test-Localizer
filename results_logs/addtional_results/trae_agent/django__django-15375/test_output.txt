@@ -1,0 +1,1176 @@
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
++++++ dirname /opt/miniconda3/bin/conda
+++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1=
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   django/db/models/aggregates.py
+	modified:   django/db/models/sql/compiler.py
+	modified:   django/db/models/sql/query.py
+	modified:   django/db/models/sql/subqueries.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git show
+commit da0455dbb8e0933efb4d7289310ec5a7ee27b999
+Author: SWE-bench <setup@swebench.config>
+Date:   Wed Sep 10 12:39:21 2025 +0000
+
+    SWE-bench
++ git -c core.fileMode=false diff beb7ddbcee03270e833b2f74927ccfc8027aa693
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index 8c4eae7906..8836fc8329 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -60,12 +60,10 @@ class Aggregate(Func):
+                     before_resolved = self.get_source_expressions()[index]
+                     name = before_resolved.name if hasattr(before_resolved, 'name') else repr(before_resolved)
+                     raise FieldError("Cannot compute %s('%s'): '%s' is an aggregate" % (c.name, name, name))
+-        if (default := c.default) is None:
+-            return c
+-        if hasattr(default, 'resolve_expression'):
+-            default = default.resolve_expression(query, allow_joins, reuse, summarize)
+-        c.default = None  # Reset the default argument before wrapping.
+-        return Coalesce(c, default, output_field=c._output_field_or_none)
++        
++        # Store the default value but don't wrap with Coalesce
++        # This will be handled in the SQL generation
++        return c
+ 
+     @property
+     def default_alias(self):
+@@ -79,6 +77,8 @@ class Aggregate(Func):
+ 
+     def as_sql(self, compiler, connection, **extra_context):
+         extra_context['distinct'] = 'DISTINCT ' if self.distinct else ''
++        
++        # Handle filter clause
+         if self.filter:
+             if connection.features.supports_aggregate_filter_clause:
+                 filter_sql, filter_params = self.filter.as_sql(compiler, connection)
+@@ -87,15 +87,29 @@ class Aggregate(Func):
+                     compiler, connection, template=template, filter=filter_sql,
+                     **extra_context
+                 )
+-                return sql, (*params, *filter_params)
++                result_sql, result_params = sql, (*params, *filter_params)
+             else:
+                 copy = self.copy()
+                 copy.filter = None
+                 source_expressions = copy.get_source_expressions()
+                 condition = When(self.filter, then=source_expressions[0])
+                 copy.set_source_expressions([Case(condition)] + source_expressions[1:])
+-                return super(Aggregate, copy).as_sql(compiler, connection, **extra_context)
+-        return super().as_sql(compiler, connection, **extra_context)
++                result_sql, result_params = super(Aggregate, copy).as_sql(compiler, connection, **extra_context)
++        else:
++            result_sql, result_params = super().as_sql(compiler, connection, **extra_context)
++        
++        # Handle default value
++        if hasattr(self, 'default') and self.default is not None:
++            # Wrap the SQL with COALESCE to handle default values
++            if hasattr(self.default, 'as_sql'):
++                default_sql, default_params = compiler.compile(self.default)
++                result_sql = f'COALESCE({result_sql}, {default_sql})'
++                result_params = result_params + default_params
++            else:
++                result_sql = f'COALESCE({result_sql}, %s)'
++                result_params = result_params + (self.default,)
++                
++        return result_sql, result_params
+ 
+     def _get_repr_options(self):
+         options = super()._get_repr_options()
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index d405a203ee..e536aa26ea 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -10,6 +10,7 @@ from django.db.models.constants import LOOKUP_SEP
+ from django.db.models.expressions import F, OrderBy, RawSQL, Ref, Value
+ from django.db.models.functions import Cast, Random
+ from django.db.models.query_utils import select_related_descend
++import django.db.models.expressions
+ from django.db.models.sql.constants import (
+     CURSOR, GET_ITERATOR_CHUNK_SIZE, MULTI, NO_RESULTS, ORDER_DIR, SINGLE,
+ )
+@@ -1670,12 +1671,25 @@ class SQLAggregateCompiler(SQLCompiler):
+         Create the SQL for this query. Return the SQL string and list of
+         parameters.
+         """
++        # First, check if we have any aggregates with default values
++        has_default_aggregates = False
++        for annotation in self.query.annotation_select.values():
++            if hasattr(annotation, 'default') and annotation.default is not None:
++                has_default_aggregates = True
++                break
++                
++        # If we have aggregates with default values, we need to handle them specially
++        if has_default_aggregates:
++            return self._as_sql_with_default_aggregates()
++        
++        # Normal case
+         sql, params = [], []
+         for annotation in self.query.annotation_select.values():
+             ann_sql, ann_params = self.compile(annotation)
+             ann_sql, ann_params = annotation.select_format(self, ann_sql, ann_params)
+             sql.append(ann_sql)
+             params.extend(ann_params)
++            
+         self.col_count = len(self.query.annotation_select)
+         sql = ', '.join(sql)
+         params = tuple(params)
+@@ -1683,9 +1697,52 @@ class SQLAggregateCompiler(SQLCompiler):
+         inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+             self.using, elide_empty=self.elide_empty,
+         ).as_sql(with_col_aliases=True)
++        
++        # Make sure the inner query includes all necessary columns for aggregation
+         sql = 'SELECT %s FROM (%s) subquery' % (sql, inner_query_sql)
+         params = params + inner_query_params
+         return sql, params
++        
++    def _as_sql_with_default_aggregates(self):
++        """
++        Special case for aggregates with default values.
++        We need to ensure the inner query selects the fields needed for aggregation.
++        """
++        inner_query = self.query.inner_query
++        
++        # Make sure the inner query selects the fields needed for aggregation
++        inner_query_compiler = inner_query.get_compiler(self.using, elide_empty=self.elide_empty)
++        inner_query_sql, inner_query_params = inner_query_compiler.as_sql(with_col_aliases=True)
++        
++        # Generate the outer query that selects from the inner query
++        sql_parts = []
++        params = []
++        
++        for alias, annotation in self.query.annotation_select.items():
++            if hasattr(annotation, 'source_expressions') and annotation.source_expressions:
++                # Get the source field name
++                source_expr = annotation.source_expressions[0]
++                if hasattr(source_expr, 'name'):
++                    field_name = source_expr.name
++                    
++                    # Handle default value if present
++                    if hasattr(annotation, 'default') and annotation.default is not None:
++                        default_value = annotation.default
++                        sql_part = f'COALESCE(SUM("subquery"."{field_name}"), %s) AS {self.connection.ops.quote_name(alias)}'
++                        params.append(default_value)
++                    else:
++                        sql_part = f'SUM("subquery"."{field_name}") AS {self.connection.ops.quote_name(alias)}'
++                        
++                    sql_parts.append(sql_part)
++        
++        # If we didn't generate any SQL parts, use a placeholder
++        if not sql_parts:
++            sql_parts = ["1"]
++            
++        final_sql = f"SELECT {', '.join(sql_parts)} FROM ({inner_query_sql}) subquery"
++        final_params = tuple(params) + inner_query_params
++        
++        return final_sql, final_params
+ 
+ 
+ def cursor_iter(cursor, sentinel, col_count, itersize):
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index e3fdea6f3a..1e0a78e17b 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -423,6 +423,15 @@ class Query(BaseExpression):
+         """
+         if not self.annotation_select:
+             return {}
++            
++        # Extract aggregates with default values
++        default_aggregates = {}
++        for alias, annotation in list(self.annotations.items()):
++            if alias in added_aggregate_names and hasattr(annotation, 'default') and annotation.default is not None:
++                default_aggregates[alias] = annotation.default
++                # Replace the aggregate with one without default to avoid SQL generation issues
++                annotation.default = None
++                
+         existing_annotations = [
+             annotation for alias, annotation
+             in self.annotations.items()
+@@ -502,13 +511,30 @@ class Query(BaseExpression):
+         outer_query.select_related = False
+         compiler = outer_query.get_compiler(using, elide_empty=elide_empty)
+         result = compiler.execute_sql(SINGLE)
++        
++        # Apply default values for empty result sets
+         if result is None:
+             result = empty_set_result
++        else:
++            # Apply default values for aggregates with default values
++            result_dict = dict(zip(outer_query.annotation_select, result))
++            for alias, default_value in default_aggregates.items():
++                if alias in result_dict and result_dict[alias] is None:
++                    result_dict[alias] = default_value
++            # Convert back to a tuple in the same order as annotation_select
++            result = tuple(result_dict.get(alias) for alias in outer_query.annotation_select)
+ 
+         converters = compiler.get_converters(outer_query.annotation_select.values())
+         result = next(compiler.apply_converters((result,), converters))
+-
+-        return dict(zip(outer_query.annotation_select, result))
++        
++        result_dict = dict(zip(outer_query.annotation_select, result))
++        
++        # Apply default values for aggregates with default values
++        for alias, default_value in default_aggregates.items():
++            if alias in result_dict and result_dict[alias] is None:
++                result_dict[alias] = default_value
++                
++        return result_dict
+ 
+     def get_count(self, using):
+         """
+diff --git a/django/db/models/sql/subqueries.py b/django/db/models/sql/subqueries.py
+index f6a371a925..20d92d82ac 100644
+--- a/django/db/models/sql/subqueries.py
++++ b/django/db/models/sql/subqueries.py
+@@ -163,3 +163,17 @@ class AggregateQuery(Query):
+     def __init__(self, model, inner_query):
+         self.inner_query = inner_query
+         super().__init__(model)
++        
++    def get_compiler(self, using=None, connection=None, elide_empty=True):
++        """
++        Return a compiler instance for this AggregateQuery.
++        """
++        # Make sure we have at least one annotation
++        if not self.annotation_select and self.inner_query.annotation_select:
++            # Copy annotations from inner query if needed
++            for alias, annotation in self.inner_query.annotation_select.items():
++                if alias not in self.annotations:
++                    self.annotations[alias] = annotation
++                    self.annotation_select[alias] = annotation
++        
++        return super().get_compiler(using, connection, elide_empty)
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z x ']'
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1='(testbed) '
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=3
++++ CONDA_SHLVL=3
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=4
+++ CONDA_SHLVL=4
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_3=/opt/miniconda3
+++ CONDA_PREFIX_3=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python -m pip install -e .
+Obtaining file:///testbed
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: asgiref>=3.4.1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Django==4.1.dev20250910123921) (3.8.1)
+Requirement already satisfied: sqlparse>=0.2.2 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Django==4.1.dev20250910123921) (0.5.1)
+Requirement already satisfied: typing-extensions>=4 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from asgiref>=3.4.1->Django==4.1.dev20250910123921) (4.12.2)
+Building wheels for collected packages: Django
+  Building editable for Django (pyproject.toml): started
+  Building editable for Django (pyproject.toml): finished with status 'done'
+  Created wheel for Django: filename=django-4.1.dev20250910123921-0.editable-py3-none-any.whl size=26984 sha256=bc14a2c4df593938a526a4406e81eab83bdd1a1735c5bcb35ced0e25f902f326
+  Stored in directory: /tmp/pip-ephem-wheel-cache-vmpgqyyy/wheels/7d/66/67/70d1ee2124ccf21d601c352e25cdca10f611f7c8b3f9ffb9e4
+Successfully built Django
+Installing collected packages: Django
+  Attempting uninstall: Django
+    Found existing installation: Django 4.1.dev20220129180115
+    Uninstalling Django-4.1.dev20220129180115:
+      Successfully uninstalled Django-4.1.dev20220129180115
+Successfully installed Django-4.1.dev20250910123921
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
++ git checkout beb7ddbcee03270e833b2f74927ccfc8027aa693 tests/aggregation/tests.py
+Updated 0 paths from 56e88fea70
++ git apply -v -
+Checking patch tests/aggregation/tests.py...
+Applied patch tests/aggregation/tests.py cleanly.
++ : '>>>>> Start Test Output'
++ ./tests/runtests.py --verbosity 2 --settings=test_sqlite --parallel 1 aggregation.tests
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/testbed/django'
+Importing application aggregation
+Found 96 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_add_implementation (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_alias (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_annotation (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_in_order_by (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_join_transform (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_multi_join (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_over_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_over_complex_annotation (aggregation.tests.AggregateTestCase) ... ok
+test_aggregate_transform (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_after_annotation (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_compound_expression (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_expression (aggregation.tests.AggregateTestCase) ... test_aggregation_default_group_by (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_integer (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_not_in_aggregate (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_passed_another_aggregate (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_unset (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_unsupported_by_count (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_using_date_from_database (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_using_date_from_python (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_datetime_from_database (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_datetime_from_python (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_default_using_decimal_from_database (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_decimal_from_python (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_duration_from_database (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_duration_from_python (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_time_from_database (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_using_time_from_python (aggregation.tests.AggregateTestCase) ... ERROR
+test_aggregation_default_zero (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_exists_annotation (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_expressions (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_nested_subquery_outerref (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_order_by_not_selected_annotation_values (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_random_ordering (aggregation.tests.AggregateTestCase)
+Random() is not included in the GROUP BY when used for ordering. ... ok
+test_aggregation_subquery_annotation (aggregation.tests.AggregateTestCase)
+Subquery annotations are excluded from the GROUP BY if they are ... ok
+test_aggregation_subquery_annotation_exists (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_subquery_annotation_multivalued (aggregation.tests.AggregateTestCase)
+Subquery annotations must be included in the GROUP BY if they use ... ok
+test_aggregation_subquery_annotation_related_field (aggregation.tests.AggregateTestCase) ... ok
+test_aggregation_subquery_annotation_values (aggregation.tests.AggregateTestCase)
+Subquery annotations and external aliases are excluded from the GROUP ... ok
+test_aggregation_subquery_annotation_values_collision (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_basic (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_defer (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_defer_select_related (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_m2m (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_ordering (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_over_annotate (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_values (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_values_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_annotate_values_list (aggregation.tests.AggregateTestCase) ... ok
+test_annotated_aggregate_over_annotated_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_annotation (aggregation.tests.AggregateTestCase) ... ok
+test_annotation_expressions (aggregation.tests.AggregateTestCase) ... ok
+test_arguments_must_be_expressions (aggregation.tests.AggregateTestCase) ... ok
+test_avg_decimal_field (aggregation.tests.AggregateTestCase) ... ok
+test_avg_duration_field (aggregation.tests.AggregateTestCase) ... ok
+test_backwards_m2m_annotate (aggregation.tests.AggregateTestCase) ... ok
+test_coalesced_empty_result_set (aggregation.tests.AggregateTestCase) ... ok
+test_combine_different_types (aggregation.tests.AggregateTestCase) ... ok
+test_complex_aggregations_require_kwarg (aggregation.tests.AggregateTestCase) ... ok
+test_complex_values_aggregation (aggregation.tests.AggregateTestCase) ... ok
+test_count (aggregation.tests.AggregateTestCase) ... ok
+test_count_distinct_expression (aggregation.tests.AggregateTestCase) ... ok
+test_count_star (aggregation.tests.AggregateTestCase) ... ok
+test_dates_with_aggregation (aggregation.tests.AggregateTestCase)
+.dates() returns a distinct set of dates when applied to a ... ok
+test_decimal_max_digits_has_no_effect (aggregation.tests.AggregateTestCase) ... ok
+test_distinct_on_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_empty_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_empty_result_optimization (aggregation.tests.AggregateTestCase) ... ok
+test_even_more_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_exists_extra_where_with_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_exists_none_with_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_expression_on_aggregation (aggregation.tests.AggregateTestCase) ... ok
+test_filter_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_filter_in_subquery_or_aggregation (aggregation.tests.AggregateTestCase)
+Filtering against an aggregate requires the usage of the HAVING clause. ... ok
+test_filtering (aggregation.tests.AggregateTestCase) ... ok
+test_fkey_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_group_by_exists_annotation (aggregation.tests.AggregateTestCase)
+Exists annotations are included in the GROUP BY if they are ... ok
+test_group_by_subquery_annotation (aggregation.tests.AggregateTestCase)
+Subquery annotations are included in the GROUP BY if they are ... ok
+test_grouped_annotation_in_group_by (aggregation.tests.AggregateTestCase)
+An annotation included in values() before an aggregate should be ... ok
+test_more_aggregation (aggregation.tests.AggregateTestCase) ... ok
+test_multi_arg_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_multiple_aggregates (aggregation.tests.AggregateTestCase) ... ok
+test_non_grouped_annotation_not_in_group_by (aggregation.tests.AggregateTestCase)
+An annotation not included in values() before an aggregate should be ... ok
+test_nonaggregate_aggregation_throws (aggregation.tests.AggregateTestCase) ... ok
+test_nonfield_annotation (aggregation.tests.AggregateTestCase) ... ok
+test_order_of_precedence (aggregation.tests.AggregateTestCase) ... ok
+test_related_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_reverse_fkey_annotate (aggregation.tests.AggregateTestCase) ... ok
+test_single_aggregate (aggregation.tests.AggregateTestCase) ... ok
+test_sum_distinct_aggregate (aggregation.tests.AggregateTestCase)
+Sum on a distinct() QuerySet should aggregate only the distinct items. ... ok
+test_sum_duration_field (aggregation.tests.AggregateTestCase) ... ok
+test_ticket11881 (aggregation.tests.AggregateTestCase)
+Subqueries do not needlessly contain ORDER BY, SELECT FOR UPDATE or ... ok
+test_ticket12886 (aggregation.tests.AggregateTestCase)
+Aggregation over sliced queryset works correctly. ... ok
+test_ticket17424 (aggregation.tests.AggregateTestCase)
+Doing exclude() on a foreign model after annotate() doesn't crash. ... ok
+test_values_aggregation (aggregation.tests.AggregateTestCase) ... ok
+test_values_annotation_with_expression (aggregation.tests.AggregateTestCase) ... ok
+
+======================================================================
+ERROR: test_aggregation_default_compound_expression (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1497, in test_aggregation_default_compound_expression
+    self.assertSequenceEqual(queryset.values('name', 'rating'), [
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/unittest/case.py", line 1020, in assertSequenceEqual
+    difflib.ndiff(pprint.pformat(seq1).splitlines(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 58, in pformat
+    return PrettyPrinter(indent=indent, width=width, depth=depth,
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 153, in pformat
+    self._format(object, sio, 0, 0, {}, 0)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 170, in _format
+    rep = self._repr(object, context, level)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 431, in _repr
+    repr, readable, recursive = self.format(object, context.copy(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 444, in format
+    return _safe_repr(object, context, maxlevels, level, self._sort_dicts)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 596, in _safe_repr
+    rep = repr(object)
+  File "/testbed/django/db/models/query.py", line 257, in __repr__
+    data = list(self[:REPR_OUTPUT_SIZE + 1])
+  File "/testbed/django/db/models/query.py", line 281, in __iter__
+    self._fetch_all()
+  File "/testbed/django/db/models/query.py", line 1480, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/testbed/django/db/models/query.py", line 110, in __iter__
+    for row in compiler.results_iter(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size):
+  File "/testbed/django/db/models/sql/compiler.py", line 1172, in results_iter
+    results = self.execute_sql(MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size)
+  File "/testbed/django/db/models/sql/compiler.py", line 1204, in execute_sql
+    sql, params = self.as_sql()
+  File "/testbed/django/db/models/sql/compiler.py", line 544, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/testbed/django/db/models/sql/compiler.py", line 67, in pre_sql_setup
+    self.setup_query()
+  File "/testbed/django/db/models/sql/compiler.py", line 58, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/testbed/django/db/models/sql/compiler.py", line 275, in get_select
+    sql, params = self.compile(col)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/expressions.py", line 481, in as_sql
+    sql, params = compiler.compile(self.lhs)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/aggregates.py", line 110, in as_sql
+    result_params = result_params + (self.default,)
+TypeError: can only concatenate list (not "tuple") to list
+
+======================================================================
+ERROR: test_aggregation_default_expression (aggregation.tests.AggregateTestCase) [<class 'django.db.models.aggregates.Avg'>]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1478, in test_aggregation_default_expression
+    result = Author.objects.filter(age__gt=100).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/models/expressions.py", line 325, in <lambda>
+    return lambda value, expression, connection: None if value is None else float(value)
+TypeError: float() argument must be a string or a number, not 'CombinedExpression'
+
+======================================================================
+ERROR: test_aggregation_default_expression (aggregation.tests.AggregateTestCase) [<class 'django.db.models.aggregates.Max'>]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1478, in test_aggregation_default_expression
+    result = Author.objects.filter(age__gt=100).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/models/expressions.py", line 327, in <lambda>
+    return lambda value, expression, connection: None if value is None else int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'CombinedExpression'
+
+======================================================================
+ERROR: test_aggregation_default_expression (aggregation.tests.AggregateTestCase) [<class 'django.db.models.aggregates.Min'>]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1478, in test_aggregation_default_expression
+    result = Author.objects.filter(age__gt=100).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/models/expressions.py", line 327, in <lambda>
+    return lambda value, expression, connection: None if value is None else int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'CombinedExpression'
+
+======================================================================
+ERROR: test_aggregation_default_expression (aggregation.tests.AggregateTestCase) [<class 'django.db.models.aggregates.StdDev'>]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1478, in test_aggregation_default_expression
+    result = Author.objects.filter(age__gt=100).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/models/expressions.py", line 325, in <lambda>
+    return lambda value, expression, connection: None if value is None else float(value)
+TypeError: float() argument must be a string or a number, not 'CombinedExpression'
+
+======================================================================
+ERROR: test_aggregation_default_expression (aggregation.tests.AggregateTestCase) [<class 'django.db.models.aggregates.Sum'>]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1478, in test_aggregation_default_expression
+    result = Author.objects.filter(age__gt=100).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/models/expressions.py", line 327, in <lambda>
+    return lambda value, expression, connection: None if value is None else int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'CombinedExpression'
+
+======================================================================
+ERROR: test_aggregation_default_expression (aggregation.tests.AggregateTestCase) [<class 'django.db.models.aggregates.Variance'>]
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1478, in test_aggregation_default_expression
+    result = Author.objects.filter(age__gt=100).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/models/expressions.py", line 325, in <lambda>
+    return lambda value, expression, connection: None if value is None else float(value)
+TypeError: float() argument must be a string or a number, not 'CombinedExpression'
+
+======================================================================
+ERROR: test_aggregation_default_group_by (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1488, in test_aggregation_default_group_by
+    self.assertSequenceEqual(
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/unittest/case.py", line 1020, in assertSequenceEqual
+    difflib.ndiff(pprint.pformat(seq1).splitlines(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 58, in pformat
+    return PrettyPrinter(indent=indent, width=width, depth=depth,
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 153, in pformat
+    self._format(object, sio, 0, 0, {}, 0)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 170, in _format
+    rep = self._repr(object, context, level)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 431, in _repr
+    repr, readable, recursive = self.format(object, context.copy(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 444, in format
+    return _safe_repr(object, context, maxlevels, level, self._sort_dicts)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 596, in _safe_repr
+    rep = repr(object)
+  File "/testbed/django/db/models/query.py", line 257, in __repr__
+    data = list(self[:REPR_OUTPUT_SIZE + 1])
+  File "/testbed/django/db/models/query.py", line 281, in __iter__
+    self._fetch_all()
+  File "/testbed/django/db/models/query.py", line 1480, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/testbed/django/db/models/query.py", line 110, in __iter__
+    for row in compiler.results_iter(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size):
+  File "/testbed/django/db/models/sql/compiler.py", line 1172, in results_iter
+    results = self.execute_sql(MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size)
+  File "/testbed/django/db/models/sql/compiler.py", line 1204, in execute_sql
+    sql, params = self.as_sql()
+  File "/testbed/django/db/models/sql/compiler.py", line 544, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/testbed/django/db/models/sql/compiler.py", line 67, in pre_sql_setup
+    self.setup_query()
+  File "/testbed/django/db/models/sql/compiler.py", line 58, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/testbed/django/db/models/sql/compiler.py", line 275, in get_select
+    sql, params = self.compile(col)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/aggregates.py", line 110, in as_sql
+    result_params = result_params + (self.default,)
+TypeError: can only concatenate list (not "tuple") to list
+
+======================================================================
+ERROR: test_aggregation_default_not_in_aggregate (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1640, in test_aggregation_default_not_in_aggregate
+    result = Publisher.objects.annotate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 513, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/testbed/django/db/models/sql/compiler.py", line 1204, in execute_sql
+    sql, params = self.as_sql()
+  File "/testbed/django/db/models/sql/compiler.py", line 1697, in as_sql
+    inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+  File "/testbed/django/db/models/sql/compiler.py", line 544, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/testbed/django/db/models/sql/compiler.py", line 67, in pre_sql_setup
+    self.setup_query()
+  File "/testbed/django/db/models/sql/compiler.py", line 58, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/testbed/django/db/models/sql/compiler.py", line 275, in get_select
+    sql, params = self.compile(col)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/aggregates.py", line 110, in as_sql
+    result_params = result_params + (self.default,)
+TypeError: can only concatenate list (not "tuple") to list
+
+======================================================================
+ERROR: test_aggregation_default_passed_another_aggregate (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1628, in test_aggregation_default_passed_another_aggregate
+    result = Book.objects.aggregate(
+  File "/testbed/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/backends/sqlite3/operations.py", line 328, in converter
+    return create_decimal(value)
+TypeError: argument must be int or float
+
+======================================================================
+ERROR: test_aggregation_default_using_date_from_python (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1547, in test_aggregation_default_using_date_from_python
+    self.assertSequenceEqual(queryset.values('name', 'earliest_pubdate'), [
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/unittest/case.py", line 1020, in assertSequenceEqual
+    difflib.ndiff(pprint.pformat(seq1).splitlines(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 58, in pformat
+    return PrettyPrinter(indent=indent, width=width, depth=depth,
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 153, in pformat
+    self._format(object, sio, 0, 0, {}, 0)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 170, in _format
+    rep = self._repr(object, context, level)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 431, in _repr
+    repr, readable, recursive = self.format(object, context.copy(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 444, in format
+    return _safe_repr(object, context, maxlevels, level, self._sort_dicts)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 596, in _safe_repr
+    rep = repr(object)
+  File "/testbed/django/db/models/query.py", line 257, in __repr__
+    data = list(self[:REPR_OUTPUT_SIZE + 1])
+  File "/testbed/django/db/models/query.py", line 281, in __iter__
+    self._fetch_all()
+  File "/testbed/django/db/models/query.py", line 1480, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/testbed/django/db/models/query.py", line 110, in __iter__
+    for row in compiler.results_iter(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size):
+  File "/testbed/django/db/models/sql/compiler.py", line 1172, in results_iter
+    results = self.execute_sql(MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size)
+  File "/testbed/django/db/models/sql/compiler.py", line 1204, in execute_sql
+    sql, params = self.as_sql()
+  File "/testbed/django/db/models/sql/compiler.py", line 544, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/testbed/django/db/models/sql/compiler.py", line 67, in pre_sql_setup
+    self.setup_query()
+  File "/testbed/django/db/models/sql/compiler.py", line 58, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/testbed/django/db/models/sql/compiler.py", line 275, in get_select
+    sql, params = self.compile(col)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/aggregates.py", line 110, in as_sql
+    result_params = result_params + (self.default,)
+TypeError: can only concatenate list (not "tuple") to list
+
+======================================================================
+ERROR: test_aggregation_default_using_datetime_from_database (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1594, in test_aggregation_default_using_datetime_from_database
+    self.assertSequenceEqual(queryset.values('isbn', 'oldest_store_opening'), [
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/unittest/case.py", line 1020, in assertSequenceEqual
+    difflib.ndiff(pprint.pformat(seq1).splitlines(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 58, in pformat
+    return PrettyPrinter(indent=indent, width=width, depth=depth,
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 153, in pformat
+    self._format(object, sio, 0, 0, {}, 0)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 170, in _format
+    rep = self._repr(object, context, level)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 431, in _repr
+    repr, readable, recursive = self.format(object, context.copy(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 444, in format
+    return _safe_repr(object, context, maxlevels, level, self._sort_dicts)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 596, in _safe_repr
+    rep = repr(object)
+  File "/testbed/django/db/models/query.py", line 257, in __repr__
+    data = list(self[:REPR_OUTPUT_SIZE + 1])
+  File "/testbed/django/db/models/query.py", line 281, in __iter__
+    self._fetch_all()
+  File "/testbed/django/db/models/query.py", line 1480, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/testbed/django/db/models/query.py", line 110, in __iter__
+    for row in compiler.results_iter(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size):
+  File "/testbed/django/db/models/sql/compiler.py", line 1172, in results_iter
+    results = self.execute_sql(MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size)
+  File "/testbed/django/db/models/sql/compiler.py", line 1204, in execute_sql
+    sql, params = self.as_sql()
+  File "/testbed/django/db/models/sql/compiler.py", line 544, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/testbed/django/db/models/sql/compiler.py", line 67, in pre_sql_setup
+    self.setup_query()
+  File "/testbed/django/db/models/sql/compiler.py", line 58, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/testbed/django/db/models/sql/compiler.py", line 275, in get_select
+    sql, params = self.compile(col)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/aggregates.py", line 107, in as_sql
+    result_params = result_params + default_params
+TypeError: can only concatenate tuple (not "list") to tuple
+
+======================================================================
+ERROR: test_aggregation_default_using_decimal_from_database (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1622, in test_aggregation_default_using_decimal_from_database
+    result = Book.objects.filter(rating__lt=3.0).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/backends/sqlite3/operations.py", line 328, in converter
+    return create_decimal(value)
+TypeError: argument must be int or float
+
+======================================================================
+ERROR: test_aggregation_default_using_decimal_from_python (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1616, in test_aggregation_default_using_decimal_from_python
+    result = Book.objects.filter(rating__lt=3.0).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/backends/sqlite3/operations.py", line 328, in converter
+    return create_decimal(value)
+TypeError: argument must be int or float
+
+======================================================================
+ERROR: test_aggregation_default_using_duration_from_database (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1610, in test_aggregation_default_using_duration_from_database
+    result = Publisher.objects.filter(num_awards__gt=3).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/backends/base/operations.py", line 603, in convert_durationfield_value
+    return datetime.timedelta(0, 0, value)
+TypeError: unsupported type for timedelta microseconds component: CombinedExpression
+
+======================================================================
+ERROR: test_aggregation_default_using_duration_from_python (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1604, in test_aggregation_default_using_duration_from_python
+    result = Publisher.objects.filter(num_awards__gt=3).aggregate(
+  File "/testbed/django/db/models/query.py", line 432, in aggregate
+    return query.get_aggregation(self.db, kwargs)
+  File "/testbed/django/db/models/sql/query.py", line 528, in get_aggregation
+    result = next(compiler.apply_converters((result,), converters))
+  File "/testbed/django/db/models/sql/compiler.py", line 1164, in apply_converters
+    value = converter(value, expression, connection)
+  File "/testbed/django/db/backends/base/operations.py", line 603, in convert_durationfield_value
+    return datetime.timedelta(0, 0, value)
+TypeError: unsupported type for timedelta microseconds component: datetime.timedelta
+
+======================================================================
+ERROR: test_aggregation_default_using_time_from_database (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1532, in test_aggregation_default_using_time_from_database
+    self.assertSequenceEqual(queryset.values('isbn', 'oldest_store_opening'), [
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/unittest/case.py", line 1020, in assertSequenceEqual
+    difflib.ndiff(pprint.pformat(seq1).splitlines(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 58, in pformat
+    return PrettyPrinter(indent=indent, width=width, depth=depth,
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 153, in pformat
+    self._format(object, sio, 0, 0, {}, 0)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 170, in _format
+    rep = self._repr(object, context, level)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 431, in _repr
+    repr, readable, recursive = self.format(object, context.copy(),
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 444, in format
+    return _safe_repr(object, context, maxlevels, level, self._sort_dicts)
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/pprint.py", line 596, in _safe_repr
+    rep = repr(object)
+  File "/testbed/django/db/models/query.py", line 257, in __repr__
+    data = list(self[:REPR_OUTPUT_SIZE + 1])
+  File "/testbed/django/db/models/query.py", line 281, in __iter__
+    self._fetch_all()
+  File "/testbed/django/db/models/query.py", line 1480, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/testbed/django/db/models/query.py", line 110, in __iter__
+    for row in compiler.results_iter(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size):
+  File "/testbed/django/db/models/sql/compiler.py", line 1172, in results_iter
+    results = self.execute_sql(MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size)
+  File "/testbed/django/db/models/sql/compiler.py", line 1204, in execute_sql
+    sql, params = self.as_sql()
+  File "/testbed/django/db/models/sql/compiler.py", line 544, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup()
+  File "/testbed/django/db/models/sql/compiler.py", line 67, in pre_sql_setup
+    self.setup_query()
+  File "/testbed/django/db/models/sql/compiler.py", line 58, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select()
+  File "/testbed/django/db/models/sql/compiler.py", line 275, in get_select
+    sql, params = self.compile(col)
+  File "/testbed/django/db/models/sql/compiler.py", line 469, in compile
+    sql, params = vendor_impl(self, self.connection)
+  File "/testbed/django/db/models/expressions.py", line 24, in as_sqlite
+    sql, params = self.as_sql(compiler, connection, **extra_context)
+  File "/testbed/django/db/models/aggregates.py", line 107, in as_sql
+    result_params = result_params + default_params
+TypeError: can only concatenate tuple (not "list") to tuple
+
+======================================================================
+ERROR: test_aggregation_default_using_time_from_python (aggregation.tests.AggregateTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/django/db/backends/utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "/testbed/django/db/backends/sqlite3/base.py", line 334, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.InterfaceError: Error binding parameter 1 - probably unsupported type.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/testbed/tests/aggregation/tests.py", line 1515, in test_aggregation_default_using_time_from_python
+    self.assertSequenceEqual(queryset.values('isbn', 'oldest_store_opening'), [
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/unittest/case.py", line 955, in assertSequenceEqual
+    len1 = len(seq1)
+  File "/testbed/django/db/models/query.py", line 263, in __len__
+    self._fetch_all()
+  File "/testbed/django/db/models/query.py", line 1480, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/testbed/django/db/models/query.py", line 110, in __iter__
+    for row in compiler.results_iter(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size):
+  File "/testbed/django/db/models/sql/compiler.py", line 1172, in results_iter
+    results = self.execute_sql(MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size)
+  File "/testbed/django/db/models/sql/compiler.py", line 1217, in execute_sql
+    cursor.execute(sql, params)
+  File "/testbed/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/testbed/django/db/backends/utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/testbed/django/db/backends/utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "/testbed/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/testbed/django/db/backends/utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "/testbed/django/db/backends/sqlite3/base.py", line 334, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.InterfaceError: Error binding parameter 1 - probably unsupported type.
+
+----------------------------------------------------------------------
+Ran 96 tests in 0.135s
+
+FAILED (errors=18)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
++ : '>>>>> End Test Output'
++ git checkout beb7ddbcee03270e833b2f74927ccfc8027aa693 tests/aggregation/tests.py
+Updated 1 path from 56e88fea70

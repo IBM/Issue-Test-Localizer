@@ -1,0 +1,26 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 43e675a..4496d5d 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -19,6 +19,7 @@ from django.core.checks import Error, Warning
+ from django.core.checks.urls import check_resolver
+ from django.core.exceptions import ImproperlyConfigured, ViewDoesNotExist
+ from django.utils.datastructures import MultiValueDict
++import functools
+ from django.utils.functional import cached_property
+ from django.utils.http import RFC3986_SUBDELIMS, escape_leading_slashes
+ from django.utils.regex_helper import _lazy_re_compile, normalize
+@@ -45,7 +46,12 @@ class ResolverMatch:
+         self.namespaces = [x for x in namespaces if x] if namespaces else []
+         self.namespace = ':'.join(self.namespaces)
+ 
+-        if not hasattr(func, '__name__'):
++        if isinstance(func, functools.partial):
++            self._func_path = (
++                func.func.__module__ + '.' + func.func.__name__
++                + repr(func.args) + repr(func.keywords)
++            )
++        elif not hasattr(func, '__name__'):
+             # A class-based view
+             self._func_path = func.__class__.__module__ + '.' + func.__class__.__name__
+         else:

@@ -1,0 +1,53 @@
+diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
+index c268a56724..dfab03dd72 100644
+--- a/lib/matplotlib/__init__.py
++++ b/lib/matplotlib/__init__.py
+@@ -673,8 +673,46 @@ class RcParams(MutableMapping, dict):
+         elif key == "backend" and self is globals().get("rcParams"):
+             val = dict.__getitem__(self, key)
+             if val is rcsetup._auto_backend_sentinel:
+-                from matplotlib import pyplot as plt
+-                plt.switch_backend(rcsetup._auto_backend_sentinel)
++                # Resolve the auto backend sentinel without closing figures
++                from matplotlib import cbook
++                current_framework = cbook._get_running_interactive_framework()
++                mapping = {'qt': 'qtagg',
++                           'gtk3': 'gtk3agg',
++                           'gtk4': 'gtk4agg',
++                           'wx': 'wxagg',
++                           'tk': 'tkagg',
++                           'macosx': 'macosx',
++                           'headless': 'agg'}
++
++                best_guess = mapping.get(current_framework, None)
++                if best_guess is not None:
++                    candidates = [best_guess]
++                else:
++                    candidates = []
++                candidates += [
++                    "macosx", "qtagg", "gtk4agg", "gtk3agg", "tkagg", "wxagg"]
++
++                # Try to find a working backend without switching
++                resolved_backend = None
++                for candidate in candidates:
++                    try:
++                        import importlib
++                        backend_mod = importlib.import_module(
++                            cbook._backend_module_name(candidate))
++                        # If we can import it, it should work
++                        resolved_backend = candidate
++                        break
++                    except ImportError:
++                        continue
++                
++                if resolved_backend is None:
++                    # Fall back to agg which should always work
++                    resolved_backend = "agg"
++                
++                # Set the resolved backend directly without calling switch_backend
++                dict.__setitem__(self, "backend", resolved_backend)
++                # Also update rcParamsOrig so it's consistent
++                dict.__setitem__(globals().get("rcParamsOrig", {}), "backend", resolved_backend)
+ 
+         return dict.__getitem__(self, key)
+ 

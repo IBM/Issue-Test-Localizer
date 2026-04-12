@@ -1,0 +1,26 @@
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 0ddba33..0ab788f 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -821,17 +821,12 @@ class PrettyPrinter(Printer):
+     def _print_MatAdd(self, expr):
+         s = None
+         for item in expr.args:
+-            pform = self._print(item)
+             if s is None:
+-                s = pform     # First element
++                s = self._print(item)     # First element
+             else:
+-                if S(item.args[0]).is_negative:
+-                    s = prettyForm(*stringPict.next(s, ' '))
+-                    pform = self._print(item)
+-                else:
+-                    s = prettyForm(*stringPict.next(s, ' + '))
+-                s = prettyForm(*stringPict.next(s, pform))
+-
++                # Always use + between terms, let the term's printing handle negatives
++                s = prettyForm(*stringPict.next(s, ' + '))
++                s = prettyForm(*stringPict.next(s, self._print(item)))
+         return s
+ 
+     def _print_MatMul(self, expr):

@@ -1,0 +1,29 @@
+diff --git a/sympy/printing/lambdarepr.py b/sympy/printing/lambdarepr.py
+index b9227d8d7a..dc20cf5e80 100644
+--- a/sympy/printing/lambdarepr.py
++++ b/sympy/printing/lambdarepr.py
+@@ -24,6 +24,11 @@ class LambdaPrinter(PythonCodePrinter):
+     """
+     printmethod = "_lambdacode"
+ 
++    def _print_tuple(self, expr):
++        if len(expr) == 1:
++            return "(%s,)" % self._print(expr[0])
++        else:
++            return "(%s)" % self.stringify(expr, ", ")
+ 
+     def _print_And(self, expr):
+         result = ['(']
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index da67263b19..f3148e308e 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -959,6 +959,8 @@ def _recursive_to_string(doprint, arg):
+             left, right = "[]"
+         elif isinstance(arg, tuple):
+             left, right = "()"
++            if len(arg) == 1:
++                return left + _recursive_to_string(doprint, arg[0]) + "," + right
+         else:
+             raise NotImplementedError("unhandled type: %s, %s" % (type(arg), arg))
+         return left +', '.join(_recursive_to_string(doprint, e) for e in arg) + right

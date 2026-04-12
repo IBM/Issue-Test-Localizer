@@ -1,0 +1,44 @@
+diff --git a/sphinx/util/inspect.py b/sphinx/util/inspect.py
+index 15f0d66e2..5afcbc818 100644
+--- a/sphinx/util/inspect.py
++++ b/sphinx/util/inspect.py
+@@ -521,14 +521,35 @@ def signature_from_str(signature: str) -> inspect.Signature:
+     params = []
+ 
+     if hasattr(args, "posonlyargs"):
+-        for arg in args.posonlyargs:  # type: ignore
++        # In Python, default values are assigned from right to left
++        # for all positional parameters (both positional-only and positional-or-keyword)
++        # We need to determine which positional-only parameters have default values
++        
++        # Total number of positional parameters (positional-only + regular positional)
++        total_positional = len(args.posonlyargs) + len(args.args)
++        
++        for i, arg in enumerate(args.posonlyargs):  # type: ignore
++            # Check if this positional-only parameter has a default value
++            pos_from_right = total_positional - i
++            if pos_from_right <= len(args.defaults):
++                default_index = len(args.defaults) - pos_from_right
++                default = ast_unparse(args.defaults[default_index])
++            else:
++                default = Parameter.empty
++                
+             annotation = ast_unparse(arg.annotation) or Parameter.empty
+             params.append(Parameter(arg.arg, Parameter.POSITIONAL_ONLY,
+-                                    annotation=annotation))
++                                    default=default, annotation=annotation))
+ 
++    # Total number of positional parameters (positional-only + regular positional)
++    total_positional = len(getattr(args, "posonlyargs", [])) + len(args.args)
++    
+     for i, arg in enumerate(args.args):
+-        if len(args.args) - i <= len(args.defaults):
+-            default = ast_unparse(args.defaults[-len(args.args) + i])
++        # Calculate position from right among all positional parameters
++        pos_from_right = len(args.args) - i
++        if pos_from_right <= len(args.defaults):
++            default_index = len(args.defaults) - pos_from_right
++            default = ast_unparse(args.defaults[default_index])
+         else:
+             default = Parameter.empty
+ 

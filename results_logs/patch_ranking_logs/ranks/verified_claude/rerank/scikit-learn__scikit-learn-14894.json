@@ -1,0 +1,55 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14894",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14894/dedup_patch_0.jsonl",
+    "repro_fixes": 7,
+    "repro_total_considered": 7,
+    "regression_passed": 4,
+    "occurrence": 1,
+    "normalized_occurrence": 9
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14894/dedup_patch_3.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 7,
+        "regression_passed": 4,
+        "occurrence": 3,
+        "normalized_occurrence": 9
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14894/dedup_patch_0.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 7,
+        "regression_passed": 4,
+        "occurrence": 1,
+        "normalized_occurrence": 9
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14894/dedup_patch_1.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 7,
+        "regression_passed": 4,
+        "occurrence": 1,
+        "normalized_occurrence": 9
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14894/dedup_patch_2.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 7,
+        "regression_passed": 4,
+        "occurrence": 4,
+        "normalized_occurrence": 9
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14894/dedup_patch_4.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 7,
+        "regression_passed": 4,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 6f6ac51..28062f8 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -429,7 +429,7 @@ class LatexPrinter(Printer):
+                         tex += r"\frac{%s}{%s}%s%s" \
+                             % (convert(a), sdenom, separator, convert(b))
+                 else:
+-                    tex += r"\frac{1}{%s}%s%s" % (sdenom, separator, snumer)
++                    tex += r"\frac{%s}{%s}" % (snumer, sdenom)
+             else:
+                 tex += r"\frac{%s}{%s}" % (snumer, sdenom)
+ 

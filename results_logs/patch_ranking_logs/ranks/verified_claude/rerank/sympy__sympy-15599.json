@@ -1,0 +1,47 @@
+{
+  "instance_id": "sympy__sympy-15599",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15599/dedup_patch_3.jsonl",
+    "repro_fixes": 0,
+    "repro_total_considered": 5,
+    "regression_passed": 2,
+    "occurrence": 10,
+    "normalized_occurrence": 29
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15599/dedup_patch_3.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 2,
+        "occurrence": 10,
+        "normalized_occurrence": 29
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15599/dedup_patch_1.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 2,
+        "occurrence": 1,
+        "normalized_occurrence": 29
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15599/dedup_patch_2.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 2,
+        "occurrence": 18,
+        "normalized_occurrence": 29
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15599/dedup_patch_0.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 2,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

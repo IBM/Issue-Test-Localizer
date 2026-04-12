@@ -1,0 +1,43 @@
+diff --git a/sklearn/decomposition/kernel_pca.py b/sklearn/decomposition/kernel_pca.py
+index bb91d0cbb..a1e547181 100644
+--- a/sklearn/decomposition/kernel_pca.py
++++ b/sklearn/decomposition/kernel_pca.py
+@@ -15,6 +15,28 @@ from ..preprocessing import KernelCenterer
+ from ..metrics.pairwise import pairwise_kernels
+ 
+ 
++def _deterministic_vector_sign_flip(vectors):
++    """Modify the sign of vectors for reproducible output
++    
++    Flips the sign of the vector elements such that the largest absolute 
++    value of each vector is always positive.
++    
++    Parameters
++    ----------
++    vectors : ndarray, shape (n_features, n_vectors)
++        Vectors to flip
++        
++    Returns
++    -------
++    vectors : ndarray, shape (n_features, n_vectors)
++        Vectors with deterministic signs
++    """
++    max_abs_rows = np.argmax(np.abs(vectors), axis=0)
++    signs = np.sign(vectors[max_abs_rows, range(vectors.shape[1])])
++    vectors *= signs
++    return vectors
++
++
+ class KernelPCA(BaseEstimator, TransformerMixin, _UnstableOn32BitMixin):
+     """Kernel Principal component analysis (KPCA)
+ 
+@@ -215,6 +237,9 @@ class KernelPCA(BaseEstimator, TransformerMixin, _UnstableOn32BitMixin):
+         self.lambdas_ = self.lambdas_[indices]
+         self.alphas_ = self.alphas_[:, indices]
+ 
++        # flip eigenvectors' sign to enforce deterministic output
++        self.alphas_ = _deterministic_vector_sign_flip(self.alphas_)
++
+         # remove eigenvectors with a zero eigenvalue
+         if self.remove_zero_eig or self.n_components is None:
+             self.alphas_ = self.alphas_[:, self.lambdas_ > 0]

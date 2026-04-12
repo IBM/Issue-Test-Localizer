@@ -1,0 +1,342 @@
+diff --git a/debug_backward.py b/debug_backward.py
+new file mode 100644
+index 0000000000..e02bf233ec
+--- /dev/null
++++ b/debug_backward.py
+@@ -0,0 +1,96 @@
++#!/usr/bin/env python
++"""
++Debug script to understand the backward operation behavior.
++"""
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import connection, models
++from django.db.migrations.operations.models import RenameIndex
++from django.db.migrations.state import ProjectState, ModelState
++
++
++def debug_backward_operation():
++    """Debug the backward operation to understand state changes."""
++    print("Debugging backward operation...")
++    
++    app_label = "test_app"
++    model_name = "TestModel"
++    
++    # Create a model state with index_together
++    model_state = ModelState(
++        app_label,
++        model_name,
++        [
++            ("id", models.AutoField(primary_key=True)),
++            ("weight", models.IntegerField()),
++            ("pink", models.BooleanField()),
++        ],
++        {
++            "index_together": [("weight", "pink")],
++        }
++    )
++    
++    project_state = ProjectState()
++    project_state.add_model(model_state)
++    
++    # Create the RenameIndex operation for unnamed index
++    operation = RenameIndex(
++        model_name, 
++        new_name="new_test_idx", 
++        old_fields=("weight", "pink")
++    )
++    
++    # Apply forward operation
++    print("\n1. Forward operation:")
++    new_state = project_state.clone()
++    operation.state_forwards(app_label, new_state)
++    
++    original_model = project_state.models[app_label, model_name.lower()]
++    forward_model = new_state.models[app_label, model_name.lower()]
++    
++    print(f"   Original index_together: {original_model.options.get('index_together', [])}")
++    print(f"   Forward index_together: {forward_model.options.get('index_together', [])}")
++    print(f"   Forward indexes: {[idx.name for idx in forward_model.options.get('indexes', [])]}")
++    
++    # Now let's debug what happens in database_backwards
++    print("\n2. Backward operation debug:")
++    print(f"   from_state (new_state) index_together: {forward_model.options.get('index_together', [])}")
++    print(f"   to_state (project_state) index_together: {original_model.options.get('index_together', [])}")
++    
++    # The issue might be that we're comparing the wrong things
++    # Let's see what the model._meta.index_together would be
++    print("\n3. What would model._meta.index_together be?")
++    print("   In a real scenario, model._meta would reflect the current database state")
++    print("   After forward operation, model._meta.index_together would be empty")
++    print("   After backward operation, model._meta.index_together should be restored")
++    
++    print("\n4. The fix should:")
++    print("   - Remove the named index (this is working)")
++    print("   - Restore the index_together constraint")
++    print("   - The comparison should be: current_empty_set vs target_index_together")
++
++
++if __name__ == "__main__":
++    debug_backward_operation()
+\ No newline at end of file
+diff --git a/debug_detailed.py b/debug_detailed.py
+new file mode 100644
+index 0000000000..2369917ed6
+--- /dev/null
++++ b/debug_detailed.py
+@@ -0,0 +1,107 @@
++#!/usr/bin/env python
++"""
++Detailed debug script to understand the model state during backward operation.
++"""
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import connection, models
++from django.db.migrations.operations.models import RenameIndex
++from django.db.migrations.state import ProjectState, ModelState
++from django.apps import apps
++
++
++# We'll work with model states only
++
++
++def debug_model_meta():
++    """Debug what happens to model._meta during operations."""
++    print("Debugging model._meta during operations...")
++    
++    app_label = "test_app"
++    model_name = "TestModel"
++    
++    # Create a model state with index_together
++    model_state = ModelState(
++        app_label,
++        model_name,
++        [
++            ("id", models.AutoField(primary_key=True)),
++            ("weight", models.IntegerField()),
++            ("pink", models.BooleanField()),
++        ],
++        {
++            "index_together": [("weight", "pink")],
++        }
++    )
++    
++    project_state = ProjectState()
++    project_state.add_model(model_state)
++    
++    # Apply forward operation
++    print("\n1. Forward operation:")
++    new_state = project_state.clone()
++    operation = RenameIndex(
++        model_name, 
++        new_name="new_test_idx", 
++        old_fields=("weight", "pink")
++    )
++    operation.state_forwards(app_label, new_state)
++    
++    # Get the models from states
++    original_model_state = project_state.models[app_label, model_name.lower()]
++    forward_model_state = new_state.models[app_label, model_name.lower()]
++    
++    print(f"   Original model state index_together: {original_model_state.options.get('index_together', [])}")
++    print(f"   Forward model state index_together: {forward_model_state.options.get('index_together', [])}")
++    
++    # Now let's see what happens when we get the actual model from the apps
++    print("\n2. Getting models from apps:")
++    try:
++        original_model = project_state.apps.get_model(app_label, model_name)
++        print(f"   Original model._meta.index_together: {getattr(original_model._meta, 'index_together', [])}")
++    except Exception as e:
++        print(f"   Error getting original model: {e}")
++    
++    try:
++        forward_model = new_state.apps.get_model(app_label, model_name)
++        print(f"   Forward model._meta.index_together: {getattr(forward_model._meta, 'index_together', [])}")
++    except Exception as e:
++        print(f"   Error getting forward model: {e}")
++    
++    print("\n3. The issue:")
++    print("   In database_backwards, we use to_state.apps.get_model() to get the model")
++    print("   This model reflects the target state (with index_together)")
++    print("   But model._meta.index_together reflects the current database state (without index_together)")
++    print("   So the comparison might be wrong")
++    
++    print("\n4. Let's simulate the backward operation:")
++    print("   from_state: forward_model_state (has named index, no index_together)")
++    print("   to_state: original_model_state (has index_together, no named index)")
++    print("   model = to_state.apps.get_model() -> should have index_together in _meta")
++    print("   But in reality, the database still has the named index and no index_together")
++
++
++if __name__ == "__main__":
++    debug_model_meta()
+\ No newline at end of file
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index d17232e4ec..0c169e6c01 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -967,7 +967,25 @@ class RenameIndex(IndexOperation):
+ 
+     def database_backwards(self, app_label, schema_editor, from_state, to_state):
+         if self.old_fields:
+-            # Backward operation with unnamed index is a no-op.
++            # Restore the old auto-generated name when an unnamed index is moving backward.
++            model = to_state.apps.get_model(app_label, self.model_name)
++            if not self.allow_migrate_model(schema_editor.connection.alias, model):
++                return
++
++            # Remove the named index
++            from_model_state = from_state.models[app_label, self.model_name_lower]
++            named_index = from_model_state.get_index_by_name(self.new_name)
++            schema_editor.remove_index(model, named_index)
++
++            # Restore the index_together
++            from_model_state = from_state.models[app_label, self.model_name_lower]
++            to_model_state = to_state.models[app_label, self.model_name_lower]
++            old_index_together = from_model_state.options.get("index_together", [])
++            new_index_together = to_model_state.options.get("index_together", [])
++            if old_index_together != new_index_together:
++                schema_editor.alter_index_together(
++                    model, old_index_together, new_index_together
++                )
+             return
+ 
+         self.new_name_lower, self.old_name_lower = (
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 0000000000..610fd9dac0
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,87 @@
++#!/usr/bin/env python
++"""
++Script to reproduce the RenameIndex issue with unnamed indexes.
++"""
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import connection, models
++from django.db.migrations.operations.models import RenameIndex
++from django.db.migrations.state import ProjectState, ModelState
++
++def test_rename_index_issue():
++    """Test the RenameIndex issue with unnamed indexes."""
++    print("Testing RenameIndex issue with unnamed indexes...")
++    
++    app_label = "test_app"
++    
++    # Create a simple model state with index_together
++    model_state = ModelState(
++        app_label,
++        "TestModel",
++        [
++            ("id", models.AutoField(primary_key=True)),
++            ("weight", models.IntegerField()),
++            ("pink", models.BooleanField()),
++        ],
++        {
++            "index_together": [("weight", "pink")],
++        }
++    )
++    
++    project_state = ProjectState()
++    project_state.add_model(model_state)
++    
++    # Create the RenameIndex operation for unnamed index
++    operation = RenameIndex(
++        "TestModel", 
++        new_name="new_test_idx", 
++        old_fields=("weight", "pink")
++    )
++    
++    print(f"Operation: {operation.describe()}")
++    
++    # Test forward state operation
++    new_state = project_state.clone()
++    operation.state_forwards(app_label, new_state)
++    print("Forward state operation completed")
++    
++    # Check the state changes
++    original_model = project_state.models[app_label, "testmodel"]
++    new_model = new_state.models[app_label, "testmodel"]
++    
++    print(f"Original model options: {original_model.options}")
++    print(f"New model options: {new_model.options}")
++    print(f"New model indexes: {[idx.name for idx in new_model.options.get('indexes', [])]}")
++    
++    # The issue: database_backwards is a no-op for old_fields
++    # but state_forwards modifies the state
++    print("\nIssue analysis:")
++    print("- database_backwards() returns early for old_fields (line 971)")
++    print("- but state_forwards() still modifies state by adding index and removing index_together")
++    print("- This creates inconsistency between state and database")
++    print("- Re-applying forward operation would fail because index already exists in DB")
++
++if __name__ == "__main__":
++    test_rename_index_issue()
+\ No newline at end of file

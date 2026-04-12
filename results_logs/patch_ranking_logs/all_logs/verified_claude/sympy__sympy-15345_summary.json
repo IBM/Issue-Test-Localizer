@@ -1,0 +1,108 @@
+{
+  "instance_id": "sympy__sympy-15345",
+  "container_id": "47d65f933dd5da6b7849e74519e3fe035ec713c76bda482e54f30a1a3e9bb2ed",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_10.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_11.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_5.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_6.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_7.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_8.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-15345/dedup_patch_9.jsonl",
+        "inst": "sympy__sympy-15345",
+        "passed": 7,
+        "failed": 0
+      }
+    ],
+    "top_passed": 7,
+    "top_subset_size": 12
+  },
+  "reproduction": {
+    "sympy/printing/tests/test_mathematica.py::test_Sum#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/printing/tests/test_mathematica.py::test_Function#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/printing/tests/test_mathematica.py::test_Function#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/printing/tests/test_mathematica.py::test_Function#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/printing/tests/test_mathematica.py::test_Rational#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/printing/tests/test_mathematica.py::test_Rational#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

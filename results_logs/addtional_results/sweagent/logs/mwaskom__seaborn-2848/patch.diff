@@ -1,0 +1,43 @@
+diff --git a/seaborn/_oldcore.py b/seaborn/_oldcore.py
+index c9218c1f..6191cf17 100644
+--- a/seaborn/_oldcore.py
++++ b/seaborn/_oldcore.py
+@@ -154,9 +154,20 @@ class HueMapping(SemanticMapping):
+             try:
+                 normed = self.norm(key)
+             except TypeError as err:
+-                if np.isnan(key):
++                # Check if key is NaN (for numeric data) or if it's a categorical
++                # value not in hue_order (for categorical data)
++                try:
++                    is_nan = np.isnan(key)
++                except (TypeError, ValueError):
++                    # key is not numeric (e.g., string), so it's a categorical value
++                    # not in hue_order. Return transparent color to hide the point.
++                    is_nan = False
+                     value = (0, 0, 0, 0)
+-                else:
++                
++                if is_nan:
++                    value = (0, 0, 0, 0)
++                elif 'value' not in locals():
++                    # If we haven't set value yet, raise the original error
+                     raise err
+             else:
+                 if np.ma.is_masked(normed):
+@@ -1093,9 +1104,13 @@ class VectorPlotter:
+                 parts = []
+                 grouped = self.plot_data[var].groupby(self.converters[var], sort=False)
+                 for converter, orig in grouped:
+-                    with pd.option_context('mode.use_inf_as_null', True):
++                    try:
++                        with pd.option_context('mode.use_inf_as_null', True):
++                            orig = orig.dropna()
++                    except pd._config.config.OptionError:
++                        # Fallback for newer pandas versions where this option was removed
+                         orig = orig.dropna()
+-                        if var in self.var_levels:
++                    if var in self.var_levels:
+                             # TODO this should happen in some centralized location
+                             # it is similar to GH2419, but more complicated because
+                             # supporting `order` in categorical plots is tricky

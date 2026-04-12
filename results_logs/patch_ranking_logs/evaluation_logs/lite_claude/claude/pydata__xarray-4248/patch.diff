@@ -1,0 +1,31 @@
+diff --git a/xarray/core/formatting.py b/xarray/core/formatting.py
+index 91a7f67..38b2686 100644
+--- a/xarray/core/formatting.py
++++ b/xarray/core/formatting.py
+@@ -306,12 +306,17 @@ def _summarize_coord_levels(coord, col_width, marker="-"):
+ 
+ 
+ def summarize_datavar(name, var, col_width):
++    if 'units' in var.attrs:
++        name = f"{name}, in {var.attrs['units']}"
+     return summarize_variable(name, var.variable, col_width)
+ 
+ 
+ def summarize_coord(name: Hashable, var, col_width: int):
+     is_index = name in var.dims
+     marker = "*" if is_index else " "
++    display_name = name
++    if 'units' in var.attrs:
++        display_name = f"{name}, in {var.attrs['units']}"
+     if is_index:
+         coord = var.variable.to_index_variable()
+         if coord.level_names is not None:
+@@ -321,7 +326,7 @@ def summarize_coord(name: Hashable, var, col_width: int):
+                     _summarize_coord_levels(coord, col_width),
+                 ]
+             )
+-    return summarize_variable(name, var.variable, col_width, marker)
++    return summarize_variable(display_name, var.variable, col_width, marker)
+ 
+ 
+ def summarize_attr(key, value, col_width=None):

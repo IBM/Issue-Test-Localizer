@@ -1,0 +1,41 @@
+diff --git a/astropy/table/table.py b/astropy/table/table.py
+index 5afe2127a..41720af60 100644
+--- a/astropy/table/table.py
++++ b/astropy/table/table.py
+@@ -1243,6 +1243,11 @@ class Table:
+         # mixin class
+         if (not isinstance(data, Column) and not data_is_mixin
+                 and isinstance(data, np.ndarray) and len(data.dtype) > 1):
++            warnings.warn(
++                "Automatic conversion of structured arrays to NdarrayMixin is deprecated. "
++                "Please wrap your structured array in Column() explicitly. In astropy 5.2, "
++                "structured arrays will be added as Column objects.",
++                FutureWarning, stacklevel=3)
+             data = data.view(NdarrayMixin)
+             data_is_mixin = True
+ 
+diff --git a/astropy/table/tests/test_mixin.py b/astropy/table/tests/test_mixin.py
+index 2fdcd20d8..3de8dd333 100644
+--- a/astropy/table/tests/test_mixin.py
++++ b/astropy/table/tests/test_mixin.py
+@@ -712,9 +712,17 @@ def test_ndarray_mixin():
+     d = np.arange(8, dtype='i8').reshape(4, 2).view(NdarrayMixin)
+ 
+     # Add one during initialization and the next as a new column.
+-    t = Table([a], names=['a'])
+-    t['b'] = b
+-    t['c'] = c
++    # Expect FutureWarning for structured arrays
++    with pytest.warns(FutureWarning):
++        t = Table([a], names=['a'])
++    
++    with pytest.warns(FutureWarning):
++        t['b'] = b
++    
++    with pytest.warns(FutureWarning):
++        t['c'] = c
++    
++    # No warning for existing NdarrayMixin
+     t['d'] = d
+ 
+     assert isinstance(t['a'], NdarrayMixin)

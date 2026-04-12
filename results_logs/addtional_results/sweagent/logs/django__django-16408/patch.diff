@@ -1,0 +1,31 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 7c433b3f06..14d740dbdd 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1291,11 +1291,25 @@ class SQLCompiler:
+                     from_parent = (
+                         issubclass(model, opts.model) and model is not opts.model
+                     )
++                    
++                    # Check if this is a multi-level FilteredRelation
++                    filtered_relation = self.query._filtered_relations[name]
++                    is_multi_level = LOOKUP_SEP in filtered_relation.relation_name
++                    
++                    # For multi-level FilteredRelations, don't set reverse relationships
++                    # to avoid setting wrong cached values
++                    if is_multi_level:
++                        def filtered_local_setter(obj, from_obj):
++                            pass
++                        local_setter_func = filtered_local_setter
++                    else:
++                        local_setter_func = partial(local_setter, final_field)
++                    
+                     klass_info = {
+                         "model": model,
+                         "field": final_field,
+                         "reverse": True,
+-                        "local_setter": partial(local_setter, final_field),
++                        "local_setter": local_setter_func,
+                         "remote_setter": partial(remote_setter, name),
+                         "from_parent": from_parent,
+                     }

@@ -1,0 +1,69 @@
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index a89c35599f..1b0d4554e0 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -333,7 +333,7 @@ class BaseFormSet:
+         self._non_form_errors.
+         """
+         self._errors = []
+-        self._non_form_errors = self.error_class()
++        self._non_form_errors = self.error_class(error_class='nonform')
+         empty_forms_count = 0
+ 
+         if not self.is_bound:  # Stop further processing.
+@@ -380,7 +380,7 @@ class BaseFormSet:
+             # Give self.clean() a chance to do cross-form validation.
+             self.clean()
+         except ValidationError as e:
+-            self._non_form_errors = self.error_class(e.error_list)
++            self._non_form_errors = self.error_class(e.error_list, error_class='nonform')
+ 
+     def clean(self):
+         """
+diff --git a/docs/topics/forms/index.txt b/docs/topics/forms/index.txt
+index e55b6d7bf2..4c9a28fa15 100644
+--- a/docs/topics/forms/index.txt
++++ b/docs/topics/forms/index.txt
+@@ -616,6 +616,16 @@ errors. For example, ``{{ form.non_field_errors }}`` would look like:
+         <li>Generic validation error</li>
+     </ul>
+ 
++Similarly, non-form errors in formsets (errors from the ``formset.clean()`` method)
++will be rendered with an additional class of ``nonform`` to help distinguish them
++from form-specific errors. For example, ``{{ formset.non_form_errors }}`` would look like:
++
++.. code-block:: html+django
++
++    <ul class="errorlist nonform">
++        <li>Generic formset validation error</li>
++    </ul>
++
+ See :doc:`/ref/forms/api` for more on errors, styling, and working with form
+ attributes in templates.
+ 
+diff --git a/tests/forms_tests/tests/test_formsets.py b/tests/forms_tests/tests/test_formsets.py
+index 889560aa74..2d1a37e834 100644
+--- a/tests/forms_tests/tests/test_formsets.py
++++ b/tests/forms_tests/tests/test_formsets.py
+@@ -983,6 +983,21 @@ class FormsFormsetTestCase(SimpleTestCase):
+         formset = FavoriteDrinksFormSet(data, prefix='drinks')
+         self.assertFalse(formset.is_valid())
+         self.assertEqual(formset.non_form_errors(), ['You may only specify a drink once.'])
++        
++    def test_non_form_errors_have_nonform_class(self):
++        """Non-form errors in formsets should have the 'nonform' CSS class."""
++        data = {
++            'drinks-TOTAL_FORMS': '2',  # the number of forms rendered
++            'drinks-INITIAL_FORMS': '0',  # the number of forms with initial data
++            'drinks-MIN_NUM_FORMS': '0',  # min number of forms
++            'drinks-MAX_NUM_FORMS': '0',  # max number of forms
++            'drinks-0-name': 'Gin and Tonic',
++            'drinks-1-name': 'Gin and Tonic',
++        }
++        formset = FavoriteDrinksFormSet(data, prefix='drinks')
++        self.assertFalse(formset.is_valid())
++        self.assertTrue('nonform' in formset.non_form_errors().error_class)
++        self.assertIn('class="errorlist nonform"', formset.non_form_errors().as_ul())
+ 
+     def test_formset_iteration(self):
+         """Formset instances are iterable."""

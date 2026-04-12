@@ -1,0 +1,94 @@
+diff --git a/sympy/concrete/summations.py b/sympy/concrete/summations.py
+index 372487664..ff746a57f 100644
+--- a/sympy/concrete/summations.py
++++ b/sympy/concrete/summations.py
+@@ -3,7 +3,7 @@
+ from sympy.concrete.expr_with_limits import AddWithLimits
+ from sympy.concrete.expr_with_intlimits import ExprWithIntLimits
+ from sympy.core.function import Derivative
+-from sympy.core.relational import Eq
++from sympy.core.relational import Eq, Ge, Gt, Le, Lt
+ from sympy.core.singleton import S
+ from sympy.core.symbol import Dummy, Wild, Symbol
+ from sympy.core.add import Add
+@@ -854,6 +854,62 @@ def eval_sum(f, limits):
+         return f*(b - a + 1)
+     if a == b:
+         return f.subs(i, a)
++    
++    # Special case for summing KroneckerDelta
++    if isinstance(f, KroneckerDelta) and i in f.args and len(f.args) == 2:
++        # This is KroneckerDelta(i, j) or KroneckerDelta(j, i)
++        other_arg = f.args[1] if f.args[0] == i else f.args[0]
++        if other_arg.is_Symbol:
++            # Return a piecewise function: 1 if other_arg is in range [a, b], 0 otherwise
++            if a is S.NegativeInfinity and b is S.Infinity:
++                # Handle the special case of summing over the entire real line
++                return Piecewise((S.One, (S.NegativeInfinity < other_arg) & (other_arg < S.Infinity)), (S.Zero, True))
++            return Piecewise((S.One, (other_arg >= a) & (other_arg <= b)), (S.Zero, True))
++    
++    # Special case for summing Piecewise from KroneckerDelta
++    if isinstance(f, Piecewise) and len(f.args) == 2 and f.args[0][0] == S.One and f.args[1][0] == S.Zero:
++        # This looks like the result of summing KroneckerDelta
++        # Check if it's of the form Piecewise((1, (a <= j) & (j <= b)), (0, True))
++        cond = f.args[0][1]
++        if isinstance(cond, And) and len(cond.args) == 2:
++            # Extract the bounds from the condition
++            lower_bound = None
++            upper_bound = None
++            for arg in cond.args:
++                if isinstance(arg, Ge) or isinstance(arg, Gt):
++                    var = arg.args[0]
++                    if var == i:
++                        lower_bound = arg.args[1]
++                if isinstance(arg, Le) or isinstance(arg, Lt):
++                    var = arg.args[0]
++                    if var == i:
++                        upper_bound = arg.args[1]
++            
++            if lower_bound is not None and upper_bound is not None:
++                # Calculate the number of elements in the range
++                count = upper_bound - lower_bound + 1
++                if count.is_number:
++                    return count
++                else:
++                    # For symbolic expressions, return the count if it's positive
++                    return Piecewise((count, count > 0), (S.Zero, True))
++    
++    # Special case for identity matrix elements
++    if hasattr(f, 'args') and len(f.args) >= 3 and hasattr(f.args[0], 'is_Identity'):
++        if f.args[0].is_Identity and f.args[1] == i and f.args[2] in f.free_symbols:
++            # This is e[i, j] where e is an identity matrix
++            # For a sum over i, if j is in the range [a, b], return 1, otherwise 0
++            j = f.args[2]
++            if j.is_Symbol:
++                # For symbolic j, we return a KroneckerDelta to indicate that
++                # the sum is 1 when j is in the range [a, b], and 0 otherwise
++                return Piecewise((S.One, (j >= a) & (j <= b)), (S.Zero, True))
++            elif j.is_number:
++                # For numeric j, we can directly check if it's in range
++                if a <= j <= b:
++                    return S.One
++                else:
++                    return S.Zero
+     if isinstance(f, Piecewise):
+         if not any(i in arg.args[1].free_symbols for arg in f.args):
+             # Piecewise conditions do not depend on the dummy summation variable,
+diff --git a/sympy/matrices/expressions/matexpr.py b/sympy/matrices/expressions/matexpr.py
+index b4d759836..5094c219e 100644
+--- a/sympy/matrices/expressions/matexpr.py
++++ b/sympy/matrices/expressions/matexpr.py
+@@ -476,7 +476,12 @@ def conjugate(self):
+         return self
+ 
+     def _entry(self, i, j):
+-        if i == j:
++        from sympy.functions import KroneckerDelta
++        # Use KroneckerDelta to represent the entry, which will handle summations better
++        if (isinstance(i, Symbol) and isinstance(j, Symbol)) or \
++           (not i.is_number and not j.is_number):
++            return KroneckerDelta(i, j)
++        elif i == j:
+             return S.One
+         else:
+             return S.Zero

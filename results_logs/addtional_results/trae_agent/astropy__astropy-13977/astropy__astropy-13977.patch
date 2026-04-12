@@ -1,0 +1,109 @@
+diff --git a/astropy/units/core.py b/astropy/units/core.py
+index 8c3204b8b..b2e7643c3 100644
+--- a/astropy/units/core.py
++++ b/astropy/units/core.py
+@@ -1070,7 +1070,7 @@ class UnitBase:
+             if scale == 1.0:
+                 return unit_scale_converter
+             else:
+-                return lambda val: scale * _condition_arg(val)
++                return lambda val: _scale_or_not_implemented(val, scale)
+ 
+         # if that doesn't work, maybe we can do it with equivalencies?
+         try:
+@@ -2601,6 +2601,28 @@ def def_unit(
+     return result
+ 
+ 
++def _scale_or_not_implemented(value, scale):
++    """
++    Helper function to scale a value or return NotImplemented if the value
++    cannot be conditioned.
++    
++    Parameters
++    ----------
++    value : object
++        The value to be scaled
++    scale : float
++        The scaling factor
++        
++    Returns
++    -------
++    scaled_value or NotImplemented
++    """
++    conditioned = _condition_arg(value)
++    if conditioned is NotImplemented:
++        return NotImplemented
++    return scale * conditioned
++
++
+ def _condition_arg(value):
+     """
+     Validate value is acceptable for conversion purposes.
+@@ -2614,23 +2636,28 @@ def _condition_arg(value):
+ 
+     Returns
+     -------
+-    Scalar value or numpy array
++    Scalar value or numpy array or NotImplemented
++        Returns NotImplemented if value cannot be converted to a numeric array,
++        allowing for __array_ufunc__ methods to properly chain.
+ 
+     Raises
+     ------
+     ValueError
+-        If value is not as expected
++        If value is not as expected (deprecated, will return NotImplemented in the future)
+     """
+     if isinstance(value, (np.ndarray, float, int, complex, np.void)):
+         return value
+ 
+-    avalue = np.array(value)
+-    if avalue.dtype.kind not in ["i", "f", "c"]:
+-        raise ValueError(
+-            "Value not scalar compatible or convertible to "
+-            "an int, float, or complex array"
+-        )
+-    return avalue
++    try:
++        avalue = np.array(value)
++        if avalue.dtype.kind not in ["i", "f", "c"]:
++            # Return NotImplemented instead of raising ValueError
++            # This allows other operands to handle the operation
++            return NotImplemented
++        return avalue
++    except (TypeError, ValueError):
++        # If we can't even create an array from the value, return NotImplemented
++        return NotImplemented
+ 
+ 
+ def unit_scale_converter(val):
+@@ -2639,7 +2666,7 @@ def unit_scale_converter(val):
+     This is a separate function so it can be recognized and
+     discarded in unit conversion.
+     """
+-    return 1.0 * _condition_arg(val)
++    return _scale_or_not_implemented(val, 1.0)
+ 
+ 
+ dimensionless_unscaled = CompositeUnit(1, [], [], _error_check=False)
+diff --git a/astropy/units/quantity.py b/astropy/units/quantity.py
+index b98abfafb..d685105a5 100644
+--- a/astropy/units/quantity.py
++++ b/astropy/units/quantity.py
+@@ -667,7 +667,14 @@ class Quantity(np.ndarray):
+         arrays = []
+         for input_, converter in zip(inputs, converters):
+             input_ = getattr(input_, "value", input_)
+-            arrays.append(converter(input_) if converter else input_)
++            if converter:
++                converted = converter(input_)
++                # If converter returns NotImplemented, return NotImplemented from __array_ufunc__
++                if converted is NotImplemented:
++                    return NotImplemented
++                arrays.append(converted)
++            else:
++                arrays.append(input_)
+ 
+         # Call our superclass's __array_ufunc__
+         result = super().__array_ufunc__(function, method, *arrays, **kwargs)

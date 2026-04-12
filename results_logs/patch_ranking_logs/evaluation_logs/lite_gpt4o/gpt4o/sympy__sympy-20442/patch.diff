@@ -1,0 +1,15 @@
+diff --git a/sympy/physics/units/util.py b/sympy/physics/units/util.py
+index f42b6a4..5894c13 100644
+--- a/sympy/physics/units/util.py
++++ b/sympy/physics/units/util.py
+@@ -106,6 +106,10 @@ def convert_to(expr, target_units, unit_system="SI"):
+         return expr
+ 
+     expr_scale_factor = get_total_scale_factor(expr)
++    # Check if the resulting exponents make sense (i.e., they should be integers or simple fractions)
++    if any(not (p.is_Rational and p.q in {1, 2}) for p in depmat):
++        # If not, return the original expression
++        return expr
+     return expr_scale_factor * Mul.fromiter((1/get_total_scale_factor(u) * u) ** p for u, p in zip(target_units, depmat))
+ 
+ 

@@ -1,0 +1,41 @@
+diff --git a/lib/matplotlib/colors.py b/lib/matplotlib/colors.py
+index 2d3072da04..13fa5cfe3d 100644
+--- a/lib/matplotlib/colors.py
++++ b/lib/matplotlib/colors.py
+@@ -727,9 +727,33 @@ class Colormap:
+                 xa = xa.astype(int)
+         # Set the over-range indices before the under-range;
+         # otherwise the under-range values get converted to over-range.
+-        xa[xa > self.N - 1] = self._i_over
+-        xa[xa < 0] = self._i_under
+-        xa[mask_bad] = self._i_bad
++        # Use np.array().astype() to handle out-of-bound values for integer arrays
++        # This avoids NumPy deprecation warnings in NumPy 1.24+
++        
++        # Check if the array's dtype is too small to hold our special indices
++        needs_conversion = (np.issubdtype(xa.dtype, np.integer) and 
++                           (xa.dtype.itemsize == 1 or  # uint8, int8
++                            (xa.dtype.itemsize == 2 and   # uint16, int16
++                             self._i_bad > np.iinfo(xa.dtype).max)))
++        
++        if needs_conversion:
++            # Convert to a larger integer type that can hold our special indices
++            # Create masks before conversion to preserve the conditions
++            over_mask = xa > self.N - 1
++            under_mask = xa < 0
++            
++            # Convert to int32 which should be large enough for any reasonable N value
++            xa = xa.astype(np.int32)
++            
++            # Apply the masks in the correct order
++            xa[over_mask] = self._i_over
++            xa[under_mask] = self._i_under
++            xa[mask_bad] = self._i_bad
++        else:
++            # For types that can handle the special indices, proceed as before
++            xa[xa > self.N - 1] = self._i_over
++            xa[xa < 0] = self._i_under
++            xa[mask_bad] = self._i_bad
+ 
+         lut = self._lut
+         if bytes:

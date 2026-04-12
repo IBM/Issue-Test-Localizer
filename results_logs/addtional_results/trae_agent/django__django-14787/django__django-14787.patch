@@ -1,0 +1,32 @@
+diff --git a/django/utils/decorators.py b/django/utils/decorators.py
+index 5c9a5d01c7..d3b0491c08 100644
+--- a/django/utils/decorators.py
++++ b/django/utils/decorators.py
+@@ -37,9 +37,26 @@ def _multi_decorate(decorators, method):
+         # 'self' argument, but it's a closure over self so it can call
+         # 'func'. Also, wrap method.__get__() in a function because new
+         # attributes can't be set on bound method objects, only on functions.
+-        bound_method = partial(method.__get__(self, type(self)))
++        original_method = method.__get__(self, type(self))
++        
++        # Create a function that will be passed to the decorator chain
++        def _wrapped_method(*args, **kwargs):
++            return original_method(*args, **kwargs)
++        
++        # Explicitly copy the attributes that decorators typically access
++        # Use getattr with default values to handle cases where attributes might not exist
++        _wrapped_method.__module__ = getattr(method, '__module__', None)
++        _wrapped_method.__name__ = getattr(method, '__name__', None)
++        if hasattr(method, '__qualname__'):
++            _wrapped_method.__qualname__ = method.__qualname__
++        _wrapped_method.__doc__ = getattr(method, '__doc__', None)
++        _wrapped_method.__annotations__ = getattr(method, '__annotations__', {})
++        
++        # Apply decorators
++        bound_method = _wrapped_method
+         for dec in decorators:
+             bound_method = dec(bound_method)
++        
+         return bound_method(*args, **kwargs)
+ 
+     # Copy any attributes that a decorator adds to the function it decorates.

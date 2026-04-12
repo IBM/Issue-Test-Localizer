@@ -1,0 +1,100 @@
+diff --git a/astropy/units/format/cds.py b/astropy/units/format/cds.py
+index 307e987ed..49347159a 100644
+--- a/astropy/units/format/cds.py
++++ b/astropy/units/format/cds.py
+@@ -182,11 +182,15 @@ class CDS(Base):
+         def p_division_of_units(p):
+             """
+             division_of_units : DIVISION unit_expression
+-                              | unit_expression DIVISION combined_units
++                              | unit_expression DIVISION product_of_units
+             """
+             if len(p) == 3:
++                # Case: /unit_expression
+                 p[0] = p[2] ** -1
+             else:
++                # Simple division with product_of_units on the right side
++                # This ensures that consecutive divisions like J/m/s/kpc2
++                # are parsed as J/(m*s*kpc2) instead of ((J/m)/s)/kpc2
+                 p[0] = p[1] / p[3]
+ 
+         def p_unit_expression(p):
+@@ -295,6 +299,78 @@ class CDS(Base):
+         if not isinstance(s, str):
+             s = s.decode("ascii")
+ 
++        # Special case handling for multiple consecutive division operations
++        # like 10+3J/m/s/kpc2 or 10-7J/s/kpc2
++        if '/' in s:
++            parts = s.split('/')
++            if len(parts) > 2:  # Multiple divisions
++                from astropy.units.core import Unit
++                
++                # Extract the numerator (which might include a scale factor)
++                numerator = parts[0]
++                
++                # Handle the case where the numerator includes a scale factor
++                if '+' in numerator or '-' in numerator:
++                    # Try to parse just the scale part
++                    import re
++                    scale_match = re.match(r'(10[-+]\d+)', numerator)
++                    if scale_match:
++                        scale_str = scale_match.group(1)
++                        unit_part = numerator[len(scale_str):]
++                        
++                        # Parse the scale
++                        if '+' in scale_str:
++                            scale = 10 ** int(scale_str.split('+')[1])
++                        else:
++                            scale = 10 ** (-int(scale_str.split('-')[1]))
++                        
++                        # Parse the unit part
++                        try:
++                            unit = cls._parse_unit(unit_part, detailed_exception=False)
++                        except ValueError:
++                            # If not a simple unit, parse it
++                            unit = cls._parser.parse(unit_part, lexer=cls._lexer, debug=debug)
++                    else:
++                        # Just try to parse the whole numerator
++                        try:
++                            return cls._parser.parse(s, lexer=cls._lexer, debug=debug)
++                        except ValueError as e:
++                            if str(e):
++                                raise ValueError(str(e))
++                            else:
++                                raise ValueError("Syntax error")
++                else:
++                    # Try to parse the numerator as a unit
++                    try:
++                        unit = cls._parse_unit(numerator, detailed_exception=False)
++                    except ValueError:
++                        # If not a simple unit, parse it
++                        try:
++                            return cls._parser.parse(s, lexer=cls._lexer, debug=debug)
++                        except ValueError as e:
++                            if str(e):
++                                raise ValueError(str(e))
++                            else:
++                                raise ValueError("Syntax error")
++                    scale = 1.0
++                
++                # Create the denominator by multiplying all the denominator units
++                denominator = None
++                for denom_part in parts[1:]:
++                    try:
++                        denom_unit = cls._parse_unit(denom_part, detailed_exception=False)
++                    except ValueError:
++                        # If not a simple unit, parse it
++                        denom_unit = cls._parser.parse(denom_part, lexer=cls._lexer, debug=debug)
++                    
++                    if denominator is None:
++                        denominator = denom_unit
++                    else:
++                        denominator = denominator * denom_unit
++                
++                # Create the final unit
++                return Unit(scale * unit / denominator)
++        
+         # This is a short circuit for the case where the string
+         # is just a single unit name
+         try:

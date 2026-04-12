@@ -1,0 +1,353 @@
+diff --git a/debug_concat.py b/debug_concat.py
+new file mode 100644
+index 00000000..b89ccdc3
+--- /dev/null
++++ b/debug_concat.py
+@@ -0,0 +1,38 @@
++#!/usr/bin/env python
++
++import numpy as np
++import xarray as xr
++
++# Create datasets with different variables
++ds1 = xr.Dataset({
++    'var1': (['x'], [1, 2, 3]),
++}, coords={'x': [0, 1, 2]})
++
++ds2 = xr.Dataset({
++    'var2': (['x'], [4, 5, 6])
++}, coords={'x': [0, 1, 2]})
++
++print("Dataset 1:")
++print(ds1)
++print("\nDataset 2:")
++print(ds2)
++
++print("\nTrying with join_vars='outer' and fill_value=0...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', join_vars='outer', fill_value=0)
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++    import traceback
++    traceback.print_exc()
++
++print("\nTrying with join_vars='outer' and default fill_value...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', join_vars='outer')
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++    import traceback
++    traceback.print_exc()
+\ No newline at end of file
+diff --git a/debug_existing_dim.py b/debug_existing_dim.py
+new file mode 100644
+index 00000000..32c8e63c
+--- /dev/null
++++ b/debug_existing_dim.py
+@@ -0,0 +1,35 @@
++#!/usr/bin/env python
++
++import numpy as np
++import xarray as xr
++
++# Reproduce the failing test
++data = xr.Dataset({"foo": ("x", np.random.randn(10))})
++objs = [
++    data.isel(x=slice(5)).assign_coords(c=0),
++    data.isel(x=slice(5, None)).assign_coords(c=1),
++]
++
++print("Dataset 1:")
++print(objs[0])
++print("Variables:", list(objs[0].variables.keys()))
++print("Coords:", list(objs[0].coords.keys()))
++print("Data vars:", list(objs[0].data_vars.keys()))
++print("Dims:", list(objs[0].dims.keys()))
++
++print("\nDataset 2:")
++print(objs[1])
++print("Variables:", list(objs[1].variables.keys()))
++print("Coords:", list(objs[1].coords.keys()))
++print("Data vars:", list(objs[1].data_vars.keys()))
++print("Dims:", list(objs[1].dims.keys()))
++
++print("\nTrying to concatenate along existing dimension 'x' with coords='all'...")
++try:
++    result = xr.concat(objs, dim="x", coords="all")
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++    import traceback
++    traceback.print_exc()
+\ No newline at end of file
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 00000000..be9e738d
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,68 @@
++#!/usr/bin/env python
++
++import numpy as np
++import xarray as xr
++
++# Create datasets with different variables
++ds1 = xr.Dataset({
++    'var1': (['x'], [1, 2, 3]),
++    'var2': (['x'], [4, 5, 6])
++}, coords={'x': [0, 1, 2]})
++
++ds2 = xr.Dataset({
++    'var1': (['x'], [7, 8, 9]),
++    'var3': (['x'], [10, 11, 12])
++}, coords={'x': [0, 1, 2]})
++
++print("Dataset 1:")
++print(ds1)
++print("\nDataset 2:")
++print(ds2)
++
++print("\nTrying to concatenate datasets with different variables (default behavior)...")
++try:
++    result = xr.concat([ds1, ds2], dim='y')
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++
++print("\nTrying to concatenate datasets with different variables (join_vars='outer')...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', join_vars='outer')
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++
++print("\nTrying with data_vars='minimal'...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', data_vars='minimal')
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++
++print("\nTrying with data_vars='all'...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', data_vars='all')
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++
++print("\nTrying with join_vars='outer' and fill_value=np.nan...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', join_vars='outer', fill_value=np.nan)
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
++
++print("\nTrying with join_vars='inner'...")
++try:
++    result = xr.concat([ds1, ds2], dim='y', join_vars='inner')
++    print("Success! Result:")
++    print(result)
++except Exception as e:
++    print(f"Error: {e}")
+\ No newline at end of file
+diff --git a/xarray/core/concat.py b/xarray/core/concat.py
+index ecae2566..18e54e26 100644
+--- a/xarray/core/concat.py
++++ b/xarray/core/concat.py
+@@ -1,7 +1,9 @@
++import numpy as np
+ import pandas as pd
+ 
+ from . import dtypes, utils
+ from .alignment import align
++from .common import full_like
+ from .merge import _VALID_COMPAT, unique_variable
+ from .variable import IndexVariable, Variable, as_variable
+ from .variable import concat as concat_vars
+@@ -16,6 +18,7 @@ def concat(
+     positions=None,
+     fill_value=dtypes.NA,
+     join="outer",
++    join_vars="inner",
+ ):
+     """Concatenate xarray objects along a new or existing dimension.
+ 
+@@ -90,6 +93,13 @@ def concat(
+         - 'override': if indexes are of same size, rewrite indexes to be
+           those of the first object with that dimension. Indexes for the same
+           dimension must have the same size in all objects.
++    join_vars : {'outer', 'inner'}, optional
++        String indicating how to combine data variables and coordinates that
++        are not present in all datasets
++
++        - 'outer': take variables from all datasets and fill missing values
++          with NaN
++        - 'inner': take only variables that are present in all datasets
+ 
+     indexers, mode, concat_over : deprecated
+ 
+@@ -128,7 +138,7 @@ def concat(
+             "can only concatenate xarray Dataset and DataArray "
+             "objects, got %s" % type(first_obj)
+         )
+-    return f(objs, dim, data_vars, coords, compat, positions, fill_value, join)
++    return f(objs, dim, data_vars, coords, compat, positions, fill_value, join, join_vars)
+ 
+ 
+ def _calc_concat_dim_coord(dim):
+@@ -155,7 +165,7 @@ def _calc_concat_dim_coord(dim):
+     return dim, coord
+ 
+ 
+-def _calc_concat_over(datasets, dim, dim_names, data_vars, coords, compat):
++def _calc_concat_over(datasets, dim, dim_names, data_vars, coords, compat, join_vars="inner"):
+     """
+     Determine which dataset variables need to be concatenated in the result,
+     """
+@@ -211,9 +221,22 @@ def _calc_concat_over(datasets, dim, dim_names, data_vars, coords, compat):
+                             equals[k] = True
+ 
+             elif opt == "all":
+-                concat_over.update(
+-                    set(getattr(datasets[0], subset)) - set(datasets[0].dims)
+-                )
++                if join_vars == "outer":
++                    # For outer join, include variables from all datasets
++                    all_vars = set()
++                    for ds in datasets:
++                        # Only include data_vars or coords, not dimension coordinates
++                        if subset == "data_vars":
++                            all_vars.update(ds.data_vars)
++                        elif subset == "coords":
++                            # Only include non-dimension coordinates
++                            all_vars.update(set(ds.coords) - set(ds.dims))
++                    concat_over.update(all_vars)
++                else:
++                    # For inner join, only include variables from first dataset
++                    concat_over.update(
++                        set(getattr(datasets[0], subset)) - set(datasets[0].dims)
++                    )
+             elif opt == "minimal":
+                 pass
+             else:
+@@ -269,6 +292,7 @@ def _dataset_concat(
+     positions,
+     fill_value=dtypes.NA,
+     join="outer",
++    join_vars="outer",
+ ):
+     """
+     Concatenate a sequence of datasets along a new or existing dimension
+@@ -301,7 +325,7 @@ def _dataset_concat(
+ 
+     # determine which variables to concatentate
+     concat_over, equals, concat_dim_lengths = _calc_concat_over(
+-        datasets, dim, dim_names, data_vars, coords, compat
++        datasets, dim, dim_names, data_vars, coords, compat, join_vars
+     )
+ 
+     # determine which variables to merge, and then merge them according to compat
+@@ -314,18 +338,26 @@ def _dataset_concat(
+         for ds in datasets:
+             absent_merge_vars = variables_to_merge - set(ds.variables)
+             if absent_merge_vars:
+-                raise ValueError(
+-                    "variables %r are present in some datasets but not others. "
+-                    % absent_merge_vars
+-                )
++                if join_vars == 'inner':
++                    raise ValueError(
++                        "variables %r are present in some datasets but not others. "
++                        % absent_merge_vars
++                    )
++                elif join_vars == 'outer':
++                    # For outer join, we'll handle missing variables later
++                    pass
++                else:
++                    raise ValueError(f"join_vars={join_vars!r} is invalid")
+ 
+             for var in variables_to_merge:
+-                to_merge[var].append(ds.variables[var])
++                if var in ds.variables:
++                    to_merge[var].append(ds.variables[var])
+ 
+         for var in variables_to_merge:
+-            result_vars[var] = unique_variable(
+-                var, to_merge[var], compat=compat, equals=equals.get(var, None)
+-            )
++            if var in to_merge and to_merge[var]:
++                result_vars[var] = unique_variable(
++                    var, to_merge[var], compat=compat, equals=equals.get(var, None)
++                )
+     else:
+         result_vars = {}
+     result_vars.update(dim_coords)
+@@ -356,8 +388,48 @@ def _dataset_concat(
+ 
+     # stack up each variable to fill-out the dataset (in order)
+     # n.b. this loop preserves variable order, needed for groupby.
+-    for k in datasets[0].variables:
+-        if k in concat_over:
++    for k in concat_over:
++        # Skip if the variable doesn't exist in any dataset
++        if not any(k in ds.variables for ds in datasets):
++            continue
++        if join_vars == 'outer':
++            # For outer join, handle missing variables by filling with NaN
++            vars_to_concat = []
++            # Find a template variable to determine shape and attributes
++            template_var = None
++            for ds in datasets:
++                if k in ds.variables:
++                    template_var = ds.variables[k]
++                    break
++            
++            if template_var is None:
++                continue  # Skip if variable is not in any dataset
++                
++            for ds in datasets:
++                if k in ds.variables:
++                    vars_to_concat.append(ds.variables[k])
++                else:
++                    # Create a variable filled with fill_value
++                    # Handle dtypes.NA by using appropriate fill value for the data type
++                    if fill_value is dtypes.NA:
++                        if np.issubdtype(template_var.dtype, np.floating):
++                            actual_fill_value = np.nan
++                        elif np.issubdtype(template_var.dtype, np.integer):
++                            actual_fill_value = 0
++                        else:
++                            actual_fill_value = None
++                    else:
++                        actual_fill_value = fill_value
++                    
++                    filled_var = full_like(template_var, actual_fill_value)
++                    vars_to_concat.append(filled_var)
++            
++            vars = ensure_common_dims(vars_to_concat)
++            combined = concat_vars(vars, dim, positions)
++            assert isinstance(combined, Variable)
++            result_vars[k] = combined
++        else:
++            # For inner join, require all datasets to have the variable
+             try:
+                 vars = ensure_common_dims([ds.variables[k] for ds in datasets])
+             except KeyError:
+@@ -394,6 +466,7 @@ def _dataarray_concat(
+     positions,
+     fill_value=dtypes.NA,
+     join="outer",
++    join_vars="outer",
+ ):
+     arrays = list(arrays)
+ 

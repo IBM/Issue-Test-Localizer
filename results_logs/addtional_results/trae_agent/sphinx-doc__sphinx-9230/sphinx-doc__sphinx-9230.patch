@@ -1,0 +1,465 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index 7d39d80ed..9551340a2 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -34,12 +34,14 @@ from sphinx.pycode.ast import ast
+ from sphinx.pycode.ast import parse as ast_parse
+ from sphinx.roles import XRefRole
+ from sphinx.util import logging
+-from sphinx.util.docfields import Field, GroupedField, TypedField
++from sphinx.util.docfields import Field, GroupedField, TypedField, DocFieldTransformer
+ from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.inspect import signature_from_str
+ from sphinx.util.nodes import find_pending_xref_condition, make_id, make_refnode
+ from sphinx.util.typing import OptionSpec, TextlikeNode
+ 
++# No need for custom DocFieldTransformer
++
+ logger = logging.getLogger(__name__)
+ 
+ 
+@@ -170,6 +172,76 @@ def _parse_annotation(annotation: str, env: BuildEnvironment = None) -> List[Nod
+         warnings.warn("The env parameter for _parse_annotation becomes required now.",
+                       RemovedInSphinx50Warning, stacklevel=2)
+ 
++    # Handle special case for Dict[str, str] format
++    if annotation.startswith('Dict[') and ']' in annotation:
++        try:
++            # Split into Dict and its parameters
++            dict_part = annotation[:4]  # "Dict"
++            params_part = annotation[4:]  # "[str, str]"
++            
++            # Create the result nodes
++            result = []
++            
++            # Add the 'Dict' part with proper xref
++            result.append(type_to_xref('Dict', env))
++            
++            # Add the opening bracket
++            result.append(addnodes.desc_sig_punctuation('', '['))
++            
++            # Extract the content inside the brackets
++            content = params_part[1:-1]  # Remove [ and ]
++            
++            # Split the content by comma and process each part
++            parts = []
++            current_part = ""
++            bracket_level = 0
++            
++            for char in content:
++                if char == '[':
++                    bracket_level += 1
++                    current_part += char
++                elif char == ']':
++                    bracket_level -= 1
++                    current_part += char
++                elif char == ',' and bracket_level == 0:
++                    parts.append(current_part.strip())
++                    current_part = ""
++                else:
++                    current_part += char
++                    
++            if current_part:
++                parts.append(current_part.strip())
++                
++            # Process each part and add to result
++            for i, part in enumerate(parts):
++                if i > 0:
++                    result.append(addnodes.desc_sig_punctuation('', ', '))
++                try:
++                    part_nodes = _parse_annotation(part, env)
++                    result.extend(part_nodes)
++                except Exception:
++                    result.append(nodes.Text(part))
++            
++            # Add the closing bracket
++            result.append(addnodes.desc_sig_punctuation('', ']'))
++            
++            return result
++        except Exception:
++            # If any error occurs during special handling, fall back to the standard approach
++            pass
++
++    # Handle special case for dict(str, str) format which is not valid Python syntax
++    # but is commonly used in docstrings
++    if annotation.startswith('dict(') and annotation.endswith(')'):
++        try:
++            # Convert dict(str, str) to Dict[str, str] format for better compatibility
++            content = annotation[5:-1]  # Remove dict( and )
++            converted = f"Dict[{content}]"
++            return _parse_annotation(converted, env)
++        except Exception:
++            # If any error occurs during special handling, fall back to the standard approach
++            pass
++
+     try:
+         tree = ast_parse(annotation)
+         result = unparse(tree)
+@@ -346,8 +418,172 @@ class PyTypedField(PyXrefMixin, TypedField):
+         if rolename == 'class' and target == 'None':
+             # None is not a type, so use obj role instead.
+             rolename = 'obj'
+-
++            
++        # Handle dict(str, str) format
++        if target.startswith('dict(') and ')' in target:
++            # Extract the dict type and parameters
++            paren_level = 0
++            close_paren_pos = -1
++            
++            for i in range(5, len(target)):  # Start after 'dict('
++                if target[i] == '(':
++                    paren_level += 1
++                elif target[i] == ')':
++                    if paren_level == 0:
++                        close_paren_pos = i
++                        break
++                    paren_level -= 1
++            
++            if close_paren_pos > 0:
++                # Split the target into dict and its parameters
++                dict_type = 'dict'
++                params = target[5:close_paren_pos]  # Content between dict( and )
++                
++                # Create a container for all parts
++                result = nodes.inline()
++                
++                # Add the 'dict' part with proper xref
++                result.append(super().make_xref(rolename, domain, dict_type, innernode, contnode, env))
++                
++                # Add the opening parenthesis
++                result.append(nodes.Text('('))
++                
++                # Process parameters (split by comma but respect nesting)
++                parts = []
++                current_part = ""
++                nested_level = 0
++                
++                for char in params:
++                    if char == '(' or char == '[' or char == '{':
++                        nested_level += 1
++                        current_part += char
++                    elif char == ')' or char == ']' or char == '}':
++                        nested_level -= 1
++                        current_part += char
++                    elif char == ',' and nested_level == 0:
++                        parts.append(current_part.strip())
++                        current_part = ""
++                    else:
++                        current_part += char
++                
++                if current_part:
++                    parts.append(current_part.strip())
++                
++                # Add each parameter with proper formatting
++                for i, part in enumerate(parts):
++                    if i > 0:
++                        result.append(nodes.Text(', '))
++                    part_stripped = part.strip()
++                    result.append(super().make_xref(rolename, domain, part_stripped, innernode, contnode, env))
++                
++                # Add the closing parenthesis
++                result.append(nodes.Text(')'))
++                
++                return result
++                
+         return super().make_xref(rolename, domain, target, innernode, contnode, env)
++        
++    def make_field(self, types: Dict[str, List[Node]], domain: str,
++                   items: Tuple, env: BuildEnvironment = None) -> nodes.field:
++        """Override to handle dict(str, str) type format correctly."""
++        def handle_item(fieldarg: str, content: str) -> nodes.paragraph:
++            par = nodes.paragraph()
++            par.extend(self.make_xrefs(self.rolename, domain, fieldarg,
++                                       addnodes.literal_strong, env=env))
++            if fieldarg in types:
++                par += nodes.Text(' (')
++                # NOTE: using .pop() here to prevent a single type node to be
++                # inserted twice into the doctree, which leads to
++                # inconsistencies later when references are resolved
++                fieldtype = types.pop(fieldarg)
++                
++                # Special handling for dict(str, str) pattern
++                if len(fieldtype) == 1 and isinstance(fieldtype[0], nodes.Text):
++                    typename = fieldtype[0].astext()
++                    
++                    # Handle dict(str, str) pattern
++                    if typename.startswith('dict('):
++                        # Find the matching closing parenthesis with proper nesting
++                        paren_level = 0
++                        close_paren_pos = -1
++                        
++                        for i in range(5, len(typename)):  # Start after 'dict('
++                            if typename[i] == '(':
++                                paren_level += 1
++                            elif typename[i] == ')':
++                                if paren_level == 0:
++                                    close_paren_pos = i
++                                    break
++                                paren_level -= 1
++                                
++                        if close_paren_pos > 0:
++                            # Extract the type and parameters
++                            dict_type = 'dict'
++                            params = typename[5:close_paren_pos]  # Content between dict( and )
++                            
++                            # Create nodes for the type reference
++                            par.extend(self.make_xrefs(self.typerolename, domain, dict_type,
++                                                     addnodes.literal_emphasis, env=env))
++                            
++                            # Add the opening parenthesis
++                            par += addnodes.desc_sig_punctuation('', '(')
++                            
++                            # Process parameters (split by comma but respect nesting)
++                            parts = []
++                            current_part = ""
++                            nested_level = 0
++                            
++                            for char in params:
++                                if char == '(' or char == '[' or char == '{':
++                                    nested_level += 1
++                                    current_part += char
++                                elif char == ')' or char == ']' or char == '}':
++                                    nested_level -= 1
++                                    current_part += char
++                                elif char == ',' and nested_level == 0:
++                                    parts.append(current_part.strip())
++                                    current_part = ""
++                                else:
++                                    current_part += char
++                                    
++                            if current_part:
++                                parts.append(current_part.strip())
++                            
++                            # Add each parameter with proper formatting
++                            for i, part in enumerate(parts):
++                                if i > 0:
++                                    par += addnodes.desc_sig_punctuation('', ', ')
++                                part_stripped = part.strip()
++                                par.extend(self.make_xrefs(self.typerolename, domain, part_stripped,
++                                                         addnodes.literal_emphasis, env=env))
++                            
++                            # Add the closing parenthesis
++                            par += addnodes.desc_sig_punctuation('', ')')
++                        else:
++                            # Fallback to standard handling
++                            par.extend(self.make_xrefs(self.typerolename, domain, typename,
++                                                     addnodes.literal_emphasis, env=env))
++                    else:
++                        # Standard handling for other types
++                        par.extend(self.make_xrefs(self.typerolename, domain, typename,
++                                                 addnodes.literal_emphasis, env=env))
++                else:
++                    par += fieldtype
++                par += nodes.Text(')')
++            par += nodes.Text(' -- ')
++            par += content
++            return par
++
++        fieldname = nodes.field_name('', self.label)
++        if len(items) == 1 and self.can_collapse:
++            fieldarg, content = items[0]
++            bodynode = handle_item(fieldarg, content)
++        else:
++            bodynode = self.list_type()
++            for fieldarg, content in items:
++                bodynode += nodes.list_item('', handle_item(fieldarg, content))
++        fieldbody = nodes.field_body('', bodynode)
++        return nodes.field('', fieldname, fieldbody)
+ 
+ 
+ class PyObject(ObjectDescription[Tuple[str, str]]):
+@@ -364,6 +600,8 @@ class PyObject(ObjectDescription[Tuple[str, str]]):
+         'canonical': directives.unchanged,
+         'annotation': directives.unchanged,
+     }
++    
++    # No need for custom transform_content method
+ 
+     doc_field_types = [
+         PyTypedField('parameter', label=_('Parameters'),
+diff --git a/sphinx/ext/napoleon/docstring.py b/sphinx/ext/napoleon/docstring.py
+index d8cb75a5f..3d2607c61 100644
+--- a/sphinx/ext/napoleon/docstring.py
++++ b/sphinx/ext/napoleon/docstring.py
+@@ -28,7 +28,8 @@ logger = logging.getLogger(__name__)
+ 
+ _directive_regex = re.compile(r'\.\. \S+::')
+ _google_section_regex = re.compile(r'^(\s|\w)+:\s*$')
+-_google_typed_arg_regex = re.compile(r'(.+?)\(\s*(.*[^\s]+)\s*\)')
++# Modified to better handle nested parentheses in type definitions
++_google_typed_arg_regex = re.compile(r'(.+?)\(([^()]*(?:\([^()]*\)[^()]*)*)\)')
+ _numpy_section_regex = re.compile(r'^[=\-`:\'"~^_*+#<>]{2,}\s*$')
+ _single_colon_regex = re.compile(r'(?<!:):(?!:)')
+ _xref_or_code_regex = re.compile(
+@@ -262,8 +263,63 @@ class GoogleDocstring:
+ 
+         before, colon, after = self._partition_field_on_colon(line)
+         _name, _type, _desc = before, '', after
+-
+-        if parse_type:
++        
++        # Handle the special case for dict(str, str) parameter format
++        if parse_type and 'dict(' in before:
++            # Find the position of 'dict(' in the string
++            dict_pos = before.find('dict(')
++            if dict_pos >= 0:
++                # Find the matching closing parenthesis with proper nesting
++                paren_level = 0
++                close_paren_pos = -1
++                
++                for i in range(dict_pos + 5, len(before)):  # Start after 'dict('
++                    if before[i] == '(':
++                        paren_level += 1
++                    elif before[i] == ')':
++                        if paren_level == 0:
++                            close_paren_pos = i
++                            break
++                        paren_level -= 1
++                
++                if close_paren_pos > 0:
++                    # If the format is "dict(str, str) param_name"
++                    if dict_pos == 0:
++                        # Extract the dict type and parameter name
++                        dict_type = before[:close_paren_pos + 1]  # Include the closing parenthesis
++                        param_name = before[close_paren_pos + 1:].strip()
++                        
++                        if param_name:
++                            _name = param_name
++                            # Use typing.Dict format which is better handled by Sphinx
++                            params_part = dict_type[5:-1]  # Remove dict( and )
++                            _type = f"typing.Dict[{params_part}]"
++                        else:
++                            # Try the standard regex match as fallback
++                            match = _google_typed_arg_regex.match(before)
++                            if match:
++                                _name = match.group(1).strip()
++                                _type = match.group(2)
++                    else:
++                        # Standard regex match for other cases
++                        match = _google_typed_arg_regex.match(before)
++                        if match:
++                            _name = match.group(1).strip()
++                            _type = match.group(2)
++                else:
++                    # Standard regex match for other cases
++                    match = _google_typed_arg_regex.match(before)
++                    if match:
++                        _name = match.group(1).strip()
++                        _type = match.group(2)
++            else:
++                # Standard regex match for other cases
++                match = _google_typed_arg_regex.match(before)
++                if match:
++                    _name = match.group(1).strip()
++                    _type = match.group(2)
++        elif parse_type:
++            # Standard regex match for other cases
+             match = _google_typed_arg_regex.match(before)
+             if match:
+                 _name = match.group(1).strip()
+@@ -424,7 +480,17 @@ class GoogleDocstring:
+                 lines.append(':%s %s:' % (field_role, _name))
+ 
+             if _type:
+-                lines.append(':%s %s: %s' % (type_role, _name, _type))
++                # Handle the special case for dict(str, str)
++                if _type.startswith('dict('):
++                    # Use a more explicit format that Sphinx can handle better
++                    # Convert dict(str, str) to typing.Dict[str, str]
++                    lines.append(':%s %s: typing.Dict[%s]' % (
++                        type_role, 
++                        _name, 
++                        _type[5:-1]  # Remove dict( and )
++                    ))
++                else:
++                    lines.append(':%s %s: %s' % (type_role, _name, _type))
+         return lines + ['']
+ 
+     def _format_field(self, _name: str, _type: str, _desc: List[str]) -> List[str]:
+diff --git a/sphinx/util/docfields.py b/sphinx/util/docfields.py
+index 3a3367ebe..398d39eca 100644
+--- a/sphinx/util/docfields.py
++++ b/sphinx/util/docfields.py
+@@ -181,10 +181,79 @@ class TypedField(GroupedField):
+                 # inserted twice into the doctree, which leads to
+                 # inconsistencies later when references are resolved
+                 fieldtype = types.pop(fieldarg)
++                
++                # Special handling for complex types
+                 if len(fieldtype) == 1 and isinstance(fieldtype[0], nodes.Text):
+                     typename = fieldtype[0].astext()
+-                    par.extend(self.make_xrefs(self.typerolename, domain, typename,
+-                                               addnodes.literal_emphasis, env=env))
++                    
++                    # Handle dict(str, str) pattern
++                    if typename.startswith('dict(') and ')' in typename:
++                        # Extract the type name and parameters
++                        dict_type = 'dict'
++                        
++                        # Find the closing parenthesis with proper nesting
++                        paren_level = 0
++                        close_paren_pos = -1
++                        
++                        for i, char in enumerate(typename[5:], 5):  # Start after 'dict('
++                            if char == '(':
++                                paren_level += 1
++                            elif char == ')':
++                                if paren_level == 0:
++                                    close_paren_pos = i
++                                    break
++                                paren_level -= 1
++                        
++                        if close_paren_pos > 0:
++                            content_inside = typename[5:close_paren_pos]  # Content between dict( and )
++                            
++                            # Add the 'dict' part with proper xref
++                            par.extend(self.make_xrefs(self.typerolename, domain, dict_type,
++                                                     addnodes.literal_emphasis, env=env))
++                            
++                            # Add the opening parenthesis
++                            par += nodes.Text('(')
++                            
++                            # Process the content inside the parentheses
++                            # Split by commas but respect nested parentheses
++                            parts = []
++                            current_part = ""
++                            nested_level = 0
++                            
++                            for char in content_inside:
++                                if char == '(' or char == '[' or char == '{':
++                                    nested_level += 1
++                                    current_part += char
++                                elif char == ')' or char == ']' or char == '}':
++                                    nested_level -= 1
++                                    current_part += char
++                                elif char == ',' and nested_level == 0:
++                                    parts.append(current_part.strip())
++                                    current_part = ""
++                                else:
++                                    current_part += char
++                            
++                            if current_part:
++                                parts.append(current_part.strip())
++                            
++                            # Add each parameter with proper formatting
++                            for i, part in enumerate(parts):
++                                if i > 0:
++                                    par += nodes.Text(', ')
++                                part_stripped = part.strip()
++                                par.extend(self.make_xrefs(self.typerolename, domain, part_stripped,
++                                                         addnodes.literal_emphasis, env=env))
++                            
++                            # Add the closing parenthesis
++                            par += nodes.Text(')')
++                        else:
++                            # Fallback to standard handling
++                            par.extend(self.make_xrefs(self.typerolename, domain, typename,
++                                                     addnodes.literal_emphasis, env=env))
++                    else:
++                        # Standard handling for other types
++                        par.extend(self.make_xrefs(self.typerolename, domain, typename,
++                                                 addnodes.literal_emphasis, env=env))
+                 else:
+                     par += fieldtype
+                 par += nodes.Text(')')

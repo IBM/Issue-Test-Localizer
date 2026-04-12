@@ -1,0 +1,138 @@
+{
+  "instance_id": "sympy__sympy-24152",
+  "container_id": "8835069ad9b701e9bd5d1ad2a74c0c032a4fbb3866362e84bf36373b5b5d4381",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-24152",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-24152",
+        "passed": 5,
+        "failed": 0
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "sympy/physics/quantum/tests/test_tensorproduct.py::test_tensor_product_abstract#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/quantum/tests/test_tensorproduct.py::test_tensor_product_expand#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/quantum/tests/test_tensorproduct.py::test_tensor_product_expand#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/quantum/tests/test_tensorproduct.py::test_tensor_product_expand#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/quantum/tests/test_tensorproduct.py::test_tensor_product_expand#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/quantum/tests/test_tensorproduct.py::test_tensor_product_expand#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-24152/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24152",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

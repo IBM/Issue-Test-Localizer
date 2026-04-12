@@ -1,0 +1,47 @@
+{
+  "instance_id": "django__django-11001",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-11001/dedup_patch_0.jsonl",
+    "repro_fixes": 0,
+    "repro_total_considered": 5,
+    "regression_passed": 15,
+    "occurrence": 1,
+    "normalized_occurrence": 44
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-11001/dedup_patch_2.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 15,
+        "occurrence": 41,
+        "normalized_occurrence": 44
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-11001/dedup_patch_0.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 15,
+        "occurrence": 1,
+        "normalized_occurrence": 44
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-11001/dedup_patch_3.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 15,
+        "occurrence": 1,
+        "normalized_occurrence": 44
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-11001/dedup_patch_1.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 5,
+        "regression_passed": 15,
+        "occurrence": 1,
+        "normalized_occurrence": 44
+      }
+    ]
+  }
+}

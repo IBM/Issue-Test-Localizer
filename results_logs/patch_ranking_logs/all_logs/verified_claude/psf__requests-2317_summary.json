@@ -1,0 +1,32 @@
+{
+  "instance_id": "psf__requests-2317",
+  "container_id": "aa86b64a4a8d02faab08562967b72e9d29001a69b9555c06f871b563d2f7548b",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/psf__requests-2317/dedup_patch_0.jsonl",
+        "inst": "psf__requests-2317",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/psf__requests-2317/dedup_patch_1.jsonl",
+        "inst": "psf__requests-2317",
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "top_passed": 3,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "test_requests.py::test_prepare_unicode_url#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "test_requests.py::test_prepare_unicode_url#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

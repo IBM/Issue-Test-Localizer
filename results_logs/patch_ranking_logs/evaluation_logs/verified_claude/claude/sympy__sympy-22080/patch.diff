@@ -1,0 +1,21 @@
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index ae1df59..50e43e0 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -1113,6 +1113,16 @@ class _EvaluatorPrinter:
+         str_expr = self._exprrepr(expr)
+         if '\n' in str_expr:
+             str_expr = '({})'.format(str_expr)
++        # Ensure proper parentheses for modulo operations in negations and multiplications
++        if '%' in str_expr and (str_expr.startswith('-') or '*' in str_expr):
++            parts = str_expr.split('%')
++            if len(parts) == 2:
++                if str_expr.startswith('-'):
++                    str_expr = '-({} % {})'.format(parts[0][1:].strip(), parts[1].strip())
++                else:
++                    left, right = parts[0].strip(), parts[1].strip()
++                    if '*' in left:
++                        str_expr = '({}) % {}'.format(left, right)
+         funcbody.append('return {}'.format(str_expr))
+ 
+         funclines = [funcsig]

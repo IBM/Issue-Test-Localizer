@@ -1,0 +1,23 @@
+diff --git a/sphinx/environment/collectors/title.py b/sphinx/environment/collectors/title.py
+index ec97f42..1b1b396 100644
+--- a/sphinx/environment/collectors/title.py
++++ b/sphinx/environment/collectors/title.py
+@@ -38,9 +38,9 @@ class TitleCollector(EnvironmentCollector):
+             longtitlenode += nodes.Text(doctree['title'])
+         # look for first section title and use that as the title
+         for node in doctree.findall(nodes.section):
+-            visitor = SphinxContentsFilter(doctree)
+-            node[0].walkabout(visitor)
+-            titlenode += visitor.get_entry_text()
++            # Handle domain directives in titles by getting raw astext
++            title = node[0]
++            titlenode += nodes.Text(title.astext())
+             break
+         else:
+             # document has no title
+@@ -56,4 +56,4 @@ def setup(app: Sphinx) -> dict[str, Any]:
+         'version': 'builtin',
+         'parallel_read_safe': True,
+         'parallel_write_safe': True,
+-    }
++    }

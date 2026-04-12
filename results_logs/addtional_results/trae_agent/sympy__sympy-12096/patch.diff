@@ -1,0 +1,43 @@
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 1b8005e1d..84a0c8194 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -507,7 +507,9 @@ def _eval_evalf(self, prec):
+             func = getattr(mpmath, fname)
+         except (AttributeError, KeyError):
+             try:
+-                return Float(self._imp_(*self.args), prec)
++                # Evaluate arguments before passing to _imp_
++                evalf_args = [arg.evalf(prec) for arg in self.args]
++                return Float(self._imp_(*evalf_args), prec)
+             except (AttributeError, TypeError, ValueError):
+                 return
+ 
+diff --git a/sympy/utilities/tests/test_lambdify.py b/sympy/utilities/tests/test_lambdify.py
+index d8a1a68a2..e725ef9a0 100644
+--- a/sympy/utilities/tests/test_lambdify.py
++++ b/sympy/utilities/tests/test_lambdify.py
+@@ -612,6 +612,23 @@ def test_imps():
+     raises(ValueError, lambda: lambdify(x, f(f2(x))))
+ 
+ 
++def test_recursive_evalf():
++    # Test that nested implemented functions can be properly evaluated with evalf
++    f = implemented_function('f', lambda x: x ** 2)
++    g = implemented_function('g', lambda x: 2 * x)
++    
++    # Test individual function evaluation
++    assert float(f(2).evalf()) == 4.0
++    assert float(g(2).evalf()) == 4.0
++    
++    # Test nested function evaluation - this is what the fix addresses
++    assert float(f(g(2)).evalf()) == 16.0
++    
++    # Test with deeper nesting
++    h = implemented_function('h', lambda x: x + 1)
++    assert float(f(g(h(2))).evalf()) == 36.0  # f(g(h(2))) = f(g(3)) = f(6) = 36
++
++
+ def test_imps_errors():
+     # Test errors that implemented functions can return, and still be able to
+     # form expressions.

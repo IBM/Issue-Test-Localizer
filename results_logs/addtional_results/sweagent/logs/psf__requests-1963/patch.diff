@@ -1,0 +1,14 @@
+diff --git a/requests/sessions.py b/requests/sessions.py
+index 425db22c..6d6bdb35 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -182,6 +182,9 @@ class SessionRedirectMixin(object):
+ 
+             i += 1
+             yield resp
++            
++            # Update req to be the prepared request for the next iteration
++            req = prepared_request
+ 
+ 
+ class Session(SessionRedirectMixin):

@@ -1,0 +1,21 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index b1d3c04..d1bb6ac 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -1389,6 +1389,16 @@ def builtin_resolver(app: Sphinx, env: BuildEnvironment,
+         elif istyping(reftarget):
+             # typing class
+             return contnode
++        else:
++            # Check if it's a standard library type
++            module_name = node.get('py:module')
++            if module_name:
++                try:
++                    module = __import__(module_name)
++                    if inspect.isclass(getattr(module, reftarget, None)):
++                        return contnode
++                except ImportError:
++                    pass
+ 
+     return None
+ 

@@ -1,0 +1,21 @@
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index ab763da..98ca528 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -1231,6 +1231,16 @@ class Derivative(Expr):
+ 
+     is_Derivative = True
+ 
++    @property
++    def kind(self):
++        """Identify the kind of the derivative expression.
++
++        This is used to identify the kind (number, matrix, etc.) of the
++        derivative expression.
++        """
++        # Return the kind of the expression being differentiated
++        return self.expr.kind
++
+     @property
+     def _diff_wrt(self):
+         """An expression may be differentiated wrt a Derivative if

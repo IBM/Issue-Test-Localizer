@@ -1,0 +1,55 @@
+{
+  "instance_id": "pydata__xarray-4966",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4966/dedup_patch_4.jsonl",
+    "repro_fixes": 2,
+    "repro_total_considered": 2,
+    "regression_passed": 2,
+    "occurrence": 20,
+    "normalized_occurrence": 21
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4966/dedup_patch_4.jsonl",
+        "repro_fixes": 2,
+        "repro_total_considered": 2,
+        "regression_passed": 2,
+        "occurrence": 20,
+        "normalized_occurrence": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4966/dedup_patch_2.jsonl",
+        "repro_fixes": 2,
+        "repro_total_considered": 2,
+        "regression_passed": 2,
+        "occurrence": 1,
+        "normalized_occurrence": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4966/dedup_patch_3.jsonl",
+        "repro_fixes": 2,
+        "repro_total_considered": 2,
+        "regression_passed": 2,
+        "occurrence": 17,
+        "normalized_occurrence": 17
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4966/dedup_patch_0.jsonl",
+        "repro_fixes": 2,
+        "repro_total_considered": 2,
+        "regression_passed": 2,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4966/dedup_patch_1.jsonl",
+        "repro_fixes": 2,
+        "repro_total_considered": 2,
+        "regression_passed": 2,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

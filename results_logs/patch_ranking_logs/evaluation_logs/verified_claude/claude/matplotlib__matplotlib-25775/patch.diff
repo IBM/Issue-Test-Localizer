@@ -1,0 +1,68 @@
+diff --git a/lib/matplotlib/text.py b/lib/matplotlib/text.py
+index c2b18d4..faacc8a 100644
+--- a/lib/matplotlib/text.py
++++ b/lib/matplotlib/text.py
+@@ -115,6 +115,7 @@ class Text(Artist):
+                  wrap=False,
+                  transform_rotates_text=False,
+                  parse_math=None,    # defaults to rcParams['text.parse_math']
++                 antialiased=None,   # defaults to rcParams['text.antialiased']
+                  **kwargs
+                  ):
+         """
+@@ -149,6 +150,7 @@ class Text(Artist):
+             transform_rotates_text=transform_rotates_text,
+             linespacing=linespacing,
+             rotation_mode=rotation_mode,
++            antialiased=antialiased,
+         )
+         self.update(kwargs)
+ 
+@@ -167,6 +169,7 @@ class Text(Artist):
+         transform_rotates_text=False,
+         linespacing=None,
+         rotation_mode=None,
++        antialiased=None,
+     ):
+         self.set_text(text)
+         self.set_color(
+@@ -187,6 +190,7 @@ class Text(Artist):
+             linespacing = 1.2  # Maybe use rcParam later.
+         self.set_linespacing(linespacing)
+         self.set_rotation_mode(rotation_mode)
++        self._antialiased = mpl.rcParams['text.antialiased'] if antialiased is None else antialiased
+ 
+     def update(self, kwargs):
+         # docstring inherited
+@@ -737,6 +741,7 @@ class Text(Artist):
+             gc.set_foreground(self.get_color())
+             gc.set_alpha(self.get_alpha())
+             gc.set_url(self._url)
++            gc.set_antialiased(self._antialiased)
+             self._set_gc_clip(gc)
+ 
+             angle = self.get_rotation()
+@@ -1335,6 +1340,23 @@ class Text(Artist):
+         """
+         return self.set_family(fontname)
+ 
++    def get_antialiased(self):
++        """
++        Return whether text is antialiased.
++        """
++        return self._antialiased
++
++    def set_antialiased(self, aa):
++        """
++        Set whether to use antialiased rendering.
++
++        Parameters
++        ----------
++        aa : bool
++        """
++        self._antialiased = bool(aa)
++        self.stale = True
++
+ 
+ class OffsetFrom:
+     """Callable helper class for working with `Annotation`."""

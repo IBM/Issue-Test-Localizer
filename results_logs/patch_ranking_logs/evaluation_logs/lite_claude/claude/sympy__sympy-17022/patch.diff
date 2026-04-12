@@ -1,0 +1,19 @@
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index 1a97f12..85529a2 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -19,11 +19,11 @@ from sympy.utilities.decorator import doctest_depends_on
+ __doctest_requires__ = {('lambdify',): ['numpy', 'tensorflow']}
+ 
+ # Default namespaces, letting us define translations that can't be defined
+-# by simple variable maps, like I => 1j
++# by simple variable maps
+ MATH_DEFAULT = {}
+ MPMATH_DEFAULT = {}
+-NUMPY_DEFAULT = {"I": 1j}
+-SCIPY_DEFAULT = {"I": 1j}
++NUMPY_DEFAULT = {}
++SCIPY_DEFAULT = {}
+ TENSORFLOW_DEFAULT = {}
+ SYMPY_DEFAULT = {}
+ NUMEXPR_DEFAULT = {}

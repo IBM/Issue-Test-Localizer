@@ -1,0 +1,60 @@
+diff --git a/sklearn/svm/base.py b/sklearn/svm/base.py
+index 64cebe837..0ab06d115 100644
+--- a/sklearn/svm/base.py
++++ b/sklearn/svm/base.py
+@@ -286,12 +286,17 @@ class BaseLibSVM(BaseEstimator, metaclass=ABCMeta):
+             n_class = 1
+         n_SV = self.support_vectors_.shape[0]
+ 
+-        dual_coef_indices = np.tile(np.arange(n_SV), n_class)
+-        dual_coef_indptr = np.arange(0, dual_coef_indices.size + 1,
+-                                     dual_coef_indices.size / n_class)
+-        self.dual_coef_ = sp.csr_matrix(
+-            (dual_coef_data, dual_coef_indices, dual_coef_indptr),
+-            (n_class, n_SV))
++        # Handle the case where there are no support vectors
++        if n_SV == 0:
++            # Create an empty CSR matrix of the correct shape (n_class, 0)
++            self.dual_coef_ = sp.csr_matrix((n_class, 0))
++        else:
++            dual_coef_indices = np.tile(np.arange(n_SV), n_class)
++            dual_coef_indptr = np.arange(0, dual_coef_indices.size + 1,
++                                        dual_coef_indices.size / n_class)
++            self.dual_coef_ = sp.csr_matrix(
++                (dual_coef_data, dual_coef_indices, dual_coef_indptr),
++                (n_class, n_SV))
+ 
+     def predict(self, X):
+         """Perform regression on samples in X.
+diff --git a/sklearn/svm/tests/test_sparse.py b/sklearn/svm/tests/test_sparse.py
+index 7cf6e8af2..0f3a99ac6 100644
+--- a/sklearn/svm/tests/test_sparse.py
++++ b/sklearn/svm/tests/test_sparse.py
+@@ -360,3 +360,27 @@ def test_consistent_proba():
+     with ignore_warnings(category=ConvergenceWarning):
+         proba_2 = a.fit(X, Y).predict_proba(X)
+     assert_array_almost_equal(proba_1, proba_2)
++
++
++def test_empty_support_vectors_sparse():
++    """Test that SVM with sparse input works correctly when there are no support vectors."""
++    # Create test data that will result in no support vectors
++    x_train = np.array([[0, 1, 0, 0],
++                        [0, 0, 0, 1],
++                        [0, 0, 1, 0],
++                        [0, 0, 0, 1]])
++    y_train = np.array([0.04, 0.04, 0.10, 0.16])
++    x_train_sp = sparse.csr_matrix(x_train)
++
++    # Parameters that will result in no support vectors for this data
++    model = svm.SVR(C=316.227766017, gamma=1.0, kernel='linear', epsilon=0.1)
++    
++    # Fit with dense data first to confirm no support vectors
++    model.fit(x_train, y_train)
++    assert model.support_vectors_.shape[0] == 0
++    
++    # Now fit with sparse data - this should not raise an exception
++    model.fit(x_train_sp, y_train)
++    
++    # Check that dual_coef_ has the correct shape
++    assert model.dual_coef_.shape == (1, 0)

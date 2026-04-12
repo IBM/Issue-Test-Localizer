@@ -1,0 +1,40 @@
+diff --git a/sympy/parsing/latex/_parse_latex_antlr.py b/sympy/parsing/latex/_parse_latex_antlr.py
+index 2e4a45ad20..231e653677 100644
+--- a/sympy/parsing/latex/_parse_latex_antlr.py
++++ b/sympy/parsing/latex/_parse_latex_antlr.py
+@@ -140,6 +140,10 @@ def convert_mp(mp):
+     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
+         lh = convert_mp(mp_left)
+         rh = convert_mp(mp_right)
++        # Properly handle division by using Pow directly on the denominator
++        # This ensures correct parentheses for nested fractions
++        # The issue is when the denominator is a fraction like 1/(c^2)
++        # We need to wrap it properly in parentheses
+         return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
+     else:
+         if hasattr(mp, 'unary'):
+@@ -382,10 +386,12 @@ def convert_frac(frac):
+ 
+     expr_top = convert_expr(frac.upper)
+     expr_bot = convert_expr(frac.lower)
++    # Create a proper inverse with parentheses by using Pow directly
+     inverse_denom = sympy.Pow(expr_bot, -1, evaluate=False)
+     if expr_top == 1:
+         return inverse_denom
+     else:
++        # Use proper multiplication with the inverse denominator
+         return sympy.Mul(expr_top, inverse_denom, evaluate=False)
+ 
+ def convert_binom(binom):
+diff --git a/sympy/parsing/tests/test_latex.py b/sympy/parsing/tests/test_latex.py
+index f5c61cde13..a3cb3d0616 100644
+--- a/sympy/parsing/tests/test_latex.py
++++ b/sympy/parsing/tests/test_latex.py
+@@ -120,6 +120,7 @@ def test_import():
+     (r"\frac{a}{b}", a / b),
+     (r"\frac{a + b}{c}", _Mul(a + b, _Pow(c, -1))),
+     (r"\frac{7}{3}", _Mul(7, _Pow(3, -1))),
++    (r"\frac{\frac{a^3+b}{c}}{\frac{1}{c^2}}", _Mul(_Mul(_Add(a**3, b), _Pow(c, -1)), _Pow(_Mul(1, _Pow(_Pow(c, 2), -1)), -1))),
+     (r"(\csc x)(\sec y)", csc(x)*sec(y)),
+     (r"\lim_{x \to 3} a", Limit(a, x, 3)),
+     (r"\lim_{x \rightarrow 3} a", Limit(a, x, 3)),

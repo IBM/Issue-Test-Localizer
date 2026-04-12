@@ -1,0 +1,19 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index e8330e81c..18d87fe41 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -861,7 +861,13 @@ class PyProperty(PyObject):
+ 
+         typ = self.options.get('type')
+         if typ:
+-            signode += addnodes.desc_annotation(typ, ': ' + typ)
++            # Convert type annotation string to reST cross-references
++            # Only for non-builtin types (no spaces, starts with capital letter)
++            if ' ' not in typ and typ[0].isupper():
++                typ_cross_ref = ':class:`' + typ + '`'
++                signode += addnodes.desc_annotation(typ_cross_ref, ': ' + typ_cross_ref)
++            else:
++                signode += addnodes.desc_annotation(typ, ': ' + typ)
+ 
+         return fullname, prefix
+ 

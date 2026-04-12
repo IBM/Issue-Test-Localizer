@@ -1,0 +1,92 @@
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 1dee8a23d9..08c604a6d0 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -1516,6 +1516,7 @@ class DraggableBase:
+ 
+     def on_motion(self, evt):
+         if self._check_still_parented() and self.got_artist:
++            self._ensure_canvas()
+             dx = evt.x - self.mouse_x
+             dy = evt.y - self.mouse_y
+             self.update_offset(dx, dy)
+@@ -1529,6 +1530,7 @@ class DraggableBase:
+ 
+     def on_pick(self, evt):
+         if self._check_still_parented() and evt.artist == self.ref_artist:
++            self._ensure_canvas()
+             self.mouse_x = evt.mouseevent.x
+             self.mouse_y = evt.mouseevent.y
+             self.got_artist = True
+@@ -1546,6 +1548,7 @@ class DraggableBase:
+ 
+     def on_release(self, event):
+         if self._check_still_parented() and self.got_artist:
++            self._ensure_canvas()
+             self.finalize_offset()
+             self.got_artist = False
+             self.canvas.mpl_disconnect(self._c1)
+@@ -1562,14 +1565,55 @@ class DraggableBase:
+ 
+     def disconnect(self):
+         """Disconnect the callbacks."""
+-        for cid in self.cids:
+-            self.canvas.mpl_disconnect(cid)
+-        try:
+-            c1 = self._c1
+-        except AttributeError:
+-            pass
+-        else:
+-            self.canvas.mpl_disconnect(c1)
++        if self.canvas is not None:
++            for cid in self.cids:
++                self.canvas.mpl_disconnect(cid)
++            try:
++                c1 = self._c1
++            except AttributeError:
++                pass
++            else:
++                self.canvas.mpl_disconnect(c1)
++
++    def __getstate__(self):
++        """
++        Return the state for pickling.
++        
++        We exclude the canvas and callback IDs since they cannot be pickled
++        and will be recreated when the object is unpickled.
++        """
++        state = self.__dict__.copy()
++        # Remove the unpicklable entries
++        state.pop('canvas', None)
++        state.pop('cids', None)
++        state.pop('_c1', None)
++        return state
++
++    def __setstate__(self, state):
++        """
++        Restore the state from pickling.
++        
++        We need to recreate the canvas reference and callback connections.
++        """
++        self.__dict__.update(state)
++        # Restore the canvas reference - we'll do this lazily when needed
++        # since the figure might not be fully restored yet during unpickling
++        self.canvas = None
++        self.cids = []
++        
++    def _ensure_canvas(self):
++        """Ensure canvas and callbacks are set up. Called lazily when needed."""
++        if self.canvas is None:
++            self.canvas = self.ref_artist.figure.canvas
++            # Update _use_blit based on current canvas capabilities
++            self._use_blit = getattr(self, '_use_blit', False) and self.canvas.supports_blit
++            # Reconnect the callbacks
++            self.cids = [
++                self.canvas.callbacks._connect_picklable(
++                    'pick_event', self.on_pick),
++                self.canvas.callbacks._connect_picklable(
++                    'button_release_event', self.on_release),
++            ]
+ 
+     def save_offset(self):
+         pass

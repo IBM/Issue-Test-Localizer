@@ -1,0 +1,20 @@
+diff --git a/sympy/printing/codeprinter.py b/sympy/printing/codeprinter.py
+index ad10365..1eeec3a 100644
+--- a/sympy/printing/codeprinter.py
++++ b/sympy/printing/codeprinter.py
+@@ -457,4 +457,14 @@ class CodePrinter(StrPrinter):
+     _print_Uniform = _print_not_supported
+     _print_Unit = _print_not_supported
+     _print_Wild = _print_not_supported
+-    _print_WildFunction = _print_not_supported
++    _print_WildFunction = _print_not_supported
++
++class MCodePrinter(CodePrinter):
++    # other methods and initializations
++
++    def _print_Derivative(self, expr):
++        return "D[%s]" % (self.stringify(expr.args, ", "))
++
++    def _print_Float(self, expr):
++        res = str(expr)
++        return res.replace('e', '*^')

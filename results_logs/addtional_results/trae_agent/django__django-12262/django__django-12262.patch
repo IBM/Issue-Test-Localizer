@@ -1,0 +1,90 @@
+diff --git a/django/template/library.py b/django/template/library.py
+index 20bc86dac8..d00eb6f07d 100644
+--- a/django/template/library.py
++++ b/django/template/library.py
+@@ -261,16 +261,19 @@ def parse_bits(parser, bits, params, varargs, varkw, defaults,
+         if kwarg:
+             # The kwarg was successfully extracted
+             param, value = kwarg.popitem()
+-            if param not in params and param not in unhandled_kwargs and varkw is None:
+-                # An unexpected keyword argument was supplied
+-                raise TemplateSyntaxError(
+-                    "'%s' received unexpected keyword argument '%s'" %
+-                    (name, param))
+-            elif param in kwargs:
++            # Check for duplicate keyword arguments first
++            if param in kwargs:
+                 # The keyword argument has already been supplied once
+                 raise TemplateSyntaxError(
+                     "'%s' received multiple values for keyword argument '%s'" %
+                     (name, param))
++            # Then check if it's a valid keyword argument
++            elif (param not in params and param not in unhandled_kwargs and
++                    (not kwonly_defaults or param not in kwonly_defaults) and varkw is None):
++                # An unexpected keyword argument was supplied
++                raise TemplateSyntaxError(
++                    "'%s' received unexpected keyword argument '%s'" %
++                    (name, param))
+             else:
+                 # All good, record the keyword argument
+                 kwargs[str(param)] = value
+@@ -281,6 +284,7 @@ def parse_bits(parser, bits, params, varargs, varkw, defaults,
+                 elif param in unhandled_kwargs:
+                     # Same for keyword-only arguments
+                     unhandled_kwargs.remove(param)
++                # Note: no need to remove from kwonly_defaults as those are optional
+         else:
+             if kwargs:
+                 raise TemplateSyntaxError(
+diff --git a/tests/template_tests/templatetags/custom.py b/tests/template_tests/templatetags/custom.py
+index a5e1b33c67..43745a5929 100644
+--- a/tests/template_tests/templatetags/custom.py
++++ b/tests/template_tests/templatetags/custom.py
+@@ -183,6 +183,16 @@ def minustwo_overridden_name(value):
+     return value - 2
+ 
+ 
++@register.simple_tag
++def keyword_only_default(*, kwarg='default'):
++    return f'keyword_only_default - Expected result: {kwarg}'
++
++
++@register.simple_tag
++def keyword_only_arg(*, kwarg):
++    return f'keyword_only_arg - Expected result: {kwarg}'
++
++
+ register.simple_tag(lambda x: x - 1, name='minusone')
+ 
+ 
+diff --git a/tests/template_tests/test_custom.py b/tests/template_tests/test_custom.py
+index dbc5bc267d..864693afba 100644
+--- a/tests/template_tests/test_custom.py
++++ b/tests/template_tests/test_custom.py
+@@ -46,6 +46,26 @@ class TagTestCase(SimpleTestCase):
+ 
+ class SimpleTagTests(TagTestCase):
+ 
++    def test_keyword_only_default_arg(self):
++        t = self.engine.from_string('{% load custom %}{% keyword_only_default %}')
++        self.assertEqual(t.render(Context({})), 'keyword_only_default - Expected result: default')
++        
++        t = self.engine.from_string('{% load custom %}{% keyword_only_default kwarg="custom" %}')
++        self.assertEqual(t.render(Context({})), 'keyword_only_default - Expected result: custom')
++        
++    def test_keyword_only_arg(self):
++        t = self.engine.from_string('{% load custom %}{% keyword_only_arg kwarg="value" %}')
++        self.assertEqual(t.render(Context({})), 'keyword_only_arg - Expected result: value')
++        
++        with self.assertRaisesMessage(TemplateSyntaxError, 
++                                     "'keyword_only_arg' did not receive value(s) for the argument(s): 'kwarg'"):
++            self.engine.from_string('{% load custom %}{% keyword_only_arg %}')
++            
++    def test_duplicate_keyword_arg(self):
++        with self.assertRaisesMessage(TemplateSyntaxError, 
++                                     "'keyword_only_arg' received multiple values for keyword argument 'kwarg'"):
++            self.engine.from_string('{% load custom %}{% keyword_only_arg kwarg="first" kwarg="second" %}')
++
+     def test_simple_tags(self):
+         c = Context({'value': 42})
+ 

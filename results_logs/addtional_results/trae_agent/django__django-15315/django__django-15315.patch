@@ -1,0 +1,67 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 88c9ca9f28..8890ebd4d9 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -526,27 +526,47 @@ class Field(RegisterLookupMixin):
+         # This is needed because bisect does not take a comparison function.
+         # Order by creation_counter first for backward compatibility.
+         if isinstance(other, Field):
+-            if (
+-                self.creation_counter != other.creation_counter or
+-                not hasattr(self, 'model') and not hasattr(other, 'model')
+-            ):
++            # First compare by creation counter
++            if self.creation_counter != other.creation_counter:
+                 return self.creation_counter < other.creation_counter
+-            elif hasattr(self, 'model') != hasattr(other, 'model'):
+-                return not hasattr(self, 'model')  # Order no-model fields first
+-            else:
+-                # creation_counter's are equal, compare only models.
++                
++            # If both have a model attribute and it's not None, compare by model
++            model_self = getattr(self, 'model', None)
++            model_other = getattr(other, 'model', None)
++            
++            # Check if both models have app_label
++            has_app_label_self = (
++                model_self is not None and 
++                hasattr(model_self, '_meta') and 
++                hasattr(model_self._meta, 'app_label') and
++                model_self._meta.app_label is not None
++            )
++            has_app_label_other = (
++                model_other is not None and 
++                hasattr(model_other, '_meta') and 
++                hasattr(model_other._meta, 'app_label') and
++                model_other._meta.app_label is not None
++            )
++            
++            # If both have app_label, compare by app_label and model_name
++            if has_app_label_self and has_app_label_other:
+                 return (
+-                    (self.model._meta.app_label, self.model._meta.model_name) <
+-                    (other.model._meta.app_label, other.model._meta.model_name)
++                    (model_self._meta.app_label, model_self._meta.model_name) <
++                    (model_other._meta.app_label, model_other._meta.model_name)
+                 )
++            # If only one has app_label, the one without app_label comes first
++            elif has_app_label_self != has_app_label_other:
++                return not has_app_label_self
++                
++            # If neither has app_label or we can't compare them, fall back to creation counter
++            return self.creation_counter < other.creation_counter
+         return NotImplemented
+ 
+     def __hash__(self):
+-        return hash((
+-            self.creation_counter,
+-            self.model._meta.app_label if hasattr(self, 'model') else None,
+-            self.model._meta.model_name if hasattr(self, 'model') else None,
+-        ))
++        # Hash should be immutable to allow using fields as dictionary keys.
++        # The model information is intentionally not included as it would change
++        # the hash value when a field is added to a model.
++        return hash(self.creation_counter)
+ 
+     def __deepcopy__(self, memodict):
+         # We don't have to deepcopy very much here, since most things are not

@@ -1,0 +1,126 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7462",
+  "container_id": "7c9deba6e1fed448263dfb03817355e02afa8819a5779aec8a15061e3347b569",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_10.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_12.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_13.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_14.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_4.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_5.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_6.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_7.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_8.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_9.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7462/dedup_patch_11.jsonl",
+        "inst": "sphinx-doc__sphinx-7462",
+        "passed": 7,
+        "failed": 2
+      }
+    ],
+    "top_passed": 8,
+    "top_subset_size": 14
+  },
+  "reproduction": {
+    "tests/test_domain_py.py::test_pyfunction_signature#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pyfunction_signature_full_py38#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_parse_annotation#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_parse_annotation#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_parse_annotation#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_parse_annotation#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

@@ -1,0 +1,191 @@
+diff --git a/sphinx/ext/autodoc/typehints.py b/sphinx/ext/autodoc/typehints.py
+index d912cd7d5..003acd2ba 100644
+--- a/sphinx/ext/autodoc/typehints.py
++++ b/sphinx/ext/autodoc/typehints.py
+@@ -2,6 +2,7 @@
+ 
+ import re
+ from collections import OrderedDict
++from inspect import Parameter
+ from typing import Any, Dict, Iterable, Set, cast
+ 
+ from docutils import nodes
+@@ -24,10 +25,14 @@ def record_typehints(app: Sphinx, objtype: str, name: str, obj: Any,
+         if callable(obj):
+             annotations = app.env.temp_data.setdefault('annotations', {})
+             annotation = annotations.setdefault(name, OrderedDict())
++            # Store parameter kinds for *args and **kwargs formatting
++            param_kinds = app.env.temp_data.setdefault('param_kinds', {})
++            param_kind = param_kinds.setdefault(name, {})
+             sig = inspect.signature(obj, type_aliases=app.config.autodoc_type_aliases)
+             for param in sig.parameters.values():
+                 if param.annotation is not param.empty:
+                     annotation[param.name] = typing.stringify(param.annotation, mode)
++                    param_kind[param.name] = param.kind
+             if sig.return_annotation is not sig.empty:
+                 annotation['return'] = typing.stringify(sig.return_annotation, mode)
+     except (TypeError, ValueError):
+@@ -51,6 +56,7 @@ def merge_typehints(app: Sphinx, domain: str, objtype: str, contentnode: Element
+         return
+ 
+     annotations = app.env.temp_data.get('annotations', {})
++    param_kinds = app.env.temp_data.get('param_kinds', {})
+     if annotations.get(fullname, {}):
+         field_lists = [n for n in contentnode if isinstance(n, nodes.field_list)]
+         if field_lists == []:
+@@ -60,16 +66,16 @@ def merge_typehints(app: Sphinx, domain: str, objtype: str, contentnode: Element
+         for field_list in field_lists:
+             if app.config.autodoc_typehints_description_target == "all":
+                 if objtype == 'class':
+-                    modify_field_list(field_list, annotations[fullname], suppress_rtype=True)
++                    modify_field_list(field_list, annotations[fullname], param_kinds.get(fullname, {}), suppress_rtype=True)
+                 else:
+-                    modify_field_list(field_list, annotations[fullname])
++                    modify_field_list(field_list, annotations[fullname], param_kinds.get(fullname, {}))
+             elif app.config.autodoc_typehints_description_target == "documented_params":
+                 augment_descriptions_with_types(
+-                    field_list, annotations[fullname], force_rtype=True
++                    field_list, annotations[fullname], param_kinds.get(fullname, {}), force_rtype=True
+                 )
+             else:
+                 augment_descriptions_with_types(
+-                    field_list, annotations[fullname], force_rtype=False
++                    field_list, annotations[fullname], param_kinds.get(fullname, {}), force_rtype=False
+                 )
+ 
+ 
+@@ -87,7 +93,10 @@ def insert_field_list(node: Element) -> nodes.field_list:
+ 
+ 
+ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
++                      param_kinds: Dict[str, Parameter] = None,
+                       suppress_rtype: bool = False) -> None:
++    if param_kinds is None:
++        param_kinds = {}
+     arguments: Dict[str, Dict[str, bool]] = {}
+     fields = cast(Iterable[nodes.field], node)
+     for field in fields:
+@@ -96,16 +105,32 @@ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
+         if parts[0] == 'param':
+             if len(parts) == 2:
+                 # :param xxx:
+-                arg = arguments.setdefault(parts[1], {})
++                param_name = parts[1]
++                # Normalize *args and **kwargs to match annotation keys
++                if param_name.startswith('**'):
++                    param_name = param_name[2:]
++                elif param_name.startswith('*'):
++                    param_name = param_name[1:]
++                arg = arguments.setdefault(param_name, {})
+                 arg['param'] = True
+             elif len(parts) > 2:
+                 # :param xxx yyy:
+                 name = ' '.join(parts[2:])
++                # Normalize *args and **kwargs to match annotation keys
++                if name.startswith('**'):
++                    name = name[2:]
++                elif name.startswith('*'):
++                    name = name[1:]
+                 arg = arguments.setdefault(name, {})
+                 arg['param'] = True
+                 arg['type'] = True
+         elif parts[0] == 'type':
+             name = ' '.join(parts[1:])
++            # Normalize *args and **kwargs to match annotation keys
++            if name.startswith('**'):
++                name = name[2:]
++            elif name.startswith('*'):
++                name = name[1:]
+             arg = arguments.setdefault(name, {})
+             arg['type'] = True
+         elif parts[0] == 'rtype':
+@@ -116,14 +141,23 @@ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
+             continue
+ 
+         arg = arguments.get(name, {})
++        # Format parameter name with appropriate asterisks for display
++        param_kind = param_kinds.get(name)
++        if param_kind == Parameter.VAR_POSITIONAL:
++            display_name = '*' + name
++        elif param_kind == Parameter.VAR_KEYWORD:
++            display_name = '**' + name
++        else:
++            display_name = name
++            
+         if not arg.get('type'):
+             field = nodes.field()
+-            field += nodes.field_name('', 'type ' + name)
++            field += nodes.field_name('', 'type ' + display_name)
+             field += nodes.field_body('', nodes.paragraph('', annotation))
+             node += field
+         if not arg.get('param'):
+             field = nodes.field()
+-            field += nodes.field_name('', 'param ' + name)
++            field += nodes.field_name('', 'param ' + display_name)
+             field += nodes.field_body('', nodes.paragraph('', ''))
+             node += field
+ 
+@@ -141,8 +175,11 @@ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
+ def augment_descriptions_with_types(
+     node: nodes.field_list,
+     annotations: Dict[str, str],
+-    force_rtype: bool
++    param_kinds: Dict[str, Parameter] = None,
++    force_rtype: bool = False
+ ) -> None:
++    if param_kinds is None:
++        param_kinds = {}
+     fields = cast(Iterable[nodes.field], node)
+     has_description = set()  # type: Set[str]
+     has_type = set()  # type: Set[str]
+@@ -152,14 +189,30 @@ def augment_descriptions_with_types(
+         if parts[0] == 'param':
+             if len(parts) == 2:
+                 # :param xxx:
+-                has_description.add(parts[1])
++                param_name = parts[1]
++                # Normalize *args and **kwargs to match annotation keys
++                if param_name.startswith('**'):
++                    param_name = param_name[2:]
++                elif param_name.startswith('*'):
++                    param_name = param_name[1:]
++                has_description.add(param_name)
+             elif len(parts) > 2:
+                 # :param xxx yyy:
+                 name = ' '.join(parts[2:])
++                # Normalize *args and **kwargs to match annotation keys
++                if name.startswith('**'):
++                    name = name[2:]
++                elif name.startswith('*'):
++                    name = name[1:]
+                 has_description.add(name)
+                 has_type.add(name)
+         elif parts[0] == 'type':
+             name = ' '.join(parts[1:])
++            # Normalize *args and **kwargs to match annotation keys
++            if name.startswith('**'):
++                name = name[2:]
++            elif name.startswith('*'):
++                name = name[1:]
+             has_type.add(name)
+         elif parts[0] in ('return', 'returns'):
+             has_description.add('return')
+@@ -171,8 +224,17 @@ def augment_descriptions_with_types(
+         if name in ('return', 'returns'):
+             continue
+         if name in has_description and name not in has_type:
++            # Format parameter name with appropriate asterisks for display
++            param_kind = param_kinds.get(name)
++            if param_kind == Parameter.VAR_POSITIONAL:
++                display_name = '*' + name
++            elif param_kind == Parameter.VAR_KEYWORD:
++                display_name = '**' + name
++            else:
++                display_name = name
++                
+             field = nodes.field()
+-            field += nodes.field_name('', 'type ' + name)
++            field += nodes.field_name('', 'type ' + display_name)
+             field += nodes.field_body('', nodes.paragraph('', annotations[name]))
+             node += field
+ 

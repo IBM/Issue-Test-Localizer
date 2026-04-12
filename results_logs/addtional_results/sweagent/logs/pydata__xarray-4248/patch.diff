@@ -1,0 +1,34 @@
+diff --git a/xarray/core/formatting.py b/xarray/core/formatting.py
+index 28eaae5f..5ddb9215 100644
+--- a/xarray/core/formatting.py
++++ b/xarray/core/formatting.py
+@@ -278,7 +278,13 @@ def summarize_variable(
+             raise TypeError(f"`max_width` value of `{max_width}` is not a valid int")
+         else:
+             max_width = max_width_options
+-    first_col = pretty_print(f"  {marker} {name} ", col_width)
++    
++    # Check if variable has units in its attributes
++    units_str = ""
++    if hasattr(var, 'attrs') and 'units' in var.attrs and var.attrs['units']:
++        units_str = f", in {var.attrs['units']}"
++    
++    first_col = pretty_print(f"  {marker} {name}{units_str} ", col_width)
+     if var.dims:
+         dims_str = "({}) ".format(", ".join(map(str, var.dims)))
+     else:
+@@ -347,8 +353,13 @@ def _get_col_items(mapping):
+ 
+     col_items = []
+     for k, v in mapping.items():
+-        col_items.append(k)
++        # Include units in the column width calculation
+         var = getattr(v, "variable", v)
++        name_with_units = str(k)
++        if hasattr(var, 'attrs') and 'units' in var.attrs and var.attrs['units']:
++            name_with_units += f", in {var.attrs['units']}"
++        col_items.append(name_with_units)
++        
+         if isinstance(var, IndexVariable):
+             level_names = var.to_index_variable().level_names
+             if level_names is not None:

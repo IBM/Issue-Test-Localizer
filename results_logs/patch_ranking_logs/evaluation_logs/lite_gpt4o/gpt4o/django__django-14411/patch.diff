@@ -1,0 +1,25 @@
+diff --git a/django/contrib/admin/utils.py b/django/contrib/admin/utils.py
+index ab619c1..a2d2c65 100644
+--- a/django/contrib/admin/utils.py
++++ b/django/contrib/admin/utils.py
+@@ -307,7 +307,7 @@ def _get_non_gfk_field(opts, name):
+     return field
+ 
+ 
+-def label_for_field(name, model, model_admin=None, return_attr=False, form=None):
++def label_for_field(name, model, model_admin=None, return_attr=False, form=None, is_widget_readonly=False):
+     """
+     Return a sensible label for a field name. The name can be a callable,
+     property (but not created with @property decorator), or the name of an
+@@ -362,7 +362,10 @@ def label_for_field(name, model, model_admin=None, return_attr=False, form=None)
+         attr = name
+ 
+     if return_attr:
+-        return (label, attr)
++        if is_widget_readonly:
++            return (label, None)
++        else:
++            return (label, attr)
+     else:
+         return label
+ 

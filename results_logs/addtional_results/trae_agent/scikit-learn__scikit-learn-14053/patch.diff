@@ -1,0 +1,62 @@
+diff --git a/sklearn/tree/export.py b/sklearn/tree/export.py
+index 1fe11e596..bf7384c49 100644
+--- a/sklearn/tree/export.py
++++ b/sklearn/tree/export.py
+@@ -890,9 +890,17 @@ def export_text(decision_tree, feature_names=None, max_depth=10,
+         value_fmt = "{}{} value: {}\n"
+ 
+     if feature_names:
+-        feature_names_ = [feature_names[i] for i in tree_.feature]
++        # Only include valid feature indices (not TREE_UNDEFINED which is -2)
++        feature_names_ = {}
++        for i, f_idx in enumerate(tree_.feature):
++            if f_idx != _tree.TREE_UNDEFINED:
++                feature_names_[i] = feature_names[f_idx]
+     else:
+-        feature_names_ = ["feature_{}".format(i) for i in tree_.feature]
++        # Only include valid feature indices (not TREE_UNDEFINED which is -2)
++        feature_names_ = {}
++        for i, f_idx in enumerate(tree_.feature):
++            if f_idx != _tree.TREE_UNDEFINED:
++                feature_names_[i] = "feature_{}".format(f_idx)
+ 
+     export_text.report = ""
+ 
+@@ -928,7 +936,8 @@ def export_text(decision_tree, feature_names=None, max_depth=10,
+             info_fmt_right = info_fmt
+ 
+             if tree_.feature[node] != _tree.TREE_UNDEFINED:
+-                name = feature_names_[node]
++                # Get the feature name from our dictionary, defaulting to a generic name if not found
++                name = feature_names_.get(node, "feature_{}".format(tree_.feature[node]))
+                 threshold = tree_.threshold[node]
+                 threshold = "{1:.{0}f}".format(decimals, threshold)
+                 export_text.report += right_child_fmt.format(indent,
+diff --git a/sklearn/tree/tests/test_export.py b/sklearn/tree/tests/test_export.py
+index 503431f45..6b3639dbf 100644
+--- a/sklearn/tree/tests/test_export.py
++++ b/sklearn/tree/tests/test_export.py
+@@ -344,6 +344,23 @@ def test_export_text():
+     assert export_text(clf, max_depth=0) == expected_report
+     # testing that the rest of the tree is truncated
+     assert export_text(clf, max_depth=10) == expected_report
++    
++    # Test with a single feature (regression test for GitHub issue #14053)
++    X_single = [[1], [2], [3], [4], [5], [6]]
++    y_single = [0, 0, 0, 1, 1, 1]
++    clf_single = DecisionTreeClassifier(max_depth=1, random_state=0)
++    clf_single.fit(X_single, y_single)
++    
++    # This should not raise an IndexError
++    single_feature_report = export_text(clf_single, feature_names=['single_feature'])
++    expected_single_report = dedent("""
++    |--- single_feature <= 3.50
++    |   |--- class: 0
++    |--- single_feature >  3.50
++    |   |--- class: 1
++    """).lstrip()
++    
++    assert single_feature_report == expected_single_report
+ 
+     expected_report = dedent("""
+     |--- b <= 0.00

@@ -1,0 +1,82 @@
+{
+  "instance_id": "django__django-10914",
+  "container_id": "c75e6e7edb6b4070a0b9a8877a206d9f229e1624fa1cf31593280b4db508d5c0",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+        "inst": "django__django-10914",
+        "passed": 17,
+        "failed": 0
+      }
+    ],
+    "top_passed": 17,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "file_storage.tests.FileStoragePermissions.test_default_file_permissions#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+          "inst": "django__django-10914",
+          "passed": false
+        }
+      ]
+    },
+    "file_uploads.tests.MultiParserTests.test_file_permissions#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "file_uploads.tests.FileUploadTests.test_file_permissions#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+          "inst": "django__django-10914",
+          "passed": false
+        }
+      ]
+    },
+    "file_uploads.tests.FileUploadTests.test_file_upload_permissions#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+          "inst": "django__django-10914",
+          "passed": false
+        }
+      ]
+    },
+    "file_uploads.tests.FileUploadTests.test_file_upload_permissions#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+          "inst": "django__django-10914",
+          "passed": false
+        }
+      ]
+    },
+    "file_uploads.tests.FileUploadTests.test_file_upload_permissions#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+          "inst": "django__django-10914",
+          "passed": false
+        }
+      ]
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-10914/dedup_patch_0.jsonl",
+          "inst": "django__django-10914",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

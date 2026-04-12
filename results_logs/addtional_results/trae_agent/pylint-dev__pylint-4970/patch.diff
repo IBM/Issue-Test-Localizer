@@ -1,0 +1,57 @@
+diff --git a/pylint/checkers/similar.py b/pylint/checkers/similar.py
+index c65b1c89..44fa6d16 100644
+--- a/pylint/checkers/similar.py
++++ b/pylint/checkers/similar.py
+@@ -236,6 +236,10 @@ def hash_lineset(
+     :return: a dict linking hashes to corresponding start index and a dict that links this
+              index to the start and end lines in the file
+     """
++    # If min_common_lines is 0 or negative, return empty dictionaries
++    if min_common_lines <= 0:
++        return defaultdict(list), {}
++        
+     hash2index = defaultdict(list)
+     index2lines = {}
+     # Comments, docstring and other specific patterns maybe excluded -> call to stripped_lines
+@@ -390,6 +394,9 @@ class Similar:
+ 
+     def run(self) -> None:
+         """start looking for similarities and display results on stdout"""
++        # If min_lines is 0, skip similarity checking entirely
++        if self.min_lines <= 0:
++            return
+         self._display_sims(self._compute_sims())
+ 
+     def _compute_sims(self) -> List[Tuple[int, Set[LinesChunkLimits_T]]]:
+@@ -471,6 +478,9 @@ class Similar:
+         Last regroups all successive couples in a bigger one. It allows to take into account common chunk of lines that have more
+         than the minimal number of successive lines required.
+         """
++        # If min_lines is 0 or negative, don't check for similarities
++        if self.min_lines <= 0:
++            return
+         hash_to_index_1: HashToIndex_T
+         hash_to_index_2: HashToIndex_T
+         index_to_lines_1: IndexToLines_T
+@@ -531,6 +541,10 @@ class Similar:
+         """iterate on similarities among all files, by making a cartesian
+         product
+         """
++        # If min_lines is 0 or negative, don't check for similarities
++        if self.min_lines <= 0:
++            return
++            
+         for idx, lineset in enumerate(self.linesets[:-1]):
+             for lineset2 in self.linesets[idx + 1 :]:
+                 yield from self._find_common(lineset, lineset2)
+@@ -830,6 +844,10 @@ class SimilarChecker(BaseChecker, Similar, MapReduceMixin):
+ 
+     def close(self):
+         """compute and display similarities on closing (i.e. end of parsing)"""
++        # If min_lines is 0 or negative, skip similarity checking entirely
++        if self.config.min_similarity_lines <= 0:
++            return
++            
+         total = sum(len(lineset) for lineset in self.linesets)
+         duplicated = 0
+         stats = self.stats

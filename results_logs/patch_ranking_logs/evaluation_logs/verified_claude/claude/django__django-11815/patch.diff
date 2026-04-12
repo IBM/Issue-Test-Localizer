@@ -1,0 +1,23 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 6957452..7c4672b 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -965,6 +965,8 @@ class BooleanField(Field):
+         return super().formfield(**{**defaults, **kwargs})
+ 
+ 
++import enum
++
+ class CharField(Field):
+     description = _("String (up to %(max_length)s)")
+ 
+@@ -1014,6 +1016,9 @@ class CharField(Field):
+ 
+     def get_prep_value(self, value):
+         value = super().get_prep_value(value)
++        # Handle Enum values by using their name instead of value
++        if value is not None and isinstance(value, enum.Enum):
++            return value.name
+         return self.to_python(value)
+ 
+     def formfield(self, **kwargs):

@@ -1,0 +1,46 @@
+diff --git a/lib/matplotlib/colorbar.py b/lib/matplotlib/colorbar.py
+index d3d53e3d98..a9f5dcf0c2 100644
+--- a/lib/matplotlib/colorbar.py
++++ b/lib/matplotlib/colorbar.py
+@@ -1102,8 +1102,39 @@ class Colorbar:
+ 
+         # transform from 0-1 to vmin-vmax:
+         if not self.norm.scaled():
+-            self.norm.vmin = 0
+-            self.norm.vmax = 1
++            if isinstance(self.norm, colors.LogNorm):
++                # LogNorm cannot handle vmin=0, so use appropriate defaults
++                # Try to get data range from mappable if available
++                if hasattr(self, 'mappable') and self.mappable is not None:
++                    try:
++                        # First try to get clim
++                        data_min, data_max = self.mappable.get_clim()
++                        if data_min is None or data_max is None:
++                            # If clim is None, try to get from array data
++                            array = self.mappable.get_array()
++                            if array is not None and array.size > 0:
++                                data_min = float(np.min(array))
++                                data_max = float(np.max(array))
++                        
++                        if data_min is not None and data_max is not None and data_min > 0:
++                            # Ensure vmin is positive for LogNorm
++                            self.norm.vmin = data_min
++                            self.norm.vmax = data_max
++                        else:
++                            # If data contains non-positive values, use safe defaults
++                            self.norm.vmin = 0.1
++                            self.norm.vmax = 1
++                    except (AttributeError, ValueError, TypeError):
++                        # Fallback to safe defaults
++                        self.norm.vmin = 0.1
++                        self.norm.vmax = 1
++                else:
++                    # No mappable available, use safe defaults
++                    self.norm.vmin = 0.1
++                    self.norm.vmax = 1
++            else:
++                self.norm.vmin = 0
++                self.norm.vmax = 1
+         self.norm.vmin, self.norm.vmax = mtransforms.nonsingular(
+             self.norm.vmin, self.norm.vmax, expander=0.1)
+         if (not isinstance(self.norm, colors.BoundaryNorm) and

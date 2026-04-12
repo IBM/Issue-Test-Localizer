@@ -1,0 +1,19 @@
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 81d644a..c371fe4 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -917,8 +917,12 @@ class PrettyPrinter(Printer):
+                 else:
+                     #We always wrap the measure numbers in
+                     #parentheses
+-                    arg_str = self._print(
+-                        v).parens()[0]
++                    arg_pform = self._print(v)
++                    # Special handling for multi-line expressions
++                    if '\n' in str(arg_pform):
++                        arg_str = str(prettyForm(*arg_pform.parens()))
++                    else:
++                        arg_str = str(arg_pform.parens()[0])
+ 
+                     o1.append(arg_str + ' ' + k._pretty_form)
+                 vectstrs.append(k._pretty_form)

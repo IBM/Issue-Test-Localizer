@@ -1,0 +1,19 @@
+diff --git a/django/db/migrations/loader.py b/django/db/migrations/loader.py
+index aa36469..a9a3bf9 100644
+--- a/django/db/migrations/loader.py
++++ b/django/db/migrations/loader.py
+@@ -239,11 +239,11 @@ class MigrationLoader:
+                 # Get applied status of each of this migration's replacement
+                 # targets.
+                 applied_statuses = [(target in self.applied_migrations) for target in migration.replaces]
+-                # The replacing migration is only marked as applied if all of
+-                # its replacement targets are.
++                # The replacing migration is marked as applied if all of its
++                # replacement targets are applied, and removed only if none are applied
+                 if all(applied_statuses):
+                     self.applied_migrations[key] = migration
+-                else:
++                elif not any(applied_statuses):
+                     self.applied_migrations.pop(key, None)
+                 # A replacing migration can be used if either all or none of
+                 # its replacement targets have been applied.

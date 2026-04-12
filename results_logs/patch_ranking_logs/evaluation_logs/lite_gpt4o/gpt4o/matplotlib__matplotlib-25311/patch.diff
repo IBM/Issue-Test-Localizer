@@ -1,0 +1,19 @@
+diff --git a/lib/matplotlib/legend.py b/lib/matplotlib/legend.py
+index a038473..7f43ddd 100644
+--- a/lib/matplotlib/legend.py
++++ b/lib/matplotlib/legend.py
+@@ -51,6 +51,14 @@ from . import legend_handler
+ 
+ 
+ class DraggableLegend(DraggableOffsetBox):
++    def __getstate__(self):
++        state = self.__dict__.copy()
++        state.pop("canvas", None)
++        return state
++
++    def __setstate__(self, state):
++        self.__dict__.update(state)
++        self.canvas = None
+     def __init__(self, legend, use_blit=False, update="loc"):
+         """
+         Wrapper around a `.Legend` to support mouse dragging.

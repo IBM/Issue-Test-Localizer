@@ -1,0 +1,35 @@
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index d9fb088350..b78f0c1c74 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -25,7 +25,8 @@ class Command(BaseCommand):
+     help = "Starts a lightweight Web server for development."
+ 
+     # Validation is called explicitly each time the server is reloaded.
+-    requires_system_checks = []
++    # Use a non-empty value to ensure the --skip-checks option is available
++    requires_system_checks = '__all__'
+     stealth_options = ('shutdown_message',)
+ 
+     default_addr = '127.0.0.1'
+@@ -114,11 +115,15 @@ class Command(BaseCommand):
+         shutdown_message = options.get('shutdown_message', '')
+         quit_command = 'CTRL-BREAK' if sys.platform == 'win32' else 'CONTROL-C'
+ 
+-        self.stdout.write("Performing system checks...\n\n")
+-        self.check(display_num_errors=True)
+-        # Need to check migrations here, so can't use the
+-        # requires_migrations_check attribute.
+-        self.check_migrations()
++        # Skip system checks if --skip-checks option was provided
++        if options.get('skip_checks', False):
++            self.stdout.write("Skipping system checks.\n\n")
++        else:
++            self.stdout.write("Performing system checks...\n\n")
++            self.check(display_num_errors=True)
++            # Need to check migrations here, so can't use the
++            # requires_migrations_check attribute.
++            self.check_migrations()
+         now = datetime.now().strftime('%B %d, %Y - %X')
+         self.stdout.write(now)
+         self.stdout.write((

@@ -1,0 +1,168 @@
+{
+  "instance_id": "sympy__sympy-20590",
+  "container_id": "46b2ba2d301b4a175c1ddaa6ae932bd66f249f98767eb6b7acc871912e059eaa",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_10.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_12.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_13.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_14.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_15.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_16.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_17.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_6.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_7.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_8.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 27,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 0,
+        "failed": 27
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_11.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 0,
+        "failed": 27
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_5.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 0,
+        "failed": 27
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-20590/dedup_patch_9.jsonl",
+        "inst": "sympy__sympy-20590",
+        "passed": 0,
+        "failed": 27
+      }
+    ],
+    "top_passed": 27,
+    "top_subset_size": 14
+  },
+  "reproduction": {
+    "sympy/core/tests/test_symbol.py::test_Symbol#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_Str#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_disambiguate#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_disambiguate#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_Symbol#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_Symbol#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

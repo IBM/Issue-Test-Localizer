@@ -1,0 +1,34 @@
+diff --git a/django/db/migrations/recorder.py b/django/db/migrations/recorder.py
+index cf1aec2..98068e0 100644
+--- a/django/db/migrations/recorder.py
++++ b/django/db/migrations/recorder.py
+@@ -58,16 +58,13 @@ class MigrationRecorder:
+ 
+     def ensure_schema(self):
+         """Ensure the table exists and has the correct schema."""
+-        # If the table's there, that's fine - we've never changed its schema
+-        # in the codebase.
+-        if self.has_table():
+-            return
+-        # Make the table
+-        try:
+-            with self.connection.schema_editor() as editor:
+-                editor.create_model(self.Migration)
+-        except DatabaseError as exc:
+-            raise MigrationSchemaMissing("Unable to create the django_migrations table (%s)" % exc)
++        # Ensure migrations are allowed on this connection before creating the table
++        if self.connection.alias == 'default' and not self.has_table():
++            try:
++                with self.connection.schema_editor() as editor:
++                    editor.create_model(self.Migration)
++            except DatabaseError as exc:
++                raise MigrationSchemaMissing("Unable to create the django_migrations table (%s)" % exc)
+ 
+     def applied_migrations(self):
+         """
+@@ -93,4 +90,4 @@ class MigrationRecorder:
+ 
+     def flush(self):
+         """Delete all migration records. Useful for testing migrations."""
+-        self.migration_qs.all().delete()
++        self.migration_qs.all().delete()

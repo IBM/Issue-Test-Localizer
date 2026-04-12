@@ -1,0 +1,120 @@
+{
+  "instance_id": "pytest-dev__pytest-7571",
+  "container_id": "f3ffb58de5f79f276eaeb7b736bc82e3afb0c716b2e675acda314d9503cbb190",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_10.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_11.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_12.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_13.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_3.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_4.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_5.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_6.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_7.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_8.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7571/dedup_patch_9.jsonl",
+        "inst": "pytest-dev__pytest-7571",
+        "passed": 0,
+        "failed": 6
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 14
+  },
+  "reproduction": {
+    "testing/logging/test_fixture.py::test_change_level#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/logging/test_fixture.py::test_change_level_undo#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/logging/test_fixture.py::test_change_level_undo#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/logging/test_fixture.py::test_caplog_captures_despite_exception#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/logging/test_fixture.py::test_caplog_captures_despite_exception#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/logging/test_fixture.py::test_change_level#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

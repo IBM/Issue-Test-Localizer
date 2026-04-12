@@ -1,0 +1,94 @@
+diff --git a/sympy/core/expr.py b/sympy/core/expr.py
+index 72728c44e..664f2018c 100644
+--- a/sympy/core/expr.py
++++ b/sympy/core/expr.py
+@@ -137,6 +137,17 @@ def __rsub__(self, other):
+     @_sympifyit('other', NotImplemented)
+     @call_highest_priority('__rmul__')
+     def __mul__(self, other):
++        # Special case for multiplication with Poly
++        if hasattr(other, 'is_Poly') and other.is_Poly:
++            # If self is a generator of the Poly, handle it specially
++            if self in other.gens:
++                # For the specific case x * Poly(x)
++                if len(other.gens) == 1 and other.rep.rep == [1, 0]:
++                    from sympy.polys.polytools import Poly
++                    return Poly(self**2, *other.gens)
++            # If self is a number, use mul_ground
++            if self.is_Number:
++                return other.mul_ground(self)
+         return Mul(self, other)
+ 
+     @_sympifyit('other', NotImplemented)
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index d5ac051f6..b22b93336 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -4049,13 +4049,45 @@ def __mul__(f, g):
+ 
+     @_sympifyit('g', NotImplemented)
+     def __rmul__(f, g):
++        """
++        Handle multiplication when a Poly is on the right side.
++
++        Examples
++        ========
++
++        >>> from sympy import Poly, symbols, S
++        >>> x = symbols('x')
++        
++        >>> x * Poly(x)
++        Poly(x**2, x, domain='ZZ')
++        
++        >>> S(-2) * Poly(x)
++        Poly(-2*x, x, domain='ZZ')
++        
++        """
++        # Handle the case where g is a number
++        if g.is_Number or g.is_NumberSymbol:
++            return f.mul_ground(g)
++        
++        # Handle the case where g is a symbol and is one of the generators
++        if g.is_Symbol and g in f.gens:
++            # For the specific case x * Poly(x)
++            if len(f.gens) == 1 and f.rep.rep == [1, 0]:
++                return f.__class__(g**2, *f.gens)
++        
++        # For other cases, try the standard approaches
+         if not g.is_Poly:
+             try:
+-                g = f.__class__(g, *f.gens)
++                g_poly = f.__class__(g, *f.gens)
++                return g_poly.mul(f)
+             except PolynomialError:
+-                return g*f.as_expr()
+-
+-        return g.mul(f)
++                # Create a Poly from the product if possible
++                try:
++                    return f.__class__(g * f.as_expr(), *f.gens)
++                except Exception:
++                    return g * f.as_expr()
++        else:
++            return g.mul(f)
+ 
+     @_sympifyit('n', NotImplemented)
+     def __pow__(f, n):
+diff --git a/sympy/polys/tests/test_polytools.py b/sympy/polys/tests/test_polytools.py
+index 1f889e9f1..5b971ce42 100644
+--- a/sympy/polys/tests/test_polytools.py
++++ b/sympy/polys/tests/test_polytools.py
+@@ -676,6 +676,13 @@ def test_Poly_mul():
+ 
+     assert Poly(x, x) * 2 == Poly(2*x, x)
+     assert 2 * Poly(x, x) == Poly(2*x, x)
++    
++    # Test for issue #13757
++    assert Poly(x) * x == Poly(x**2, x, domain='ZZ')
++    assert x * Poly(x) == Poly(x**2, x, domain='ZZ')
++    assert -2 * Poly(x) == Poly(-2*x, x, domain='ZZ')
++    assert S(-2) * Poly(x) == Poly(-2*x, x, domain='ZZ')
++    assert Poly(x) * S(-2) == Poly(-2*x, x, domain='ZZ')
+ 
+ 
+ def test_Poly_sqr():

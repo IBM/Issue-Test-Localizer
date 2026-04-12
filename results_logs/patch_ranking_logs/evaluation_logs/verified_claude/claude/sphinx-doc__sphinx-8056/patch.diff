@@ -1,0 +1,30 @@
+diff --git a/sphinx/ext/napoleon/docstring.py b/sphinx/ext/napoleon/docstring.py
+index f955f19..05183af 100644
+--- a/sphinx/ext/napoleon/docstring.py
++++ b/sphinx/ext/napoleon/docstring.py
+@@ -407,14 +407,22 @@ class GoogleDocstring:
+         _desc = self._strip_empty(_desc)
+         has_desc = any(_desc)
+         separator = ' -- ' if has_desc else ''
++        
+         if _name:
++            # Handle multiple parameter names (split by comma)
++            names = [n.strip() for n in _name.split(',')]
++            if len(names) > 1:
++                formatted_names = ', '.join('**%s**' % n for n in names)
++            else:
++                formatted_names = '**%s**' % _name
++                
+             if _type:
+                 if '`' in _type:
+-                    field = '**%s** (%s)%s' % (_name, _type, separator)
++                    field = '%s (%s)%s' % (formatted_names, _type, separator)
+                 else:
+-                    field = '**%s** (*%s*)%s' % (_name, _type, separator)
++                    field = '%s (*%s*)%s' % (formatted_names, _type, separator)
+             else:
+-                field = '**%s**%s' % (_name, separator)
++                field = '%s%s' % (formatted_names, separator)
+         elif _type:
+             if '`' in _type:
+                 field = '%s%s' % (_type, separator)

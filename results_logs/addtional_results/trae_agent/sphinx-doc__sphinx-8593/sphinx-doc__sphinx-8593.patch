@@ -1,0 +1,22 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 76265f5be..9ebca291a 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -757,6 +757,17 @@ class Documenter:
+                 else:
+                     keep = False
+             elif (namespace, membername) in attr_docs:
++                # For attributes with comments, check for metadata
++                comment_lines = attr_docs[(namespace, membername)]
++                comment_metadata = extract_metadata('\n'.join(comment_lines))
++                
++                if 'private' in comment_metadata:
++                    # consider a member private if comment has "private" metadata
++                    isprivate = True
++                elif 'public' in comment_metadata:
++                    # consider a member public if comment has "public" metadata
++                    isprivate = False
++                    
+                 if want_all and isprivate:
+                     if self.options.private_members is None:
+                         keep = False

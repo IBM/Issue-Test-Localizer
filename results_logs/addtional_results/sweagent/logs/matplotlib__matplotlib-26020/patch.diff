@@ -1,0 +1,45 @@
+diff --git a/lib/mpl_toolkits/axes_grid1/axes_grid.py b/lib/mpl_toolkits/axes_grid1/axes_grid.py
+index 2b1b1d3200..0f774c8cbd 100644
+--- a/lib/mpl_toolkits/axes_grid1/axes_grid.py
++++ b/lib/mpl_toolkits/axes_grid1/axes_grid.py
+@@ -13,8 +13,17 @@ from .mpl_axes import Axes
+ def _tick_only(ax, bottom_on, left_on):
+     bottom_off = not bottom_on
+     left_off = not left_on
+-    ax.axis["bottom"].toggle(ticklabels=bottom_off, label=bottom_off)
+-    ax.axis["left"].toggle(ticklabels=left_off, label=left_off)
++    
++    # Check if this is an mpl_toolkits axes with the special axis property
++    # or a regular matplotlib axes
++    if hasattr(ax, 'axis') and hasattr(ax.axis, '__getitem__'):
++        # This is an mpl_toolkits axes with axis as a dict-like object
++        ax.axis["bottom"].toggle(ticklabels=bottom_off, label=bottom_off)
++        ax.axis["left"].toggle(ticklabels=left_off, label=left_off)
++    else:
++        # This is a regular matplotlib axes, use tick_params
++        ax.tick_params(bottom=bottom_on, left=left_on, 
++                      labelbottom=bottom_on, labelleft=left_on)
+ 
+ 
+ class CbarAxesBase:
+@@ -28,8 +37,18 @@ class CbarAxesBase:
+ 
+     @_api.deprecated("3.8", alternative="ax.tick_params and colorbar.set_label")
+     def toggle_label(self, b):
+-        axis = self.axis[self.orientation]
+-        axis.toggle(ticklabels=b, label=b)
++        # Check if this is an mpl_toolkits axes with the special axis property
++        # or a regular matplotlib axes
++        if hasattr(self, 'axis') and hasattr(self.axis, '__getitem__'):
++            # This is an mpl_toolkits axes with axis as a dict-like object
++            axis = self.axis[self.orientation]
++            axis.toggle(ticklabels=b, label=b)
++        else:
++            # This is a regular matplotlib axes, use tick_params
++            if self.orientation in ['top', 'bottom']:
++                self.tick_params(bottom=b, labelbottom=b)
++            else:  # left or right
++                self.tick_params(left=b, labelleft=b)
+ 
+ 
+ _cbaraxes_class_factory = cbook._make_class_factory(CbarAxesBase, "Cbar{}")

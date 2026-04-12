@@ -1,0 +1,34 @@
+diff --git a/sympy/printing/mathematica.py b/sympy/printing/mathematica.py
+index 4c2ffd81e1..e67125b143 100644
+--- a/sympy/printing/mathematica.py
++++ b/sympy/printing/mathematica.py
+@@ -109,6 +109,29 @@ def _print_Integral(self, expr):
+     def _print_Sum(self, expr):
+         return "Hold[Sum[" + ', '.join(self.doprint(a) for a in expr.args) + "]]"
+ 
++    def _print_Derivative(self, expr):
++        return "D[%s]" % (self.stringify(expr.args, ", "))
++
++    def _print_Float(self, expr):
++        # First get the default string representation from parent class
++        res = super(MCodePrinter, self)._print_Float(expr)
++        
++        # Check if the result contains 'e' (scientific notation)
++        if 'e' in res.lower():
++            return res.replace('e', '*^').replace('E', '*^')
++        
++        # For very small or very large numbers, convert to scientific notation
++        try:
++            val = float(res)
++            if val != 0 and (abs(val) < 0.001 or abs(val) >= 1000):
++                # Convert to scientific notation and then to Mathematica format
++                sci_str = "{:.6e}".format(val)
++                return sci_str.replace('e', '*^')
++        except (ValueError, OverflowError):
++            pass
++        
++        return res
++
+ 
+ def mathematica_code(expr, **settings):
+     r"""Converts an expr to a string of the Wolfram Mathematica code

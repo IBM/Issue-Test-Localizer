@@ -1,0 +1,151 @@
+{
+  "instance_id": "django__django-14534",
+  "container_id": "b8c6130e46e83934b6675d1b30270f3ff54916c781d6ceab58e25c2f1de8fbee",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+        "inst": "django__django-14534",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+        "inst": "django__django-14534",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_2.jsonl",
+        "inst": "django__django-14534",
+        "passed": 1,
+        "failed": 1
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_checkbox_select_multiple_id_for_label#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": false
+        }
+      ]
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_id_for_label_with_custom_id#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        }
+      ]
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_id_for_label_with_custom_id#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_label_with_custom_id#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_custom_id_for_label#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "forms_tests.tests.test_forms.SomeForm.test_boundfield_widget_type#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": false
+        }
+      ]
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_id_for_label_respects_widget_id#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        }
+      ]
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_id_for_label_respects_widget_id#8": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        }
+      ]
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_id_for_label_with_custom_id#9": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": true
+        }
+      ]
+    },
+    "forms_tests.widget_tests.test_checkboxselectmultiple.CheckboxSelectMultipleTest.test_boundwidget_id_for_label_with_custom_id#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_0.jsonl",
+          "inst": "django__django-14534",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-14534/dedup_patch_1.jsonl",
+          "inst": "django__django-14534",
+          "passed": false
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

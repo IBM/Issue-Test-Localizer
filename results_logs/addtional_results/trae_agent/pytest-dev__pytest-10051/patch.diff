@@ -1,0 +1,45 @@
+diff --git a/src/_pytest/logging.py b/src/_pytest/logging.py
+index a4f4214b1..6843b7e52 100644
+--- a/src/_pytest/logging.py
++++ b/src/_pytest/logging.py
+@@ -364,6 +364,8 @@ class LogCaptureFixture:
+         self._initial_handler_level: Optional[int] = None
+         # Dict of log name -> log level.
+         self._initial_logger_levels: Dict[Optional[str], int] = {}
++        # Flag to track if clear() has been called
++        self._cleared: bool = False
+ 
+     def _finalize(self) -> None:
+         """Finalize the fixture.
+@@ -396,6 +398,15 @@ class LogCaptureFixture:
+ 
+         .. versionadded:: 3.4
+         """
++        # If clear() has been called and we're in the current phase,
++        # return the handler's records to ensure consistency with caplog.records
++        if self._cleared and self._item.stash[caplog_handler_key] is self.handler:
++            # Check if we're in the current phase by looking at the active phases
++            phases = list(self._item.stash[caplog_records_key].keys())
++            if phases and when == phases[-1]:
++                return self.handler.records
++        
++        # Otherwise, return the stored records for the requested phase
+         return self._item.stash[caplog_records_key].get(when, [])
+ 
+     @property
+@@ -441,6 +452,7 @@ class LogCaptureFixture:
+     def clear(self) -> None:
+         """Reset the list of log records and the captured log text."""
+         self.handler.reset()
++        self._cleared = True
+ 
+     def set_level(self, level: Union[int, str], logger: Optional[str] = None) -> None:
+         """Set the level of a logger for the duration of a test.
+@@ -696,6 +708,7 @@ class LoggingPlugin:
+         ) as report_handler:
+             caplog_handler.reset()
+             report_handler.reset()
++            # Store a reference to the handler's records list
+             item.stash[caplog_records_key][when] = caplog_handler.records
+             item.stash[caplog_handler_key] = caplog_handler
+ 

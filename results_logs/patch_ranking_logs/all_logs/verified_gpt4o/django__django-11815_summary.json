@@ -1,0 +1,390 @@
+{
+  "instance_id": "django__django-11815",
+  "container_id": "cff8d27607c1ec0166a5db6e1761acca4ddf625b8cc9d5bc9ab7ed909e204558",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+        "inst": "django__django-11815",
+        "passed": 0,
+        "failed": 2
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 8
+  },
+  "reproduction": {
+    "migrations.test_writer.WriterTests.test_serialize_enum_default_value#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_writer.WriterTests.test_serialize_enums#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_writer.WriterTests.test_serialize_enums#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_writer.WriterTests.test_serialize_enums#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_writer.WriterTests.test_serialize_enum_default_value#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_writer.WriterTests.test_serialize_enum_with_translations#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_2.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_6.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_7.jsonl",
+          "inst": "django__django-11815",
+          "passed": false
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_0.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_1.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_3.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_4.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/django__django-11815/dedup_patch_5.jsonl",
+          "inst": "django__django-11815",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

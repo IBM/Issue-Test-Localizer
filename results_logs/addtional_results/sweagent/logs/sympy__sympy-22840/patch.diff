@@ -1,0 +1,62 @@
+diff --git a/sympy/simplify/cse_main.py b/sympy/simplify/cse_main.py
+index d649dd02a9..82c943504f 100644
+--- a/sympy/simplify/cse_main.py
++++ b/sympy/simplify/cse_main.py
+@@ -567,6 +567,7 @@ def tree_cse(exprs, symbols, opt_subs=None, order='canonical', ignore=()):
+         Substitutions containing any Symbol from ``ignore`` will be ignored.
+     """
+     from sympy.matrices.expressions import MatrixExpr, MatrixSymbol, MatMul, MatAdd
++    from sympy.matrices.expressions.matexpr import MatrixElement
+     from sympy.polys.rootoftools import RootOf
+ 
+     if opt_subs is None:
+@@ -616,6 +617,49 @@ def _find_repeated(expr):
+         if isinstance(e, Basic):
+             _find_repeated(e)
+ 
++    # Filter out MatrixSymbols that are only used for element access
++    def _should_eliminate_matrix_symbol(matrix_symbol, exprs):
++        """
++        Check if a MatrixSymbol should be eliminated.
++        Returns False if the MatrixSymbol is only used for element access.
++        """
++        if not isinstance(matrix_symbol, MatrixSymbol):
++            return True
++            
++        # Check all expressions to see how this MatrixSymbol is used
++        def _check_usage(expr):
++            if not isinstance(expr, Basic):
++                return True  # Non-matrix usage found
++                
++            if expr == matrix_symbol:
++                # Direct usage of the MatrixSymbol (not as element access)
++                return True
++                
++            if isinstance(expr, MatrixElement) and expr.parent == matrix_symbol:
++                # This is element access - continue checking
++                return False
++                
++            # Check arguments recursively
++            for arg in expr.args:
++                if _check_usage(arg):
++                    return True
++            return False
++            
++        # If any expression uses the MatrixSymbol in a non-element-access way,
++        # then it should be eliminated
++        for e in exprs:
++            if isinstance(e, Basic) and _check_usage(e):
++                return True
++        return False
++    
++    # Remove MatrixSymbols that are only used for element access
++    matrix_symbols_to_keep = set()
++    for expr in to_eliminate.copy():
++        if isinstance(expr, MatrixSymbol):
++            if not _should_eliminate_matrix_symbol(expr, exprs):
++                to_eliminate.remove(expr)
++                matrix_symbols_to_keep.add(expr)
++
+     ## Rebuild tree
+ 
+     # Remove symbols from the generator that conflict with names in the expressions.

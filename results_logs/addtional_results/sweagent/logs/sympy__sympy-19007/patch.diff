@@ -1,0 +1,94 @@
+diff --git a/sympy/matrices/expressions/blockmatrix.py b/sympy/matrices/expressions/blockmatrix.py
+index b821c42845..2cf7e8b97b 100644
+--- a/sympy/matrices/expressions/blockmatrix.py
++++ b/sympy/matrices/expressions/blockmatrix.py
+@@ -7,7 +7,7 @@
+ from sympy.utilities import sift
+ from sympy.utilities.misc import filldedent
+ 
+-from sympy.matrices.expressions.matexpr import MatrixExpr, ZeroMatrix, Identity
++from sympy.matrices.expressions.matexpr import MatrixExpr, ZeroMatrix, Identity, MatrixElement
+ from sympy.matrices.expressions.matmul import MatMul
+ from sympy.matrices.expressions.matadd import MatAdd
+ from sympy.matrices.expressions.matpow import MatPow
+@@ -233,17 +233,74 @@ def transpose(self):
+         return self._eval_transpose()
+ 
+     def _entry(self, i, j, **kwargs):
++        from sympy import S
++        from sympy.matrices.expressions.slice import MatrixSlice
++        
++        # Check if all blocks are slices of the same matrix
++        # If so, we can use the original logic since slices handle symbolic indexing correctly
++        all_same_parent = True
++        first_parent = None
++        for block_i in range(self.blockshape[0]):
++            for block_j in range(self.blockshape[1]):
++                block = self.blocks[block_i, block_j]
++                if isinstance(block, MatrixSlice):
++                    if first_parent is None:
++                        first_parent = block.parent
++                    elif block.parent != first_parent:
++                        all_same_parent = False
++                        break
++                else:
++                    all_same_parent = False
++                    break
++            if not all_same_parent:
++                break
++        
+         # Find row entry
+-        for row_block, numrows in enumerate(self.rowblocksizes):
+-            if (i < numrows) != False:
++        orig_i, orig_j = i, j
++        row_block = None
++        for block_idx, numrows in enumerate(self.rowblocksizes):
++            # Check if we can definitively determine if i is in this block
++            comparison = i < numrows
++            if comparison == S.true:
++                row_block = block_idx
+                 break
+-            else:
++            elif comparison == S.false:
+                 i -= numrows
+-        for col_block, numcols in enumerate(self.colblocksizes):
+-            if (j < numcols) != False:
+-                break
+             else:
++                # Cannot determine which block definitively
++                if all_same_parent:
++                    # All blocks are slices of the same matrix, use original logic
++                    if (i < numrows) != False:
++                        row_block = block_idx
++                        break
++                    else:
++                        i -= numrows
++                else:
++                    # Different matrices, return symbolic element
++                    return MatrixElement(self, orig_i, orig_j)
++        
++        # Find column entry
++        for block_idx, numcols in enumerate(self.colblocksizes):
++            # Check if we can definitively determine if j is in this block
++            comparison = j < numcols
++            if comparison == S.true:
++                col_block = block_idx
++                break
++            elif comparison == S.false:
+                 j -= numcols
++            else:
++                # Cannot determine which block definitively
++                if all_same_parent:
++                    # All blocks are slices of the same matrix, use original logic
++                    if (j < numcols) != False:
++                        col_block = block_idx
++                        break
++                    else:
++                        j -= numcols
++                else:
++                    # Different matrices, return symbolic element
++                    return MatrixElement(self, orig_i, orig_j)
++        
+         return self.blocks[row_block, col_block][i, j]
+ 
+     @property

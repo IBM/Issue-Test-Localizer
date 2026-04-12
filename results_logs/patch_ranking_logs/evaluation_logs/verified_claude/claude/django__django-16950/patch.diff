@@ -1,0 +1,15 @@
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 71f23cb..ebf23b5 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -67,8 +67,10 @@ def construct_instance(form, instance, fields=None, exclude=None):
+             continue
+         # Leave defaults for fields that aren't in POST data, except for
+         # checkbox inputs because they don't appear in POST data if not checked.
++        # Also ensure uneditable fields with defaults are properly handled.
+         if (
+             f.has_default()
++            and not isinstance(f, models.UUIDField)  # Don't skip UUID fields with defaults
+             and form[f.name].field.widget.value_omitted_from_data(
+                 form.data, form.files, form.add_prefix(f.name)
+             )

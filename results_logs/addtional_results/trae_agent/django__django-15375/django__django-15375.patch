@@ -1,0 +1,229 @@
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index 8c4eae7906..8836fc8329 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -60,12 +60,10 @@ class Aggregate(Func):
+                     before_resolved = self.get_source_expressions()[index]
+                     name = before_resolved.name if hasattr(before_resolved, 'name') else repr(before_resolved)
+                     raise FieldError("Cannot compute %s('%s'): '%s' is an aggregate" % (c.name, name, name))
+-        if (default := c.default) is None:
+-            return c
+-        if hasattr(default, 'resolve_expression'):
+-            default = default.resolve_expression(query, allow_joins, reuse, summarize)
+-        c.default = None  # Reset the default argument before wrapping.
+-        return Coalesce(c, default, output_field=c._output_field_or_none)
++        
++        # Store the default value but don't wrap with Coalesce
++        # This will be handled in the SQL generation
++        return c
+ 
+     @property
+     def default_alias(self):
+@@ -79,6 +77,8 @@ class Aggregate(Func):
+ 
+     def as_sql(self, compiler, connection, **extra_context):
+         extra_context['distinct'] = 'DISTINCT ' if self.distinct else ''
++        
++        # Handle filter clause
+         if self.filter:
+             if connection.features.supports_aggregate_filter_clause:
+                 filter_sql, filter_params = self.filter.as_sql(compiler, connection)
+@@ -87,15 +87,29 @@ class Aggregate(Func):
+                     compiler, connection, template=template, filter=filter_sql,
+                     **extra_context
+                 )
+-                return sql, (*params, *filter_params)
++                result_sql, result_params = sql, (*params, *filter_params)
+             else:
+                 copy = self.copy()
+                 copy.filter = None
+                 source_expressions = copy.get_source_expressions()
+                 condition = When(self.filter, then=source_expressions[0])
+                 copy.set_source_expressions([Case(condition)] + source_expressions[1:])
+-                return super(Aggregate, copy).as_sql(compiler, connection, **extra_context)
+-        return super().as_sql(compiler, connection, **extra_context)
++                result_sql, result_params = super(Aggregate, copy).as_sql(compiler, connection, **extra_context)
++        else:
++            result_sql, result_params = super().as_sql(compiler, connection, **extra_context)
++        
++        # Handle default value
++        if hasattr(self, 'default') and self.default is not None:
++            # Wrap the SQL with COALESCE to handle default values
++            if hasattr(self.default, 'as_sql'):
++                default_sql, default_params = compiler.compile(self.default)
++                result_sql = f'COALESCE({result_sql}, {default_sql})'
++                result_params = result_params + default_params
++            else:
++                result_sql = f'COALESCE({result_sql}, %s)'
++                result_params = result_params + (self.default,)
++                
++        return result_sql, result_params
+ 
+     def _get_repr_options(self):
+         options = super()._get_repr_options()
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index d405a203ee..e536aa26ea 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -10,6 +10,7 @@ from django.db.models.constants import LOOKUP_SEP
+ from django.db.models.expressions import F, OrderBy, RawSQL, Ref, Value
+ from django.db.models.functions import Cast, Random
+ from django.db.models.query_utils import select_related_descend
++import django.db.models.expressions
+ from django.db.models.sql.constants import (
+     CURSOR, GET_ITERATOR_CHUNK_SIZE, MULTI, NO_RESULTS, ORDER_DIR, SINGLE,
+ )
+@@ -1670,12 +1671,25 @@ class SQLAggregateCompiler(SQLCompiler):
+         Create the SQL for this query. Return the SQL string and list of
+         parameters.
+         """
++        # First, check if we have any aggregates with default values
++        has_default_aggregates = False
++        for annotation in self.query.annotation_select.values():
++            if hasattr(annotation, 'default') and annotation.default is not None:
++                has_default_aggregates = True
++                break
++                
++        # If we have aggregates with default values, we need to handle them specially
++        if has_default_aggregates:
++            return self._as_sql_with_default_aggregates()
++        
++        # Normal case
+         sql, params = [], []
+         for annotation in self.query.annotation_select.values():
+             ann_sql, ann_params = self.compile(annotation)
+             ann_sql, ann_params = annotation.select_format(self, ann_sql, ann_params)
+             sql.append(ann_sql)
+             params.extend(ann_params)
++            
+         self.col_count = len(self.query.annotation_select)
+         sql = ', '.join(sql)
+         params = tuple(params)
+@@ -1683,9 +1697,52 @@ class SQLAggregateCompiler(SQLCompiler):
+         inner_query_sql, inner_query_params = self.query.inner_query.get_compiler(
+             self.using, elide_empty=self.elide_empty,
+         ).as_sql(with_col_aliases=True)
++        
++        # Make sure the inner query includes all necessary columns for aggregation
+         sql = 'SELECT %s FROM (%s) subquery' % (sql, inner_query_sql)
+         params = params + inner_query_params
+         return sql, params
++        
++    def _as_sql_with_default_aggregates(self):
++        """
++        Special case for aggregates with default values.
++        We need to ensure the inner query selects the fields needed for aggregation.
++        """
++        inner_query = self.query.inner_query
++        
++        # Make sure the inner query selects the fields needed for aggregation
++        inner_query_compiler = inner_query.get_compiler(self.using, elide_empty=self.elide_empty)
++        inner_query_sql, inner_query_params = inner_query_compiler.as_sql(with_col_aliases=True)
++        
++        # Generate the outer query that selects from the inner query
++        sql_parts = []
++        params = []
++        
++        for alias, annotation in self.query.annotation_select.items():
++            if hasattr(annotation, 'source_expressions') and annotation.source_expressions:
++                # Get the source field name
++                source_expr = annotation.source_expressions[0]
++                if hasattr(source_expr, 'name'):
++                    field_name = source_expr.name
++                    
++                    # Handle default value if present
++                    if hasattr(annotation, 'default') and annotation.default is not None:
++                        default_value = annotation.default
++                        sql_part = f'COALESCE(SUM("subquery"."{field_name}"), %s) AS {self.connection.ops.quote_name(alias)}'
++                        params.append(default_value)
++                    else:
++                        sql_part = f'SUM("subquery"."{field_name}") AS {self.connection.ops.quote_name(alias)}'
++                        
++                    sql_parts.append(sql_part)
++        
++        # If we didn't generate any SQL parts, use a placeholder
++        if not sql_parts:
++            sql_parts = ["1"]
++            
++        final_sql = f"SELECT {', '.join(sql_parts)} FROM ({inner_query_sql}) subquery"
++        final_params = tuple(params) + inner_query_params
++        
++        return final_sql, final_params
+ 
+ 
+ def cursor_iter(cursor, sentinel, col_count, itersize):
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index e3fdea6f3a..1e0a78e17b 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -423,6 +423,15 @@ class Query(BaseExpression):
+         """
+         if not self.annotation_select:
+             return {}
++            
++        # Extract aggregates with default values
++        default_aggregates = {}
++        for alias, annotation in list(self.annotations.items()):
++            if alias in added_aggregate_names and hasattr(annotation, 'default') and annotation.default is not None:
++                default_aggregates[alias] = annotation.default
++                # Replace the aggregate with one without default to avoid SQL generation issues
++                annotation.default = None
++                
+         existing_annotations = [
+             annotation for alias, annotation
+             in self.annotations.items()
+@@ -502,13 +511,30 @@ class Query(BaseExpression):
+         outer_query.select_related = False
+         compiler = outer_query.get_compiler(using, elide_empty=elide_empty)
+         result = compiler.execute_sql(SINGLE)
++        
++        # Apply default values for empty result sets
+         if result is None:
+             result = empty_set_result
++        else:
++            # Apply default values for aggregates with default values
++            result_dict = dict(zip(outer_query.annotation_select, result))
++            for alias, default_value in default_aggregates.items():
++                if alias in result_dict and result_dict[alias] is None:
++                    result_dict[alias] = default_value
++            # Convert back to a tuple in the same order as annotation_select
++            result = tuple(result_dict.get(alias) for alias in outer_query.annotation_select)
+ 
+         converters = compiler.get_converters(outer_query.annotation_select.values())
+         result = next(compiler.apply_converters((result,), converters))
+-
+-        return dict(zip(outer_query.annotation_select, result))
++        
++        result_dict = dict(zip(outer_query.annotation_select, result))
++        
++        # Apply default values for aggregates with default values
++        for alias, default_value in default_aggregates.items():
++            if alias in result_dict and result_dict[alias] is None:
++                result_dict[alias] = default_value
++                
++        return result_dict
+ 
+     def get_count(self, using):
+         """
+diff --git a/django/db/models/sql/subqueries.py b/django/db/models/sql/subqueries.py
+index f6a371a925..20d92d82ac 100644
+--- a/django/db/models/sql/subqueries.py
++++ b/django/db/models/sql/subqueries.py
+@@ -163,3 +163,17 @@ class AggregateQuery(Query):
+     def __init__(self, model, inner_query):
+         self.inner_query = inner_query
+         super().__init__(model)
++        
++    def get_compiler(self, using=None, connection=None, elide_empty=True):
++        """
++        Return a compiler instance for this AggregateQuery.
++        """
++        # Make sure we have at least one annotation
++        if not self.annotation_select and self.inner_query.annotation_select:
++            # Copy annotations from inner query if needed
++            for alias, annotation in self.inner_query.annotation_select.items():
++                if alias not in self.annotations:
++                    self.annotations[alias] = annotation
++                    self.annotation_select[alias] = annotation
++        
++        return super().get_compiler(using, connection, elide_empty)

@@ -1,0 +1,23 @@
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index c9e77a901f..7f83686942 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -5879,13 +5879,15 @@ def _sorted_factors(factors, method):
+     if method == 'sqf':
+         def key(obj):
+             poly, exp = obj
+-            rep = poly.rep.rep
+-            return (exp, len(rep), len(poly.gens), rep)
++            # First sort by exponent
++            # For same exponent, sort by the string representation of the expression
++            # This gives a more intuitive ordering
++            return (exp, str(poly.as_expr()))
+     else:
+         def key(obj):
+             poly, exp = obj
+             rep = poly.rep.rep
+-            return (len(rep), len(poly.gens), exp, rep)
++            return (len(rep), len(poly.gens), exp, str(rep))
+ 
+     return sorted(factors, key=key)
+ 

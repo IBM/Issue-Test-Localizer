@@ -1,0 +1,46 @@
+diff --git a/django/core/management/commands/inspectdb.py b/django/core/management/commands/inspectdb.py
+index f33bcbdccf..9682fa686a 100644
+--- a/django/core/management/commands/inspectdb.py
++++ b/django/core/management/commands/inspectdb.py
+@@ -133,6 +133,26 @@ class Command(BaseCommand):
+                 known_models.append(table2model(table_name))
+                 used_column_names = []  # Holds column names used in the table so far
+                 column_to_field_name = {}  # Maps column names to names of model fields
++                
++                # First pass: collect relationship information to detect multiple relations to same model
++                relation_counts = {}  # Maps related model names to count of relations
++                relation_fields = {}  # Maps related model names to list of field names
++                for row in table_description:
++                    column_name = row.name
++                    if column_name in relations:
++                        ref_db_column, ref_db_table = relations[column_name]
++                        rel_to = (
++                            "self"
++                            if ref_db_table == table_name
++                            else table2model(ref_db_table)
++                        )
++                        if rel_to not in relation_counts:
++                            relation_counts[rel_to] = 0
++                            relation_fields[rel_to] = []
++                        relation_counts[rel_to] += 1
++                        # We'll determine the actual field name in the main loop
++                        relation_fields[rel_to].append(column_name)
++                
+                 for row in table_description:
+                     comment_notes = (
+                         []
+@@ -182,6 +202,14 @@ class Command(BaseCommand):
+                             if ref_db_table == table_name
+                             else table2model(ref_db_table)
+                         )
++                        
++                        # Add related_name if there are multiple relations to the same model
++                        if relation_counts.get(rel_to, 0) > 1:
++                            if rel_type == "OneToOneField":
++                                extra_params["related_name"] = att_name
++                            else:
++                                extra_params["related_name"] = f"{att_name}_set"
++                        
+                         if rel_to in known_models:
+                             field_type = "%s(%s" % (rel_type, rel_to)
+                         else:

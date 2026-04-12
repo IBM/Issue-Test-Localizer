@@ -1,0 +1,15 @@
+diff --git a/sphinx/ext/autodoc/typehints.py b/sphinx/ext/autodoc/typehints.py
+index c6bab1b..7962ab9 100644
+--- a/sphinx/ext/autodoc/typehints.py
++++ b/sphinx/ext/autodoc/typehints.py
+@@ -116,6 +116,10 @@ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
+             continue
+ 
+         arg = arguments.get(name, {})
++        # Skip adding duplicate fields for *args and **kwargs if they already exist
++        if name.startswith('*'):
++            continue
++            
+         if not arg.get('type'):
+             field = nodes.field()
+             field += nodes.field_name('', 'type ' + name)

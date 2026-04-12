@@ -1,0 +1,106 @@
+diff --git a/lib/matplotlib/dates.py b/lib/matplotlib/dates.py
+index 4d8ddf3ee5..158c424305 100644
+--- a/lib/matplotlib/dates.py
++++ b/lib/matplotlib/dates.py
+@@ -795,15 +795,58 @@ class ConciseDateFormatter(ticker.Formatter):
+         # determine the level we will label at:
+         # mostly 0: years,  1: months,  2: days,
+         # 3: hours, 4: minutes, 5: seconds, 6: microseconds
++        
++        # Check date range characteristics
++        if len(tickdatetime) > 1:
++            first_date = tickdatetime[0]
++            last_date = tickdatetime[-1]
++            
++            # Calculate span in months
++            delta_months = (last_date.year - first_date.year) * 12 + (last_date.month - first_date.month)
++            
++            # Check if January is included in the ticks
++            has_january = any(date.month == 1 for date in tickdatetime)
++            
++            # Check if all dates are in the same year
++            same_year = all(date.year == first_date.year for date in tickdatetime)
++            
++            # Check if we're showing less than 12 months
++            less_than_12_months = (delta_months < 12)
++        else:
++            delta_months = 0
++            has_january = tickdatetime[0].month == 1 if tickdatetime else False
++            same_year = True
++            less_than_12_months = True
++        
++        # Determine the level to display
++        found_level = False
+         for level in range(5, -1, -1):
+             if len(np.unique(tickdate[:, level])) > 1:
+-                if level < 2:
++                found_level = True
++                if level == 0:  # Year level
++                    # If we're showing years, don't show offset
+                     show_offset = False
++                elif level == 1:  # Month level
++                    # For month level, we need special handling
++                    if delta_months >= 6:
++                        # For spans >= 6 months, follow the original behavior
++                        show_offset = False
++                    else:
++                        # For spans < 6 months:
++                        # - If January is not shown, show the year in the offset
++                        # - Otherwise, follow original behavior
++                        show_offset = not has_january
+                 break
+             elif level == 0:
+                 # all tickdate are the same, so only micros might be different
+                 # set to the most precise (6: microseconds doesn't exist...)
+                 level = 5
++        
++        # Special case for the reported bug:
++        # If we're showing less than 12 months, and January is not included,
++        # and the level is days, hours, minutes, or seconds, show the year in the offset
++        if found_level and level >= 2 and less_than_12_months and not has_january:
++            show_offset = True
+ 
+         # level is the basic level we will label at.
+         # now loop through and decide the actual ticklabels
+diff --git a/lib/matplotlib/tests/test_dates.py b/lib/matplotlib/tests/test_dates.py
+index a78c39c560..d41eb82bc6 100644
+--- a/lib/matplotlib/tests/test_dates.py
++++ b/lib/matplotlib/tests/test_dates.py
+@@ -1307,6 +1307,37 @@ def test_concise_formatter_call():
+     assert formatter.format_data_short(19002.0) == '2022-01-10 00:00:00'
+ 
+ 
++def test_concise_formatter_year_in_offset_without_january():
++    """
++    Test that the year appears in the offset text when plotting less than 12 months
++    and January is not included in the x-axis.
++    
++    This test addresses the bug reported in issue #22871.
++    """
++    # Create a figure with dates from February to May (less than 12 months, no January)
++    fig, ax = plt.subplots()
++    
++    # Create dates from February to May
++    start_date = datetime.datetime(2021, 2, 14)
++    dates = [start_date + datetime.timedelta(days=i) for i in range(100)]
++    
++    # Plot the data
++    ax.plot(dates, range(len(dates)))
++    
++    # Set up the formatter
++    locator = mdates.AutoDateLocator()
++    formatter = mdates.ConciseDateFormatter(locator)
++    ax.xaxis.set_major_locator(locator)
++    ax.xaxis.set_major_formatter(formatter)
++    
++    # Draw the figure to update the formatter
++    fig.canvas.draw()
++    
++    # The offset text should contain the year (2021)
++    offset_text = formatter.get_offset()
++    assert '2021' in offset_text, f"Year not found in offset text: '{offset_text}'"
++
++
+ @pytest.mark.parametrize('span, expected_locator',
+                          ((0.02, mdates.MinuteLocator),
+                           (1, mdates.HourLocator),

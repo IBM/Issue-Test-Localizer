@@ -1,0 +1,51 @@
+diff --git a/pylint/reporters/text.py b/pylint/reporters/text.py
+index 29bd46798..ed7e3d1d7 100644
+--- a/pylint/reporters/text.py
++++ b/pylint/reporters/text.py
+@@ -12,6 +12,7 @@ from __future__ import annotations
+ 
+ import os
+ import re
++import string
+ import sys
+ import warnings
+ from dataclasses import asdict, fields
+@@ -175,14 +176,33 @@ class TextReporter(BaseReporter):
+         self._template = template
+ 
+         # Check to see if all parameters in the template are attributes of the Message
+-        arguments = re.findall(r"\{(.+?)(:.*)?\}", template)
+-        for argument in arguments:
+-            if argument[0] not in MESSAGE_FIELDS:
++        # Use string.Formatter to properly parse the template and handle escaped braces
++        formatter = string.Formatter()
++        try:
++            parsed_fields = list(formatter.parse(template))
++        except ValueError as e:
++            warnings.warn(f"Invalid template format: {e}")
++            self._fixed_template = self._template
++            return
++            
++        # Extract field names from parsed template
++        field_names = []
++        for literal_text, field_name, format_spec, conversion in parsed_fields:
++            if field_name is not None:
++                # Handle field names that might contain conversion specifiers (e.g., "field!r")
++                if conversion:
++                    field_name = field_name
++                field_names.append(field_name)
++        
++        # Check if all field names are valid Message attributes
++        for field_name in field_names:
++            if field_name not in MESSAGE_FIELDS:
+                 warnings.warn(
+-                    f"Don't recognize the argument '{argument[0]}' in the --msg-template. "
++                    f"Don't recognize the argument '{field_name}' in the --msg-template. "
+                     "Are you sure it is supported on the current version of pylint?"
+                 )
+-                template = re.sub(r"\{" + argument[0] + r"(:.*?)?\}", "", template)
++                # Remove invalid field from template by replacing with empty string
++                template = re.sub(r"\{" + re.escape(field_name) + r"(?:![rs])?(?::[^}]*)?\}", "", template)
+         self._fixed_template = template
+ 
+     def write_message(self, msg: Message) -> None:

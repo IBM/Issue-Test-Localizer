@@ -1,0 +1,23 @@
+diff --git a/src/_pytest/tmpdir.py b/src/_pytest/tmpdir.py
+index cae5caf..65c252b 100644
+--- a/src/_pytest/tmpdir.py
++++ b/src/_pytest/tmpdir.py
+@@ -150,11 +150,16 @@ class TempdirFactory:
+ 
+ def get_user() -> Optional[str]:
+     """Return the current user name, or None if getuser() does not work
+-    in the current environment (see #1010)."""
++    in the current environment (see #1010). The username is sanitized
++    to ensure it is valid for use in directory names."""
+     import getpass
++    import re
+ 
+     try:
+-        return getpass.getuser()
++        username = getpass.getuser()
++        # Replace common invalid characters with underscore
++        username = re.sub(r'[\\/:*?"<>|]', '_', username)
++        return username
+     except (ImportError, KeyError):
+         return None
+ 

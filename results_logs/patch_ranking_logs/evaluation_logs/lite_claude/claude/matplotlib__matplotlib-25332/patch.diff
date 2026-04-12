@@ -1,0 +1,15 @@
+diff --git a/lib/matplotlib/figure.py b/lib/matplotlib/figure.py
+index 973eb1a..25236f0 100644
+--- a/lib/matplotlib/figure.py
++++ b/lib/matplotlib/figure.py
+@@ -3167,6 +3167,10 @@ None}, default: None
+         # discard any changes to the dpi due to pixel ratio changes
+         state["_dpi"] = state.get('_original_dpi', state['_dpi'])
+ 
++        # Clear any label alignment references that can't be pickled
++        if '_align_label_groups' in state:
++            del state['_align_label_groups']
++
+         # add version information to the state
+         state['__mpl_version__'] = mpl.__version__
+ 

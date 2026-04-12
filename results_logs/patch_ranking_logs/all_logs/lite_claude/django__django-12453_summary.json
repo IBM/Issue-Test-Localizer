@@ -1,0 +1,28 @@
+{
+  "instance_id": "django__django-12453",
+  "container_id": "703a1cb5aab6ba20e8b942e3c70e9d0e1f5640eed3f0ab0297af8bf5af019722",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12453/dedup_patch_0.jsonl",
+        "inst": "django__django-12453",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "backends.base.test_creation.TestDbCreationTests.test_deserialize_db_from_string_atomic#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-12453/dedup_patch_0.jsonl",
+          "inst": "django__django-12453",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

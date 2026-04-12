@@ -1,0 +1,28 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index e32266f..089cf72 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -156,11 +156,19 @@ class LatexPrinter(Printer):
+             "times": r" \times "
+         }
+ 
+-        self._settings['mul_symbol_latex'] = \
+-            mul_symbol_table[self._settings['mul_symbol']]
++        # Allow custom multiplication symbols while maintaining backwards compatibility
++        mul_symbol = self._settings['mul_symbol']
++        if mul_symbol in mul_symbol_table:
++            self._settings['mul_symbol_latex'] = mul_symbol_table[mul_symbol]
++        else:
++            # If not in table, use the symbol directly with spaces around it
++            self._settings['mul_symbol_latex'] = r" " + mul_symbol + r" " if mul_symbol else r" "
+ 
+-        self._settings['mul_symbol_latex_numbers'] = \
+-            mul_symbol_table[self._settings['mul_symbol'] or 'dot']
++        # For numbers, default to dot if None, otherwise use the same as mul_symbol
++        if self._settings['mul_symbol'] is None:
++            self._settings['mul_symbol_latex_numbers'] = mul_symbol_table['dot']
++        else:
++            self._settings['mul_symbol_latex_numbers'] = self._settings['mul_symbol_latex']
+ 
+         self._delim_dict = {'(': ')', '[': ']'}
+ 

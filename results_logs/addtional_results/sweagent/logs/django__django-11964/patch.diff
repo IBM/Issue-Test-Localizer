@@ -1,0 +1,48 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index d610dc86f0..0f91767b7a 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -2,6 +2,7 @@ import collections.abc
+ import copy
+ import datetime
+ import decimal
++import enum
+ import operator
+ import uuid
+ import warnings
+@@ -792,6 +793,8 @@ class Field(RegisterLookupMixin):
+         """Perform preliminary non-db specific value checks and conversions."""
+         if isinstance(value, Promise):
+             value = value._proxy____cast()
++        elif isinstance(value, enum.Enum):
++            value = value.value
+         return value
+ 
+     def get_db_prep_value(self, value, connection, prepared=False):
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index 189fb4fa44..00dda595ac 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -6,6 +6,7 @@ large and/or so that they can be used by other modules without getting into
+ circular import difficulties.
+ """
+ import copy
++import enum
+ import functools
+ import inspect
+ from collections import namedtuple
+@@ -138,6 +139,14 @@ class DeferredAttribute:
+             data[field_name] = val
+         return data[field_name]
+ 
++    def __set__(self, instance, value):
++        """
++        Set the value on the instance. Convert enum values to their underlying values.
++        """
++        if isinstance(value, enum.Enum):
++            value = value.value
++        instance.__dict__[self.field.attname] = value
++
+     def _check_parent_chain(self, instance):
+         """
+         Check if the field value can be fetched from a parent field already

@@ -1,0 +1,62 @@
+{
+  "instance_id": "sympy__sympy-16886",
+  "container_id": "0d7ad7ce120bb79a523a032cef35c5a9f3f35a39a118de73784d7ff555d771ad",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-16886/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-16886",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sympy/crypto/tests/test_crypto.py::test_decipher_kid_rsa#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/crypto/tests/test_crypto.py::test_decipher_kid_rsa#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/crypto/tests/test_crypto.py::test_decipher_kid_rsa#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/crypto/tests/test_crypto.py::test_decode_morse#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/crypto/tests/test_crypto.py::test_decipher_kid_rsa#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/crypto/tests/test_crypto.py::test_decode_morse#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-16886/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-16886",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-16886/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-16886",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

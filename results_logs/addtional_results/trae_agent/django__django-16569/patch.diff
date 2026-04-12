@@ -1,0 +1,42 @@
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index 235aaf844c..02d040ee03 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -490,7 +490,7 @@ class BaseFormSet(RenderableFormMixin):
+                     required=False,
+                     widget=self.get_ordering_widget(),
+                 )
+-        if self.can_delete and (self.can_delete_extra or index < initial_form_count):
++        if self.can_delete and (self.can_delete_extra or (index is not None and index < initial_form_count)):
+             form.fields[DELETION_FIELD_NAME] = BooleanField(
+                 label=_("Delete"),
+                 required=False,
+diff --git a/tests/forms_tests/tests/test_formsets.py b/tests/forms_tests/tests/test_formsets.py
+index e2c695f0dc..476cf8a03e 100644
+--- a/tests/forms_tests/tests/test_formsets.py
++++ b/tests/forms_tests/tests/test_formsets.py
+@@ -1898,3 +1898,24 @@ class AllValidTests(SimpleTestCase):
+         ]
+         self.assertEqual(formset1._errors, expected_errors)
+         self.assertEqual(formset2._errors, expected_errors)
++        
++    def test_empty_form_with_can_delete_no_can_delete_extra(self):
++        """
++        Test that empty_form works when can_delete=True and can_delete_extra=False.
++        This test ensures that accessing empty_form doesn't raise a TypeError
++        when index is None.
++        """
++        class EmptyForm(Form):
++            field = CharField()
++            
++        EmptyFormSet = formset_factory(
++            form=EmptyForm,
++            can_delete=True,
++            can_delete_extra=False,
++        )
++        
++        formset = EmptyFormSet(initial=None)
++        
++        # This should not raise TypeError
++        empty_form = formset.empty_form
++        self.assertIsNotNone(empty_form)

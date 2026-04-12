@@ -1,0 +1,35 @@
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index 3adbc6979a..7bb7808126 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -48,6 +48,30 @@ class ManagementForm(Form):
+         cleaned_data.setdefault(INITIAL_FORM_COUNT, 0)
+         return cleaned_data
+ 
++    def render(self, template_name=None, context=None, renderer=None):
++        """
++        Render the ManagementForm without triggering the default.html
++        deprecation warning. Since ManagementForm only contains hidden fields,
++        the template used is insignificant.
++        """
++        from django.utils.safestring import mark_safe
++        
++        renderer = renderer or self.renderer
++        template = template_name or self.template_name
++        context = context or self.get_context()
++        
++        # Avoid the deprecation warning for ManagementForm since it only
++        # contains hidden fields and the template choice is insignificant
++        return mark_safe(renderer.render(template, context))
++
++    # Override __str__ and __html__ to use our custom render method
++    # instead of the parent's render method which triggers the deprecation warning
++    def __str__(self):
++        return self.render()
++
++    def __html__(self):
++        return self.render()
++
+ 
+ class BaseFormSet(RenderableFormMixin):
+     """

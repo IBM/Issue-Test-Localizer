@@ -1,0 +1,32 @@
+diff --git a/lib/matplotlib/cm.py b/lib/matplotlib/cm.py
+index 38158db956..a863513bca 100644
+--- a/lib/matplotlib/cm.py
++++ b/lib/matplotlib/cm.py
+@@ -145,7 +145,10 @@ class ColormapRegistry(Mapping):
+             _api.warn_external(f"Overwriting the cmap {name!r} "
+                                "that was already in the registry.")
+ 
+-        self._cmaps[name] = cmap.copy()
++        copied_cmap = cmap.copy()
++        # Update the name attribute to match the registered name
++        copied_cmap.name = name
++        self._cmaps[name] = copied_cmap
+ 
+     def unregister(self, name):
+         """
+diff --git a/lib/matplotlib/tests/test_colors.py b/lib/matplotlib/tests/test_colors.py
+index 2e841699cd..ecba1024cf 100644
+--- a/lib/matplotlib/tests/test_colors.py
++++ b/lib/matplotlib/tests/test_colors.py
+@@ -80,7 +80,10 @@ def test_register_cmap():
+             match=r"matplotlib\.colormaps\.register\(name\)"
+     ):
+         cm.register_cmap(target, new_cm)
+-    assert mpl.colormaps[target] == new_cm
++    # The registered colormap is a copy with the name updated to the target name
++    registered_cm = mpl.colormaps[target]
++    assert registered_cm is not new_cm  # It's a copy, not the same object
++    assert registered_cm.name == target  # Name is updated to match the registered name
+ 
+     with pytest.raises(ValueError,
+                        match="Arguments must include a name or a Colormap"):

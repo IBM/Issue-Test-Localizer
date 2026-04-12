@@ -1,0 +1,58 @@
+{
+  "instance_id": "sympy__sympy-13971",
+  "container_id": "85e01dd717f8ad3e41878dda4e17169c083ab5790e1601195df84e21d89adf0e",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13971/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-13971",
+        "passed": 1,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13971/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-13971",
+        "passed": 1,
+        "failed": 1
+      }
+    ],
+    "top_passed": 1,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "sympy/printing/tests/test_latex.py::test_latex_Range#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/series/tests/test_sequences.py::test_find_linear_recurrence#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/series/tests/test_sequences.py::test_SeqFormula#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/series/tests/test_sequences.py::test_SeqFormula#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/series/tests/test_sequences.py::test_SeqPer#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/series/tests/test_sequences.py::test_SeqPer#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13971/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13971",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

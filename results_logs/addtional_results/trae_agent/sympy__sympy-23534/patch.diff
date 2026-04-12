@@ -1,0 +1,15 @@
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..ec25ce8947 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -790,8 +790,9 @@ def literal(s):
+ 
+         return tuple(result)
+     else:
++        # Ensure 'cls' is included in the recursive call to symbols
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+ 

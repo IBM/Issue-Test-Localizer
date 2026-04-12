@@ -1,0 +1,122 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7454",
+  "container_id": "518c4b90c4b5c86653e9e6ab78a4da822c9f84e732f29b581a113b2faf6aa027",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_12.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_14.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_5.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_7.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_8.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_9.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_10.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_11.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_13.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_4.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7454/dedup_patch_6.jsonl",
+        "inst": "sphinx-doc__sphinx-7454",
+        "passed": 0,
+        "failed": 6
+      }
+    ],
+    "top_passed": 6,
+    "top_subset_size": 9
+  },
+  "reproduction": {
+    "tests/test_ext_autodoc_configs.py::test_autodoc_typehints_signature#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_configs.py::test_autodoc_typehints_none#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_configs.py::test_autodoc_typehints_description#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_configs.py::test_autodoc_typehints_signature#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_configs.py::test_autodoc_typehints_none#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

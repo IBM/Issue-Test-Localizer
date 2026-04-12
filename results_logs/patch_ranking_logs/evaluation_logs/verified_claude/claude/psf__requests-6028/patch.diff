@@ -1,0 +1,24 @@
+diff --git a/requests/adapters.py b/requests/adapters.py
+index d47134b..00c82fb 100644
+--- a/requests/adapters.py
++++ b/requests/adapters.py
+@@ -386,9 +386,16 @@ class HTTPAdapter(BaseAdapter):
+         headers = {}
+         username, password = get_auth_from_url(proxy)
+ 
+-        if username:
+-            headers['Proxy-Authorization'] = _basic_auth_str(username,
+-                                                             password)
++        if username and password:
++            # Only add basic auth if both username and password are present
++            headers['Proxy-Authorization'] = _basic_auth_str(username, password)
++        elif ':' in proxy:
++            # Handle cases where auth info might be in the URL's netloc
++            parsed = urlparse(proxy)
++            if '@' in parsed.netloc:
++                netlog_auth = parsed.netloc.split('@')[0].split(':')
++                if len(netlog_auth) == 2:
++                    headers['Proxy-Authorization'] = _basic_auth_str(netlog_auth[0], netlog_auth[1])
+ 
+         return headers
+ 

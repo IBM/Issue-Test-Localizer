@@ -1,0 +1,60 @@
+diff --git a/seaborn/_core/plot.py b/seaborn/_core/plot.py
+index 4f0290a4..8dd0c3b9 100644
+--- a/seaborn/_core/plot.py
++++ b/seaborn/_core/plot.py
+@@ -1475,13 +1475,20 @@ class Plotter:
+ 
+                 axes_df = self._filter_subplot_data(df, view)
+ 
+-                with pd.option_context("mode.use_inf_as_null", True):
++                # Check if the option exists before using it
++                # (pandas 2.0+ removed mode.use_inf_as_null)
++                try:
++                    with pd.option_context("mode.use_inf_as_null", True):
++                        if keep_na:
++                            # The simpler thing to do would be x.dropna().reindex(x.index).
++                            # But that doesn't work with the way that the subset iteration
++                            # is written below, which assumes data for grouping vars.
++                            # Matplotlib (usually?) masks nan data, so this should "work".
++                            # Downstream code can also drop these rows, at some speed cost.
++                            present = axes_df.notna().all(axis=1)
++                except Exception:
++                    # Fall back to standard behavior if option doesn't exist
+                     if keep_na:
+-                        # The simpler thing to do would be x.dropna().reindex(x.index).
+-                        # But that doesn't work with the way that the subset iteration
+-                        # is written below, which assumes data for grouping vars.
+-                        # Matplotlib (usually?) masks nan data, so this should "work".
+-                        # Downstream code can also drop these rows, at some speed cost.
+                         present = axes_df.notna().all(axis=1)
+                         nulled = {}
+                         for axis in "xy":
+@@ -1632,8 +1639,26 @@ class Plotter:
+             for axis in "xy":
+                 axis_key = sub[axis]
+ 
+-                # Axis limits
+-                if axis_key in p._limits:
++                # Get the scale for this axis
++                scale = p._scales.get(axis_key)
++                is_nominal = scale is not None and isinstance(scale, Scale) and scale.__class__.__name__ == "Nominal"
++
++                # Handle Nominal scales like categorical axes
++                if is_nominal:
++                    # 1. Turn off grid for Nominal scales
++                    getattr(ax, f"{axis}axis").grid(False)
++
++                    # 2. Set limits to +/- 0.5 from first and last tick
++                    ticks = getattr(ax, f"get_{axis}ticks")()
++                    if len(ticks) > 0:
++                        if axis == "y":
++                            # 3. Invert y axis for Nominal scales
++                            ax.set_ylim(len(ticks) - 0.5, -0.5, auto=None)
++                        else:
++                            ax.set_xlim(-0.5, len(ticks) - 0.5, auto=None)
++                
++                # Standard axis limits handling
++                elif axis_key in p._limits:
+                     convert_units = getattr(ax, f"{axis}axis").convert_units
+                     a, b = p._limits[axis_key]
+                     lo = a if a is None else convert_units(a)

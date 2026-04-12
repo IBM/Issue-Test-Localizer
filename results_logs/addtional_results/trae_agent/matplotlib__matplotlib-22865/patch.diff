@@ -1,0 +1,35 @@
+diff --git a/lib/matplotlib/colorbar.py b/lib/matplotlib/colorbar.py
+index c59b0ac815..59dc604c48 100644
+--- a/lib/matplotlib/colorbar.py
++++ b/lib/matplotlib/colorbar.py
+@@ -651,8 +651,28 @@ class Colorbar:
+             if not self.drawedges:
+                 if len(self._y) >= self.n_rasterize:
+                     self.solids.set_rasterized(True)
+-        self.dividers.set_segments(
+-            np.dstack([X, Y])[1:-1] if self.drawedges else [])
++        if self.drawedges:
++            # Get the segments from the mesh
++            segments = np.dstack([X, Y])
++            
++            # For extend='neither', use only the inner segments (exclude first and last)
++            # This is the original behavior
++            if self.extend == 'neither':
++                self.dividers.set_segments(segments[1:-1])
++            else:
++                # For 'both', 'min', or 'max', we need to include the appropriate segments
++                # to draw edges at the extremities
++                if self.extend == 'both':
++                    # Include all segments for 'both'
++                    self.dividers.set_segments(segments)
++                elif self.extend == 'min':
++                    # Include the first segment but exclude the last for 'min'
++                    self.dividers.set_segments(segments[:-1])
++                elif self.extend == 'max':
++                    # Exclude the first segment but include the last for 'max'
++                    self.dividers.set_segments(segments[1:])
++        else:
++            self.dividers.set_segments([])
+ 
+     def _add_solids_patches(self, X, Y, C, mappable):
+         hatches = mappable.hatches * len(C)  # Have enough hatches.

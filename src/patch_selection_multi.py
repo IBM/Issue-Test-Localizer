@@ -76,10 +76,10 @@ class ResultStore:
             self._save()
 
 
-DEFAULT_UNIQPATCH_TMPL = "all_patches/verified_gpt4o_all_unique_patches/{instance_id}/*.jsonl"
+DEFAULT_UNIQPATCH_TMPL = "all_patches/lite_gpt4o_all_unique_patches/{instance_id}/*.jsonl"
 REPO_PATH_IN_CONTAINER = "/testbed"
 OCCUR_COUNT_FILE = "regression_reproduction_data/per_instance_patch_counts.json"
-RESULTS_DIR_DEFAULT = Path("test_logs/results")
+RESULTS_DIR_DEFAULT = Path("test_logs_lite_gpt4o/results")
 
 
 # Logs
@@ -87,7 +87,7 @@ DEFAULT_LOG_DIR = Path("logs")
 
 SWEBENCH_CMD = (
     "python -m swebench.harness.run_evaluation "
-    "--dataset_name princeton-nlp/SWE-bench_Verified "
+    "--dataset_name princeton-nlp/SWE-bench_Lite "
     "--predictions_path gold "
     "--max_workers 5 "
     "--run_id {run_id} "
@@ -95,7 +95,6 @@ SWEBENCH_CMD = (
     "--test_methods '[]'"
 )
 
-# ============================== Logging ==============================
 
 
 def setup_root_logging(level: int = logging.WARNING, to_console: bool = False) -> None:
@@ -134,7 +133,6 @@ def get_instance_logger(instance_id: str, log_dir: Path) -> logging.Logger:
     return logger
 
 
-# ============================== cmds ==============================
 
 
 def sh(
@@ -208,7 +206,6 @@ def apply_patch_in_container(
     )
 
 
-# ============================== Test running ==============================
 import shlex
 
 
@@ -276,7 +273,6 @@ def iter_jsonl_entries(jsonl_path: Path) -> Iterable[dict]:
                 yield json.loads(line)
 
 
-# ============================== regression tests ==============================
 
 
 def evaluate_patches(
@@ -373,7 +369,6 @@ def evaluate_patches(
     return results, top
 
 
-# ============================== reproduction tests ==============================
 
 def verify_repro_fails_on_clean_repo(
     container: str,
@@ -520,7 +515,6 @@ def evaluate_top_patches_with_repro(
     return outcomes
 
 
-# ============================== SWE-bench harness / container discovery ==============================
 
 
 def run_swebench_and_get_container(
@@ -554,7 +548,6 @@ def run_swebench_and_get_container(
         )
 
 
-# ============================== Orchestration per instance ==============================
 
 
 def _to_module_from_tests_py(path_b: str) -> str:
@@ -623,6 +616,12 @@ def transform_testname(test_name: str, instance_id: str) -> str:
     elif "pylint" in instance_id or "sphinx" in instance_id:
         if not test_name.startswith("tests/"):
             runname = "tests/" + test_name
+        else:
+            runname = test_name
+        return runname
+    elif "pytest" in instance_id:
+        if not test_name.startswith("testing/"):
+            runname = "testing/" + test_name
         else:
             runname = test_name
         return runname
@@ -741,8 +740,8 @@ def process_instance(
             # apply the test_patch to the clean repo and run the repro test
             # print(test_patch)
             test_idx += 1
-            if "reproduce_bug.py" in test_patch:
-                patched_test_name = "reproduce_bug.py"
+            if "reproduce_bug" in test_patch:
+                patched_test_name = "reproduce_bug_new.py"
             else:
                 patched_test_name = extract_testname_from_patch(test_patch)
             test_name = transform_testname(patched_test_name, instance_id)
@@ -1057,8 +1056,8 @@ def main():
             # if inst in skip:
             #     print(f"Skipping {inst} (in skip list)")
             #     continue
-            if inst != "django__django-10097":
-                continue
+            # if inst != "django__django-11333":
+            #     continue
 
             summary_result = Path(log_dir) / f"{inst}_summary.json"
             if summary_result.exists():

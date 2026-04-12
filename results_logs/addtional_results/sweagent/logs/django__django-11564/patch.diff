@@ -1,0 +1,84 @@
+diff --git a/django/core/files/storage.py b/django/core/files/storage.py
+index 4c27fce605..4ae8dbfce1 100644
+--- a/django/core/files/storage.py
++++ b/django/core/files/storage.py
+@@ -332,7 +332,32 @@ class FileSystemStorage(Storage):
+         url = filepath_to_uri(name)
+         if url is not None:
+             url = url.lstrip('/')
+-        return urljoin(self.base_url, url)
++        full_url = urljoin(self.base_url, url)
++        
++        # Add SCRIPT_NAME prefix if available and URL is relative
++        try:
++            from django.urls import get_script_prefix
++            from urllib.parse import urlparse
++            
++            # Only add script prefix for relative URLs
++            parsed_url = urlparse(full_url)
++            if not parsed_url.scheme and not parsed_url.netloc:  # Relative URL
++                script_prefix = get_script_prefix()
++                if script_prefix and script_prefix != '/' and not full_url.startswith(script_prefix):
++                    # Ensure script_prefix starts with / and doesn't end with /
++                    if not script_prefix.startswith('/'):
++                        script_prefix = '/' + script_prefix
++                    script_prefix = script_prefix.rstrip('/')
++                    
++                    if full_url.startswith('/'):
++                        full_url = script_prefix + full_url
++                    else:
++                        full_url = script_prefix + '/' + full_url
++        except ImportError:
++            # Handle case where urls module is not available yet
++            pass
++        
++        return full_url
+ 
+     def _datetime_from_timestamp(self, ts):
+         """
+diff --git a/django/templatetags/static.py b/django/templatetags/static.py
+index 39712aaba0..ed14e58af3 100644
+--- a/django/templatetags/static.py
++++ b/django/templatetags/static.py
+@@ -48,6 +48,20 @@ class PrefixNode(template.Node):
+ 
+     def render(self, context):
+         prefix = self.handle_simple(self.name)
++        # Add SCRIPT_NAME prefix if available in request context
++        request = context.get('request')
++        if request and hasattr(request, 'META'):
++            script_name = request.META.get('SCRIPT_NAME', '')
++            if script_name and not prefix.startswith(script_name):
++                # Ensure script_name starts with / and doesn't end with /
++                if not script_name.startswith('/'):
++                    script_name = '/' + script_name
++                script_name = script_name.rstrip('/')
++                
++                if prefix.startswith('/'):
++                    prefix = script_name + prefix
++                else:
++                    prefix = script_name + '/' + prefix
+         if self.varname is None:
+             return prefix
+         context[self.varname] = prefix
+@@ -104,6 +118,20 @@ class StaticNode(template.Node):
+ 
+     def render(self, context):
+         url = self.url(context)
++        # Add SCRIPT_NAME prefix if available in request context
++        request = context.get('request')
++        if request and hasattr(request, 'META'):
++            script_name = request.META.get('SCRIPT_NAME', '')
++            if script_name and not url.startswith(script_name):
++                # Ensure script_name starts with / and doesn't end with /
++                if not script_name.startswith('/'):
++                    script_name = '/' + script_name
++                script_name = script_name.rstrip('/')
++                
++                if url.startswith('/'):
++                    url = script_name + url
++                else:
++                    url = script_name + '/' + url
+         if context.autoescape:
+             url = conditional_escape(url)
+         if self.varname is None:

@@ -1,0 +1,32 @@
+diff --git a/astropy/modeling/separable.py b/astropy/modeling/separable.py
+index d6e9246..4d58aaf 100644
+--- a/astropy/modeling/separable.py
++++ b/astropy/modeling/separable.py
+@@ -207,12 +207,21 @@ def _coord_matrix(model, pos, noutp):
+         else:
+             mat[-model.n_outputs:, -model.n_inputs:] = 1
+     else:
+-        mat = np.zeros((noutp, model.n_inputs))
+-
+-        for i in range(model.n_inputs):
+-            mat[i, i] = 1
+-        if pos == 'right':
+-            mat = np.roll(mat, (noutp - model.n_outputs))
++        if isinstance(model, CompoundModel) and model.op == '&':
++            # Handle compound models with & operator
++            left_mat = _coord_matrix(model.left, 'left', model.n_outputs)
++            right_mat = _coord_matrix(model.right, 'right', model.n_outputs)
++            mat = np.zeros((noutp, model.n_inputs))
++            if pos == 'left':
++                mat[:model.n_outputs, :model.n_inputs] = np.hstack([left_mat, right_mat])
++            else:
++                mat[-model.n_outputs:, -model.n_inputs:] = np.hstack([left_mat, right_mat])
++        else:
++            mat = np.zeros((noutp, model.n_inputs))
++            for i in range(model.n_inputs):
++                mat[i, i] = 1
++            if pos == 'right':
++                mat = np.roll(mat, (noutp - model.n_outputs))
+     return mat
+ 
+ 

@@ -1,0 +1,81 @@
+{
+  "instance_id": "django__django-11066",
+  "container_id": "5ca6321ce6278aaddcd0926a805040fb57b716c934834dade24d75990fb8ba74",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_0.jsonl",
+        "inst": "django__django-11066",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_1.jsonl",
+        "inst": "django__django-11066",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "migrations.test_multidb.MultiDBOperationTests.test_rename_model_different_db#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_0.jsonl",
+          "inst": "django__django-11066",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_1.jsonl",
+          "inst": "django__django-11066",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_multidb.MultiDBOperationTests.test_rename_model_using_correct_db#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_0.jsonl",
+          "inst": "django__django-11066",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_1.jsonl",
+          "inst": "django__django-11066",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_multidb.MultiDBOperationTests.test_run_python_migrate_foo_router_with_hints#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "contenttypes_tests.test_operations.ContentTypeOperationsTests.test_content_type_rename_multidb#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_0.jsonl",
+          "inst": "django__django-11066",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11066/dedup_patch_1.jsonl",
+          "inst": "django__django-11066",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_multidb.MultiDBOperationTests.test_run_python_migrate_foo_router_with_hints#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "migrations.test_multidb.MultiDBOperationTests.test_run_python_migrate_foo_router_with_hints#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

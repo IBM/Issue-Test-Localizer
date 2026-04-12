@@ -1,0 +1,18 @@
+diff --git a/src/_pytest/_code/source.py b/src/_pytest/_code/source.py
+index 6f54057c0..5b3f66747 100644
+--- a/src/_pytest/_code/source.py
++++ b/src/_pytest/_code/source.py
+@@ -149,7 +149,12 @@ def get_statement_startend2(lineno: int, node: ast.AST) -> Tuple[int, Optional[i
+     values: List[int] = []
+     for x in ast.walk(node):
+         if isinstance(x, (ast.stmt, ast.ExceptHandler)):
+-            values.append(x.lineno - 1)
++            # For statements with decorators, use the first decorator's line number
++            # instead of the statement's line number to get the true start of the statement
++            if hasattr(x, 'decorator_list') and x.decorator_list:
++                values.append(x.decorator_list[0].lineno - 1)
++            else:
++                values.append(x.lineno - 1)
+             for name in ("finalbody", "orelse"):
+                 val: Optional[List[ast.stmt]] = getattr(x, name, None)
+                 if val:

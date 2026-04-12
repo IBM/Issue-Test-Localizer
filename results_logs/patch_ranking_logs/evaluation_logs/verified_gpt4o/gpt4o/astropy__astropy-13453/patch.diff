@@ -1,0 +1,16 @@
+diff --git a/astropy/io/ascii/ui.py b/astropy/io/ascii/ui.py
+index ef49d6a..22e7200 100644
+--- a/astropy/io/ascii/ui.py
++++ b/astropy/io/ascii/ui.py
+@@ -848,6 +848,11 @@ def write(table, output=None, format=None, Writer=None, fast_writer=True, *,
+             'The key(s) {} specified in the formats argument do not match a column name.'
+             .format(diff_format_with_names), AstropyWarning)
+ 
++    if 'formats' in kwargs:
++        for colname, formatter in kwargs['formats'].items():
++            if colname in table.colnames:
++                table[colname].info.format = formatter
++
+     if table.has_mixin_columns:
+         fast_writer = False
+ 

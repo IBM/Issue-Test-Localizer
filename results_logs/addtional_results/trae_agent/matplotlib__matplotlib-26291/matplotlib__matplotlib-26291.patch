@@ -1,0 +1,26 @@
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 13af941552..7df2f30e5e 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -234,7 +234,8 @@ class OffsetBox(martist.Artist):
+         """
+         super().set_figure(fig)
+         for c in self.get_children():
+-            c.set_figure(fig)
++            if c is not None:  # Check for None children
++                c.set_figure(fig)
+ 
+     @martist.Artist.axes.setter
+     def axes(self, ax):
+diff --git a/lib/mpl_toolkits/axes_grid1/inset_locator.py b/lib/mpl_toolkits/axes_grid1/inset_locator.py
+index 9d35051074..f1561eb283 100644
+--- a/lib/mpl_toolkits/axes_grid1/inset_locator.py
++++ b/lib/mpl_toolkits/axes_grid1/inset_locator.py
+@@ -70,6 +70,7 @@ class AnchoredLocatorBase(AnchoredOffsetbox):
+ 
+     def __call__(self, ax, renderer):
+         self.axes = ax
++        self.set_figure(ax.figure)  # Set the figure attribute
+         bbox = self.get_window_extent(renderer)
+         px, py = self.get_offset(bbox.width, bbox.height, 0, 0, renderer)
+         bbox_canvas = Bbox.from_bounds(px, py, bbox.width, bbox.height)

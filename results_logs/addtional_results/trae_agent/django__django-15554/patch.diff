@@ -1,0 +1,86 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 54f3258eac..12f33c06bc 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1024,11 +1024,30 @@ class Query(BaseExpression):
+         sure chains like t1 LOUTER t2 INNER t3 aren't generated. All new
+         joins are created as LOUTER if the join is nullable.
+         """
+-        reuse_aliases = [
+-            a
+-            for a, j in self.alias_map.items()
+-            if (reuse is None or a in reuse) and j.equals(join)
+-        ]
++        # Check if we can reuse an existing join
++        # For FilteredRelation, we need to consider the filtered_relation attribute
++        # when determining if a join can be reused
++        if hasattr(join, 'filtered_relation') and join.filtered_relation:
++            # For joins with FilteredRelation, we need to check if there's an
++            # existing join with the same filtered_relation
++            reuse_aliases = [
++                a
++                for a, j in self.alias_map.items()
++                if ((reuse is None or a in reuse)
++                    and j.equals(join)
++                    and hasattr(j, 'filtered_relation')
++                    and j.filtered_relation
++                    and j.filtered_relation.relation_name == join.filtered_relation.relation_name
++                    and j.filtered_relation.condition == join.filtered_relation.condition)
++            ]
++        else:
++            # For regular joins, use the standard equals method
++            reuse_aliases = [
++                a
++                for a, j in self.alias_map.items()
++                if (reuse is None or a in reuse) and j.equals(join)
++            ]
++            
+         if reuse_aliases:
+             if join.table_alias in reuse_aliases:
+                 reuse_alias = join.table_alias
+@@ -1040,9 +1059,22 @@ class Query(BaseExpression):
+             return reuse_alias
+ 
+         # No reuse is possible, so we need a new alias.
+-        alias, _ = self.table_alias(
+-            join.table_name, create=True, filtered_relation=join.filtered_relation
+-        )
++        # For FilteredRelation, use the alias from the FilteredRelation object
++        if hasattr(join, 'filtered_relation') and join.filtered_relation and join.filtered_relation.alias:
++            # Use the alias from the FilteredRelation
++            alias = join.filtered_relation.alias
++            # Add the alias to the table_map
++            if join.table_name in self.table_map:
++                if alias not in self.table_map[join.table_name]:
++                    self.table_map[join.table_name].append(alias)
++            else:
++                self.table_map[join.table_name] = [alias]
++        else:
++            # Use the standard table_alias method
++            alias, _ = self.table_alias(
++                join.table_name, create=True, filtered_relation=join.filtered_relation
++            )
++            
+         if join.join_type:
+             if self.alias_map[join.parent_alias].join_type == LOUTER or join.nullable:
+                 join_type = LOUTER
+@@ -1051,6 +1083,7 @@ class Query(BaseExpression):
+             join.join_type = join_type
+         join.table_alias = alias
+         self.alias_map[alias] = join
++        self.alias_refcount[alias] = 1
+         return alias
+ 
+     def join_parent_model(self, opts, model, alias, seen):
+diff --git a/tests/filtered_relation/models.py b/tests/filtered_relation/models.py
+index d34a86305f..8aa0571c5f 100644
+--- a/tests/filtered_relation/models.py
++++ b/tests/filtered_relation/models.py
+@@ -38,6 +38,7 @@ class Book(models.Model):
+     editor = models.ForeignKey(Editor, models.CASCADE)
+     generic_author = GenericRelation(Author)
+     state = models.CharField(max_length=9, choices=STATES, default=AVAILABLE)
++    price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+ 
+ 
+ class Borrower(models.Model):

@@ -1,0 +1,138 @@
+{
+  "instance_id": "django__django-11099",
+  "container_id": "8da1bc57d7f407ec9ad18addb3edf6277620cdfa6efe51faab60a24b37e19c85",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+        "inst": "django__django-11099",
+        "passed": 0,
+        "failed": 0
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "auth_tests.test_validators.UsernameValidatorsTests.test_ascii_validator#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "auth_tests.test_validators.UsernameValidatorsTests.test_ascii_validator#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "auth_tests.test_validators.UsernameValidatorsTests.test_ascii_validator#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "auth_tests.test_validators.NumericPasswordValidatorTest.test_ascii_validator#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_validators.NumericPasswordValidatorTest.test_unicode_validator#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_validators.NumericPasswordValidatorTest.test_unicode_validator#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": false
+        }
+      ]
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-11099/dedup_patch_0.jsonl",
+          "inst": "django__django-11099",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

@@ -59,15 +59,33 @@ def collect_repo_info(repo_name, base_commit, file, funcs, repo_base="temp_repos
     return func_dict, all_test_files
 
 
+def _strip_fq_prefix(file_path, fq_name):
+    """
+    Strip the module prefix from a fully-qualified function name,
+    keeping only the short name that parse_func_code expects.
+    """
+    # Convert file path to module prefix: 'sympy/polys/matrices/normalforms.py' -> 'sympy.polys.matrices.normalforms'
+    module_prefix = file_path.replace("/", ".").removesuffix(".py")
+
+    if fq_name.startswith(module_prefix + "."):
+        short = fq_name[len(module_prefix) + 1:]  # strip 'module.' prefix
+        return short
+    # Already short
+    return fq_name
+
+
 def get_suspicious_funcs(norm_funcs, instance_info, instance_id):
     """Extract suspicious function code for all files in one instance."""
     all_dict = {}
     all_test_files = []
     for file, funcs in norm_funcs.items():
         funcs = [f for f in funcs if f]
-        logging.info(f"  Processing file: {file} with {len(funcs)} functions")
+        # Strip FQ module prefix: parse_func_code expects 'func_name' or 'Class.method',
+        # not 'module.path.func_name'
+        short_funcs = [_strip_fq_prefix(file, f) for f in funcs]
+        logging.info(f"  Processing file: {file} with {len(short_funcs)} functions: {short_funcs}")
         func_dict, all_test_files = collect_repo_info(
-            instance_info["repo"], instance_info["base_commit"], file, funcs
+            instance_info["repo"], instance_info["base_commit"], file, short_funcs
         )
         if func_dict:
             all_dict.update(func_dict)

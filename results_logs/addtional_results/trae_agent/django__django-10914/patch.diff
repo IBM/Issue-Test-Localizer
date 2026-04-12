@@ -1,0 +1,51 @@
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index acee9887d2..bdeec80610 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -304,7 +304,7 @@ FILE_UPLOAD_TEMP_DIR = None
+ 
+ # The numeric mode to set newly-uploaded files to. The value should be a mode
+ # you'd pass directly to os.chmod; see https://docs.python.org/library/os.html#files-and-directories.
+-FILE_UPLOAD_PERMISSIONS = None
++FILE_UPLOAD_PERMISSIONS = 0o644
+ 
+ # The numeric mode to assign to newly-created directories, when uploading files.
+ # The value should be a mode as you'd pass to os.chmod;
+diff --git a/docs/topics/http/file-uploads.txt b/docs/topics/http/file-uploads.txt
+index 21a6f06853..f1b65fe53a 100644
+--- a/docs/topics/http/file-uploads.txt
++++ b/docs/topics/http/file-uploads.txt
+@@ -214,6 +214,15 @@ Changing upload handler behavior
+ There are a few settings which control Django's file upload behavior. See
+ :ref:`File Upload Settings <file-upload-settings>` for details.
+ 
++.. note::
++   The permission of uploaded files is set by the ``FILE_UPLOAD_PERMISSIONS`` setting,
++   which defaults to ``0o644``. Without this setting, the file permissions may vary
++   depending on whether a ``MemoryUploadedFile`` or a ``TemporaryUploadedFile`` was used
++   for temporary storage of the uploaded data (which, with the default
++   ``FILE_UPLOAD_HANDLERS``, depends on the uploaded data size). For example, if Python's
++   ``tempfile.NamedTemporaryFile`` is used, it may create files with permissions of
++   ``0o600`` on some systems.
++
+ .. _modifying_upload_handlers_on_the_fly:
+ 
+ Modifying upload handlers on the fly
+diff --git a/tests/file_storage/tests.py b/tests/file_storage/tests.py
+index 434869554c..ee878df332 100644
+--- a/tests/file_storage/tests.py
++++ b/tests/file_storage/tests.py
+@@ -892,12 +892,11 @@ class FileStoragePermissions(unittest.TestCase):
+         actual_mode = os.stat(self.storage.path(name))[0] & 0o777
+         self.assertEqual(actual_mode, 0o654)
+ 
+-    @override_settings(FILE_UPLOAD_PERMISSIONS=None)
+     def test_file_upload_default_permissions(self):
+         self.storage = FileSystemStorage(self.storage_dir)
+         fname = self.storage.save("some_file", ContentFile("data"))
+         mode = os.stat(self.storage.path(fname))[0] & 0o777
+-        self.assertEqual(mode, 0o666 & ~self.umask)
++        self.assertEqual(mode, 0o644)
+ 
+     @override_settings(FILE_UPLOAD_DIRECTORY_PERMISSIONS=0o765)
+     def test_file_upload_directory_permissions(self):

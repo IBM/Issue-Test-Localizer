@@ -1,0 +1,16 @@
+diff --git a/sklearn/utils/_set_output.py b/sklearn/utils/_set_output.py
+index 335773c6a..8ac3c64e0 100644
+--- a/sklearn/utils/_set_output.py
++++ b/sklearn/utils/_set_output.py
+@@ -56,7 +56,10 @@ def _wrap_in_pandas_container(
+         if columns is not None:
+             data_to_wrap.columns = columns
+         if index is not None:
+-            data_to_wrap.index = index
++            # Only set the index if the lengths match to avoid length mismatch errors
++            # when transformers aggregate data
++            if len(index) == len(data_to_wrap):
++                data_to_wrap.index = index
+         return data_to_wrap
+ 
+     return pd.DataFrame(data_to_wrap, index=index, columns=columns)

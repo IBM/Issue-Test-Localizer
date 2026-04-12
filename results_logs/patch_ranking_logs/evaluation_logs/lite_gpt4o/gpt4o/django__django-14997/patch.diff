@@ -1,0 +1,38 @@
+diff --git a/django/db/backends/sqlite3/schema.py b/django/db/backends/sqlite3/schema.py
+index 6d9014e..b4fe53b 100644
+--- a/django/db/backends/sqlite3/schema.py
++++ b/django/db/backends/sqlite3/schema.py
+@@ -419,26 +419,26 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+         self.delete_model(old_field.remote_field.through)
+ 
+     def add_constraint(self, model, constraint):
+-        if isinstance(constraint, UniqueConstraint) and (
++        if isinstance(constraint, UniqueConstraint) and not (
+             constraint.condition or
+             constraint.contains_expressions or
+             constraint.include or
+             constraint.deferrable
+         ):
+-            super().add_constraint(model, constraint)
+-        else:
+             self._remake_table(model)
++        else:
++            super().add_constraint(model, constraint)
+ 
+     def remove_constraint(self, model, constraint):
+-        if isinstance(constraint, UniqueConstraint) and (
++        if isinstance(constraint, UniqueConstraint) and not (
+             constraint.condition or
+             constraint.contains_expressions or
+             constraint.include or
+             constraint.deferrable
+         ):
+-            super().remove_constraint(model, constraint)
+-        else:
+             self._remake_table(model)
++        else:
++            super().remove_constraint(model, constraint)
+ 
+     def _collate_sql(self, collation):
+-        return 'COLLATE ' + collation
++        return 'COLLATE ' + collation

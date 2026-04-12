@@ -1,0 +1,20 @@
+diff --git a/sympy/physics/units/prefixes.py b/sympy/physics/units/prefixes.py
+index bc0a281..bab2857 100644
+--- a/sympy/physics/units/prefixes.py
++++ b/sympy/physics/units/prefixes.py
+@@ -1,3 +1,4 @@
++
+ """
+ Module defining unit prefixe class and some constants.
+ 
+@@ -85,9 +86,7 @@ class Prefix(Expr):
+ 
+         fact = self.scale_factor * other.scale_factor
+ 
+-        if fact == 1:
+-            return 1
+-        elif isinstance(other, Prefix):
++        if isinstance(other, Prefix):
+             # simplify prefix
+             for p in PREFIXES:
+                 if PREFIXES[p].scale_factor == fact:

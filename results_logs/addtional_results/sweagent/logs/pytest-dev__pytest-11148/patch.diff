@@ -1,0 +1,24 @@
+diff --git a/src/_pytest/pathlib.py b/src/_pytest/pathlib.py
+index e43310ef0..01df722fe 100644
+--- a/src/_pytest/pathlib.py
++++ b/src/_pytest/pathlib.py
+@@ -533,6 +533,19 @@ def import_path(
+ 
+         if spec is None:
+             raise ImportError(f"Can't find module {module_name} at location {path}")
++
++        # Check if module is already imported and the path matches
++        if module_name in sys.modules:
++            existing_mod = sys.modules[module_name]
++            # Verify that the existing module is from the same file
++            if hasattr(existing_mod, "__file__") and existing_mod.__file__:
++                try:
++                    if _is_same(str(path), existing_mod.__file__):
++                        return existing_mod
++                except (OSError, ValueError):
++                    # If we can't compare paths, fall through to reimport
++                    pass
++
+         mod = importlib.util.module_from_spec(spec)
+         sys.modules[module_name] = mod
+         spec.loader.exec_module(mod)  # type: ignore[union-attr]

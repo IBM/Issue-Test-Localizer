@@ -1,0 +1,26 @@
+diff --git a/django/contrib/staticfiles/handlers.py b/django/contrib/staticfiles/handlers.py
+index f289230..2a92d0f 100644
+--- a/django/contrib/staticfiles/handlers.py
++++ b/django/contrib/staticfiles/handlers.py
+@@ -78,6 +78,15 @@ class ASGIStaticFilesHandler(StaticFilesHandlerMixin, ASGIHandler):
+         self.application = application
+         self.base_url = urlparse(self.get_base_url())
+ 
++    async def get_response_async(self, request):
++        """
++        Async version of get_response.
++        """
++        try:
++            return self.serve(request)
++        except Http404 as e:
++            return response_for_exception(request, e)
++
+     async def __call__(self, scope, receive, send):
+         # Only even look at HTTP requests
+         if scope['type'] == 'http' and self._should_handle(scope['path']):
+@@ -85,4 +94,4 @@ class ASGIStaticFilesHandler(StaticFilesHandlerMixin, ASGIHandler):
+             # (the one thing super() doesn't do is __call__, apparently)
+             return await super().__call__(scope, receive, send)
+         # Hand off to the main app
+-        return await self.application(scope, receive, send)
++        return await self.application(scope, receive, send)

@@ -1,0 +1,32 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index 000e2e8d3..f1b0903de 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -1157,9 +1157,24 @@ class PythonDomain(Domain):
+                     else:
+                         # "fuzzy" searching mode
+                         searchname = '.' + name
+-                        matches = [(oname, self.objects[oname]) for oname in self.objects
+-                                   if oname.endswith(searchname) and
+-                                   self.objects[oname].objtype in objtypes]
++                        matches = []
++                        
++                        # For instance variables (type 'attr' or 'var'), we should be more strict
++                        # to avoid linking to unrelated variables with the same name
++                        if type in ('attr', 'var') and classname:
++                            # For instance variables, only match within the same class or module
++                            for oname in self.objects:
++                                if oname.endswith(searchname) and self.objects[oname].objtype in objtypes:
++                                    # Only include matches from the same class or direct module
++                                    if (modname and oname.startswith(modname + '.') and 
++                                        (classname and oname.startswith(modname + '.' + classname + '.') or 
++                                         not '.' in oname[len(modname)+1:].split(name)[0])):
++                                        matches.append((oname, self.objects[oname]))
++                        else:
++                            # For other types, keep the existing behavior
++                            matches = [(oname, self.objects[oname]) for oname in self.objects
++                                      if oname.endswith(searchname) and
++                                      self.objects[oname].objtype in objtypes]
+         else:
+             # NOTE: searching for exact match, object type is not considered
+             if name in self.objects:

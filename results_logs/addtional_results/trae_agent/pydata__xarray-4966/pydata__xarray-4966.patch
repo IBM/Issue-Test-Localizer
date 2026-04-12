@@ -1,0 +1,42 @@
+diff --git a/xarray/coding/variables.py b/xarray/coding/variables.py
+index b035ff82..993fa2a7 100644
+--- a/xarray/coding/variables.py
++++ b/xarray/coding/variables.py
+@@ -316,6 +316,15 @@ class UnsignedIntegerCoder(VariableCoder):
+                     if "_FillValue" in attrs:
+                         new_fill = unsigned_dtype.type(attrs["_FillValue"])
+                         attrs["_FillValue"] = new_fill
++            elif data.dtype.kind == "u" and unsigned == "false":
++                # Handle the OPeNDAP case where unsigned bytes are used to store signed bytes
++                # with _Unsigned=False
++                signed_dtype = np.dtype("i%s" % data.dtype.itemsize)
++                transform = partial(np.asarray, dtype=signed_dtype)
++                data = lazy_elemwise_func(data, transform, signed_dtype)
++                if "_FillValue" in attrs:
++                    new_fill = signed_dtype.type(attrs["_FillValue"])
++                    attrs["_FillValue"] = new_fill
+             else:
+                 warnings.warn(
+                     "variable %r has _Unsigned attribute but is not "
+diff --git a/xarray/tests/test_coding.py b/xarray/tests/test_coding.py
+index e0df7782..4f5761b2 100644
+--- a/xarray/tests/test_coding.py
++++ b/xarray/tests/test_coding.py
+@@ -94,6 +94,17 @@ def test_coder_roundtrip():
+     assert_identical(original, roundtripped)
+ 
+ 
++def test_unsigned_false_with_unsigned_dtype():
++    # Test handling of _Unsigned=false with unsigned data (OPeNDAP case)
++    original = xr.Variable(("x",), np.array([128, 255, 0, 1, 2, 127], dtype="u1"),
++                          attrs={"_Unsigned": "false"})
++    expected = xr.Variable(("x",), np.array([-128, -1, 0, 1, 2, 127], dtype="i1"))
++    coder = variables.UnsignedIntegerCoder()
++    decoded = coder.decode(original)
++    assert decoded.dtype == np.dtype("i1")
++    assert np.array_equal(decoded.values, expected.values)
++
++
+ @pytest.mark.parametrize("dtype", "u1 u2 i1 i2 f2 f4".split())
+ def test_scaling_converts_to_float32(dtype):
+     original = xr.Variable(

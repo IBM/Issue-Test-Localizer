@@ -1,0 +1,56 @@
+diff --git a/django/core/paginator.py b/django/core/paginator.py
+index 1f92da5d4f..32fdb43d29 100644
+--- a/django/core/paginator.py
++++ b/django/core/paginator.py
+@@ -33,6 +33,16 @@ class Paginator:
+         self.per_page = int(per_page)
+         self.orphans = int(orphans)
+         self.allow_empty_first_page = allow_empty_first_page
++        
++    def __iter__(self):
++        """
++        Iterate over all pages in the paginator, yielding each page.
++        
++        This allows for iterating through all pages by using the paginator
++        as an iterable, e.g., `for page in paginator`.
++        """
++        for page_num in self.page_range:
++            yield self.page(page_num)
+ 
+     def validate_number(self, number):
+         """Validate the given 1-based page number."""
+diff --git a/tests/pagination/tests.py b/tests/pagination/tests.py
+index ef6e355e8d..00f56aac6d 100644
+--- a/tests/pagination/tests.py
++++ b/tests/pagination/tests.py
+@@ -297,6 +297,30 @@ class PaginationTests(SimpleTestCase):
+         with self.assertRaises(EmptyPage):
+             paginator.get_page(1)
+ 
++    def test_paginator_iter(self):
++        """
++        Tests the paginator's __iter__ method that yields all pages.
++        """
++        # Test with 3 pages
++        paginator = Paginator(list(range(1, 11)), 4)
++        pages = list(paginator)
++        self.assertEqual(len(pages), 3)
++        self.assertEqual(pages[0].object_list, [1, 2, 3, 4])
++        self.assertEqual(pages[1].object_list, [5, 6, 7, 8])
++        self.assertEqual(pages[2].object_list, [9, 10])
++        
++        # Test with 1 page
++        paginator = Paginator(list(range(1, 5)), 5)
++        pages = list(paginator)
++        self.assertEqual(len(pages), 1)
++        self.assertEqual(pages[0].object_list, [1, 2, 3, 4])
++        
++        # Test with empty page
++        paginator = Paginator([], 5, allow_empty_first_page=True)
++        pages = list(paginator)
++        self.assertEqual(len(pages), 1)
++        self.assertEqual(pages[0].object_list, [])
++
+ 
+ class ModelPaginationTests(TestCase):
+     """

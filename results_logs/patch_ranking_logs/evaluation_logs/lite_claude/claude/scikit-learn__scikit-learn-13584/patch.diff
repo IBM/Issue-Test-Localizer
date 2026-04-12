@@ -1,0 +1,32 @@
+diff --git a/sklearn/base.py b/sklearn/base.py
+index 73c394e..2fc8de1 100644
+--- a/sklearn/base.py
++++ b/sklearn/base.py
+@@ -235,16 +235,26 @@ class BaseEstimator:
+ 
+     def __repr__(self):
+         from .utils._pprint import _EstimatorPrettyPrinter
++        import numpy as np
+ 
+         N_CHAR_MAX = 700  # number of non-whitespace or newline chars
+         N_MAX_ELEMENTS_TO_SHOW = 30  # number of elements to show in sequences
+ 
++        # Create a copy of self to avoid modifying the original object
++        class _SafeRepr:
++            def __init__(self, estimator):
++                self.__dict__ = {
++                    k: v.tolist() if isinstance(v, np.ndarray) else v
++                    for k, v in estimator.__dict__.items()
++                }
++                self.__class__ = estimator.__class__
++
+         # use ellipsis for sequences with a lot of elements
+         pp = _EstimatorPrettyPrinter(
+             compact=True, indent=1, indent_at_name=True,
+             n_max_elements_to_show=N_MAX_ELEMENTS_TO_SHOW)
+ 
+-        repr_ = pp.pformat(self)
++        repr_ = pp.pformat(_SafeRepr(self))
+ 
+         # Use bruteforce ellipsis if string is very long
+         if len(''.join(repr_.split())) > N_CHAR_MAX:  # check non-blank chars

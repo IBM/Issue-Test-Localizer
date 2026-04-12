@@ -1,0 +1,19 @@
+diff --git a/src/_pytest/assertion/util.py b/src/_pytest/assertion/util.py
+index c9b4ff0..1e53ac9 100644
+--- a/src/_pytest/assertion/util.py
++++ b/src/_pytest/assertion/util.py
+@@ -220,9 +220,13 @@ def _diff_text(left, right, verbose=0):
+         right = repr(str(right))
+         explanation += ["Strings contain only whitespace, escaping them using repr()"]
+     explanation += [
+-        line.strip("\n")
++        line.rstrip("\n")
+         for line in ndiff(left.splitlines(keepends), right.splitlines(keepends))
+     ]
++
++    # Special handling for byte strings to provide a clearer difference explanation
++    if isinstance(left, bytes) or isinstance(right, bytes):
++        explanation += ["Note: Byte string differences shown in ASCII ordinal values."]
+     return explanation
+ 
+ 

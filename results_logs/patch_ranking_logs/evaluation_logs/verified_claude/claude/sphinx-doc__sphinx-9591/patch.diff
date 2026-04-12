@@ -1,0 +1,16 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 08b07d9..ff01406 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -2729,6 +2729,11 @@ class PropertyDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):  #
+                                               type_aliases=self.config.autodoc_type_aliases)
+                 if signature.return_annotation is not Parameter.empty:
+                     objrepr = stringify_typehint(signature.return_annotation)
++                    # Preserve cross-references by not converting types that are simple references
++                    if not isinstance(signature.return_annotation, type):
++                        objrepr = stringify_typehint(signature.return_annotation)
++                    else:
++                        objrepr = signature.return_annotation.__name__
+                     self.add_line('   :type: ' + objrepr, sourcename)
+             except TypeError as exc:
+                 logger.warning(__("Failed to get a function signature for %s: %s"),

@@ -1,0 +1,21 @@
+diff --git a/seaborn/axisgrid.py b/seaborn/axisgrid.py
+index 21c0562..16bd3b6 100644
+--- a/seaborn/axisgrid.py
++++ b/seaborn/axisgrid.py
+@@ -1560,12 +1560,11 @@ class PairGrid(Grid):
+ 
+         x = data[x_var]
+         y = data[y_var]
+-        if self._hue_var is None:
+-            hue = None
+-        else:
+-            hue = data.get(self._hue_var)
+-
+         if "hue" not in kwargs:
++            if self._hue_var is None:
++                hue = None
++            else:
++                hue = data.get(self._hue_var)
+             kwargs.update({
+                 "hue": hue, "hue_order": self._hue_order, "palette": self._orig_palette,
+             })

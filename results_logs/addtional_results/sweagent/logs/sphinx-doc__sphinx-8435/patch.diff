@@ -1,0 +1,101 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 171a3e7b0..a8a12af03 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -67,6 +67,26 @@ def identity(x: Any) -> Any:
+     return x
+ 
+ 
++def _resolve_annotation_string(annotation: str, globalns: Dict[str, Any], 
++                               type_aliases: Dict[str, Any]) -> str:
++    """Resolve annotation string with type aliases."""
++    if not type_aliases:
++        return annotation
++    
++    # Simple string replacement for basic cases
++    # This handles the most common case where the annotation is just the alias name
++    if annotation in type_aliases:
++        resolved = type_aliases[annotation]
++        if hasattr(resolved, '__module__') and hasattr(resolved, '__qualname__'):
++            return f"{resolved.__module__}.{resolved.__qualname__}"
++        else:
++            return str(resolved)
++    
++    # For more complex annotations, we could implement more sophisticated parsing
++    # but for now, just return the original annotation
++    return annotation
++
++
+ class _All:
+     """A special value for :*-members: that matches to any member."""
+ 
+@@ -1702,10 +1722,17 @@ class DataDocumenter(ModuleLevelDocumenter):
+         if not self.options.annotation:
+             # obtain annotation for this data
+             try:
+-                annotations = get_type_hints(self.parent)
++                annotations = get_type_hints(self.parent, None, self.config.autodoc_type_aliases)
+             except NameError:
+                 # Failed to evaluate ForwardRef (maybe TYPE_CHECKING)
+-                annotations = safe_getattr(self.parent, '__annotations__', {})
++                # Try to resolve annotations with type aliases manually
++                raw_annotations = safe_getattr(self.parent, '__annotations__', {})
++                annotations = {}
++                for name, annotation in raw_annotations.items():
++                    if isinstance(annotation, str) and annotation in self.config.autodoc_type_aliases:
++                        annotations[name] = self.config.autodoc_type_aliases[annotation]
++                    else:
++                        annotations[name] = annotation
+             except TypeError:
+                 annotations = {}
+             except KeyError:
+@@ -1721,8 +1748,12 @@ class DataDocumenter(ModuleLevelDocumenter):
+             else:
+                 key = ('.'.join(self.objpath[:-1]), self.objpath[-1])
+                 if self.analyzer and key in self.analyzer.annotations:
+-                    self.add_line('   :type: ' + self.analyzer.annotations[key],
+-                                  sourcename)
++                    annotation = self.analyzer.annotations[key]
++                    # Apply type aliases to annotation string
++                    resolved_annotation = _resolve_annotation_string(
++                        annotation, getattr(self.parent, '__dict__', {}), 
++                        self.config.autodoc_type_aliases)
++                    self.add_line('   :type: ' + resolved_annotation, sourcename)
+ 
+             try:
+                 if self.object is UNINITIALIZED_ATTR:
+@@ -2093,10 +2124,17 @@ class AttributeDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):
+         if not self.options.annotation:
+             # obtain type annotation for this attribute
+             try:
+-                annotations = get_type_hints(self.parent)
++                annotations = get_type_hints(self.parent, None, self.config.autodoc_type_aliases)
+             except NameError:
+                 # Failed to evaluate ForwardRef (maybe TYPE_CHECKING)
+-                annotations = safe_getattr(self.parent, '__annotations__', {})
++                # Try to resolve annotations with type aliases manually
++                raw_annotations = safe_getattr(self.parent, '__annotations__', {})
++                annotations = {}
++                for name, annotation in raw_annotations.items():
++                    if isinstance(annotation, str) and annotation in self.config.autodoc_type_aliases:
++                        annotations[name] = self.config.autodoc_type_aliases[annotation]
++                    else:
++                        annotations[name] = annotation
+             except TypeError:
+                 annotations = {}
+             except KeyError:
+@@ -2112,8 +2150,12 @@ class AttributeDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):
+             else:
+                 key = ('.'.join(self.objpath[:-1]), self.objpath[-1])
+                 if self.analyzer and key in self.analyzer.annotations:
+-                    self.add_line('   :type: ' + self.analyzer.annotations[key],
+-                                  sourcename)
++                    annotation = self.analyzer.annotations[key]
++                    # Apply type aliases to annotation string
++                    resolved_annotation = _resolve_annotation_string(
++                        annotation, getattr(self.parent, '__dict__', {}), 
++                        self.config.autodoc_type_aliases)
++                    self.add_line('   :type: ' + resolved_annotation, sourcename)
+ 
+             # data descriptors do not have useful values
+             if not self._datadescriptor:

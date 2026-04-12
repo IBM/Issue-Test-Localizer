@@ -1,0 +1,34 @@
+diff --git a/sympy/combinatorics/perm_groups.py b/sympy/combinatorics/perm_groups.py
+index de94ddabb4..8df5363960 100644
+--- a/sympy/combinatorics/perm_groups.py
++++ b/sympy/combinatorics/perm_groups.py
+@@ -2192,19 +2192,24 @@ def _number_blocks(blocks):
+                 # a representative block (containing 0)
+                 rep = {j for j in range(self.degree) if num_block[j] == 0}
+                 # check if the system is minimal with
+-                # respect to the already discovere ones
++                # respect to the already discovered ones
+                 minimal = True
+-                to_remove = []
++                to_remove_indices = []
+                 for i, r in enumerate(rep_blocks):
+                     if len(r) > len(rep) and rep.issubset(r):
+                         # i-th block system is not minimal
+-                        del num_blocks[i], blocks[i]
+-                        to_remove.append(rep_blocks[i])
++                        to_remove_indices.append(i)
+                     elif len(r) < len(rep) and r.issubset(rep):
+                         # the system being checked is not minimal
+                         minimal = False
+                         break
+-                # remove non-minimal representative blocks
++                
++                # Remove non-minimal systems (in reverse order to avoid index issues)
++                for i in sorted(to_remove_indices, reverse=True):
++                    del num_blocks[i], blocks[i]
++                    
++                # Remove non-minimal representative blocks
++                to_remove = [rep_blocks[i] for i in to_remove_indices]
+                 rep_blocks = [r for r in rep_blocks if r not in to_remove]
+ 
+                 if minimal and num_block not in num_blocks:

@@ -1,0 +1,25 @@
+diff --git a/sympy/printing/ccode.py b/sympy/printing/ccode.py
+index 30a07a7b59..8cb455ad27 100644
+--- a/sympy/printing/ccode.py
++++ b/sympy/printing/ccode.py
+@@ -251,6 +251,20 @@ def _print_For(self, expr):
+     def _print_sign(self, func):
+         return '((({0}) > 0) - (({0}) < 0))'.format(self._print(func.args[0]))
+ 
++    def _print_sinc(self, expr):
++        from sympy.functions import Piecewise, sin
++        from sympy.core.relational import Ne
++        arg = expr.args[0]
++        # sinc(x) = Piecewise((sin(x)/x, Ne(x, 0)), (1, True))
++        piecewise_expr = Piecewise((sin(arg)/arg, Ne(arg, 0)), (1, True))
++        return self._print(piecewise_expr)
++
++    def _print_Relational(self, expr):
++        lhs = self._print(expr.lhs)
++        rhs = self._print(expr.rhs)
++        op = expr.rel_op
++        return "{0} {1} {2}".format(lhs, op, rhs)
++
+     def indent_code(self, code):
+         """Accepts a string of code or a list of code lines"""
+ 

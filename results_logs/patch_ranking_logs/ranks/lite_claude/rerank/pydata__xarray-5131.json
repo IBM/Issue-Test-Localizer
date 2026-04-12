@@ -1,0 +1,23 @@
+{
+  "instance_id": "pydata__xarray-5131",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-5131/dedup_patch_0.jsonl",
+    "repro_fixes": 6,
+    "repro_total_considered": 6,
+    "regression_passed": 4,
+    "occurrence": 40,
+    "normalized_occurrence": 40
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-5131/dedup_patch_0.jsonl",
+        "repro_fixes": 6,
+        "repro_total_considered": 6,
+        "regression_passed": 4,
+        "occurrence": 40,
+        "normalized_occurrence": 40
+      }
+    ]
+  }
+}

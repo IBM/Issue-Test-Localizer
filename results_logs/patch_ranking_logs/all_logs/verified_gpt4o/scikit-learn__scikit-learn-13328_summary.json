@@ -1,0 +1,783 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13328",
+  "container_id": "c4fe9f1c132a4cc78c3cfdfe7f533dbb8eab5d53afaa67e187fff6e4938a6405",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_1.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_10.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_12.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_13.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_14.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_15.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_16.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_17.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_18.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_20.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_21.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_23.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_24.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_25.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_27.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_3.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_4.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_5.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_6.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_7.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_8.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_11.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 3,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_26.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 3,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_9.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 3,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_19.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 0,
+        "failed": 4
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_2.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 0,
+        "failed": 4
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_22.jsonl",
+        "inst": "scikit-learn__scikit-learn-13328",
+        "passed": 0,
+        "failed": 4
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 22
+  },
+  "reproduction": {
+    "sklearn/linear_model/tests/test_huber.py::test_huber_sparse#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_huber.py::test_huber_better_r2_score#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug.py#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_huber.py::test_huber_equals_lr_for_high_epsilon#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_huber.py::test_huber_sparse#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_huber.py::test_huber_better_r2_score#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_huber.py::test_huber_equals_lr_for_high_epsilon#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_10.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_12.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_13.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_14.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_15.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_16.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_17.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_18.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_20.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_21.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_23.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_24.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_25.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_27.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_3.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_4.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_5.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_6.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_7.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_8.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_10.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_12.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_13.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_14.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_15.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_16.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_17.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_18.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_20.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_21.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_23.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_24.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_25.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_27.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_3.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_4.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_5.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_6.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_7.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_8.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_10.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_12.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_13.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_14.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_15.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_16.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_17.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_18.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_20.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_21.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_23.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_24.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_25.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_27.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_3.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_4.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_5.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_6.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_7.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_8.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_10.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_12.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_13.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_14.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_15.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_16.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_17.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_18.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_20.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_21.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_23.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_24.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_25.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_27.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_3.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_4.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_5.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_6.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_7.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_8.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_10.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_12.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_13.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_14.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_15.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_16.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_17.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_18.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_20.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_21.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_23.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_24.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_25.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_27.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_3.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_4.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_5.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_6.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_7.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13328/dedup_patch_8.jsonl",
+          "inst": "scikit-learn__scikit-learn-13328",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

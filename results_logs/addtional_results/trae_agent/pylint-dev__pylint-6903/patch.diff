@@ -1,0 +1,14 @@
+diff --git a/pylint/lint/run.py b/pylint/lint/run.py
+index a7e5d557..0f43414e 100644
+--- a/pylint/lint/run.py
++++ b/pylint/lint/run.py
+@@ -76,7 +76,8 @@ def _cpu_count() -> int:
+     else:
+         cpu_count = 1
+     if cpu_share is not None:
+-        return min(cpu_share, cpu_count)
++        # Ensure we never return 0 CPUs, as multiprocessing requires at least 1
++        return max(1, min(cpu_share, cpu_count))
+     return cpu_count
+ 
+ 

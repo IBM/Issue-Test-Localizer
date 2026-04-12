@@ -1,0 +1,26 @@
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 3a462f1c4c..3c583166af 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -232,9 +232,19 @@ class Collector:
+         """
+         Get a QuerySet of objects related to `objs` via the relation `related`.
+         """
+-        return related.related_model._base_manager.using(self.using).filter(
++        # Only select the primary key field and the field used in the relation
++        # for deletion. The relation field is needed for signal handlers.
++        related_model = related.related_model
++        fields = [related_model._meta.pk.name]
++        
++        # If the related field is a foreign key, include it in the selected fields
++        # This is important for signal handlers that might access the foreign key
++        if hasattr(related.field, 'attname') and related.field.attname != related.field.name:
++            fields.append(related.field.attname)
++            
++        return related_model._base_manager.using(self.using).filter(
+             **{"%s__in" % related.field.name: objs}
+-        )
++        ).only(*fields)
+ 
+     def instances_with_model(self):
+         for model, instances in self.data.items():

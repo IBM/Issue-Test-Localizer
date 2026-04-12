@@ -1,0 +1,37 @@
+diff --git a/sympy/combinatorics/homomorphisms.py b/sympy/combinatorics/homomorphisms.py
+index bb7bdf32ba..6c612a1dd4 100644
+--- a/sympy/combinatorics/homomorphisms.py
++++ b/sympy/combinatorics/homomorphisms.py
+@@ -311,7 +311,6 @@ def _check_homomorphism(domain, codomain, images):
+     if hasattr(domain, 'relators'):
+         rels = domain.relators
+     else:
+-        gens = domain.presentation().generators
+         rels = domain.presentation().relators
+     identity = codomain.identity
+ 
+@@ -333,10 +332,7 @@ def _image(r):
+             # both indices
+             while i < len(r):
+                 power = r_arr[j][1]
+-                if isinstance(domain, PermutationGroup) and r[i] in gens:
+-                    s = domain.generators[gens.index(r[i])]
+-                else:
+-                    s = r[i]
++                s = r[i]
+                 if s in images:
+                     w = w*images[s]**power
+                 elif s**-1 in images:
+diff --git a/sympy/combinatorics/tests/test_homomorphisms.py b/sympy/combinatorics/tests/test_homomorphisms.py
+index 800dfeeb1e..7b6b59cb2b 100644
+--- a/sympy/combinatorics/tests/test_homomorphisms.py
++++ b/sympy/combinatorics/tests/test_homomorphisms.py
+@@ -106,4 +106,7 @@ def test_check_homomorphism():
+     a = Permutation(1,2,3,4)
+     b = Permutation(1,3)
+     G = PermutationGroup([a, b])
+-    raises(ValueError, lambda: homomorphism(G, G, [a], [a]))
++    # The homomorphism should now be valid with our fix
++    T = homomorphism(G, G, [a], [a])
++    # Check that the homomorphism was created successfully
++    assert T(a) == a

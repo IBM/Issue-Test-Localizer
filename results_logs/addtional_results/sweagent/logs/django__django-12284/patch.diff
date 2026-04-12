@@ -1,0 +1,35 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 1a55d3d417..58c23aba16 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -764,12 +764,28 @@ class Field(RegisterLookupMixin):
+             if not getattr(cls, self.attname, None):
+                 setattr(cls, self.attname, self.descriptor_class(self))
+         if self.choices is not None:
+-            if not hasattr(cls, 'get_%s_display' % self.name):
++            method_name = 'get_%s_display' % self.name
++            # Always set the method if it doesn't exist
++            if not hasattr(cls, method_name):
+                 setattr(
+                     cls,
+-                    'get_%s_display' % self.name,
++                    method_name,
+                     partialmethod(cls._get_FIELD_display, field=self),
+                 )
++            else:
++                # Check if the existing method is a partialmethod created by Django
++                # by checking if it's defined in the current class or inherited
++                existing_method = getattr(cls, method_name)
++                
++                # If the method is defined in the current class's __dict__, 
++                # it's a user-defined method, so don't override it
++                if method_name not in cls.__dict__:
++                    # Method is inherited, so we should override it with our field
++                    setattr(
++                        cls,
++                        method_name,
++                        partialmethod(cls._get_FIELD_display, field=self),
++                    )
+ 
+     def get_filter_kwargs_for_object(self, obj):
+         """

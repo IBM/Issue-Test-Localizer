@@ -1,0 +1,93 @@
+diff --git a/sympy/physics/vector/point.py b/sympy/physics/vector/point.py
+index d4e3cfcc90..7bb0454a94 100644
+--- a/sympy/physics/vector/point.py
++++ b/sympy/physics/vector/point.py
+@@ -499,6 +499,11 @@ def v2pt_theory(self, otherpoint, outframe, fixedframe):
+     def vel(self, frame):
+         """The velocity Vector of this Point in the ReferenceFrame.
+ 
++        If the velocity has been explicitly set using set_vel(), that value is returned.
++        Otherwise, if this point has a position relationship with another point (set using
++        set_pos()), the velocity is calculated automatically by taking the time derivative
++        of the position vector and adding the velocity of the reference point.
++
+         Parameters
+         ==========
+ 
+@@ -508,20 +513,71 @@ def vel(self, frame):
+         Examples
+         ========
+ 
+-        >>> from sympy.physics.vector import Point, ReferenceFrame
++        >>> from sympy.physics.vector import Point, ReferenceFrame, dynamicsymbols
+         >>> N = ReferenceFrame('N')
+         >>> p1 = Point('p1')
+         >>> p1.set_vel(N, 10 * N.x)
+         >>> p1.vel(N)
+         10*N.x
+ 
++        Velocity can also be calculated automatically from position relationships:
++
++        >>> q = dynamicsymbols('q')
++        >>> p2 = Point('p2')
++        >>> p3 = Point('p3')
++        >>> p3.set_pos(p2, q * N.x + 2 * q * N.y)
++        >>> p3.vel(N)  # Automatically calculated as time derivative of position
++        Derivative(q(t), t)*N.x + 2*Derivative(q(t), t)*N.y
++
+         """
+ 
+         _check_frame(frame)
+-        if not (frame in self._vel_dict):
+-            raise ValueError('Velocity of point ' + self.name + ' has not been'
+-                             ' defined in ReferenceFrame ' + frame.name)
+-        return self._vel_dict[frame]
++        if frame in self._vel_dict:
++            return self._vel_dict[frame]
++        
++        # Try to calculate velocity from position relationships
++        return self._calculate_vel_from_pos(frame, set())
++    
++    def _calculate_vel_from_pos(self, frame, visited_points):
++        """Helper method to calculate velocity from position relationships.
++        
++        Parameters
++        ==========
++        frame : ReferenceFrame
++            The frame in which to calculate velocity
++        visited_points : set
++            Set of points already visited to avoid infinite recursion
++        """
++        
++        if self._pos_dict:
++            from .vector import Vector
++            # Find a point with position relationship
++            for other_point, pos_vector in self._pos_dict.items():
++                # Skip if this would create a cycle
++                if other_point in visited_points:
++                    continue
++                    
++                # Check if the other point has velocity defined
++                if frame in other_point._vel_dict:
++                    # Other point has velocity defined, use kinematic relationship
++                    other_vel = other_point._vel_dict[frame]
++                    calculated_vel = other_vel + pos_vector.dt(frame)
++                    return calculated_vel
++                else:
++                    # Try to calculate the other point's velocity recursively
++                    new_visited = visited_points | {self}
++                    try:
++                        other_vel = other_point._calculate_vel_from_pos(frame, new_visited)
++                        calculated_vel = other_vel + pos_vector.dt(frame)
++                        return calculated_vel
++                    except ValueError:
++                        # Other point can't calculate velocity, assume it's stationary
++                        calculated_vel = Vector(0) + pos_vector.dt(frame)
++                        return calculated_vel
++        
++        # If no position relationships exist, raise error
++        raise ValueError('Velocity of point ' + self.name + ' has not been'
++                         ' defined in ReferenceFrame ' + frame.name)
+ 
+     def partial_velocity(self, frame, *gen_speeds):
+         """Returns the partial velocities of the linear velocity vector of this

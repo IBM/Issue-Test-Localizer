@@ -1,0 +1,40 @@
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index ad2f5a7da1..42131c4111 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1066,7 +1066,9 @@ class BaseDatabaseSchemaEditor:
+         )
+ 
+     def _index_columns(self, table, columns, col_suffixes, opclasses):
+-        return Columns(table, columns, self.quote_name, col_suffixes=col_suffixes)
++        # Handle both string and Table objects
++        table_name = table.table if hasattr(table, 'table') else table
++        return Columns(table_name, columns, self.quote_name, col_suffixes=col_suffixes)
+ 
+     def _model_indexes_sql(self, model):
+         """
+diff --git a/django/db/backends/ddl_references.py b/django/db/backends/ddl_references.py
+index c06386a2fa..2fee9f5a19 100644
+--- a/django/db/backends/ddl_references.py
++++ b/django/db/backends/ddl_references.py
+@@ -65,10 +65,18 @@ class TableColumns(Table):
+         self.columns = columns
+ 
+     def references_column(self, table, column):
+-        return self.table == table and column in self.columns
++        # Handle case where self.table is a Table object
++        table_name = self.table
++        if hasattr(self.table, 'table'):
++            table_name = self.table.table
++        return table_name == table and column in self.columns
+ 
+     def rename_column_references(self, table, old_column, new_column):
+-        if self.table == table:
++        # Handle case where self.table is a Table object
++        table_name = self.table
++        if hasattr(self.table, 'table'):
++            table_name = self.table.table
++        if table_name == table:
+             for index, column in enumerate(self.columns):
+                 if column == old_column:
+                     self.columns[index] = new_column

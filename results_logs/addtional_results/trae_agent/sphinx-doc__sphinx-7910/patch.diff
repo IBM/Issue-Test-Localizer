@@ -1,0 +1,42 @@
+diff --git a/sphinx/ext/napoleon/__init__.py b/sphinx/ext/napoleon/__init__.py
+index 10b1ff3a3..a6372d44e 100644
+--- a/sphinx/ext/napoleon/__init__.py
++++ b/sphinx/ext/napoleon/__init__.py
+@@ -438,10 +438,36 @@ def _skip_member(app: Sphinx, what: str, name: str, obj: Any,
+                         mod_path = cls_path.split('.')
+                         cls = functools.reduce(getattr, mod_path, mod)
+                     else:
+-                        cls = obj.__globals__[cls_path]
++                        # Try to get the class from obj.__globals__ first
++                        if cls_path in obj.__globals__:
++                            cls = obj.__globals__[cls_path]
++                        else:
++                            # If that fails, try to find the class in the module's globals
++                            # This handles decorated methods where __globals__ might not contain the class
++                            import sys
++                            module = sys.modules.get(obj.__module__)
++                            if module and cls_path in module.__dict__:
++                                cls = module.__dict__[cls_path]
++                            else:
++                                # Last resort: try to get the class by traversing the module
++                                # This handles nested classes and more complex cases
++                                mod = importlib.import_module(obj.__module__)
++                                try:
++                                    # Handle nested classes by splitting on '.'
++                                    parts = cls_path.split('.<locals>.')
++                                    if len(parts) > 1:
++                                        # For classes defined in local scopes, get the outermost container
++                                        outer_name = parts[0]
++                                        if hasattr(mod, outer_name):
++                                            cls = getattr(mod, outer_name)
++                                    else:
++                                        cls = getattr(mod, cls_path)
++                                except (AttributeError, ValueError):
++                                    raise
+                 except Exception:
+                     cls_is_owner = False
+                 else:
++                    # Check if this is a method of the class
+                     cls_is_owner = (cls and hasattr(cls, name) and  # type: ignore
+                                     name in cls.__dict__)
+             else:

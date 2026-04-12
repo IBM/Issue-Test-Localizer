@@ -1,0 +1,48 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index be0deb90b0..3ac0e52f22 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -2140,6 +2140,26 @@ class RawQuerySet:
+ 
+ 
+ class Prefetch:
++    """
++    Prefetch object for use with prefetch_related().
++    
++    This is used to customize the prefetch operation.
++    
++    Note: Using sliced querysets (e.g., ``queryset=Model.objects.all()[:10]``) with
++    ``Prefetch()`` is not supported and will raise a TypeError. Instead, use
++    a ``to_attr`` parameter and filter the results afterwards, e.g.::
++    
++        # Instead of this:
++        queryset = Category.objects.prefetch_related(
++            Prefetch('post_set', queryset=Post.objects.all()[:3])
++        )
++        
++        # Do this:
++        queryset = Category.objects.prefetch_related(
++            Prefetch('post_set', queryset=Post.objects.all(), to_attr='example_posts')
++        )
++        # Then access category.example_posts[:3] for each category
++    """
+     def __init__(self, lookup, queryset=None, to_attr=None):
+         # `prefetch_through` is the path we traverse to perform the prefetch.
+         self.prefetch_through = lookup
+@@ -2159,7 +2179,7 @@ class Prefetch:
+             self.prefetch_to = LOOKUP_SEP.join(
+                 lookup.split(LOOKUP_SEP)[:-1] + [to_attr]
+             )
+-
++            
+         self.queryset = queryset
+         self.to_attr = to_attr
+ 
+@@ -2448,6 +2468,7 @@ def prefetch_one_level(instances, prefetcher, lookup, level):
+     # The 'values to be matched' must be hashable as they will be used
+     # in a dictionary.
+ 
++    # Get the queryset from the prefetcher
+     (
+         rel_qs,
+         rel_obj_attr,

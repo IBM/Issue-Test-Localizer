@@ -1,0 +1,57 @@
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index b6af5f5491..05fa203acc 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -224,7 +224,22 @@ def get_child_arguments():
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+     if getattr(__main__, '__spec__', None) is not None and __main__.__spec__.parent:
+-        args += ['-m', __main__.__spec__.parent]
++        # Get the parent module path
++        parent = __main__.__spec__.parent
++        
++        # Check if this is a package's __main__ module or a regular module
++        is_package_main = (hasattr(__main__, '__file__') and 
++                          getattr(__main__, '__file__', '').endswith('__main__.py'))
++        
++        # For modules like foo.bar.baz, use the full module name from __spec__.name
++        # instead of __spec__.parent (which would be foo.bar)
++        if not is_package_main and hasattr(__main__.__spec__, 'name'):
++            # Only use name if it's longer than parent (has more dots)
++            # This ensures we get the full path for modules like foo.bar.baz
++            if __main__.__spec__.name.count('.') > parent.count('.'):
++                parent = __main__.__spec__.name
++        
++        args += ['-m', parent]
+         args += sys.argv[1:]
+     elif not py_script.exists():
+         # sys.argv[0] may not exist for several reasons on Windows.
+diff --git a/tests/utils_tests/test_autoreload.py b/tests/utils_tests/test_autoreload.py
+index 7b91686bf5..4fbfcf3c26 100644
+--- a/tests/utils_tests/test_autoreload.py
++++ b/tests/utils_tests/test_autoreload.py
+@@ -181,6 +181,24 @@ class TestChildArguments(SimpleTestCase):
+             autoreload.get_child_arguments(),
+             [sys.executable, '-m', 'utils_tests.test_module', 'runserver'],
+         )
++        
++    @mock.patch('sys.warnoptions', [])
++    def test_run_as_dotted_module_path(self):
++        """
++        When running a module with a dotted path like `python -m foo.bar.baz`,
++        the autoreloader should preserve the full module path.
++        """
++        module = types.ModuleType('__main__')
++        module.__spec__ = mock.MagicMock()
++        # Set both name and parent to simulate a real module spec
++        module.__spec__.name = 'utils_tests.test_module.submodule'
++        module.__spec__.parent = 'utils_tests.test_module'  # This would be set incorrectly in the original code
++        with mock.patch.dict(sys.modules, {'__main__': module}):
++            with mock.patch('sys.argv', ['/path/to/script.py', 'runserver']):
++                self.assertEqual(
++                    autoreload.get_child_arguments(),
++                    [sys.executable, '-m', 'utils_tests.test_module.submodule', 'runserver'],
++                )
+ 
+     @mock.patch('sys.argv', [__file__, 'runserver'])
+     @mock.patch('sys.warnoptions', ['error'])

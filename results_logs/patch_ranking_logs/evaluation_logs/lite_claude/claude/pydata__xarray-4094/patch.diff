@@ -1,0 +1,28 @@
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index d48a6e6..1c26fa1 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -1961,10 +1961,21 @@ class DataArray(AbstractArray, DataWithCoords):
+         # pull variables out of datarray
+         data_dict = {}
+         for k in variables:
+-            data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
++            # Get the data for this variable, handling missing values
++            var_data = self.sel({variable_dim: k}, drop=True)
++            if var_data.size == 0:
++                # If no data (was dropped during stacking), create with original dims
++                other_levels = [n for n in idx.names if n != variable_dim]
++                if other_levels:
++                    # Get the first non-empty variable's coordinates for the remaining dimensions
++                    template_var = next(v for v in variables if self.sel({variable_dim: v}, drop=True).size > 0)
++                    template_data = self.sel({variable_dim: template_var}, drop=True)
++                    coords = {dim: template_data[dim] for dim in other_levels}
++                    var_data = xr.DataArray(np.nan, coords=coords)
++            data_dict[k] = var_data.squeeze()
+ 
+         # unstacked dataset
+-        return Dataset(data_dict)
++        return Dataset(data_dict, attrs=self.attrs)
+ 
+     def transpose(self, *dims: Hashable, transpose_coords: bool = True) -> "DataArray":
+         """Return a new DataArray object with transposed dimensions.

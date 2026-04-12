@@ -1,0 +1,15 @@
+diff --git a/django/template/defaulttags.py b/django/template/defaulttags.py
+index 3fb46e2..732bf75 100644
+--- a/django/template/defaulttags.py
++++ b/django/template/defaulttags.py
+@@ -452,6 +452,10 @@ class URLNode(Node):
+         else:
+             if context.autoescape:
+                 url = conditional_escape(url)
++            request = context.get('request', None)
++            if request:
++                script_name = request.META.get('SCRIPT_NAME', '')
++                url = script_name + url
+             return url
+ 
+ 

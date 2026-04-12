@@ -1,0 +1,18 @@
+diff --git a/sympy/sets/sets.py b/sympy/sets/sets.py
+index 78d756e..8d24766 100644
+--- a/sympy/sets/sets.py
++++ b/sympy/sets/sets.py
+@@ -1389,6 +1389,13 @@ class Intersection(Set, LatticeOp):
+         raise NotImplementedError()
+ 
+     def _contains(self, other):
++        # If any of the sets definitely doesn't contain other, return False
++        for s in self.args:
++            result = s.contains(other)
++            if result is False:
++                return False
++        
++        # Check containment in all sets
+         return And(*[set.contains(other) for set in self.args])
+ 
+     def __iter__(self):

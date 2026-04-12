@@ -1,0 +1,30 @@
+diff --git a/django/db/models/sql/where.py b/django/db/models/sql/where.py
+index 7a540c9..4c08f3a 100644
+--- a/django/db/models/sql/where.py
++++ b/django/db/models/sql/where.py
+@@ -93,10 +93,22 @@ class WhereNode(tree.Node):
+             # Now, check if this node is full/empty using the
+             # counts.
+             if empty_needed == 0:
+-                if self.negated:
+-                    return '', []
+-                else:
++                if len(self.children) == 1:
++                    # If we have only one condition and it's impossible, then the whole WHERE
++                    # can be determined
++                    if self.negated:
++                        return '', []
++                    else:
++                        raise EmptyResultSet
++                elif full_needed == len(self.children):
++                    # If we still need all conditions to be full, keep processing
++                    continue
++                elif self.connector == AND:
++                    # If we're AND-ing and any condition is impossible, short circuit
+                     raise EmptyResultSet
++                else:
++                    # If we're OR-ing and any condition is impossible, ignore it
++                    continue
+             if full_needed == 0:
+                 if self.negated:
+                     raise EmptyResultSet

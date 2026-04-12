@@ -1,0 +1,43 @@
+diff --git a/src/_pytest/assertion/rewrite.py b/src/_pytest/assertion/rewrite.py
+index 4810cdd..e81d173 100644
+--- a/src/_pytest/assertion/rewrite.py
++++ b/src/_pytest/assertion/rewrite.py
+@@ -964,32 +964,7 @@ warn_explicit(
+         res = self.assign(ast.BinOp(left_expr, binop.op, right_expr))
+         return res, explanation
+ 
+-    def visit_Call_35(self, call):
+-        """
+-        visit `ast.Call` nodes on Python3.5 and after
+-        """
+-        new_func, func_expl = self.visit(call.func)
+-        arg_expls = []
+-        new_args = []
+-        new_kwargs = []
+-        for arg in call.args:
+-            res, expl = self.visit(arg)
+-            arg_expls.append(expl)
+-            new_args.append(res)
+-        for keyword in call.keywords:
+-            res, expl = self.visit(keyword.value)
+-            new_kwargs.append(ast.keyword(keyword.arg, res))
+-            if keyword.arg:
+-                arg_expls.append(keyword.arg + "=" + expl)
+-            else:  # **args have `arg` keywords with an .arg of None
+-                arg_expls.append("**" + expl)
+ 
+-        expl = "%s(%s)" % (func_expl, ", ".join(arg_expls))
+-        new_call = ast.Call(new_func, new_args, new_kwargs)
+-        res = self.assign(new_call)
+-        res_expl = self.explanation_param(self.display(res))
+-        outer_expl = "%s\n{%s = %s\n}" % (res_expl, res_expl, expl)
+-        return res, outer_expl
+ 
+     def visit_Starred(self, starred):
+         # From Python 3.5, a Starred node can appear in a function call
+@@ -1081,4 +1056,4 @@ warn_explicit(
+             res = ast.BoolOp(ast.And(), load_names)
+         else:
+             res = load_names[0]
+-        return res, self.explanation_param(self.pop_format_context(expl_call))
++        return res, self.explanation_param(self.pop_format_context(expl_call))

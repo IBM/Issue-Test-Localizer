@@ -1,0 +1,68 @@
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 89e2dceeaf..262ecdd4f8 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -421,6 +421,13 @@ class MigrationAutodetector:
+                 operation.name_lower == dependency[1].lower() and
+                 (operation.order_with_respect_to or "").lower() != dependency[2].lower()
+             )
++        # order_with_respect_to being set for a field (creates _order field)
++        elif dependency[2] is not None and dependency[3] == "order_wrt_set":
++            return (
++                isinstance(operation, operations.AlterOrderWithRespectTo) and
++                operation.name_lower == dependency[1].lower() and
++                operation.order_with_respect_to is not None
++            )
+         # Field is removed and part of an index/unique_together
+         elif dependency[2] is not None and dependency[3] == "foo_together_change":
+             return (
+@@ -619,13 +626,23 @@ class MigrationAutodetector:
+             ]
+             related_dependencies.append((app_label, model_name, None, True))
+             for index in indexes:
++                index_dependencies = related_dependencies[:]
++                # Check if the index references the _order field
++                if '_order' in index.fields:
++                    # Add dependency on AlterOrderWithRespectTo operation
++                    index_dependencies.append((
++                        app_label,
++                        model_name,
++                        '_order',
++                        'order_wrt_set',
++                    ))
+                 self.add_operation(
+                     app_label,
+                     operations.AddIndex(
+                         model_name=model_name,
+                         index=index,
+                     ),
+-                    dependencies=related_dependencies,
++                    dependencies=index_dependencies,
+                 )
+             for constraint in constraints:
+                 self.add_operation(
+@@ -1015,12 +1032,23 @@ class MigrationAutodetector:
+     def generate_added_indexes(self):
+         for (app_label, model_name), alt_indexes in self.altered_indexes.items():
+             for index in alt_indexes['added_indexes']:
++                dependencies = []
++                # Check if the index references the _order field
++                if '_order' in index.fields:
++                    # Add dependency on AlterOrderWithRespectTo operation
++                    dependencies.append((
++                        app_label,
++                        model_name,
++                        '_order',
++                        'order_wrt_set',
++                    ))
+                 self.add_operation(
+                     app_label,
+                     operations.AddIndex(
+                         model_name=model_name,
+                         index=index,
+-                    )
++                    ),
++                    dependencies=dependencies,
+                 )
+ 
+     def generate_removed_indexes(self):

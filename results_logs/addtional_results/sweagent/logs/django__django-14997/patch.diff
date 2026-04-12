@@ -1,0 +1,96 @@
+diff --git a/django/db/backends/sqlite3/schema.py b/django/db/backends/sqlite3/schema.py
+index f0c81c123b..37d5e95e41 100644
+--- a/django/db/backends/sqlite3/schema.py
++++ b/django/db/backends/sqlite3/schema.py
+@@ -4,12 +4,34 @@ from decimal import Decimal
+ from django.apps.registry import Apps
+ from django.db import NotSupportedError
+ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
+-from django.db.backends.ddl_references import Statement
++from django.db.backends.ddl_references import Expressions, Statement
+ from django.db.backends.utils import strip_quotes
+ from django.db.models import UniqueConstraint
+ from django.db.transaction import atomic
+ 
+ 
++class SQLiteExpressions(Expressions):
++    """
++    Custom Expressions class for SQLite that removes table aliases from
++    column references to avoid "." operator in index expressions.
++    """
++    def __str__(self):
++        # For SQLite, we need to compile expressions without table aliases
++        # to avoid the "." operator in index expressions
++        from copy import deepcopy
++        
++        # Create a copy of expressions to avoid modifying the original
++        expressions_copy = deepcopy(self.expressions)
++        
++        # Remove table aliases from any Col objects in the expressions
++        for col in self.compiler.query._gen_cols([expressions_copy]):
++            col.alias = None
++        
++        sql, params = self.compiler.compile(expressions_copy)
++        params = map(self.quote_value, params)
++        return sql % tuple(params)
++
++
+ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+ 
+     sql_delete_table = "DROP TABLE %(table)s"
+@@ -440,5 +462,55 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+         else:
+             self._remake_table(model)
+ 
++    def _create_unique_sql(
++        self, model, fields, name=None, condition=None, deferrable=None,
++        include=None, opclasses=None, expressions=None,
++    ):
++        """
++        Override to use SQLiteExpressions for handling expressions without table aliases.
++        """
++        if (
++            (
++                deferrable and
++                not self.connection.features.supports_deferrable_unique_constraints
++            ) or
++            (condition and not self.connection.features.supports_partial_indexes) or
++            (include and not self.connection.features.supports_covering_indexes) or
++            (expressions and not self.connection.features.supports_expression_indexes)
++        ):
++            return None
++
++        def create_unique_name(*args, **kwargs):
++            return self.quote_name(self._create_index_name(*args, **kwargs))
++
++        from django.db.backends.ddl_references import IndexName, Table
++        from django.db.models.sql.query import Query
++
++        compiler = Query(model, alias_cols=False).get_compiler(connection=self.connection)
++        table = model._meta.db_table
++        columns = [field.column for field in fields]
++        if name is None:
++            name = IndexName(table, columns, '_uniq', create_unique_name)
++        else:
++            name = self.quote_name(name)
++        if condition or include or opclasses or expressions:
++            sql = self.sql_create_unique_index
++        else:
++            sql = self.sql_create_unique
++        if columns:
++            columns = self._index_columns(table, columns, col_suffixes=(), opclasses=opclasses)
++        else:
++            # Use SQLiteExpressions instead of Expressions for SQLite
++            columns = SQLiteExpressions(table, expressions, compiler, self.quote_value)
++        return Statement(
++            sql,
++            table=Table(table, self.quote_name),
++            name=name,
++            columns=columns,
++            condition=self._index_condition_sql(condition),
++            deferrable=self._deferrable_constraint_sql(deferrable),
++            include=self._index_include_sql(model, include),
++        )
++
+     def _collate_sql(self, collation):
+         return 'COLLATE ' + collation

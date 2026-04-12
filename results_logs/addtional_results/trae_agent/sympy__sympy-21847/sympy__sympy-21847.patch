@@ -1,0 +1,39 @@
+diff --git a/sympy/polys/monomials.py b/sympy/polys/monomials.py
+index 0e84403307..d592603663 100644
+--- a/sympy/polys/monomials.py
++++ b/sympy/polys/monomials.py
+@@ -127,7 +127,8 @@ def itermonomials(variables, max_degrees, min_degrees=None):
+                 for variable in item:
+                     if variable != 1:
+                         powers[variable] += 1
+-                if max(powers.values()) >= min_degree:
++                total_power = sum(powers.values())
++                if total_power >= min_degree:
+                     monomials_list_comm.append(Mul(*item))
+             yield from set(monomials_list_comm)
+         else:
+@@ -139,7 +140,8 @@ def itermonomials(variables, max_degrees, min_degrees=None):
+                 for variable in item:
+                     if variable != 1:
+                         powers[variable] += 1
+-                if max(powers.values()) >= min_degree:
++                total_power = sum(powers.values())
++                if total_power >= min_degree:
+                     monomials_list_non_comm.append(Mul(*item))
+             yield from set(monomials_list_non_comm)
+     else:
+diff --git a/sympy/polys/tests/test_monomials.py b/sympy/polys/tests/test_monomials.py
+index 482cbee30d..7cd8bded26 100644
+--- a/sympy/polys/tests/test_monomials.py
++++ b/sympy/polys/tests/test_monomials.py
+@@ -130,6 +130,10 @@ def test_monomials():
+     assert set(itermonomials([x, y], [2, 1])) == {S.One, x, y, x*y, x**2, x**2*y}
+     assert set(itermonomials([x, y], [2, 2])) == \
+             {S.One, y**2, x*y**2, x, x*y, x**2, x**2*y**2, y, x**2*y}
++            
++    # Test for total degree with min_degrees (fixed issue)
++    assert set(itermonomials([x, y, z], 3, min_degrees=3)) == \
++            {x**3, y**3, z**3, x**2*y, x**2*z, y**2*x, y**2*z, z**2*x, z**2*y, x*y*z}
+ 
+     i, j, k = symbols('i j k', commutative=False)
+     assert set(itermonomials([i, j, k], [0, 0, 0])) == {S.One}

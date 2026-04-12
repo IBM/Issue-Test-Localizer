@@ -1,0 +1,72 @@
+{
+  "instance_id": "pytest-dev__pytest-6202",
+  "container_id": "4b4a88fa9b4c4c45916b0c62d90209f2a9a55858713cb7596e3d44f383d42333",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-6202/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-6202",
+        "passed": 0,
+        "failed": 3
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "testing/test_reports.py::TestReportSerialization::test_parametrize_nodeid_with_dots_and_brackets#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-6202/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6202",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_reports.py::TestReportSerialization::test_parametrize_id_with_dots_and_brackets#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-6202/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6202",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_terminal.py::test_format_session_duration#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_reports.py::TestHooks::test_parametrize_with_dot_bracket#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-6202/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6202",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_reports.py::TestHooks::test_parametrize_with_dot_bracket#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-6202/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6202",
+          "passed": false
+        }
+      ]
+    },
+    "testing/test_reports.py::TestReportSerialization::test_parametrize_id_with_dots_and_brackets#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-6202/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-6202",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

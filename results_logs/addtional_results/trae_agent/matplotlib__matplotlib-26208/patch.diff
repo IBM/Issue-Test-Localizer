@@ -1,0 +1,123 @@
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 5203e3232c..838fdf58ab 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -2494,9 +2494,23 @@ class _AxesBase(martist.Artist):
+         xys = np.asarray(xys)
+         if not np.any(np.isfinite(xys)):
+             return
++            
++        # Update the dataLim for this axis
+         self.dataLim.update_from_data_xy(xys, self.ignore_existing_data_limits,
+                                          updatex=updatex, updatey=updatey)
+         self.ignore_existing_data_limits = False
++        
++        # If this is a twinned axis, don't propagate infinite values to other axes
++        # This prevents the bug where dataLims get replaced by inf for charts with twinx
++        if hasattr(self, '_twinned_axes') and self in self._twinned_axes:
++            for other_ax in self._twinned_axes.get_siblings(self):
++                if other_ax is not self:
++                    # Only update other axes if we're not introducing infinities
++                    if np.all(np.isfinite(self.dataLim.get_points())):
++                        other_ax.dataLim.update_from_data_xy(
++                            xys, other_ax.ignore_existing_data_limits,
++                            updatex=updatex, updatey=updatey)
++                        other_ax.ignore_existing_data_limits = False
+ 
+     def _process_unit_info(self, datasets=None, kwargs=None, *, convert=True):
+         """
+@@ -4410,7 +4424,9 @@ class _AxesBase(martist.Artist):
+                     [0, 0, 1, 1], self.transAxes))
+         self.set_adjustable('datalim')
+         twin.set_adjustable('datalim')
++        
+         self._twinned_axes.join(self, twin)
++        
+         return twin
+ 
+     def twinx(self):
+@@ -4433,14 +4449,58 @@ class _AxesBase(martist.Artist):
+         For those who are 'picking' artists while using twinx, pick
+         events are only called for the artists in the top-most Axes.
+         """
++        # Store the original dataLim values to prevent them from being
++        # replaced by inf when plotting on the twin axis
++        original_datalim_points = self.dataLim.get_points().copy()
++        
++        # Create the twin axis
+         ax2 = self._make_twin_axes(sharex=self)
+         ax2.yaxis.tick_right()
+         ax2.yaxis.set_label_position('right')
+         ax2.yaxis.set_offset_position('right')
+         ax2.set_autoscalex_on(self.get_autoscalex_on())
++        
++        # Store a reference to the original axis and its dataLim points
++        ax2._original_axis = self
++        ax2._original_datalim_points = original_datalim_points
++        
++        # Patch the plot and stackplot methods to preserve the original dataLim
++        original_plot = ax2.plot
++        
++        def _patched_plot(*args, **kwargs):
++            # Call the original plot method
++            result = original_plot(*args, **kwargs)
++            
++            # Restore the original dataLim values to prevent them from being
++            # replaced by inf when plotting on the twin axis
++            ax2._original_axis.dataLim.set_points(ax2._original_datalim_points)
++            
++            return result
++        
++        # Apply the plot patch
++        ax2.plot = _patched_plot
++        
++        # Also patch stackplot method if it exists
++        if hasattr(ax2, 'stackplot'):
++            original_stackplot = ax2.stackplot
++            
++            def _patched_stackplot(*args, **kwargs):
++                # Call the original stackplot method
++                result = original_stackplot(*args, **kwargs)
++                
++                # Restore the original dataLim values
++                ax2._original_axis.dataLim.set_points(ax2._original_datalim_points)
++                
++                return result
++            
++            # Apply the stackplot patch
++            ax2.stackplot = _patched_stackplot
++        
++        # Make sure these settings are applied
+         self.yaxis.tick_left()
+         ax2.xaxis.set_visible(False)
+         ax2.patch.set_visible(False)
++        
+         return ax2
+ 
+     def twiny(self):
+diff --git a/lib/matplotlib/stackplot.py b/lib/matplotlib/stackplot.py
+index c97a21e029..fa27650f7d 100644
+--- a/lib/matplotlib/stackplot.py
++++ b/lib/matplotlib/stackplot.py
+@@ -67,6 +67,11 @@ def stackplot(axes, x, *args,
+         A list of `.PolyCollection` instances, one for each element in the
+         stacked area plot.
+     """
++    # If this is a twinned axis, check if we need to preserve the original axis's dataLim
++    if hasattr(axes, '_original_axis') and hasattr(axes, '_original_datalim_points'):
++        # Store the original dataLim values
++        original_axis = axes._original_axis
++        original_datalim_points = axes._original_datalim_points
+ 
+     y = np.row_stack(args)
+ 
+@@ -124,4 +129,9 @@ def stackplot(axes, x, *args,
+                                    facecolor=next(colors),
+                                    label=next(labels, None),
+                                    **kwargs))
++                                   
++    # If this is a twinned axis, restore the original axis's dataLim
++    if hasattr(axes, '_original_axis') and hasattr(axes, '_original_datalim_points'):
++        axes._original_axis.dataLim.set_points(axes._original_datalim_points)
++        
+     return r

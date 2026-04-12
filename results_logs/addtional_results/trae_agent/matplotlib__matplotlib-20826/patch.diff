@@ -1,0 +1,50 @@
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 802fd3c997..8caf1db565 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -1308,6 +1308,14 @@ class _AxesBase(martist.Artist):
+         if self._sharey is not None:
+             self.yaxis.set_visible(yaxis_visible)
+             self.patch.set_visible(patch_visible)
++            
++        # For shared axes, we need to restore the tick label visibility
++        # by calling label_outer() if available
++        if (self._sharex is not None or self._sharey is not None) and hasattr(self, 'label_outer'):
++            try:
++                self.label_outer()
++            except (AttributeError, TypeError):
++                pass
+ 
+         self.stale = True
+ 
+diff --git a/lib/matplotlib/axis.py b/lib/matplotlib/axis.py
+index 887cf97ef1..b4ce3afcae 100644
+--- a/lib/matplotlib/axis.py
++++ b/lib/matplotlib/axis.py
+@@ -798,6 +798,13 @@ class Axis(martist.Artist):
+         - units
+         - registered callbacks
+         """
++        # Save tick label visibility state
++        if hasattr(self, 'majorTicks') and self.majorTicks:
++            label_bottom = self.majorTicks[0].label1.get_visible()
++            label_top = self.majorTicks[0].label2.get_visible()
++        else:
++            label_bottom = True
++            label_top = True
+ 
+         self.label.set_text('')  # self.set_label_text would change isDefault_
+ 
+@@ -810,6 +817,12 @@ class Axis(martist.Artist):
+         self._reset_minor_tick_kw()
+         self.reset_ticks()
+ 
++        # Restore tick label visibility state
++        if hasattr(self, 'majorTicks') and self.majorTicks:
++            for tick in self.majorTicks:
++                tick.label1.set_visible(label_bottom)
++                tick.label2.set_visible(label_top)
++
+         self.converter = None
+         self.units = None
+         self.set_units(None)

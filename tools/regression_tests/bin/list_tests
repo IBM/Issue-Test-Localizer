@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+"""List regression tests for the current instance."""
+
+import sys
+import os
+
+# Add lib to path
+bundle_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(bundle_dir, "lib"))
+
+from test_runner import RegressionTestRunner
+
+
+def main():
+    runner = RegressionTestRunner()
+
+    print(f"Instance ID: {runner.instance_id or '(not set)'}")
+    print(f"Test file: {runner.test_file}")
+    print("-" * 50)
+
+    tests = runner.get_instance_tests()
+
+    if not tests:
+        print(f"No tests found for instance '{runner.instance_id}'")
+        return
+
+    print(f"Found {len(tests)} test(s) for instance '{runner.instance_id}':\n")
+    for i, test in enumerate(tests, 1):
+        print(f"  {i}. {test}")
+
+
+if __name__ == "__main__":
+    main()

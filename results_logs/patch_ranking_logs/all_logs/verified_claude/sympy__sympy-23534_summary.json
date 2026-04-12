@@ -1,0 +1,62 @@
+{
+  "instance_id": "sympy__sympy-23534",
+  "container_id": "c7d6df963267313df3b0f96570b1615dfb615e07216e5360d84c13011946e158",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23534/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-23534",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sympy/core/tests/test_symbol.py::test_symbols_become_functions_issue_3539#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_symbols_become_functions_issue_3539#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_disambiguate#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_symbols_become_functions_issue_3539#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_symbols_become_functions_issue_3539#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_symbol.py::test_symbols_become_functions_issue_3539#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23534/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-23534",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23534/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-23534",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

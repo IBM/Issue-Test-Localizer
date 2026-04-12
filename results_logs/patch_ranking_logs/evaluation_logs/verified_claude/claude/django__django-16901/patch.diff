@@ -1,0 +1,29 @@
+diff --git a/django/db/backends/base/operations.py b/django/db/backends/base/operations.py
+index 5801e03..05fecca 100644
+--- a/django/db/backends/base/operations.py
++++ b/django/db/backends/base/operations.py
+@@ -667,7 +667,23 @@ class BaseDatabaseOperations:
+         the provided connecting operator. This is required because operators
+         can vary between backends (e.g., Oracle with %% and &) and between
+         subexpression types (e.g., date expressions).
+-        """
++
++        For the XOR operator, ensures proper handling of multiple terms to maintain
++        the correct parity-based behavior (true when an odd number of arguments are true).
++        """
++        if connector == '^':
++            if len(sub_expressions) <= 2:
++                conn = " %s " % connector
++                return conn.join(sub_expressions)
++            else:
++                # For more than 2 expressions, we need to ensure proper XOR behavior
++                # by counting the number of true expressions being odd
++                # We can achieve this by combining the expressions with:
++                # (a != b) != c != d != ... which is true when odd number are true
++                return " != ".join("(%s)" % expr for expr in sub_expressions)
++        else:
++            conn = " %s " % connector
++            return conn.join(sub_expressions)
+         conn = " %s " % connector
+         return conn.join(sub_expressions)
+ 

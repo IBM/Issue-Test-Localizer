@@ -1,0 +1,31 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 1edc712358..7797359bbe 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -396,7 +396,25 @@ def convert(expr):
+             tex += convert(expr)
+         else:
+             snumer = convert(numer)
+-            sdenom = convert(denom)
++            
++            # Try to factor the denominator for more readable output
++            # This ensures consistency with the pretty printer
++            if denom.is_Add:
++                from sympy import factor
++                try:
++                    factored_denom = factor(denom)
++                    # Use factored form if it's different and represents a factorization
++                    # (Mul for products like 2*(x+y), Pow for powers like (x+1)^2)
++                    if (factored_denom != denom and 
++                        (factored_denom.is_Mul or factored_denom.is_Pow)):
++                        sdenom = convert(factored_denom)
++                    else:
++                        sdenom = convert(denom)
++                except:
++                    # If factoring fails for any reason, use original
++                    sdenom = convert(denom)
++            else:
++                sdenom = convert(denom)
+             ldenom = len(sdenom.split())
+             ratio = self._settings['long_frac_ratio']
+             if self._settings['fold_short_frac'] \

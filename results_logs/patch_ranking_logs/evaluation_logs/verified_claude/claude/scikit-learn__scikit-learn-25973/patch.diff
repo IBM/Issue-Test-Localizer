@@ -1,0 +1,26 @@
+diff --git a/sklearn/feature_selection/_sequential.py b/sklearn/feature_selection/_sequential.py
+index 2854ca5..65ed388 100644
+--- a/sklearn/feature_selection/_sequential.py
++++ b/sklearn/feature_selection/_sequential.py
+@@ -291,6 +291,15 @@ class SequentialFeatureSelector(SelectorMixin, MetaEstimatorMixin, BaseEstimator
+ 
+         return self
+ 
++    def __init__(self, estimator, *, n_features_to_select=None, tol=None, direction="forward", scoring=None, cv=5, n_jobs=None):
++        self.estimator = estimator
++        self.n_features_to_select = n_features_to_select
++        self.tol = tol
++        self.direction = direction
++        self.scoring = scoring
++        self.cv = list(cv) if hasattr(cv, '__iter__') and not isinstance(cv, (str, int)) else cv
++        self.n_jobs = n_jobs
++
+     def _get_best_new_feature_score(self, estimator, X, y, current_mask):
+         # Return the best new feature and its score to add to the current_mask,
+         # i.e. return the best new feature and its score to add (resp. remove)
+@@ -323,4 +332,4 @@ class SequentialFeatureSelector(SelectorMixin, MetaEstimatorMixin, BaseEstimator
+     def _more_tags(self):
+         return {
+             "allow_nan": _safe_tags(self.estimator, key="allow_nan"),
+-        }
++        }

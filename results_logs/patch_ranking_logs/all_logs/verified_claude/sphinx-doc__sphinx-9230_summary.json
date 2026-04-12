@@ -1,0 +1,120 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9230",
+  "container_id": "0f8f7d9aeb947862011958d1eb6111378d9d6fc6abce35d43bd98ce99947a0b2",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_10.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_11.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_12.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_13.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_4.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_5.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_6.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_7.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_8.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_9.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9230/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-9230",
+        "passed": 14,
+        "failed": 1
+      }
+    ],
+    "top_passed": 15,
+    "top_subset_size": 13
+  },
+  "reproduction": {
+    "tests/test_ext_autodoc.py::test_autodoc_process_signature_typing_generic#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pydata_with_union_type_operator#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc.py::test_autodoc_process_signature_typehints#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc.py::test_type_union_operator#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc.py::test_autodoc_process_signature_typing_generic#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc.py::test_type_union_operator#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

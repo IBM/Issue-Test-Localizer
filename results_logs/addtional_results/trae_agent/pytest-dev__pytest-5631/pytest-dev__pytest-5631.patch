@@ -1,0 +1,30 @@
+diff --git a/src/_pytest/compat.py b/src/_pytest/compat.py
+index d238061b4..9448c6c53 100644
+--- a/src/_pytest/compat.py
++++ b/src/_pytest/compat.py
+@@ -67,9 +67,22 @@ def num_mock_patch_args(function):
+     mock_modules = [sys.modules.get("mock"), sys.modules.get("unittest.mock")]
+     if any(mock_modules):
+         sentinels = [m.DEFAULT for m in mock_modules if m is not None]
+-        return len(
+-            [p for p in patchings if not p.attribute_name and p.new in sentinels]
+-        )
++        count = 0
++        for p in patchings:
++            if not p.attribute_name:
++                try:
++                    is_sentinel = p.new in sentinels
++                    # Handle case where p.new is a numpy array or other object
++                    # that returns an array-like result from the 'in' operator
++                    if hasattr(is_sentinel, '__iter__') and not isinstance(is_sentinel, (str, bytes)):
++                        is_sentinel = False
++                    if is_sentinel:
++                        count += 1
++                except (ValueError, TypeError):
++                    # If we get a ValueError (e.g., from numpy array truth value)
++                    # or TypeError, assume it's not a sentinel
++                    pass
++        return count
+     return len(patchings)
+ 
+ 

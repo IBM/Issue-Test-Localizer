@@ -1,0 +1,25 @@
+diff --git a/sklearn/metrics/_ranking.py b/sklearn/metrics/_ranking.py
+index 0cdead923..0ef01eae0 100644
+--- a/sklearn/metrics/_ranking.py
++++ b/sklearn/metrics/_ranking.py
+@@ -1083,7 +1083,19 @@ def roc_curve(
+     # to make sure that the curve starts at (0, 0)
+     tps = np.r_[0, tps]
+     fps = np.r_[0, fps]
+-    thresholds = np.r_[thresholds[0] + 1, thresholds]
++    
++    # Add an extra threshold value that ensures no predictions are made
++    # For probability scores (between 0 and 1), we should use a value
++    # that is > 1 but still reasonable
++    if np.all(thresholds <= 1):
++        # If all thresholds are <= 1, it's likely a probability estimate
++        # Use a fixed value of 2 which is > 1 but not too extreme
++        extra_threshold = 2.0
++    else:
++        # For non-probability scores, we can add 1 as before
++        extra_threshold = thresholds[0] + 1
++    
++    thresholds = np.r_[extra_threshold, thresholds]
+ 
+     if fps[-1] <= 0:
+         warnings.warn(

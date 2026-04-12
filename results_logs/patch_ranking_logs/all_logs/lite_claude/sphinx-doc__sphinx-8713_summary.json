@@ -1,0 +1,23 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8713",
+  "container_id": "2771225ff616e43fd30d3c2839979ed53288c0b3fc2db907b3edc8767c9f8801",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-8713/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-8713",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-8713/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-8713",
+        "passed": 5,
+        "failed": 0
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 2
+  },
+  "reproduction": {}
+}

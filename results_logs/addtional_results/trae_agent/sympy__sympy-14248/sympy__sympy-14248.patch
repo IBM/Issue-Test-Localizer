@@ -1,0 +1,209 @@
+diff --git a/sympy/core/function.py b/sympy/core/function.py
+index 3f7374fe6..2f17bd731 100644
+--- a/sympy/core/function.py
++++ b/sympy/core/function.py
+@@ -81,7 +81,7 @@ def _coeff_isneg(a):
+ 
+     if a.is_Mul:
+         a = a.args[0]
+-    return a.is_Number and a.is_negative
++    return (a.is_Number and a.is_negative) or (hasattr(a, 'is_MatMul') and a.is_MatMul and _coeff_isneg(a.args[0]))
+ 
+ 
+ class PoleError(Exception):
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 8253b2f68..beb0716cc 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -1477,18 +1477,97 @@ def _print_Adjoint(self, expr):
+             return r"%s^\dagger" % self._print(mat)
+ 
+     def _print_MatAdd(self, expr):
++        from sympy.matrices.expressions.matmul import MatMul
++        from sympy import Add
++        from sympy.matrices.expressions.matadd import MatAdd
++        from sympy.matrices.expressions.hadamard import HadamardProduct
++        
+         terms = list(expr.args)
+-        tex = " + ".join(map(self._print, terms))
++        tex = ""
++        for i, term in enumerate(terms):
++            if i == 0:
++                if isinstance(term, MatMul) and len(term.args) >= 2 and term.args[0] == -1:
++                    if len(term.args) == 2:
++                        # Special case for -B
++                        term_tex = self._print(term.args[1])
++                        tex = "-" + term_tex
++                    else:
++                        # For more complex expressions like -A*B
++                        def parens(x):
++                            if isinstance(x, (Add, MatAdd, HadamardProduct)):
++                                return r"\left(%s\right)" % self._print(x)
++                            return self._print(x)
++                        term_tex = ' '.join(map(parens, term.args[1:]))
++                        tex = "-" + term_tex
++                elif _coeff_isneg(term):
++                    term = -term
++                    term_tex = self._print(term)
++                    if self._needs_add_brackets(term):
++                        term_tex = r"\left(%s\right)" % term_tex
++                    tex = "-" + term_tex
++                else:
++                    term_tex = self._print(term)
++                    if self._needs_add_brackets(term):
++                        term_tex = r"\left(%s\right)" % term_tex
++                    tex = term_tex
++            elif isinstance(term, MatMul) and len(term.args) >= 2 and term.args[0] == -1:
++                tex += " - "
++                if len(term.args) == 2:
++                    # Special case for -B
++                    term_tex = self._print(term.args[1])
++                else:
++                    # For more complex expressions like -A*B
++                    def parens(x):
++                        if isinstance(x, (Add, MatAdd, HadamardProduct)):
++                            return r"\left(%s\right)" % self._print(x)
++                        return self._print(x)
++                    term_tex = ' '.join(map(parens, term.args[1:]))
++                if self._needs_add_brackets(term):
++                    term_tex = r"\left(%s\right)" % term_tex
++                tex += term_tex
++            elif _coeff_isneg(term):
++                tex += " - "
++                term = -term
++                term_tex = self._print(term)
++                if self._needs_add_brackets(term):
++                    term_tex = r"\left(%s\right)" % term_tex
++                tex += term_tex
++            else:
++                tex += " + "
++                term_tex = self._print(term)
++                if self._needs_add_brackets(term):
++                    term_tex = r"\left(%s\right)" % term_tex
++                tex += term_tex
++
+         return tex
+ 
+     def _print_MatMul(self, expr):
+         from sympy import Add, MatAdd, HadamardProduct
+ 
+-        def parens(x):
+-            if isinstance(x, (Add, MatAdd, HadamardProduct)):
+-                return r"\left(%s\right)" % self._print(x)
+-            return self._print(x)
+-        return ' '.join(map(parens, expr.args))
++        if len(expr.args) >= 2 and expr.args[0] == -1:
++            if len(expr.args) == 2:
++                # Special case for -B
++                return "-" + self._print(expr.args[1])
++            else:
++                # For more complex expressions like -A*B
++                def parens(x):
++                    if isinstance(x, (Add, MatAdd, HadamardProduct)):
++                        return r"\left(%s\right)" % self._print(x)
++                    return self._print(x)
++                return "-" + ' '.join(map(parens, expr.args[1:]))
++        elif len(expr.args) >= 2 and expr.args[0].is_Number and expr.args[0].is_negative:
++            # For cases like -2*A*B
++            def parens(x):
++                if isinstance(x, (Add, MatAdd, HadamardProduct)):
++                    return r"\left(%s\right)" % self._print(x)
++                return self._print(x)
++            return self._print(expr.args[0]) + ' ' + ' '.join(map(parens, expr.args[1:]))
++        else:
++            def parens(x):
++                if isinstance(x, (Add, MatAdd, HadamardProduct)):
++                    return r"\left(%s\right)" % self._print(x)
++                return self._print(x)
++            return ' '.join(map(parens, expr.args))
+ 
+     def _print_Mod(self, expr, exp=None):
+         if exp is not None:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index db24f4c61..ad927840a 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -819,7 +819,7 @@ def _print_BlockMatrix(self, B):
+         return self._print(B.blocks)
+ 
+     def _print_MatAdd(self, expr):
+-        return self._print_seq(expr.args, None, None, ' + ')
++        return self._print_Add(expr)
+ 
+     def _print_MatMul(self, expr):
+         args = list(expr.args)
+diff --git a/sympy/printing/str.py b/sympy/printing/str.py
+index 0baefe0f7..45a98030b 100644
+--- a/sympy/printing/str.py
++++ b/sympy/printing/str.py
+@@ -6,6 +6,7 @@
+ 
+ from sympy.core import S, Rational, Pow, Basic, Mul
+ from sympy.core.mul import _keep_coeff
++from sympy.core.function import _coeff_isneg
+ from .printer import Printer
+ from sympy.printing.precedence import precedence, PRECEDENCE
+ 
+@@ -304,16 +305,58 @@ def _print_Mul(self, expr):
+             return sign + '*'.join(a_str) + "/(%s)" % '*'.join(b_str)
+ 
+     def _print_MatMul(self, expr):
+-        return '*'.join([self.parenthesize(arg, precedence(expr))
+-            for arg in expr.args])
++        prec = precedence(expr)
++        if len(expr.args) >= 2 and expr.args[0] == -1:
++            if len(expr.args) == 2:
++                # Special case for -B
++                return "-" + self.parenthesize(expr.args[1], prec)
++            else:
++                # For more complex expressions like -A*B
++                return "-" + '*'.join([self.parenthesize(arg, prec)
++                    for arg in expr.args[1:]])
++        elif len(expr.args) >= 2 and expr.args[0].is_Number and expr.args[0].is_negative:
++            # For cases like -2*A*B
++            return str(expr.args[0]) + '*' + '*'.join([self.parenthesize(arg, prec)
++                for arg in expr.args[1:]])
++        else:
++            return '*'.join([self.parenthesize(arg, prec)
++                for arg in expr.args])
+ 
+     def _print_HadamardProduct(self, expr):
+         return '.*'.join([self.parenthesize(arg, precedence(expr))
+             for arg in expr.args])
+ 
+     def _print_MatAdd(self, expr):
+-        return ' + '.join([self.parenthesize(arg, precedence(expr))
+-            for arg in expr.args])
++        from sympy.matrices.expressions.matmul import MatMul
++        
++        terms = list(expr.args)
++        PREC = precedence(expr)
++        l = []
++        for term in terms:
++            if isinstance(term, MatMul) and len(term.args) >= 2 and term.args[0] == -1:
++                if len(term.args) == 2:
++                    # Special case for -B
++                    t = self.parenthesize(term.args[1], PREC)
++                    sign = "-"
++                else:
++                    # For more complex expressions like -A*B
++                    t = '*'.join([self.parenthesize(arg, PREC) for arg in term.args[1:]])
++                    sign = "-"
++            else:
++                t = self._print(term)
++                if t.startswith('-'):
++                    sign = "-"
++                    t = t[1:]
++                else:
++                    sign = "+"
++            if precedence(term) < PREC:
++                l.extend([sign, "(%s)" % t])
++            else:
++                l.extend([sign, t])
++        sign = l.pop(0)
++        if sign == '+':
++            sign = ""
++        return sign + ' '.join(l)
+ 
+     def _print_NaN(self, expr):
+         return 'nan'

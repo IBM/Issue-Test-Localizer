@@ -1,0 +1,51 @@
+diff --git a/sympy/utilities/iterables.py b/sympy/utilities/iterables.py
+index d96e76263b..27a443cabd 100644
+--- a/sympy/utilities/iterables.py
++++ b/sympy/utilities/iterables.py
+@@ -2106,22 +2106,33 @@ def uniq(seq, result=None):
+     >>> list(uniq([[1], [2, 1], [1]]))
+     [[1], [2, 1]]
+     """
+-    try:
+-        seen = set()
+-        result = result or []
+-        for i, s in enumerate(seq):
++    # Record initial size if sequence has __len__ method (only for top-level call)
++    initial_size = None
++    if result is None and hasattr(seq, '__len__'):
++        initial_size = len(seq)
++    
++    def _check_size():
++        """Check if sequence size changed during iteration"""
++        if initial_size is not None and hasattr(seq, '__len__'):
++            current_size = len(seq)
++            if current_size != initial_size:
++                raise RuntimeError("sequence changed size during iteration")
++    
++    seen = set()
++    result = result or []
++    
++    for i, s in enumerate(seq):
++        # Check if sequence size changed during iteration
++        _check_size()
++        
++        try:
+             if not (s in seen or seen.add(s)):
+                 yield s
+-    except TypeError:
+-        if s not in result:
+-            yield s
+-            result.append(s)
+-        if hasattr(seq, '__getitem__'):
+-            for s in uniq(seq[i + 1:], result):
+-                yield s
+-        else:
+-            for s in uniq(seq, result):
++        except TypeError:
++            # Handle unhashable types
++            if s not in result:
+                 yield s
++                result.append(s)
+ 
+ 
+ def generate_bell(n):

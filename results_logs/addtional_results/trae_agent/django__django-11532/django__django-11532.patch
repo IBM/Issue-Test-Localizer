@@ -1,0 +1,107 @@
+diff --git a/django/core/mail/backends/smtp.py b/django/core/mail/backends/smtp.py
+index 13ed4a2798..79d6148f5a 100644
+--- a/django/core/mail/backends/smtp.py
++++ b/django/core/mail/backends/smtp.py
+@@ -50,7 +50,8 @@ class EmailBackend(BaseEmailBackend):
+ 
+         # If local_hostname is not specified, socket.getfqdn() gets used.
+         # For performance, we use the cached FQDN for local_hostname.
+-        connection_params = {'local_hostname': DNS_NAME.get_fqdn()}
++        # Use ASCII-only domain to avoid encoding issues with non-ASCII domains
++        connection_params = {'local_hostname': DNS_NAME.get_ascii_fqdn()}
+         if self.timeout is not None:
+             connection_params['timeout'] = self.timeout
+         if self.use_ssl:
+diff --git a/django/core/mail/message.py b/django/core/mail/message.py
+index e393b4cf5c..dd34a3bc3b 100644
+--- a/django/core/mail/message.py
++++ b/django/core/mail/message.py
+@@ -256,8 +256,9 @@ class EmailMessage:
+             # will get picked up by formatdate().
+             msg['Date'] = formatdate(localtime=settings.EMAIL_USE_LOCALTIME)
+         if 'message-id' not in header_names:
+-            # Use cached DNS_NAME for performance
+-            msg['Message-ID'] = make_msgid(domain=DNS_NAME)
++            # Use cached DNS_NAME for performance, with ASCII-only domain
++            # to avoid encoding issues with non-ASCII domains
++            msg['Message-ID'] = make_msgid(domain=DNS_NAME.get_ascii_fqdn())
+         for name, value in self.extra_headers.items():
+             if name.lower() != 'from':  # From is already handled
+                 msg[name] = value
+diff --git a/django/core/mail/utils.py b/django/core/mail/utils.py
+index d18dfe4667..5e369c973b 100644
+--- a/django/core/mail/utils.py
++++ b/django/core/mail/utils.py
+@@ -3,6 +3,7 @@ Email message and email sending related helper functions.
+ """
+ 
+ import socket
++import idna
+ 
+ 
+ # Cache the hostname, but do it lazily: socket.getfqdn() can take a couple of
+@@ -15,6 +16,25 @@ class CachedDnsName:
+         if not hasattr(self, '_fqdn'):
+             self._fqdn = socket.getfqdn()
+         return self._fqdn
++    
++    def get_ascii_fqdn(self):
++        """
++        Return ASCII-only FQDN by converting domain to punycode if needed.
++        This is used for email headers where non-ASCII domains would cause
++        encoding issues.
++        """
++        fqdn = self.get_fqdn()
++        try:
++            # Check if the domain is ASCII-only
++            fqdn.encode('ascii')
++            return fqdn
++        except UnicodeEncodeError:
++            # Convert to punycode if it contains non-ASCII characters
++            try:
++                return idna.encode(fqdn).decode('ascii')
++            except (UnicodeError, idna.IDNAError):
++                # Fall back to a safe domain if conversion fails
++                return 'localhost'
+ 
+ 
+ DNS_NAME = CachedDnsName()
+diff --git a/tests/mail/tests.py b/tests/mail/tests.py
+index 15593dc3f7..2e8cf1b92f 100644
+--- a/tests/mail/tests.py
++++ b/tests/mail/tests.py
+@@ -1628,3 +1628,34 @@ class SMTPBackendStoppedServerTests(SMTPBackendTestsBase):
+             self.backend.open()
+         self.backend.fail_silently = True
+         self.backend.open()
++
++
++class NonASCIIDomainTests(SimpleTestCase):
++    """Tests for handling non-ASCII domain names."""
++
++    def test_unicode_dns_with_non_unicode_encoding(self):
++        """
++        When the computer hostname has non-ASCII characters and the email
++        encoding is non-unicode, Django properly handles the domain name
++        by converting it to IDNA/punycode.
++        """
++        from unittest.mock import patch
++        from django.core.mail import EmailMessage
++        from django.core.mail.utils import CachedDnsName
++
++        class MockDnsName(CachedDnsName):
++            def get_fqdn(self):
++                return "漢字"  # Chinese characters for "Kanji"
++            
++            def __str__(self):
++                return self.get_fqdn()
++
++        with patch("django.core.mail.message.DNS_NAME", MockDnsName()):
++            email = EmailMessage('subject', '', 'from@example.com', ['to@example.com'])
++            email.encoding = 'iso-8859-1'  # Non-unicode encoding
++            message = email.message()
++            message_id = message['Message-ID']
++            # Check that the domain was converted to punycode
++            self.assertIn('xn--', message_id)
++            # Specifically, "漢字" should be encoded as "xn--p8s937b"
++            self.assertIn('xn--p8s937b', message_id)

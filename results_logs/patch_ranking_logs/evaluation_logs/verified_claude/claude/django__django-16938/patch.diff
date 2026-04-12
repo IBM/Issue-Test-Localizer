@@ -1,0 +1,18 @@
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index 4465765..a794e00 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -344,10 +344,9 @@ def select_related_descend(field, restricted, requested, select_mask, reverse=Fa
+         and field.name in requested
+         and field not in select_mask
+     ):
+-        raise FieldError(
+-            f"Field {field.model._meta.object_name}.{field.name} cannot be both "
+-            "deferred and traversed using select_related at the same time."
+-        )
++        # Instead of raising an error, just don't traverse this relation
++        # This allows serialization to work with custom managers using select_related
++        return False
+     return True
+ 
+ 

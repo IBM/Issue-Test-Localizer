@@ -1,0 +1,30 @@
+{
+    "django__django-16145": {
+        "selected_test_files": [
+            "tests/servers/tests.py",
+            "tests/servers/test_basehttp.py",
+            "tests/servers/test_liveserverthread.py",
+            "tests/builtin_server/tests.py",
+            "tests/admin_scripts/tests.py",
+            "tests/utils_tests/test_autoreload.py",
+            "tests/staticfiles_tests/test_liveserver.py",
+            "tests/staticfiles_tests/test_handlers.py",
+            "tests/test_utils/tests.py",
+            "tests/runtests.py"
+        ],
+        "suspicious_funcs": {
+            "django/core/management/commands/runserver.py": [
+                "django.core.management.commands.runserver.Command.inner_run",
+                "django.core.management.commands.runserver.Command.handle",
+                "django.core.management.commands.runserver.Command.run",
+                "django.core.management.commands.runserver.Command.add_arguments"
+            ],
+            "django/contrib/staticfiles/management/commands/runserver.py": [
+                "django.contrib.staticfiles.management.commands.runserver.Command.add_arguments"
+            ],
+            "django/core/servers/basehttp.py": [
+                "django.core.servers.basehttp.run"
+            ]
+        }
+    }
+}

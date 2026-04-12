@@ -1,0 +1,41 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 43e675a..60fda07 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -19,6 +19,8 @@ from django.core.checks import Error, Warning
+ from django.core.checks.urls import check_resolver
+ from django.core.exceptions import ImproperlyConfigured, ViewDoesNotExist
+ from django.utils.datastructures import MultiValueDict
++import functools
++
+ from django.utils.functional import cached_property
+ from django.utils.http import RFC3986_SUBDELIMS, escape_leading_slashes
+ from django.utils.regex_helper import _lazy_re_compile, normalize
+@@ -45,6 +47,13 @@ class ResolverMatch:
+         self.namespaces = [x for x in namespaces if x] if namespaces else []
+         self.namespace = ':'.join(self.namespaces)
+ 
++        # Handle partial functions
++        if isinstance(func, functools.partial):
++            self._partial = func
++            func = func.func
++        else:
++            self._partial = None
++
+         if not hasattr(func, '__name__'):
+             # A class-based view
+             self._func_path = func.__class__.__module__ + '.' + func.__class__.__name__
+@@ -52,6 +61,13 @@ class ResolverMatch:
+             # A function-based view
+             self._func_path = func.__module__ + '.' + func.__name__
+ 
++        # Add partial function arguments to the path if present
++        if self._partial:
++            partial_args = [repr(arg) for arg in self._partial.args]
++            partial_kwargs = [f"{k}={repr(v)}" for k, v in self._partial.keywords.items()]
++            partial_signature = ', '.join(partial_args + partial_kwargs)
++            self._func_path = f"{self._func_path}({partial_signature})"
++
+         view_path = url_name or self._func_path
+         self.view_name = ':'.join(self.namespaces + [view_path])
+ 

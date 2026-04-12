@@ -1,0 +1,13 @@
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index b70dcf9..53b4d28 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -493,7 +493,7 @@ class PrettyPrinter(Printer):
+             width = (func_height + 2) * 5 // 3 - 2
+             sign_lines = []
+             sign_lines.append(corner_chr + (horizontal_chr*width) + corner_chr)
+-            for i in range(func_height + 1):
++            for i in range(func_height):
+                 sign_lines.append(vertical_chr + (' '*width) + vertical_chr)
+ 
+             pretty_sign = stringPict('')

@@ -1,0 +1,16 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 6f6ac51..e7eb1e6 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -463,6 +463,11 @@ class LatexPrinter(Printer):
+             return r"%s^{%s/%s}" % (base, p, q)
+         elif expr.exp.is_Rational and expr.exp.is_negative and expr.base.is_commutative:
+             # Things like 1/x
++            # Special case: if base is exp/E, keep the exponent form
++            if expr.base == S.Exp1:
++                base = self._print(expr.base)
++                exp = self._print(-expr.exp)
++                return base + r"^{-%s}" % exp
+             return self._print_Mul(expr)
+         else:
+             if expr.base.is_Function:

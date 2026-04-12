@@ -1,0 +1,15 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index e0d8d05..6103a11 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -919,6 +919,10 @@ class QuerySet:
+     def none(self):
+         """Return an empty QuerySet."""
+         clone = self._chain()
++        # Clear any existing combination operations
++        clone.query.combinator = None
++        clone.query.combinator_all = False
++        # Set the query as empty
+         clone.query.set_empty()
+         return clone
+ 

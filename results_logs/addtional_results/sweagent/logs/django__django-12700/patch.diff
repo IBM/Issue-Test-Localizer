@@ -1,0 +1,47 @@
+diff --git a/django/views/debug.py b/django/views/debug.py
+index e6b7d4d821..f07084060f 100644
+--- a/django/views/debug.py
++++ b/django/views/debug.py
+@@ -84,12 +84,41 @@ class SafeExceptionReporterFilter:
+         """
+         Cleanse an individual setting key/value of sensitive content. If the
+         value is a dictionary, recursively cleanse the keys in that dictionary.
++        For lists and tuples, recursively cleanse each item.
+         """
++        return self._cleanse_setting_recursive(key, value, set())
++
++    def _cleanse_setting_recursive(self, key, value, seen_objects):
++        """
++        Recursively cleanse settings while avoiding infinite recursion
++        by tracking seen objects.
++        """
++        # Check for circular references to avoid infinite recursion
++        value_id = id(value)
++        if value_id in seen_objects:
++            return '[Circular Reference]'
++        
+         try:
+             if self.hidden_settings.search(key):
+                 cleansed = self.cleansed_substitute
+             elif isinstance(value, dict):
+-                cleansed = {k: self.cleanse_setting(k, v) for k, v in value.items()}
++                seen_objects.add(value_id)
++                try:
++                    cleansed = {k: self._cleanse_setting_recursive(k, v, seen_objects) for k, v in value.items()}
++                finally:
++                    seen_objects.discard(value_id)
++            elif isinstance(value, list):
++                seen_objects.add(value_id)
++                try:
++                    cleansed = [self._cleanse_setting_recursive('', item, seen_objects) for item in value]
++                finally:
++                    seen_objects.discard(value_id)
++            elif isinstance(value, tuple):
++                seen_objects.add(value_id)
++                try:
++                    cleansed = tuple(self._cleanse_setting_recursive('', item, seen_objects) for item in value)
++                finally:
++                    seen_objects.discard(value_id)
+             else:
+                 cleansed = value
+         except TypeError:

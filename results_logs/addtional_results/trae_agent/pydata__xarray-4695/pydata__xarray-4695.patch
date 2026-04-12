@@ -1,0 +1,217 @@
+diff --git a/xarray/core/coordinates.py b/xarray/core/coordinates.py
+index 846e4044..f0a3017d 100644
+--- a/xarray/core/coordinates.py
++++ b/xarray/core/coordinates.py
+@@ -394,8 +394,12 @@ def remap_label_indexers(
+         for k, v in indexers.items()
+     }
+ 
++    # Use local variables to avoid confusion with dimension named 'method'
++    loc_method = method
++    loc_tolerance = tolerance
++
+     pos_indexers, new_indexes = indexing.remap_label_indexers(
+-        obj, v_indexers, method=method, tolerance=tolerance
++        obj, v_indexers, method=loc_method, tolerance=loc_tolerance
+     )
+     # attach indexer's coordinate to pos_indexers
+     for k, v in indexers.items():
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index 32b24ef1..f72fbd29 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -196,7 +196,25 @@ class _LocIndexer:
+             # expand the indexer so we can handle Ellipsis
+             labels = indexing.expanded_indexer(key, self.data_array.ndim)
+             key = dict(zip(self.data_array.dims, labels))
+-        return self.data_array.sel(**key)
++        
++        # Handle special case for dimension named 'method'
++        # Create a temporary dict without the 'method' key to avoid parameter confusion
++        indexers_kwargs = {}
++        method_value = None
++        for k, v in key.items():
++            if k == 'method':
++                method_value = v
++            else:
++                indexers_kwargs[k] = v
++                
++        if method_value is not None:
++            # Add method dimension back as a kwarg with a different name
++            indexers_kwargs['_method_dim'] = method_value
++            # Create a custom sel call that handles the method dimension
++            result = self.data_array._sel_with_method_dim(indexers_kwargs)
++            return result
++        else:
++            return self.data_array.sel(**key)
+ 
+     def __setitem__(self, key, value) -> None:
+         if not utils.is_dict_like(key):
+@@ -1115,6 +1133,38 @@ class DataArray(AbstractArray, DataWithCoords):
+ 
+         return self._replace(variable=variable, coords=coords)
+ 
++    def _sel_with_method_dim(self, indexers_kwargs: dict) -> "DataArray":
++        """Special version of sel that handles a dimension named 'method'"""
++        # Extract the method dimension value if it exists
++        method_dim_value = indexers_kwargs.pop('_method_dim', None)
++        
++        # Create a dataset with renamed dimensions to avoid the name conflict
++        ds = self._to_temp_dataset()
++        
++        # If we have a dimension named 'method', we need to handle it specially
++        if 'method' in ds.dims and method_dim_value is not None:
++            # Create a new indexer dict with the method dimension
++            indexers = dict(indexers_kwargs)
++            indexers['method'] = method_dim_value
++            
++            # Use isel to avoid the method parameter confusion
++            # First convert the label indexers to positional indexers
++            pos_indexers = {}
++            for dim, label in indexers.items():
++                if dim in ds.indexes:
++                    index = ds.indexes[dim]
++                    pos = index.get_loc(label)
++                    pos_indexers[dim] = pos
++                else:
++                    pos_indexers[dim] = label
++                    
++            # Use isel which doesn't have a method parameter
++            result = ds.isel(indexers=pos_indexers)
++            return self._from_temp_dataset(result)
++        else:
++            # Normal case, no dimension named 'method'
++            return self.sel(**indexers_kwargs)
++            
+     def sel(
+         self,
+         indexers: Mapping[Hashable, Any] = None,
+@@ -1158,6 +1208,12 @@ class DataArray(AbstractArray, DataWithCoords):
+             by scalars, slices or arrays of tick labels. For dimensions with
+             multi-index, the indexer may also be a dict-like object with keys
+             matching index level names.
++            
++            .. note::
++               If you have a dimension named 'method', you must use a dictionary
++               for indexers (``{'dim1': 'x', 'method': 'a'}``) rather than keyword
++               arguments, as the latter would conflict with the `method` parameter
++               of this function.
+             If DataArrays are passed as indexers, xarray-style indexing will be
+             carried out. See :ref:`indexing` for the details.
+             One of indexers or indexers_kwargs must be provided.
+@@ -1196,11 +1252,14 @@ class DataArray(AbstractArray, DataWithCoords):
+         DataArray.isel
+ 
+         """
++        # Use local variables to avoid confusion with dimension named 'method'
++        loc_method = method
++        loc_tolerance = tolerance
+         ds = self._to_temp_dataset().sel(
+             indexers=indexers,
+             drop=drop,
+-            method=method,
+-            tolerance=tolerance,
++            method=loc_method,
++            tolerance=loc_tolerance,
+             **indexers_kwargs,
+         )
+         return self._from_temp_dataset(ds)
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index dbac288c..daa0a5f2 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -2189,6 +2189,13 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+             by scalars, slices or arrays of tick labels. For dimensions with
+             multi-index, the indexer may also be a dict-like object with keys
+             matching index level names.
++            
++            .. note::
++               If you have a dimension named 'method', you must use a dictionary
++               for indexers (``{'dim1': 'x', 'method': 'a'}``) rather than keyword
++               arguments, as the latter would conflict with the `method` parameter
++               of this function.
++               
+             If DataArrays are passed as indexers, xarray-style indexing will be
+             carried out. See :ref:`indexing` for the details.
+             One of indexers or indexers_kwargs must be provided.
+@@ -2228,8 +2235,11 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+         DataArray.sel
+         """
+         indexers = either_dict_or_kwargs(indexers, indexers_kwargs, "sel")
++        # Use local variables to avoid confusion with dimension named 'method'
++        loc_method = method
++        loc_tolerance = tolerance
+         pos_indexers, new_indexes = remap_label_indexers(
+-            self, indexers=indexers, method=method, tolerance=tolerance
++            self, indexers=indexers, method=loc_method, tolerance=loc_tolerance
+         )
+         result = self.isel(indexers=pos_indexers, drop=drop)
+         return result._overwrite_indexes(new_indexes)
+diff --git a/xarray/core/indexing.py b/xarray/core/indexing.py
+index 843feb04..23ff7749 100644
+--- a/xarray/core/indexing.py
++++ b/xarray/core/indexing.py
+@@ -100,7 +100,10 @@ def get_indexer_nd(index, labels, method=None, tolerance=None):
+     labels
+     """
+     flat_labels = np.ravel(labels)
+-    flat_indexer = index.get_indexer(flat_labels, method=method, tolerance=tolerance)
++    # Use local variables to avoid confusion with dimension named 'method'
++    loc_method = method
++    loc_tolerance = tolerance
++    flat_indexer = index.get_indexer(flat_labels, method=loc_method, tolerance=loc_tolerance)
+     indexer = flat_indexer.reshape(labels.shape)
+     return indexer
+ 
+@@ -188,7 +191,10 @@ def convert_label_indexer(index, label, index_name="", method=None, tolerance=No
+                     )
+                 indexer = index.get_loc(label_value)
+             else:
+-                indexer = index.get_loc(label_value, method=method, tolerance=tolerance)
++                # Use a local variable for method to avoid confusion with dimension named 'method'
++                loc_method = method
++                loc_tolerance = tolerance
++                indexer = index.get_loc(label_value, method=loc_method, tolerance=loc_tolerance)
+         elif label.dtype.kind == "b":
+             indexer = label
+         else:
+@@ -197,7 +203,10 @@ def convert_label_indexer(index, label, index_name="", method=None, tolerance=No
+                     "Vectorized selection is not available along "
+                     "MultiIndex variable: " + index_name
+                 )
+-            indexer = get_indexer_nd(index, label, method, tolerance)
++            # Use a local variable for method to avoid confusion with dimension named 'method'
++            loc_method = method
++            loc_tolerance = tolerance
++            indexer = get_indexer_nd(index, label, loc_method, loc_tolerance)
+             if np.any(indexer < 0):
+                 raise KeyError(f"not all values found in index {index_name!r}")
+     return indexer, new_index
+@@ -251,13 +260,17 @@ def remap_label_indexers(data_obj, indexers, method=None, tolerance=None):
+     pos_indexers = {}
+     new_indexes = {}
+ 
++    # Use local variables to avoid confusion with dimension named 'method'
++    loc_method = method
++    loc_tolerance = tolerance
++
+     dim_indexers = get_dim_indexers(data_obj, indexers)
+     for dim, label in dim_indexers.items():
+         try:
+             index = data_obj.indexes[dim]
+         except KeyError:
+             # no index for this dimension: reuse the provided labels
+-            if method is not None or tolerance is not None:
++            if loc_method is not None or loc_tolerance is not None:
+                 raise ValueError(
+                     "cannot supply ``method`` or ``tolerance`` "
+                     "when the indexed dimension does not have "
+@@ -267,7 +280,7 @@ def remap_label_indexers(data_obj, indexers, method=None, tolerance=None):
+         else:
+             coords_dtype = data_obj.coords[dim].dtype
+             label = maybe_cast_to_coords_dtype(label, coords_dtype)
+-            idxr, new_idx = convert_label_indexer(index, label, dim, method, tolerance)
++            idxr, new_idx = convert_label_indexer(index, label, dim, loc_method, loc_tolerance)
+             pos_indexers[dim] = idxr
+             if new_idx is not None:
+                 new_indexes[dim] = new_idx

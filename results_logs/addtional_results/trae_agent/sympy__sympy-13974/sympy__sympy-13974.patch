@@ -1,0 +1,69 @@
+diff --git a/sympy/physics/quantum/tensorproduct.py b/sympy/physics/quantum/tensorproduct.py
+index 9dd10d219..8c3804ef0 100644
+--- a/sympy/physics/quantum/tensorproduct.py
++++ b/sympy/physics/quantum/tensorproduct.py
+@@ -237,6 +237,12 @@ def _label_wrap(label, nlabels):
+ 
+     def doit(self, **hints):
+         return TensorProduct(*[item.doit(**hints) for item in self.args])
++        
++    def _eval_power(self, exp):
++        """Handle powers of TensorProducts by distributing the power to each element."""
++        if exp.is_Integer and exp.is_positive:
++            new_args = [arg ** exp for arg in self.args]
++            return TensorProduct(*new_args)
+ 
+     def _eval_expand_tensorproduct(self, **hints):
+         """Distribute TensorProducts across addition."""
+@@ -378,10 +384,26 @@ def tensor_product_simp(e, **hints):
+     >>> tensor_product_simp(e**2)
+     (A*C)x(B*D)**2
+ 
++    It also handles powers of tensor products:
++
++    >>> tensor_product_simp(TensorProduct(A,B)**2)
++    (A**2)x(B**2)
++
+     """
+     if isinstance(e, Add):
+         return Add(*[tensor_product_simp(arg) for arg in e.args])
+     elif isinstance(e, Pow):
++        if isinstance(e.base, TensorProduct):
++            # Handle powers of TensorProducts by distributing the power to each element
++            tp_args = e.base.args
++            # Apply the power to each argument and then simplify
++            new_args = []
++            for arg in tp_args:
++                # Let each argument handle its own power evaluation
++                powered_arg = arg ** e.exp
++                # Simplify the result
++                new_args.append(powered_arg)
++            return TensorProduct(*new_args)
+         return tensor_product_simp(e.base) ** e.exp
+     elif isinstance(e, Mul):
+         return tensor_product_simp_Mul(e)
+diff --git a/sympy/physics/quantum/tests/test_tensorproduct.py b/sympy/physics/quantum/tests/test_tensorproduct.py
+index 9f65844c8..895c39d69 100644
+--- a/sympy/physics/quantum/tests/test_tensorproduct.py
++++ b/sympy/physics/quantum/tests/test_tensorproduct.py
+@@ -49,6 +49,20 @@ def test_tensor_product_simp():
+     assert tensor_product_simp(TP(A, B)*TP(B, C)) == TP(A*B, B*C)
+ 
+ 
++def test_tensor_product_power():
++    # Test powers of tensor products
++    assert tensor_product_simp(TP(A, B)**2) == TP(A**2, B**2)
++    assert tensor_product_simp(TP(1, 1)**2) == TP(1, 1)
++    
++    # Test with Pauli matrices
++    from sympy.physics.paulialgebra import Pauli
++    assert tensor_product_simp(TP(1, Pauli(3))**2) == TP(1, 1)
++    assert tensor_product_simp(TP(A, Pauli(1))**2) == TP(A**2, 1)
++    
++    # Test with higher powers
++    assert tensor_product_simp(TP(A, B)**3) == TP(A**3, B**3)
++
++
+ def test_issue_5923():
+     # most of the issue regarding sympification of args has been handled
+     # and is tested internally by the use of args_cnc through the quantum

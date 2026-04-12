@@ -1,0 +1,25 @@
+diff --git a/django/contrib/sessions/backends/base.py b/django/contrib/sessions/backends/base.py
+index 187e14b1b7..d1a52f4c8d 100644
+--- a/django/contrib/sessions/backends/base.py
++++ b/django/contrib/sessions/backends/base.py
+@@ -117,6 +117,10 @@ class SessionBase:
+         )
+ 
+     def decode(self, session_data):
++        if session_data is None:
++            return {}
++        if not isinstance(session_data, str):
++            return {}
+         try:
+             return signing.loads(session_data, salt=self.key_salt, serializer=self.serializer)
+         # RemovedInDjango40Warning: when the deprecation ends, handle here
+@@ -132,8 +136,8 @@ class SessionBase:
+ 
+     def _legacy_decode(self, session_data):
+         # RemovedInDjango40Warning: pre-Django 3.1 format will be invalid.
+-        encoded_data = base64.b64decode(session_data.encode('ascii'))
+         try:
++            encoded_data = base64.b64decode(session_data.encode('ascii'))
+             # could produce ValueError if there is no ':'
+             hash, serialized = encoded_data.split(b':', 1)
+             expected_hash = self._hash(serialized)

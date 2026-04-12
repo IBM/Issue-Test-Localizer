@@ -1,0 +1,24 @@
+diff --git a/sklearn/utils/multiclass.py b/sklearn/utils/multiclass.py
+index 5eaef2fde..719442a77 100644
+--- a/sklearn/utils/multiclass.py
++++ b/sklearn/utils/multiclass.py
+@@ -279,6 +279,19 @@ def type_of_target(y, input_name=""):
+     >>> type_of_target(np.array([[0, 1], [1, 1]]))
+     'multilabel-indicator'
+     """
++    # Handle pandas Series with nullable extension dtypes
++    # These dtypes (Int64, Float64, boolean) become object dtype when converted
++    # to numpy arrays, but we can detect them and convert to their underlying dtype
++    try:
++        # Check if it's a pandas Series with an extension dtype that has numpy_dtype
++        if (hasattr(y, 'dtype') and hasattr(y.dtype, 'numpy_dtype') and 
++            hasattr(y, 'astype')):
++            # Convert to the underlying numpy dtype for proper type detection
++            y = y.astype(y.dtype.numpy_dtype)
++    except (AttributeError, ImportError):
++        # pandas might not be available or y might not be a pandas object
++        pass
++    
+     xp, is_array_api = get_namespace(y)
+     valid = (
+         (isinstance(y, Sequence) or issparse(y) or hasattr(y, "__array__"))

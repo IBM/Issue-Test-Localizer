@@ -1,0 +1,33 @@
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index bbe362a6ab..0dde7d7347 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -60,7 +60,10 @@ class ChoicesMeta(enum.EnumMeta):
+ 
+ class Choices(enum.Enum, metaclass=ChoicesMeta):
+     """Class for creating enumerated choices."""
+-    pass
++    
++    def __str__(self):
++        """Return the value when converting to string."""
++        return str(self.value)
+ 
+ 
+ class IntegerChoices(int, Choices):
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index d610dc86f0..edc5171392 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -792,6 +792,12 @@ class Field(RegisterLookupMixin):
+         """Perform preliminary non-db specific value checks and conversions."""
+         if isinstance(value, Promise):
+             value = value._proxy____cast()
++        # Handle TextChoices and IntegerChoices enum values
++        if value is not None and self.choices is not None and hasattr(value, 'value'):
++            # Check if this is an enum value from TextChoices or IntegerChoices
++            # by checking if it's an Enum instance and has a label attribute (which is specific to Django's Choices)
++            if hasattr(value, 'label') and hasattr(value.__class__, 'choices'):
++                value = value.value
+         return value
+ 
+     def get_db_prep_value(self, value, connection, prepared=False):

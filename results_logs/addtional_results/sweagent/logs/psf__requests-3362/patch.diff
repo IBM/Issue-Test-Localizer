@@ -1,0 +1,44 @@
+diff --git a/requests/utils.py b/requests/utils.py
+index 8d17b6b2..a5c762c9 100644
+--- a/requests/utils.py
++++ b/requests/utils.py
+@@ -359,12 +359,34 @@ def get_encoding_from_headers(headers):
+ def stream_decode_response_unicode(iterator, r):
+     """Stream decodes a iterator."""
+ 
+-    if r.encoding is None:
+-        for item in iterator:
+-            yield item
+-        return
++    # Determine the encoding to use
++    encoding = r.encoding
++    if encoding is None:
++        # For streaming responses, we can't use apparent_encoding because it would
++        # consume the stream. Instead, we use a reasonable default.
++        # Check if content is already consumed (non-streaming case)
++        if r._content_consumed and r._content:
++            # For non-streaming responses, we can safely use apparent_encoding
++            try:
++                encoding = r.apparent_encoding
++            except:
++                encoding = 'utf-8'
++            
++            # If apparent_encoding returned None, fall back to utf-8
++            if encoding is None:
++                encoding = 'utf-8'
++        else:
++            # For streaming responses, use utf-8 as default
++            # This is reasonable since UTF-8 is the default for JSON (RFC 7159)
++            # and is widely used for text content
++            encoding = 'utf-8'
+ 
+-    decoder = codecs.getincrementaldecoder(r.encoding)(errors='replace')
++    try:
++        decoder = codecs.getincrementaldecoder(encoding)(errors='replace')
++    except (LookupError, TypeError):
++        # If the encoding is invalid, fall back to utf-8
++        decoder = codecs.getincrementaldecoder('utf-8')(errors='replace')
++    
+     for chunk in iterator:
+         rv = decoder.decode(chunk)
+         if rv:

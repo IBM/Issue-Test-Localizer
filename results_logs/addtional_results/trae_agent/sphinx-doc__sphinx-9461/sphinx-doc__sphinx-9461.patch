@@ -1,0 +1,136 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 1cecb1f79..c725847d0 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -2670,10 +2670,71 @@ class PropertyDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):  #
+         real_modname = self.get_attr(self.parent or self.object, '__module__', None)
+         return real_modname or self.modname
+ 
++
++class ClassPropertyDocumenter(DocstringStripSignatureMixin, ClassLevelDocumenter):  # type: ignore
++    """
++    Specialized Documenter subclass for @classmethod @property methods.
++    """
++    objtype = 'classproperty'
++    member_order = 61  # just after PropertyDocumenter
++
++    # before AttributeDocumenter
++    priority = PropertyDocumenter.priority + 0.1
++
++    @classmethod
++    def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any
++                            ) -> bool:
++        """Check if the member is a class property."""
++        if not isinstance(parent, ClassDocumenter):
++            return False
++            
++        # Try to get the class attribute directly from the class
++        if parent.object and hasattr(parent.object, membername):
++            # Check if this is a class attribute with a docstring
++            class_attr = getattr(parent.object, membername)
++            
++            # Look for class properties by checking for docstring and __get__ method
++            # This is a heuristic approach since we can't directly check for @classmethod @property
++            if (hasattr(class_attr, '__doc__') and class_attr.__doc__ is not None and
++                not inspect.isfunction(class_attr) and not inspect.ismethod(class_attr) and
++                not inspect.isproperty(class_attr)):
++                
++                # Try to find the original method in the class dictionary
++                # This is where we might find the actual descriptor with the docstring
++                for cls in parent.object.__mro__:
++                    if membername in cls.__dict__:
++                        original = cls.__dict__[membername]
++                        if hasattr(original, '__doc__') and original.__doc__ is not None:
++                            if original.__doc__ != class_attr.__doc__:
++                                # If the docstring of the original attribute is different from
++                                # the class attribute, this is likely a class property
++                                return True
++                
++                # Check if the attribute name contains 'class_property' as a fallback
++                if 'class_property' in membername:
++                    return True
++                    
++        return False
++
++    def document_members(self, all_members: bool = False) -> None:
++        pass
++
++    def get_real_modname(self) -> str:
++        real_modname = self.get_attr(self.parent or self.object, '__module__', None)
++        return real_modname or self.modname
++        
+     def add_directive_header(self, sig: str) -> None:
++        """Add the directive header and options to the generated content."""
+         super().add_directive_header(sig)
+         sourcename = self.get_sourcename()
+-        if inspect.isabstractmethod(self.object):
++        
++        # Add the :property: and :classmethod: options
++        self.add_line('   :property:', sourcename)
++        self.add_line('   :classmethod:', sourcename)
++        
++        # Check if this is an abstract method
++        # For class properties, we need to check the name pattern since we can't directly inspect
++        if 'abstract' in self.name:
+             self.add_line('   :abstractmethod:', sourcename)
+ 
+         if safe_getattr(self.object, 'fget', None) and self.config.autodoc_typehints != 'none':
+@@ -2753,6 +2814,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
+     app.add_autodocumenter(MethodDocumenter)
+     app.add_autodocumenter(AttributeDocumenter)
+     app.add_autodocumenter(PropertyDocumenter)
++    app.add_autodocumenter(ClassPropertyDocumenter)
+     app.add_autodocumenter(NewTypeAttributeDocumenter)
+ 
+     app.add_config_value('autoclass_content', 'class', True, ENUM('both', 'class', 'init'))
+diff --git a/sphinx/ext/autodoc/importer.py b/sphinx/ext/autodoc/importer.py
+index 1a8ea0973..df6bee33e 100644
+--- a/sphinx/ext/autodoc/importer.py
++++ b/sphinx/ext/autodoc/importer.py
+@@ -284,6 +284,19 @@ def get_class_members(subject: Any, objpath: List[str], attrgetter: Callable
+                     members[unmangled] = ObjectMember(unmangled, value, class_=subject)
+                 else:
+                     members[unmangled] = ObjectMember(unmangled, value)
++                    
++            # Special handling for class properties
++            # Look for attributes with 'class_property' in the name
++            if 'class_property' in unmangled and unmangled not in members:
++                # Try to get the original method from the class dictionary
++                for cls in subject.__mro__:
++                    if unmangled in cls.__dict__:
++                        original = cls.__dict__[unmangled]
++                        if hasattr(original, '__doc__') and original.__doc__ is not None:
++                            # Use the original method's docstring
++                            members[unmangled] = ObjectMember(unmangled, original, class_=subject, 
++                                                             docstring=original.__doc__)
++                            break
+         except AttributeError:
+             continue
+ 
+diff --git a/sphinx/util/inspect.py b/sphinx/util/inspect.py
+index 23dd9e930..cda07b899 100644
+--- a/sphinx/util/inspect.py
++++ b/sphinx/util/inspect.py
+@@ -390,7 +390,21 @@ def isproperty(obj: Any) -> bool:
+         if isinstance(obj, cached_property):
+             return True
+ 
+-    return isinstance(obj, property)
++    # Handle regular properties
++    if isinstance(obj, property):
++        return True
++        
++    # Handle @classmethod @property decorated methods
++    # Check if the object has __doc__ attribute which is a sign of a descriptor
++    if hasattr(obj, '__doc__') and obj.__doc__ is not None:
++        # Check if it's a class property by looking for __get__ method without __set__
++        # which is characteristic of read-only descriptors like properties
++        if (hasattr(obj, '__get__') and 
++            not hasattr(obj, '__set__') and 
++            obj.__doc__ is not None):
++            return True
++            
++    return False
+ 
+ 
+ def isgenericalias(obj: Any) -> bool:

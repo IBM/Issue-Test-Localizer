@@ -1,0 +1,19 @@
+diff --git a/django/forms/forms.py b/django/forms/forms.py
+index 216b4cc..fd3cfbb 100644
+--- a/django/forms/forms.py
++++ b/django/forms/forms.py
+@@ -518,7 +518,7 @@ class BaseForm(RenderableFormMixin):
+         or the field, in that order. Evaluate callable values.
+         """
+         value = self.initial.get(field_name, field.initial)
+-        if callable(value):
++        if callable(value) and not (hasattr(field, 'show_hidden_initial') and field.show_hidden_initial):
+             value = value()
+         # If this is an auto-generated default date, nix the microseconds
+         # for standardized handling. See #22502.
+@@ -536,4 +536,4 @@ class Form(BaseForm, metaclass=DeclarativeFieldsMetaclass):
+     # self.fields is specified. This class (Form) is the one that does the
+     # fancy metaclass stuff purely for the semantic sugar -- it allows one
+     # to define a form using declarative syntax.
+-    # BaseForm itself has no way of designating self.fields.
++    # BaseForm itself has no way of designating self.fields.

@@ -1,0 +1,488 @@
+diff --git a/debug_detailed.py b/debug_detailed.py
+new file mode 100644
+index 0000000000..faa52238d3
+--- /dev/null
++++ b/debug_detailed.py
+@@ -0,0 +1,159 @@
++from sympy import *
++from sympy.vector import CoordSys3D
++
++# Let's manually trace through the _print_BasisDependent method with debug prints
++CC_ = CoordSys3D("C")
++xhat = CC_.i
++ten = symbols("10", positive=True)
++t = symbols("t")
++y = CC_.y
++
++# Create the problematic expression
++expr = (2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)) * xhat
++
++# Let's manually call the pretty printer and see what happens
++from sympy.printing.pretty.pretty import PrettyPrinter
++from sympy.printing.pretty.stringpict import prettyForm
++
++class DebugPrettyPrinter(PrettyPrinter):
++    def _print_BasisDependent(self, expr):
++        from sympy.vector import Vector
++
++        if not self._use_unicode:
++            raise NotImplementedError("ASCII pretty printing of BasisDependent is not implemented")
++
++        if expr == expr.zero:
++            return prettyForm(expr.zero._pretty_form)
++        o1 = []
++        vectstrs = []
++        if isinstance(expr, Vector):
++            items = expr.separate().items()
++        else:
++            items = [(0, expr)]
++        for system, vect in items:
++            inneritems = list(vect.components.items())
++            inneritems.sort(key = lambda x: x[0].__str__())
++            for k, v in inneritems:
++                print(f"Processing: k={k}, v={v}")
++                #if the coef of the basis vector is 1
++                #we skip the 1
++                if v == 1:
++                    o1.append("" +
++                              k._pretty_form)
++                #Same for -1
++                elif v == -1:
++                    o1.append("(-1) " +
++                              k._pretty_form)
++                #For a general expr
++                else:
++                    #We always wrap the measure numbers in
++                    #parentheses
++                    arg_str = self._print(
++                        v).parens()[0]
++                    
++                    print(f"arg_str: {repr(arg_str)}")
++                    print(f"k._pretty_form: {repr(k._pretty_form)}")
++                    
++                    final_str = arg_str + ' ' + k._pretty_form
++                    print(f"final_str: {repr(final_str)}")
++                    o1.append(final_str)
++                vectstrs.append(k._pretty_form)
++
++        print(f"o1 before processing: {[repr(x) for x in o1]}")
++        print(f"vectstrs: {vectstrs}")
++
++        #outstr = u("").join(o1)
++        if o1[0].startswith(" + "):
++            o1[0] = o1[0][3:]
++        elif o1[0].startswith(" "):
++            o1[0] = o1[0][1:]
++        #Fixing the newlines
++        lengths = []
++        strs = ['']
++        flag = []
++        for i, partstr in enumerate(o1):
++            flag.append(0)
++            print(f"Processing partstr {i}: {repr(partstr)}")
++            # XXX: What is this hack?
++            if '\n' in partstr:
++                print(f"Found newlines in partstr {i}")
++                tempstr = partstr
++                tempstr = tempstr.replace(vectstrs[i], '')
++                print(f"After removing vector string: {repr(tempstr)}")
++                
++                if '\N{right parenthesis extension}' in tempstr:   # If scalar is a fraction
++                    print("Found right parenthesis extension")
++                    # Instead of inserting in the middle, append to the end
++                    lines = tempstr.split('\n')
++                    flag[i] = 1
++                    print(f"Lines: {lines}")
++                    # Find the last non-empty line and append the vector string there
++                    for j in range(len(lines) - 1, -1, -1):
++                        print(f"Checking line {j}: {repr(lines[j])}")
++                        if lines[j].strip():
++                            print(f"Found last non-empty line at {j}: {repr(lines[j])}")
++                            lines[j] = lines[j] + ' ' + vectstrs[i]
++                            print(f"After adding vector: {repr(lines[j])}")
++                            break
++                    tempstr = '\n'.join(lines)
++                    print(f"Final tempstr: {repr(tempstr)}")
++                elif '\N{RIGHT PARENTHESIS LOWER HOOK}' in tempstr:
++                    print("Found right parenthesis lower hook")
++                    flag[i] = 1
++                    tempstr = tempstr.replace('\N{RIGHT PARENTHESIS LOWER HOOK}',
++                                        '\N{RIGHT PARENTHESIS LOWER HOOK}'
++                                        + ' ' + vectstrs[i])
++                else:
++                    print("Found right parenthesis upper hook")
++                    tempstr = tempstr.replace('\N{RIGHT PARENTHESIS UPPER HOOK}',
++                                        '\N{RIGHT PARENTHESIS UPPER HOOK}'
++                                        + ' ' + vectstrs[i])
++                o1[i] = tempstr
++                print(f"Updated o1[{i}]: {repr(o1[i])}")
++
++        print(f"o1 after processing: {[repr(x) for x in o1]}")
++        
++        # Continue with the rest of the method...
++        o1 = [x.split('\n') for x in o1]
++        n_newlines = max([len(x) for x in o1])  # Width of part in its pretty form
++
++        if 1 in flag:                           # If there was a fractional scalar
++            for i, parts in enumerate(o1):
++                if len(parts) == 1:             # If part has no newline
++                    parts.insert(0, ' ' * (len(parts[0])))
++                    flag[i] = 1
++
++        for i, parts in enumerate(o1):
++            lengths.append(len(parts[flag[i]]))
++            print(f"Processing parts {i}: {parts}, flag[{i}]={flag[i]}, length={lengths[-1]}")
++            for j in range(n_newlines):
++                if j+1 <= len(parts):
++                    if j >= len(strs):
++                        strs.append(' ' * (sum(lengths[:-1]) +
++                                           3*(len(lengths)-1)))
++                    if j == flag[i]:
++                        print(f"Adding to strs[{flag[i]}]: {repr(parts[flag[i]] + ' + ')}")
++                        strs[flag[i]] += parts[flag[i]] + ' + '
++                    else:
++                        padding = ' '*(lengths[-1] - len(parts[j]) + 3)
++                        print(f"Adding to strs[{j}]: {repr(parts[j] + padding)}")
++                        strs[j] += parts[j] + padding
++                else:
++                    if j >= len(strs):
++                        strs.append(' ' * (sum(lengths[:-1]) +
++                                           3*(len(lengths)-1)))
++                    padding = ' '*(lengths[-1]+3)
++                    print(f"Adding padding to strs[{j}]: {repr(padding)}")
++                    strs[j] += padding
++
++        print(f"strs before trimming: {[repr(s) for s in strs]}")
++        trimmed_strs = [s[:-3] for s in strs]
++        print(f"strs after trimming: {[repr(s) for s in trimmed_strs]}")
++        result = prettyForm('\n'.join(trimmed_strs))
++        print(f"Final result: {repr(result)}")
++        return result
++
++pp = DebugPrettyPrinter({'use_unicode': True})
++result = pp._print(expr)
++print("Final output:")
++print(result)
+\ No newline at end of file
+diff --git a/debug_flow.py b/debug_flow.py
+new file mode 100644
+index 0000000000..219b051786
+--- /dev/null
++++ b/debug_flow.py
+@@ -0,0 +1,55 @@
++from sympy import *
++from sympy.vector import CoordSys3D
++
++# Let's manually trace through the _print_BasisDependent method
++CC_ = CoordSys3D("C")
++xhat = CC_.i
++ten = symbols("10", positive=True)
++t = symbols("t")
++y = CC_.y
++
++# Create the problematic expression
++expr = (2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)) * xhat
++
++print("Expression:", expr)
++print("Type:", type(expr))
++print("Is Vector?", isinstance(expr, type(expr)))
++
++# Let's see what separate() returns
++items = expr.separate().items()
++print("Items from separate():", list(items))
++
++# Let's see the components
++for system, vect in items:
++    print(f"System: {system}")
++    print(f"Vect: {vect}")
++    print(f"Vect components: {vect.components}")
++    
++    inneritems = list(vect.components.items())
++    print(f"Inner items: {inneritems}")
++    
++    for k, v in inneritems:
++        print(f"k (basis vector): {k}")
++        print(f"k._pretty_form: {k._pretty_form}")
++        print(f"v (coefficient): {v}")
++        
++        # Let's see what happens when we print the coefficient
++        from sympy.printing.pretty.pretty import PrettyPrinter
++        pp = PrettyPrinter({'use_unicode': True})
++        coeff_pretty = pp._print(v)
++        print(f"Coefficient pretty form: {repr(coeff_pretty)}")
++        print(f"Coefficient pretty form (rendered): {coeff_pretty}")
++        
++        # Let's see what happens when we add parentheses
++        coeff_with_parens = coeff_pretty.parens()[0]
++        print(f"With parens: {repr(coeff_with_parens)}")
++        print(f"With parens (rendered): {coeff_with_parens}")
++        
++        # Now let's see what the final string would be
++        final_str = str(coeff_with_parens) + ' ' + k._pretty_form
++        print(f"Final string: {repr(final_str)}")
++        print(f"Final string (rendered): {final_str}")
++        
++        # Check for newlines
++        has_newlines = '\n' in final_str
++        print(f"Has newlines: {has_newlines}")
+\ No newline at end of file
+diff --git a/debug_issue.py b/debug_issue.py
+new file mode 100644
+index 0000000000..1bf0477d1a
+--- /dev/null
++++ b/debug_issue.py
+@@ -0,0 +1,33 @@
++from sympy import *
++from sympy.vector import CoordSys3D
++from sympy.printing.pretty import pretty as xpretty
++
++def pretty(expr):
++    """Unicode pretty-printing"""
++    return xpretty(expr, use_unicode=True, wrap_line=False)
++
++CC_ = CoordSys3D("C")
++xhat = CC_.i
++
++# Simple case
++simple_expr = 2 * xhat
++print("Simple case:")
++print(repr(pretty(simple_expr)))
++print(pretty(simple_expr))
++print()
++
++# Fraction case
++ten = symbols("10", positive=True)
++frac_expr = (2 * ten**(-4)) * xhat
++print("Fraction case:")
++print(repr(pretty(frac_expr)))
++print(pretty(frac_expr))
++print()
++
++# More complex fraction
++t = symbols("t")
++y = CC_.y
++complex_expr = (2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)) * xhat
++print("Complex fraction case:")
++print(repr(pretty(complex_expr)))
++print(pretty(complex_expr))
+\ No newline at end of file
+diff --git a/debug_issue2.py b/debug_issue2.py
+new file mode 100644
+index 0000000000..e21afe2ab9
+--- /dev/null
++++ b/debug_issue2.py
+@@ -0,0 +1,32 @@
++from sympy import *
++from sympy.vector import CoordSys3D
++from sympy.printing.pretty import pretty as xpretty
++
++def pretty(expr):
++    """Unicode pretty-printing"""
++    return xpretty(expr, use_unicode=True, wrap_line=False)
++
++CC_ = CoordSys3D("C")
++xhat = CC_.i
++
++# Let's debug what's happening in the _print_BasisDependent method
++ten = symbols("10", positive=True)
++t = symbols("t")
++y = CC_.y
++
++# Create the problematic expression
++complex_expr = (2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)) * xhat
++
++# Let's see what the components look like
++print("Expression:", complex_expr)
++print("Components:", complex_expr.components)
++print("Separate:", complex_expr.separate())
++
++# Let's see what the coefficient looks like when printed
++coeff = 2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)
++print("\nCoefficient:")
++print(repr(pretty(coeff)))
++print(pretty(coeff))
++
++# Let's see what the vector string is
++print("\nVector string:", xhat._pretty_form)
+\ No newline at end of file
+diff --git a/debug_unicode.py b/debug_unicode.py
+new file mode 100644
+index 0000000000..052f625bbb
+--- /dev/null
++++ b/debug_unicode.py
+@@ -0,0 +1,38 @@
++import unicodedata
++
++# Let's see what these Unicode characters are
++chars = [
++    '\N{right parenthesis extension}',
++    '\N{RIGHT PARENTHESIS LOWER HOOK}',
++    '\N{RIGHT PARENTHESIS UPPER HOOK}'
++]
++
++for char in chars:
++    print(f"'{char}' - {unicodedata.name(char)} - ord: {ord(char)}")
++
++# Let's check what's in our coefficient
++from sympy import *
++from sympy.vector import CoordSys3D
++from sympy.printing.pretty import pretty as xpretty
++
++def pretty(expr):
++    """Unicode pretty-printing"""
++    return xpretty(expr, use_unicode=True, wrap_line=False)
++
++CC_ = CoordSys3D("C")
++ten = symbols("10", positive=True)
++t = symbols("t")
++y = CC_.y
++
++coeff = 2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)
++coeff_str = pretty(coeff)
++
++print("\nCoefficient string:")
++print(repr(coeff_str))
++
++# Check which Unicode characters are present
++for char in chars:
++    if char in coeff_str:
++        print(f"Found: '{char}' - {unicodedata.name(char)}")
++    else:
++        print(f"Not found: '{char}' - {unicodedata.name(char)}")
+\ No newline at end of file
+diff --git a/debug_v8.py b/debug_v8.py
+new file mode 100644
+index 0000000000..970633cb35
+--- /dev/null
++++ b/debug_v8.py
+@@ -0,0 +1,51 @@
++from sympy.core.function import Function
++from sympy.printing.pretty import pretty as xpretty
++from sympy.vector import CoordSys3D
++from sympy.abc import a, b, c
++from sympy.integrals.integrals import Integral
++
++def upretty(expr):
++    """Unicode pretty-printing"""
++    return xpretty(expr, use_unicode=True, wrap_line=False)
++
++N = CoordSys3D('N')
++C = N.orient_new_axis('C', a, N.k)  # type: ignore
++f = Function('f')
++v8 = N.j - (Integral(f(b)) - C.x**2)*N.k  # type: ignore
++
++# Let's check the coefficient of k_N
++coeff = -(Integral(f(b)) - C.x**2)
++print("Coefficient of k_N:")
++print(repr(upretty(coeff)))
++print("Rendered:")
++print(upretty(coeff))
++
++# Check for Unicode characters
++coeff_str = upretty(coeff)
++chars = [
++    '\N{right parenthesis extension}',
++    '\N{RIGHT PARENTHESIS LOWER HOOK}',
++    '\N{RIGHT PARENTHESIS UPPER HOOK}'
++]
++
++for char in chars:
++    if char in coeff_str:
++        print(f"Found: '{char}' - {ord(char)}")
++    else:
++        print(f"Not found: '{char}' - {ord(char)}")
++
++# Let's see what the coefficient looks like with parentheses
++from sympy.printing.pretty.pretty import PrettyPrinter
++pp = PrettyPrinter({'use_unicode': True})
++coeff_pretty = pp._print(coeff)
++coeff_with_parens = coeff_pretty.parens()[0]
++print(f"\nWith parens: {repr(coeff_with_parens)}")
++print(f"With parens (rendered): {coeff_with_parens}")
++
++# Check for Unicode characters in parenthesized version
++coeff_parens_str = str(coeff_with_parens)
++for char in chars:
++    if char in coeff_parens_str:
++        print(f"Found in parens: '{char}' - {ord(char)}")
++    else:
++        print(f"Not found in parens: '{char}' - {ord(char)}")
+\ No newline at end of file
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 0000000000..59581f60e0
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,26 @@
++from sympy import *
++from sympy.vector import CoordSys3D, Del
++
++init_printing()
++
++delop = Del()
++CC_ = CoordSys3D("C")
++x,    y,    z    = CC_.x, CC_.y, CC_.z
++xhat, yhat, zhat = CC_.i, CC_.j, CC_.k
++
++t = symbols("t")
++ten = symbols("10", positive=True)
++eps, mu = 4*pi*ten**(-11), ten**(-5)
++
++Bx = 2 * ten**(-4) * cos(ten**5 * t) * sin(ten**(-3) * y)
++vecB = Bx * xhat
++vecE = (1/eps) * Integral(delop.cross(vecB/mu).doit(), t)
++
++print("vecB:")
++pprint(vecB)
++print()
++print("vecE:")
++pprint(vecE)
++print()
++print("vecE.doit():")
++pprint(vecE.doit())
+\ No newline at end of file
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..833cbf7858 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -1145,12 +1145,19 @@ def _print_BasisDependent(self, expr):
+                 tempstr = partstr
+                 tempstr = tempstr.replace(vectstrs[i], '')
+                 if '\N{right parenthesis extension}' in tempstr:   # If scalar is a fraction
+-                    for paren in range(len(tempstr)):
+-                        flag[i] = 1
+-                        if tempstr[paren] == '\N{right parenthesis extension}':
+-                            tempstr = tempstr[:paren] + '\N{right parenthesis extension}'\
+-                                         + ' '  + vectstrs[i] + tempstr[paren + 1:]
++                    # The original logic was inserting the vector string after the first ⎟ character,
++                    # but this could be in the middle of a line. Instead, find the line that contains
++                    # ⎟ and append the vector string at the end of that line.
++                    lines = tempstr.split('\n')
++                    flag[i] = 1
++                    
++                    # Find the first line that contains ⎟ and append the vector string at the end
++                    for j, line in enumerate(lines):
++                        if '\N{right parenthesis extension}' in line:
++                            lines[j] = line + ' ' + vectstrs[i]
+                             break
++                    
++                    tempstr = '\n'.join(lines)
+                 elif '\N{RIGHT PARENTHESIS LOWER HOOK}' in tempstr:
+                     flag[i] = 1
+                     tempstr = tempstr.replace('\N{RIGHT PARENTHESIS LOWER HOOK}',
+@@ -1190,7 +1197,14 @@ def _print_BasisDependent(self, expr):
+                                            3*(len(lengths)-1)))
+                     strs[j] += ' '*(lengths[-1]+3)
+ 
+-        return prettyForm('\n'.join([s[:-3] for s in strs]))
++        # Remove trailing ' + ' from each line, but be careful not to remove vector strings
++        final_strs = []
++        for s in strs:
++            if s.endswith(' + '):
++                final_strs.append(s[:-3])
++            else:
++                final_strs.append(s)
++        return prettyForm('\n'.join(final_strs))
+ 
+     def _print_NDimArray(self, expr):
+         from sympy.matrices.immutable import ImmutableMatrix

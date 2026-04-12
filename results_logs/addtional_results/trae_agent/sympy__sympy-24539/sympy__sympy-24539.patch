@@ -1,0 +1,36 @@
+diff --git a/sympy/polys/rings.py b/sympy/polys/rings.py
+index 12bd2fc920..4f81743552 100644
+--- a/sympy/polys/rings.py
++++ b/sympy/polys/rings.py
+@@ -616,8 +616,9 @@ def set_ring(self, new_ring):
+             return new_ring.from_dict(self, self.ring.domain)
+ 
+     def as_expr(self, *symbols):
+-        if symbols and len(symbols) != self.ring.ngens:
+-            raise ValueError("not enough symbols, expected %s got %s" % (self.ring.ngens, len(symbols)))
++        if symbols:
++            if len(symbols) != self.ring.ngens:
++                raise ValueError("not enough symbols, expected %s got %s" % (self.ring.ngens, len(symbols)))
+         else:
+             symbols = self.ring.symbols
+ 
+diff --git a/sympy/polys/tests/test_rings.py b/sympy/polys/tests/test_rings.py
+index b3962136a3..852380219c 100644
+--- a/sympy/polys/tests/test_rings.py
++++ b/sympy/polys/tests/test_rings.py
+@@ -265,6 +265,15 @@ def test_PolyElement_as_expr():
+     assert f != g
+     assert f.as_expr(X, Y, Z) == g
+ 
++    # Test with custom symbols
++    U, V, W = symbols("u,v,w")
++    g_custom = 3*U**2*V - U*V*W + 7*W**3 + 1
++    
++    assert f.as_expr(U, V, W) == g_custom
++    assert str(f.as_expr(U, V, W)).find('x') == -1  # Ensure 'x' is not in the result
++    assert str(f.as_expr(U, V, W)).find('y') == -1  # Ensure 'y' is not in the result
++    assert str(f.as_expr(U, V, W)).find('z') == -1  # Ensure 'z' is not in the result
++
+     raises(ValueError, lambda: f.as_expr(X))
+ 
+     R, = ring("", ZZ)

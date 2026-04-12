@@ -1,0 +1,117 @@
+diff --git a/django/core/exceptions.py b/django/core/exceptions.py
+index dc084b8692..458d444dc7 100644
+--- a/django/core/exceptions.py
++++ b/django/core/exceptions.py
+@@ -182,6 +182,112 @@ class ValidationError(Exception):
+     def __repr__(self):
+         return 'ValidationError(%s)' % self
+ 
++    def __eq__(self, other):
++        if not isinstance(other, ValidationError):
++            return False
++        
++        # Compare ValidationErrors with error_dict (dictionary form)
++        if hasattr(self, 'error_dict') and hasattr(other, 'error_dict'):
++            if set(self.error_dict.keys()) != set(other.error_dict.keys()):
++                return False
++            
++            for field in self.error_dict:
++                # Convert error lists to sets of messages for order-independent comparison
++                self_messages = set()
++                other_messages = set()
++                
++                for error in self.error_dict[field]:
++                    if hasattr(error, 'message'):
++                        msg = error.message
++                        if error.params:
++                            msg = msg % error.params
++                        self_messages.add((str(msg), error.code))
++                    else:
++                        # This shouldn't happen in normal cases, but handle it
++                        self_messages.add((str(error), None))
++                
++                for error in other.error_dict[field]:
++                    if hasattr(error, 'message'):
++                        msg = error.message
++                        if error.params:
++                            msg = msg % error.params
++                        other_messages.add((str(msg), error.code))
++                    else:
++                        # This shouldn't happen in normal cases, but handle it
++                        other_messages.add((str(error), None))
++                
++                if self_messages != other_messages:
++                    return False
++            
++            return True
++        
++        # Compare ValidationErrors with error_list (list form)
++        elif hasattr(self, 'error_list') and hasattr(other, 'error_list') and \
++             not hasattr(self, 'error_dict') and not hasattr(other, 'error_dict'):
++            
++            # Convert error lists to sets of messages for order-independent comparison
++            self_messages = set()
++            other_messages = set()
++            
++            for error in self.error_list:
++                if hasattr(error, 'message'):
++                    msg = error.message
++                    if error.params:
++                        msg = msg % error.params
++                    self_messages.add((str(msg), error.code))
++                else:
++                    # This shouldn't happen in normal cases, but handle it
++                    self_messages.add((str(error), None))
++            
++            for error in other.error_list:
++                if hasattr(error, 'message'):
++                    msg = error.message
++                    if error.params:
++                        msg = msg % error.params
++                    other_messages.add((str(msg), error.code))
++                else:
++                    # This shouldn't happen in normal cases, but handle it
++                    other_messages.add((str(error), None))
++            
++            return self_messages == other_messages
++        
++        # Different forms (one has error_dict, other has error_list) are not equal
++        else:
++            return False
++
++    def __hash__(self):
++        """
++        Make ValidationError hashable so that equal ValidationErrors have the same hash.
++        This is important for using ValidationErrors in sets or as dictionary keys.
++        """
++        if hasattr(self, 'error_dict'):
++            # For dictionary form, create a hash from sorted field names and their error sets
++            items = []
++            for field in sorted(self.error_dict.keys()):
++                field_errors = set()
++                for error in self.error_dict[field]:
++                    if hasattr(error, 'message'):
++                        msg = error.message
++                        if error.params:
++                            msg = msg % error.params
++                        field_errors.add((str(msg), error.code))
++                    else:
++                        field_errors.add((str(error), None))
++                items.append((field, frozenset(field_errors)))
++            return hash(frozenset(items))
++        else:
++            # For list form, create a hash from the set of error messages
++            messages = set()
++            for error in self.error_list:
++                if hasattr(error, 'message'):
++                    msg = error.message
++                    if error.params:
++                        msg = msg % error.params
++                    messages.add((str(msg), error.code))
++                else:
++                    messages.add((str(error), None))
++            return hash(frozenset(messages))
++
+ 
+ class EmptyResultSet(Exception):
+     """A database query predicate is impossible."""

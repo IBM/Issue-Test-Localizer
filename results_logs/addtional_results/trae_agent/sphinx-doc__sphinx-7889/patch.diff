@@ -1,0 +1,24 @@
+diff --git a/sphinx/ext/autodoc/mock.py b/sphinx/ext/autodoc/mock.py
+index 98a3a3a96..5a4179d87 100644
+--- a/sphinx/ext/autodoc/mock.py
++++ b/sphinx/ext/autodoc/mock.py
+@@ -68,12 +68,16 @@ class _MockObject:
+         return self.__display_name__
+ 
+ 
+-def _make_subclass(name: str, module: str, superclass: Any = _MockObject,
++def _make_subclass(name: Any, module: str, superclass: Any = _MockObject,
+                    attributes: Any = None) -> Any:
+-    attrs = {'__module__': module, '__display_name__': module + '.' + name}
++    # Convert name to string if it's not already a string
++    name_str = str(name) if not isinstance(name, str) else name
++    
++    attrs = {'__module__': module, '__display_name__': module + '.' + name_str}
+     attrs.update(attributes or {})
+ 
+-    return type(name, (superclass,), attrs)
++    # Use name_str for the type name as well
++    return type(name_str, (superclass,), attrs)
+ 
+ 
+ class _MockModule(ModuleType):

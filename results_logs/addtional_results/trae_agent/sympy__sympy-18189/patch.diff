@@ -1,0 +1,49 @@
+diff --git a/sympy/solvers/diophantine.py b/sympy/solvers/diophantine.py
+index 6092e35dab..77aa45ad7c 100644
+--- a/sympy/solvers/diophantine.py
++++ b/sympy/solvers/diophantine.py
+@@ -181,8 +181,14 @@ def diophantine(eq, param=symbols("t", integer=True), syms=None,
+             syms = [i for i in syms if i in var]
+             if syms != var:
+                 dict_sym_index = dict(zip(syms, range(len(syms))))
+-                return {tuple([t[dict_sym_index[i]] for i in var])
+-                            for t in diophantine(eq, param)}
++                # When permute=True, we need to solve the equation first with permutation
++                # and then reorder the results according to the requested syms order
++                if permute:
++                    return {tuple([t[dict_sym_index[i]] for i in var])
++                            for t in diophantine(eq, param=param, permute=True)}
++                else:
++                    return {tuple([t[dict_sym_index[i]] for i in var])
++                            for t in diophantine(eq, param=param)}
+         n, d = eq.as_numer_denom()
+         if n.is_number:
+             return set()
+diff --git a/sympy/solvers/tests/test_diophantine.py b/sympy/solvers/tests/test_diophantine.py
+index e4e8972ae0..3f7f76907e 100644
+--- a/sympy/solvers/tests/test_diophantine.py
++++ b/sympy/solvers/tests/test_diophantine.py
+@@ -896,7 +896,7 @@ def test__can_do_sum_of_squares():
+ 
+ 
+ def test_diophantine_permute_sign():
+-    from sympy.abc import a, b, c, d, e
++    from sympy.abc import a, b, c, d, e, m, n
+     eq = a**4 + b**4 - (2**4 + 3**4)
+     base_sol = set([(2, 3)])
+     assert diophantine(eq) == base_sol
+@@ -908,6 +908,14 @@ def test_diophantine_permute_sign():
+     assert len(diophantine(eq, permute=True)) == 62000
+     soln = set([(-1, -1), (-1, 2), (1, -2), (1, 1)])
+     assert diophantine(10*x**2 + 12*x*y + 12*y**2 - 34, permute=True) == soln
++    
++    # Test for the issue with syms parameter and permute=True
++    eq = n**4 + m**4 - (2**4 + 3**4)
++    # Test with different symbol orders
++    result1 = diophantine(eq, syms=(m, n), permute=True)
++    result2 = diophantine(eq, syms=(n, m), permute=True)
++    # Both should return the same number of solutions
++    assert len(result1) == len(result2) == 8
+ 
+ 
+ @XFAIL

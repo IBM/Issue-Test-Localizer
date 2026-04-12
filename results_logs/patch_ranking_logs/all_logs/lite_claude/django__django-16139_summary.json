@@ -1,0 +1,76 @@
+{
+  "instance_id": "django__django-16139",
+  "container_id": "60af211460c0a5b6e4db6f53c967d91b62286d88c398e123d2cee75ae52e5efc",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+        "inst": "django__django-16139",
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "top_passed": 3,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": true
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "auth_tests.test_views.ChangelistTests.test_user_change_password_with_to_field#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserChangeFormTest.test_password_help_text_with_to_field#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

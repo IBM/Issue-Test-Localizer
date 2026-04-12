@@ -1,0 +1,120 @@
+diff --git a/django/contrib/auth/checks.py b/django/contrib/auth/checks.py
+index 65fc266f7e..143201264b 100644
+--- a/django/contrib/auth/checks.py
++++ b/django/contrib/auth/checks.py
+@@ -4,6 +4,7 @@ from types import MethodType
+ from django.apps import apps
+ from django.conf import settings
+ from django.core import checks
++from django.db.models import UniqueConstraint
+ 
+ from .management import _get_builtin_permissions
+ 
+@@ -51,8 +52,20 @@ def check_user_model(app_configs=None, **kwargs):
+             )
+         )
+ 
+-    # Check that the username field is unique
+-    if not cls._meta.get_field(cls.USERNAME_FIELD).unique:
++    # Check that the username field is unique (either via unique=True or a UniqueConstraint)
++    field = cls._meta.get_field(cls.USERNAME_FIELD)
++    field_is_unique = field.unique
++    
++    # Check if the field is part of a UniqueConstraint
++    if not field_is_unique:
++        for constraint in cls._meta.constraints:
++            if (isinstance(constraint, UniqueConstraint) and 
++                constraint.condition is None and 
++                cls.USERNAME_FIELD in constraint.fields):
++                field_is_unique = True
++                break
++    
++    if not field_is_unique:
+         if (settings.AUTHENTICATION_BACKENDS ==
+                 ['django.contrib.auth.backends.ModelBackend']):
+             errors.append(
+diff --git a/tests/auth_tests/models/__init__.py b/tests/auth_tests/models/__init__.py
+index 003d8eeaa7..d08a9cd55d 100644
+--- a/tests/auth_tests/models/__init__.py
++++ b/tests/auth_tests/models/__init__.py
+@@ -2,7 +2,7 @@ from .custom_permissions import CustomPermissionsUser
+ from .custom_user import (
+     CustomUser, CustomUserWithoutIsActiveField, ExtensionUser,
+ )
+-from .invalid_models import CustomUserNonUniqueUsername
++from .invalid_models import CustomUserNonUniqueUsername, CustomUserWithUniqueConstraint
+ from .is_active import IsActiveTestUser1
+ from .minimal import MinimalUser
+ from .no_password import NoPasswordUser
+@@ -18,7 +18,7 @@ from .with_many_to_many import (
+ __all__ = (
+     'CustomPermissionsUser', 'CustomUser', 'CustomUserNonUniqueUsername',
+     'CustomUserWithFK', 'CustomUserWithM2M', 'CustomUserWithM2MThrough',
+-    'CustomUserWithoutIsActiveField', 'Email', 'ExtensionUser',
++    'CustomUserWithoutIsActiveField', 'CustomUserWithUniqueConstraint', 'Email', 'ExtensionUser',
+     'IntegerUsernameUser', 'IsActiveTestUser1', 'MinimalUser',
+     'NoPasswordUser', 'Organization', 'Proxy', 'UUIDUser', 'UserProxy',
+     'UserWithDisabledLastLoginField',
+diff --git a/tests/auth_tests/models/invalid_models.py b/tests/auth_tests/models/invalid_models.py
+index 123ed4d865..7108b2f835 100644
+--- a/tests/auth_tests/models/invalid_models.py
++++ b/tests/auth_tests/models/invalid_models.py
+@@ -1,5 +1,6 @@
+ from django.contrib.auth.models import AbstractBaseUser, UserManager
+ from django.db import models
++from django.db.models import UniqueConstraint
+ 
+ 
+ class CustomUserNonUniqueUsername(AbstractBaseUser):
+@@ -18,3 +19,23 @@ class CustomUserNonUniqueUsername(AbstractBaseUser):
+     REQUIRED_FIELDS = ['email']
+ 
+     objects = UserManager()
++
++
++class CustomUserWithUniqueConstraint(AbstractBaseUser):
++    """
++    A user with a username that is unique via UniqueConstraint.
++    """
++    username = models.CharField(max_length=30)  # Not unique=True
++    email = models.EmailField(blank=True)
++    is_staff = models.BooleanField(default=False)
++    is_superuser = models.BooleanField(default=False)
++
++    USERNAME_FIELD = 'username'
++    REQUIRED_FIELDS = ['email']
++
++    objects = UserManager()
++
++    class Meta:
++        constraints = [
++            UniqueConstraint(fields=['username'], name='auth_tests_unique_username')
++        ]
+diff --git a/tests/auth_tests/test_checks.py b/tests/auth_tests/test_checks.py
+index cfaa4063f8..4041f3ad50 100644
+--- a/tests/auth_tests/test_checks.py
++++ b/tests/auth_tests/test_checks.py
+@@ -9,7 +9,7 @@ from django.test import (
+ )
+ from django.test.utils import isolate_apps
+ 
+-from .models import CustomUserNonUniqueUsername
++from .models import CustomUserNonUniqueUsername, CustomUserWithUniqueConstraint
+ 
+ 
+ @isolate_apps('auth_tests', attr_name='apps')
+@@ -84,6 +84,14 @@ class UserModelChecksTests(SimpleTestCase):
+                     id='auth.W004',
+                 ),
+             ])
++            
++    @override_settings(AUTH_USER_MODEL='auth_tests.CustomUserWithUniqueConstraint')
++    def test_username_unique_with_constraint(self):
++        """
++        A USERNAME_FIELD that is part of a UniqueConstraint passes the check.
++        """
++        errors = checks.run_checks()
++        self.assertEqual(errors, [])
+ 
+     @override_settings(AUTH_USER_MODEL='auth_tests.BadUser')
+     def test_is_anonymous_authenticated_methods(self):

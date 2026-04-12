@@ -1,0 +1,42 @@
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index b086232..1f136a1 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -969,20 +969,23 @@ class RenameIndex(IndexOperation):
+         if self.old_fields:
+             # Backward operation with unnamed index is a no-op.
+             return
+-
+-        self.new_name_lower, self.old_name_lower = (
+-            self.old_name_lower,
+-            self.new_name_lower,
+-        )
+-        self.new_name, self.old_name = self.old_name, self.new_name
+-
+-        self.database_forwards(app_label, schema_editor, from_state, to_state)
+-
+-        self.new_name_lower, self.old_name_lower = (
+-            self.old_name_lower,
+-            self.new_name_lower,
+-        )
+-        self.new_name, self.old_name = self.old_name, self.new_name
++        
++        # Only do name swapping for named indexes
++        try:
++            self.new_name_lower, self.old_name_lower = (
++                self.old_name_lower,
++                self.new_name_lower,
++            )
++            self.new_name, self.old_name = self.old_name, self.new_name
++
++            self.database_forwards(app_label, schema_editor, from_state, to_state)
++        finally:
++            # Restore the names even if an error occurs
++            self.new_name_lower, self.old_name_lower = (
++                self.old_name_lower,
++                self.new_name_lower,
++            )
++            self.new_name, self.old_name = self.old_name, self.new_name
+ 
+     def describe(self):
+         if self.old_name:

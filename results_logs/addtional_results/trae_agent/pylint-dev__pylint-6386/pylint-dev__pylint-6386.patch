@@ -1,0 +1,53 @@
+diff --git a/pylint/config/utils.py b/pylint/config/utils.py
+index 8c790416..c395f8e4 100644
+--- a/pylint/config/utils.py
++++ b/pylint/config/utils.py
+@@ -185,7 +185,7 @@ def _add_plugins(run: Run, value: str | None) -> None:
+ 
+ 
+ def _set_verbose_mode(run: Run, value: str | None) -> None:
+-    assert value is None
++    # We don't need to check value anymore since store_true action will handle it
+     run.verbose = True
+ 
+ 
+@@ -215,9 +215,25 @@ def _preprocess_options(run: Run, args: Sequence[str]) -> list[str]:
+     """Preprocess options before full config parsing has started."""
+     processed_args: list[str] = []
+ 
++    # Map of short options to their long option counterparts
++    short_to_long = {
++        "-v": "--verbose",
++        "-f": "--output-format",
++        "-d": "--disable",
++        "-e": "--enable",
++        "-r": "--reports",
++        "-s": "--score",
++        "-j": "--jobs",
++    }
++
+     i = 0
+     while i < len(args):
+         argument = args[i]
++        
++        # Handle short options by converting them to long options
++        if argument in short_to_long:
++            argument = short_to_long[argument]
++        
+         if not argument.startswith("--"):
+             processed_args.append(argument)
+             i += 1
+diff --git a/pylint/lint/base_options.py b/pylint/lint/base_options.py
+index c793cc85..d385e23e 100644
+--- a/pylint/lint/base_options.py
++++ b/pylint/lint/base_options.py
+@@ -538,8 +538,7 @@ def _make_run_options(self: Run) -> Options:
+         (
+             "verbose",
+             {
+-                "action": _DoNothingAction,
+-                "kwargs": {},
++                "action": "store_true",  # Changed to store_true to make it clear it doesn't take an argument
+                 "short": "v",
+                 "help": "In verbose mode, extra non-checker-related info "
+                 "will be displayed.",

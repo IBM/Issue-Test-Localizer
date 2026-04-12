@@ -1,0 +1,19 @@
+diff --git a/lib/mpl_toolkits/mplot3d/art3d.py b/lib/mpl_toolkits/mplot3d/art3d.py
+index 8fe6e7a9c1..e1d7627c1b 100644
+--- a/lib/mpl_toolkits/mplot3d/art3d.py
++++ b/lib/mpl_toolkits/mplot3d/art3d.py
+@@ -867,10 +867,12 @@ class Poly3DCollection(PolyCollection):
+         self.stale = True
+ 
+     def get_facecolor(self):
+-        return self._facecolors2d
++        # Return the 2D projected colors if available, otherwise fall back to 3D colors
++        return getattr(self, '_facecolors2d', super().get_facecolor())
+ 
+     def get_edgecolor(self):
+-        return self._edgecolors2d
++        # Return the 2D projected colors if available, otherwise fall back to 3D colors
++        return getattr(self, '_edgecolors2d', super().get_edgecolor())
+ 
+ 
+ def poly_collection_2d_to_3d(col, zs=0, zdir='z'):

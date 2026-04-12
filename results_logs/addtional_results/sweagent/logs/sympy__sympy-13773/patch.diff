@@ -1,0 +1,155 @@
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 379a2917aa..9ab351e879 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -1973,6 +1973,50 @@ def __div__(self, other):
+ 
+     @call_highest_priority('__rmatmul__')
+     def __matmul__(self, other):
++        """Matrix multiplication using @ operator.
++        
++        This is only for matrix-matrix multiplication. For scalar multiplication,
++        use * instead.
++        
++        Examples
++        ========
++        
++        >>> from sympy.matrices import Matrix
++        >>> A = Matrix([[1, 2], [3, 4]])
++        >>> B = Matrix([[2, 3], [1, 2]])
++        >>> A @ B
++        Matrix([
++        [ 4,  7],
++        [10, 17]])
++        >>> 2 @ A  # doctest: +SKIP
++        Traceback (most recent call last):
++        ...
++        ValueError: Scalar operands are not allowed, use '*' instead
++        """
++        def _is_matrix_like(obj):
++            """Check if object is matrix-like (can be used in matrix multiplication)"""
++            # Already a matrix
++            if getattr(obj, 'is_Matrix', False):
++                return True
++            # Has 2D shape attribute
++            if hasattr(obj, 'shape') and len(obj.shape) == 2:
++                return True
++            # Check if it's a 2D list that can be converted to a matrix
++            if isinstance(obj, list) and obj:
++                if all(isinstance(row, list) for row in obj):
++                    if obj[0] and all(len(row) == len(obj[0]) for row in obj):
++                        return True
++            return False
++        
++        if not _is_matrix_like(other):
++            raise ValueError("Scalar operands are not allowed, use '*' instead")
++        
++        # Convert 2D lists to Matrix objects
++        if isinstance(other, list):
++            from sympy.matrices.dense import Matrix
++            other = Matrix(other)
++        
++        # Use the regular multiplication logic
+         return self.__mul__(other)
+ 
+     @call_highest_priority('__rmul__')
+@@ -2068,6 +2112,35 @@ def __radd__(self, other):
+ 
+     @call_highest_priority('__matmul__')
+     def __rmatmul__(self, other):
++        """Right matrix multiplication using @ operator.
++        
++        This is only for matrix-matrix multiplication. For scalar multiplication,
++        use * instead.
++        """
++        def _is_matrix_like(obj):
++            """Check if object is matrix-like (can be used in matrix multiplication)"""
++            # Already a matrix
++            if getattr(obj, 'is_Matrix', False):
++                return True
++            # Has 2D shape attribute
++            if hasattr(obj, 'shape') and len(obj.shape) == 2:
++                return True
++            # Check if it's a 2D list that can be converted to a matrix
++            if isinstance(obj, list) and obj:
++                if all(isinstance(row, list) for row in obj):
++                    if obj[0] and all(len(row) == len(obj[0]) for row in obj):
++                        return True
++            return False
++        
++        if not _is_matrix_like(other):
++            raise ValueError("Scalar operands are not allowed, use '*' instead")
++        
++        # Convert 2D lists to Matrix objects
++        if isinstance(other, list):
++            from sympy.matrices.dense import Matrix
++            other = Matrix(other)
++        
++        # Use the regular multiplication logic
+         return self.__rmul__(other)
+ 
+     @call_highest_priority('__mul__')
+diff --git a/sympy/matrices/expressions/matexpr.py b/sympy/matrices/expressions/matexpr.py
+index 92627132e9..350c19511d 100644
+--- a/sympy/matrices/expressions/matexpr.py
++++ b/sympy/matrices/expressions/matexpr.py
+@@ -112,6 +112,29 @@ def __mul__(self, other):
+     @_sympifyit('other', NotImplemented)
+     @call_highest_priority('__rmul__')
+     def __matmul__(self, other):
++        def _is_matrix_like(obj):
++            """Check if object is matrix-like (can be used in matrix multiplication)"""
++            # Already a matrix
++            if getattr(obj, 'is_Matrix', False):
++                return True
++            # Has 2D shape attribute
++            if hasattr(obj, 'shape') and len(obj.shape) == 2:
++                return True
++            # Check if it's a 2D list that can be converted to a matrix
++            if isinstance(obj, list) and obj:
++                if all(isinstance(row, list) for row in obj):
++                    if obj[0] and all(len(row) == len(obj[0]) for row in obj):
++                        return True
++            return False
++        
++        if not _is_matrix_like(other):
++            raise ValueError("Scalar operands are not allowed, use '*' instead")
++        
++        # Convert 2D lists to Matrix objects
++        if isinstance(other, list):
++            from sympy.matrices import Matrix
++            other = Matrix(other)
++        
+         return MatMul(self, other).doit()
+ 
+     @_sympifyit('other', NotImplemented)
+@@ -122,6 +145,29 @@ def __rmul__(self, other):
+     @_sympifyit('other', NotImplemented)
+     @call_highest_priority('__mul__')
+     def __rmatmul__(self, other):
++        def _is_matrix_like(obj):
++            """Check if object is matrix-like (can be used in matrix multiplication)"""
++            # Already a matrix
++            if getattr(obj, 'is_Matrix', False):
++                return True
++            # Has 2D shape attribute
++            if hasattr(obj, 'shape') and len(obj.shape) == 2:
++                return True
++            # Check if it's a 2D list that can be converted to a matrix
++            if isinstance(obj, list) and obj:
++                if all(isinstance(row, list) for row in obj):
++                    if obj[0] and all(len(row) == len(obj[0]) for row in obj):
++                        return True
++            return False
++        
++        if not _is_matrix_like(other):
++            raise ValueError("Scalar operands are not allowed, use '*' instead")
++        
++        # Convert 2D lists to Matrix objects
++        if isinstance(other, list):
++            from sympy.matrices import Matrix
++            other = Matrix(other)
++        
+         return MatMul(other, self).doit()
+ 
+     @_sympifyit('other', NotImplemented)

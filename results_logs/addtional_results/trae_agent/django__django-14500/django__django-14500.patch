@@ -1,0 +1,24 @@
+diff --git a/django/db/migrations/executor.py b/django/db/migrations/executor.py
+index 57042a8690..37c5aa6d9a 100644
+--- a/django/db/migrations/executor.py
++++ b/django/db/migrations/executor.py
+@@ -254,6 +254,8 @@ class MigrationExecutor:
+         if migration.replaces:
+             for app_label, name in migration.replaces:
+                 self.recorder.record_unapplied(app_label, name)
++            # Also mark the squashed migration itself as unapplied
++            self.recorder.record_unapplied(migration.app_label, migration.name)
+         else:
+             self.recorder.record_unapplied(migration.app_label, migration.name)
+         # Report progress
+@@ -277,6 +279,10 @@ class MigrationExecutor:
+             all_applied = all(m in applied for m in migration.replaces)
+             if all_applied and key not in applied:
+                 self.recorder.record_applied(*key)
++            # If any of the replaced migrations is unapplied, the squashed migration
++            # should also be marked as unapplied
++            elif not all_applied and key in applied:
++                self.recorder.record_unapplied(*key)
+ 
+     def detect_soft_applied(self, project_state, migration):
+         """

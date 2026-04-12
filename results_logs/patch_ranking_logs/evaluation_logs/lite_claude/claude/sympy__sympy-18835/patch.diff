@@ -1,0 +1,25 @@
+diff --git a/sympy/utilities/iterables.py b/sympy/utilities/iterables.py
+index 57371bf..744c252 100644
+--- a/sympy/utilities/iterables.py
++++ b/sympy/utilities/iterables.py
+@@ -2091,6 +2091,9 @@ def uniq(seq, result=None):
+     parameter ``result``  is used internally; it is not necessary to pass
+     anything for this.
+ 
++    The function will raise a RuntimeError if the input sequence is modified
++    during iteration, similar to Python's behavior with sets and dictionaries.
++
+     Examples
+     ========
+ 
+@@ -2109,7 +2112,10 @@ def uniq(seq, result=None):
+     try:
+         seen = set()
+         result = result or []
++        initial_len = len(seq) if hasattr(seq, '__len__') else None
+         for i, s in enumerate(seq):
++            if initial_len is not None and len(seq) != initial_len:
++                raise RuntimeError('sequence changed size during iteration')
+             if not (s in seen or seen.add(s)):
+                 yield s
+     except TypeError:

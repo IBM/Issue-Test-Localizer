@@ -1,0 +1,132 @@
+diff --git a/sklearn/model_selection/_split.py b/sklearn/model_selection/_split.py
+index 24394f869..0dc3d1892 100644
+--- a/sklearn/model_selection/_split.py
++++ b/sklearn/model_selection/_split.py
+@@ -620,7 +620,7 @@ class StratifiedKFold(_BaseKFold):
+         super().__init__(n_splits, shuffle, random_state)
+ 
+     def _make_test_folds(self, X, y=None):
+-        rng = self.random_state
++        rng = check_random_state(self.random_state)
+         y = np.asarray(y)
+         type_of_target_y = type_of_target(y)
+         allowed_target_types = ('binary', 'multiclass')
+@@ -645,29 +645,29 @@ class StratifiedKFold(_BaseKFold):
+                            " be less than n_splits=%d."
+                            % (min_groups, self.n_splits)), Warning)
+ 
+-        # pre-assign each sample to a test fold index using individual KFold
+-        # splitting strategies for each class so as to respect the balance of
+-        # classes
+-        # NOTE: Passing the data corresponding to ith class say X[y==class_i]
+-        # will break when the data is not 100% stratifiable for all classes.
+-        # So we pass np.zeroes(max(c, n_splits)) as data to the KFold
+-        per_cls_cvs = [
+-            KFold(self.n_splits, shuffle=self.shuffle,
+-                  random_state=rng).split(np.zeros(max(count, self.n_splits)))
+-            for count in y_counts]
+-
++        # Shuffle indices within each class if shuffle=True
++        # This ensures that samples within each class are shuffled
++        # before splitting into batches (folds)
++        class_indices = []
++        for cls in unique_y:
++            cls_mask = (y == cls)
++            cls_idx = np.flatnonzero(cls_mask)
++            if self.shuffle:
++                rng.shuffle(cls_idx)
++            class_indices.append(cls_idx)
++        
++        # Assign samples to test folds
+         test_folds = np.zeros(n_samples, dtype=np.int)
+-        for test_fold_indices, per_cls_splits in enumerate(zip(*per_cls_cvs)):
+-            for cls, (_, test_split) in zip(unique_y, per_cls_splits):
+-                cls_test_folds = test_folds[y == cls]
+-                # the test split can be too big because we used
+-                # KFold(...).split(X[:max(c, n_splits)]) when data is not 100%
+-                # stratifiable for all the classes
+-                # (we use a warning instead of raising an exception)
+-                # If this is the case, let's trim it:
+-                test_split = test_split[test_split < len(cls_test_folds)]
+-                cls_test_folds[test_split] = test_fold_indices
+-                test_folds[y == cls] = cls_test_folds
++        for i, cls_idx in enumerate(class_indices):
++            # Split class indices into n_splits folds
++            fold_sizes = np.full(self.n_splits, len(cls_idx) // self.n_splits, dtype=np.int)
++            fold_sizes[:len(cls_idx) % self.n_splits] += 1
++            
++            current = 0
++            for fold_idx, fold_size in enumerate(fold_sizes):
++                start, stop = current, current + fold_size
++                test_folds[cls_idx[start:stop]] = fold_idx
++                current = stop
+ 
+         return test_folds
+ 
+diff --git a/sklearn/model_selection/tests/test_split.py b/sklearn/model_selection/tests/test_split.py
+index 5981df285..c35dbf923 100644
+--- a/sklearn/model_selection/tests/test_split.py
++++ b/sklearn/model_selection/tests/test_split.py
+@@ -494,6 +494,62 @@ def test_shuffle_stratifiedkfold():
+     check_cv_coverage(kf0, X_40, y, groups=None, expected_n_splits=5)
+ 
+ 
++def test_stratifiedkfold_shuffle_within_class():
++    """Test that StratifiedKFold's shuffle parameter correctly shuffles within each class."""
++    # Create a simple dataset with a clear pattern
++    samples_per_class = 10
++    X = np.linspace(0, samples_per_class*2-1, samples_per_class * 2)
++    y = np.concatenate((np.ones(samples_per_class), np.zeros(samples_per_class)), axis=0)
++    
++    # Test with shuffle=False (should preserve the original order)
++    kf_no_shuffle = StratifiedKFold(n_splits=5, shuffle=False)
++    folds_no_shuffle = list(kf_no_shuffle.split(X, y))
++    
++    # Test with shuffle=True and different random states
++    kf_shuffle1 = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)
++    folds_shuffle1 = list(kf_shuffle1.split(X, y))
++    
++    kf_shuffle2 = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
++    folds_shuffle2 = list(kf_shuffle2.split(X, y))
++    
++    # Check that shuffle=False preserves the original order
++    # The test indices for class 1 should be [0,1], [2,3], [4,5], [6,7], [8,9]
++    # The test indices for class 0 should be [10,11], [12,13], [14,15], [16,17], [18,19]
++    expected_test_indices = [
++        np.array([0, 1, 10, 11]),
++        np.array([2, 3, 12, 13]),
++        np.array([4, 5, 14, 15]),
++        np.array([6, 7, 16, 17]),
++        np.array([8, 9, 18, 19])
++    ]
++    for i, (_, test_idx) in enumerate(folds_no_shuffle):
++        np.testing.assert_array_equal(sorted(test_idx), expected_test_indices[i])
++    
++    # Check that shuffle=True with different random states produces different folds
++    # If shuffle works correctly, the test indices should be different
++    for i in range(5):
++        # The test indices should be different for different random states
++        assert not np.array_equal(
++            sorted(folds_shuffle1[i][1]), 
++            sorted(folds_shuffle2[i][1])
++        )
++        
++        # The test indices should also be different from the no-shuffle case
++        assert not np.array_equal(
++            sorted(folds_shuffle1[i][1]), 
++            sorted(expected_test_indices[i])
++        )
++    
++    # Check that the same random state produces the same folds
++    kf_shuffle1_repeat = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)
++    folds_shuffle1_repeat = list(kf_shuffle1_repeat.split(X, y))
++    for i in range(5):
++        np.testing.assert_array_equal(
++            sorted(folds_shuffle1[i][1]), 
++            sorted(folds_shuffle1_repeat[i][1])
++        )
++
++
+ def test_kfold_can_detect_dependent_samples_on_digits():  # see #2372
+     # The digits samples are dependent: they are apparently grouped by authors
+     # although we don't have any information on the groups segment locations

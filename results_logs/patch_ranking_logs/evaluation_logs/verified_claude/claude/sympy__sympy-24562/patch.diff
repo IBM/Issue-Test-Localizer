@@ -1,0 +1,19 @@
+diff --git a/sympy/core/numbers.py b/sympy/core/numbers.py
+index 1c28b44..6f84fd3 100644
+--- a/sympy/core/numbers.py
++++ b/sympy/core/numbers.py
+@@ -1609,9 +1609,11 @@ class Rational(Number):
+                     pq = p.rsplit('/', 1)
+                     if len(pq) == 2:
+                         p, q = pq
+-                        fp = fractions.Fraction(p)
+-                        fq = fractions.Fraction(q)
+-                        p = fp/fq
++                        if _literal_float(p):
++                            p = fractions.Fraction(p)
++                        if _literal_float(q):
++                            q = fractions.Fraction(q)
++                        p = p/q
+                     try:
+                         p = fractions.Fraction(p)
+                     except ValueError:

@@ -1,0 +1,33 @@
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 30616c0172..773462cb95 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -351,6 +351,28 @@ class MigrationAutodetector:
+                         for op2 in ops:
+                             if self.check_dependency(op2, dep):
+                                 dependency_graph[op].add(op2)
++            
++            # Handle the case where a CreateModel operation creates a model that inherits from another model,
++            # and there's a RemoveField operation for that parent model
++            from django.db.migrations.operations.models import CreateModel
++            from django.db.migrations.operations.fields import RemoveField
++            
++            # First, find all CreateModel operations that create models inheriting from other models
++            for op in ops:
++                if isinstance(op, CreateModel):
++                    # Get the model's bases
++                    bases = op.bases
++                    for base in bases:
++                        if isinstance(base, str) and "." in base:
++                            base_app_label, base_name = base.split(".", 1)
++                            # If the base model is in the same app, look for RemoveField operations on it
++                            if base_app_label == app_label:
++                                for op2 in ops:
++                                    if (isinstance(op2, RemoveField) and 
++                                        op2.model_name_lower == base_name.lower()):
++                                        # Add a dependency: CreateModel depends on RemoveField
++                                        # This ensures RemoveField comes before CreateModel
++                                        dependency_graph[op].add(op2)
+ 
+             # we use a stable sort for deterministic tests & general behavior
+             self.generated_operations[app_label] = stable_topological_sort(ops, dependency_graph)

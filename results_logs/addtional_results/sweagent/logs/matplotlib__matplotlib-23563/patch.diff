@@ -1,0 +1,28 @@
+diff --git a/lib/mpl_toolkits/mplot3d/art3d.py b/lib/mpl_toolkits/mplot3d/art3d.py
+index 8fe6e7a9c1..882fefddc6 100644
+--- a/lib/mpl_toolkits/mplot3d/art3d.py
++++ b/lib/mpl_toolkits/mplot3d/art3d.py
+@@ -222,7 +222,22 @@ def line_2d_to_3d(line, zs=0, zdir='z'):
+     """Convert a 2D line to 3D."""
+ 
+     line.__class__ = Line3D
+-    line.set_3d_properties(zs, zdir)
++    try:
++        line.set_3d_properties(zs, zdir)
++    except Exception:
++        # If set_3d_properties fails, ensure _verts3d is still set
++        # to avoid AttributeError in draw()
++        xs = line.get_xdata()
++        ys = line.get_ydata()
++        # Use a safe default for zs if the original zs caused issues
++        if np.iterable(zs) and not isinstance(zs, (str, bytes)):
++            try:
++                zs_safe = np.broadcast_to(0, len(xs))
++            except Exception:
++                zs_safe = np.zeros_like(xs)
++        else:
++            zs_safe = np.broadcast_to(zs, len(xs))
++        line._verts3d = juggle_axes(xs, ys, zs_safe, zdir)
+ 
+ 
+ def _path_to_3d_segment(path, zs=0, zdir='z'):

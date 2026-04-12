@@ -1,0 +1,60 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7440",
+  "container_id": "7dc33a833b5cf8d8718810ee0db6969ee464e2b568ef3b265219411281383264",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7440/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-7440",
+        "passed": 8,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7440/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-7440",
+        "passed": 8,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7440/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-7440",
+        "passed": 8,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-7440/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-7440",
+        "passed": 7,
+        "failed": 3
+      }
+    ],
+    "top_passed": 8,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "tests/test_domain_std.py::test_glossary_warning#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_std.py::test_glossary_warning#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_std.py::test_glossary_warning#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_std.py::test_glossary_warning#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_std.py::test_glossary_conflicted_labels#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_std.py::test_glossary_conflicted_labels#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

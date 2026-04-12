@@ -1,0 +1,108 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-15100",
+  "container_id": "acb8bb993f5b13a8e869fe132a460e9f00f6ee00c8aba0cf064dbc253f77a7b6",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-15100",
+        "passed": 14,
+        "failed": 0
+      }
+    ],
+    "top_passed": 14,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sklearn/feature_extraction/tests/test_text.py::test_strip_accents#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_extraction/tests/test_text.py::test_strip_accents#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_extraction/tests/test_text.py::test_strip_accents#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_extraction/tests/test_text.py::test_strip_accents#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_extraction/tests/test_text.py::test_unused_parameters_warn#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-15100/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-15100",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

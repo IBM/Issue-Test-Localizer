@@ -1,0 +1,162 @@
+{
+  "instance_id": "pylint-dev__pylint-7277",
+  "container_id": "5a062d669e3e99a8eb4cb2d6d8a38a249e6689c2e18ab8928ed7ec921f1932a2",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_0.jsonl",
+        "inst": "pylint-dev__pylint-7277",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_1.jsonl",
+        "inst": "pylint-dev__pylint-7277",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_2.jsonl",
+        "inst": "pylint-dev__pylint-7277",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_3.jsonl",
+        "inst": "pylint-dev__pylint-7277",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_4.jsonl",
+        "inst": "pylint-dev__pylint-7277",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 5
+  },
+  "reproduction": {
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_4.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_4.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_4.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_1.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pylint-dev__pylint-7277/dedup_patch_4.jsonl",
+          "inst": "pylint-dev__pylint-7277",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

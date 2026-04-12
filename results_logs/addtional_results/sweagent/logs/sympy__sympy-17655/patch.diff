@@ -1,0 +1,61 @@
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 7c978c47be..92528b2a9a 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -32,6 +32,7 @@
+ from sympy.core.numbers import Float
+ from sympy.core.evaluate import global_evaluate
+ from sympy.core.add import Add
++from sympy.core.mul import Mul
+ from sympy.utilities.iterables import uniq
+ from sympy.utilities.misc import filldedent, func_name, Undecidable
+ 
+@@ -213,6 +214,25 @@ def __add__(self, other):
+         sympy.geometry.point.Point.translate
+ 
+         """
++        # Handle the case where other is a Mul object representing scalar * Point
++        if isinstance(other, Mul):
++            # Check if this is a scalar multiplication of a Point
++            point_factors = [arg for arg in other.args if isinstance(arg, Point)]
++            scalar_factors = [arg for arg in other.args if not isinstance(arg, Point)]
++            
++            if len(point_factors) == 1 and len(scalar_factors) >= 1:
++                # This is scalar * Point, so we can handle it
++                point = point_factors[0]
++                scalar = Mul(*scalar_factors) if len(scalar_factors) > 1 else scalar_factors[0]
++                # Convert to point * scalar and then add
++                scaled_point = point * scalar
++                try:
++                    s, o = Point._normalize_dimension(self, scaled_point)
++                except TypeError:
++                    raise GeometryError("Don't know how to add {} and a Point object".format(other))
++                coords = [simplify(a + b) for a, b in zip(s, o)]
++                return Point(coords, evaluate=False)
++        
+         try:
+             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))
+         except TypeError:
+@@ -278,6 +298,22 @@ def __mul__(self, factor):
+         coords = [simplify(x*factor) for x in self.args]
+         return Point(coords, evaluate=False)
+ 
++    def __rmul__(self, factor):
++        """Multiply point's coordinates by a factor (reverse multiplication).
++        
++        This handles cases like: factor * point
++        """
++        return self.__mul__(factor)
++
++    def as_coeff_Mul(self, rational=True):
++        """Return the coefficient and multiplicative part of the Point.
++        
++        For a Point, this returns (S.One, self) since a Point is not
++        a multiplication of simpler terms.
++        """
++        from sympy.core import S
++        return S.One, self
++
+     def __neg__(self):
+         """Negate the point."""
+         coords = [-x for x in self.args]

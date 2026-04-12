@@ -1,0 +1,39 @@
+diff --git a/django/db/models/sql/subqueries.py b/django/db/models/sql/subqueries.py
+index 04063f73bc..213043d0b1 100644
+--- a/django/db/models/sql/subqueries.py
++++ b/django/db/models/sql/subqueries.py
+@@ -134,7 +134,33 @@ class UpdateQuery(Query):
+             query = UpdateQuery(model)
+             query.values = values
+             if self.related_ids is not None:
+-                query.add_filter("pk__in", self.related_ids)
++                # For multi-table inheritance, we need to filter on the correct
++                # primary key field of the parent model
++                if self.get_meta().model != model and self.get_meta().parents.get(model):
++                    # This is a multi-inheritance case
++                    # Get the correct parent link field name
++                    parent_link = self.get_meta().parents[model]
++                    
++                    # Instead of querying each object individually, modify the query
++                    # to use a subquery that selects the correct parent link IDs
++                    from django.db.models import Q, F
++                    from django.db.models.sql import Query
++                    
++                    # Create a subquery to get the parent link IDs
++                    # We need to get the specific parent link field that points to this parent model
++                    link_field = parent_link.name + '_id'
++                    
++                    # Create a subquery that selects the parent link IDs for the child objects
++                    from django.db.models.sql import Query
++                    subquery = Query(self.get_meta().model)
++                    subquery.add_fields([link_field])
++                    subquery.add_filter("pk__in", self.related_ids)
++                    
++                    # Use the subquery to filter the parent model
++                    query.add_filter("pk__in", subquery)
++                else:
++                    # Regular case
++                    query.add_filter("pk__in", self.related_ids)
+             result.append(query)
+         return result
+ 

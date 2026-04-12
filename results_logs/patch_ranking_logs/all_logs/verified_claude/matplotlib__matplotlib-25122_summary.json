@@ -1,0 +1,86 @@
+{
+  "instance_id": "matplotlib__matplotlib-25122",
+  "container_id": "67c7709445d7a19705b9638457178e02ff02185df1e4f861ca2d4fbf9f4b7a23",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_0.jsonl",
+        "inst": "matplotlib__matplotlib-25122",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_1.jsonl",
+        "inst": "matplotlib__matplotlib-25122",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_2.jsonl",
+        "inst": "matplotlib__matplotlib-25122",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_mlab.py::test_psd_oversampling#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_mlab.py::test_psd_oversampling#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_mlab.py::TestSpectral::test_spectral_helper_window_correction#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-25122",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_1.jsonl",
+          "inst": "matplotlib__matplotlib-25122",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_2.jsonl",
+          "inst": "matplotlib__matplotlib-25122",
+          "passed": false
+        }
+      ]
+    },
+    "lib/matplotlib/tests/test_mlab.py::TestSpectral::test_window_correction_flattop#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-25122",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_1.jsonl",
+          "inst": "matplotlib__matplotlib-25122",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-25122/dedup_patch_2.jsonl",
+          "inst": "matplotlib__matplotlib-25122",
+          "passed": false
+        }
+      ]
+    },
+    "lib/matplotlib/tests/test_mlab.py::test_psd_oversampling#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_mlab.py::test_window#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

@@ -1,0 +1,45 @@
+diff --git a/sympy/parsing/sympy_parser.py b/sympy/parsing/sympy_parser.py
+index 0e3c8e4be7..d2a042bed6 100644
+--- a/sympy/parsing/sympy_parser.py
++++ b/sympy/parsing/sympy_parser.py
+@@ -1031,6 +1031,17 @@ class EvaluateFalseTransformer(ast.NodeTransformer):
+         ast.BitAnd: 'And',
+         ast.BitXor: 'Not',
+     }
++    
++    # Functions that should preserve their argument structure
++    # These are mathematical functions where the argument should be evaluated normally
++    preserve_arg_functions = {
++        'ceiling', 'floor', 'frac', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
++        'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh', 'exp', 'log', 'ln',
++        'sqrt', 'cbrt', 'abs', 'sign', 'factorial', 'gamma', 'digamma',
++        'polygamma', 'loggamma', 'erf', 'erfc', 'erfi', 'Ei', 'li', 'Si', 'Ci',
++        'Shi', 'Chi', 'fresnels', 'fresnelc', 'besselj', 'bessely', 'besseli',
++        'besselk', 'hankel1', 'hankel2', 'jn', 'yn', 'hn1', 'hn2'
++    }
+ 
+     def flatten(self, args, func):
+         result = []
+@@ -1047,6 +1058,22 @@ def flatten(self, args, func):
+                 result.append(arg)
+         return result
+ 
++    def visit_Call(self, node):
++        # Check if this is a function that should preserve its argument structure
++        if (isinstance(node.func, ast.Name) and 
++            node.func.id in self.preserve_arg_functions):
++            # For these functions, don't transform the arguments with evaluate=False
++            # Instead, create a new call node with the original arguments
++            new_node = ast.Call(
++                func=node.func,
++                args=node.args,  # Keep original args without transformation
++                keywords=node.keywords
++            )
++            return new_node
++        else:
++            # For other functions, use the default behavior (visit all children)
++            return self.generic_visit(node)
++
+     def visit_BinOp(self, node):
+         if node.op.__class__ in self.operators:
+             sympy_class = self.operators[node.op.__class__]

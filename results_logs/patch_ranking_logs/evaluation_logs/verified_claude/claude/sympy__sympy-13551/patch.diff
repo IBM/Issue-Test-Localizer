@@ -1,0 +1,25 @@
+diff --git a/sympy/concrete/products.py b/sympy/concrete/products.py
+index 65aca3f..f651c59 100644
+--- a/sympy/concrete/products.py
++++ b/sympy/concrete/products.py
+@@ -255,6 +255,20 @@ class Product(ExprWithIntLimits):
+         if dif.is_Integer:
+             return Mul(*[term.subs(k, a + i) for i in range(dif + 1)])
+ 
++        # Handle terms of form c + b**k where c is independent of k
++        if term.is_Add and len(term.args) == 2:
++            args = list(term.args)
++            if any(not arg.has(k) for arg in args):
++                # Find which term has k and which doesn't
++                k_term = next(arg for arg in args if arg.has(k))
++                c = next(arg for arg in args if not arg.has(k))
++                # Check if k_term is of form b**k
++                if k_term.is_Pow and k_term.args[1] == k:
++                    b = k_term.args[0]
++                    # For product(c + b**k, (k, a, n)) where c is independent of k
++                    # Use direct computation
++                    return Mul(*[c + b**i for i in range(a, n + 1)])
++
+         elif term.is_polynomial(k):
+             poly = term.as_poly(k)
+ 

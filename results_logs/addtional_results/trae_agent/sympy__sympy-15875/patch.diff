@@ -1,0 +1,21 @@
+diff --git a/sympy/core/add.py b/sympy/core/add.py
+index 83a5f2aed..117e109b8 100644
+--- a/sympy/core/add.py
++++ b/sympy/core/add.py
+@@ -560,9 +560,15 @@ def _eval_is_zero(self):
+         if b.is_zero:
+             if not im_or_z and not im:
+                 return True
++            # When dealing with complex expressions, we can't be sure
++            # if they'll cancel out or not, so return None instead of False
+             if im and not im_or_z:
+-                return False
++                return None
+         if b.is_zero is False:
++            # If we have a mix of real and complex terms, we can't be sure
++            # if they'll cancel out, so return None instead of False
++            if im or im_or_z:
++                return None
+             return False
+ 
+     def _eval_is_odd(self):

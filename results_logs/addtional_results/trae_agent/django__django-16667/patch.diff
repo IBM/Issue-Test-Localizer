@@ -1,0 +1,46 @@
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 842b73e95c..0f2b000266 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -1156,10 +1156,16 @@ class SelectDateWidget(Widget):
+             input_format = get_format("DATE_INPUT_FORMATS")[0]
+             input_format = formats.sanitize_strftime_format(input_format)
+             try:
+-                date_value = datetime.date(int(y), int(m), int(d))
+-            except ValueError:
++                # Check for potential integer overflow before conversion
++                # Try to convert to int first to validate the values
++                year = int(y)
++                month = int(m)
++                day = int(d)
++                date_value = datetime.date(year, month, day)
++            except (ValueError, OverflowError):
+                 # Return pseudo-ISO dates with zeros for any unselected values,
+                 # e.g. '2017-0-23'.
++                # Also handles OverflowError for extremely large integers
+                 return "%s-%s-%s" % (y or 0, m or 0, d or 0)
+             return date_value.strftime(input_format)
+         return data.get(name)
+diff --git a/tests/forms_tests/widget_tests/test_selectdatewidget.py b/tests/forms_tests/widget_tests/test_selectdatewidget.py
+index cfcd037987..72e2104987 100644
+--- a/tests/forms_tests/widget_tests/test_selectdatewidget.py
++++ b/tests/forms_tests/widget_tests/test_selectdatewidget.py
+@@ -623,6 +623,18 @@ class SelectDateWidgetTest(WidgetTest):
+ 
+     def test_value_omitted_from_data(self):
+         self.assertIs(self.widget.value_omitted_from_data({}, {}, "field"), True)
++        
++    def test_overflow_protection(self):
++        """Test that the widget handles integer overflow gracefully."""
++        # Test with a very large year value that would cause an OverflowError
++        data = {
++            'field_year': '1234567821345678',  # Very large integer
++            'field_month': '1',
++            'field_day': '1'
++        }
++        # This should return a string representation instead of raising an OverflowError
++        result = self.widget.value_from_datadict(data, {}, 'field')
++        self.assertEqual(result, '1234567821345678-1-1')
+         self.assertIs(
+             self.widget.value_omitted_from_data({"field_month": "12"}, {}, "field"),
+             False,

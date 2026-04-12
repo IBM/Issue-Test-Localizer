@@ -1,0 +1,21 @@
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index a708f18..4bf2bf1 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -213,6 +213,16 @@ class Point(GeometryEntity):
+         sympy.geometry.point.Point.translate
+ 
+         """
++        from sympy.core.mul import Mul
++        if isinstance(other, Mul):
++            coeff, pt = None, None
++            for arg in other.args:
++                if isinstance(arg, Point):
++                    pt = arg
++                else:
++                    coeff = arg
++            if coeff is not None and pt is not None:
++                other = Point([simplify(coeff * x) for x in pt.args], evaluate=False)
+         try:
+             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))
+         except TypeError:

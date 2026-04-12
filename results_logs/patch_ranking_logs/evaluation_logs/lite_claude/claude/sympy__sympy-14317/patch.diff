@@ -1,0 +1,42 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 408ff45..962f996 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -1854,7 +1854,17 @@ class LatexPrinter(Printer):
+ 
+     def _print_Poly(self, poly):
+         cls = poly.__class__.__name__
+-        expr = self._print(poly.as_expr())
++        terms = []
++        factors = []
++        for monom, coeff in poly.terms():
++            if coeff == 1 and sum(monom) > 0:
++                factors.append(self._print_monom(monom, poly.gens))
++            else:
++                if coeff == -1 and sum(monom) > 0:
++                    factors.append("-" + self._print_monom(monom, poly.gens))
++                else:
++                    factors.append(self._print(coeff) + "*" + self._print_monom(monom, poly.gens))
++        expr = " + ".join(factors) if factors else "0"
+         gens = list(map(self._print, poly.gens))
+         domain = "domain=%s" % self._print(poly.get_domain())
+ 
+@@ -1866,6 +1876,18 @@ class LatexPrinter(Printer):
+ 
+         return tex
+ 
++    def _print_monom(self, monom, gens):
++        """Helper method for _print_Poly to print a monomial"""
++        parts = []
++        for m, g in zip(monom, gens):
++            if m == 0:
++                continue
++            elif m == 1:
++                parts.append(self._print(g))
++            else:
++                parts.append(self._print(g) + "^{" + self._print(m) + "}")
++        return "*".join(parts) if parts else "1"
++
+     def _print_ComplexRootOf(self, root):
+         cls = root.__class__.__name__
+         if cls == "ComplexRootOf":

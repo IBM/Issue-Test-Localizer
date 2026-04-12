@@ -1,0 +1,18 @@
+diff --git a/django/contrib/auth/forms.py b/django/contrib/auth/forms.py
+index b3cfc6723c..d65baf7311 100644
+--- a/django/contrib/auth/forms.py
++++ b/django/contrib/auth/forms.py
+@@ -163,7 +163,12 @@ class UserChangeForm(forms.ModelForm):
+         super().__init__(*args, **kwargs)
+         password = self.fields.get("password")
+         if password:
+-            password.help_text = password.help_text.format("../password/")
++            # If the form has an instance and the instance has a pk, use the absolute path
++            if self.instance and self.instance.pk:
++                password.help_text = password.help_text.format(f"../../{self.instance.pk}/password/")
++            else:
++                # Fallback to the original relative path if there's no instance or no pk
++                password.help_text = password.help_text.format("../password/")
+         user_permissions = self.fields.get("user_permissions")
+         if user_permissions:
+             user_permissions.queryset = user_permissions.queryset.select_related(

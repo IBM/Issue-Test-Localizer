@@ -1,0 +1,43 @@
+diff --git a/django/db/models/options.py b/django/db/models/options.py
+index d3ae0cf..532e9ca 100644
+--- a/django/db/models/options.py
++++ b/django/db/models/options.py
+@@ -235,6 +235,32 @@ class Options:
+             self.ordering = ('_order',)
+             if not any(isinstance(field, OrderWrt) for field in model._meta.local_fields):
+                 model.add_to_class('_order', OrderWrt())
++                
++        # Process ordering to handle __pk lookups
++        if self.ordering:
++            processed_ordering = []
++            for field_name in self.ordering:
++                # Skip expressions and other non-string values
++                if not isinstance(field_name, str):
++                    processed_ordering.append(field_name)
++                    continue
++                    
++                # Handle descending prefix
++                desc_prefix = ''
++                if field_name.startswith('-'):
++                    desc_prefix = '-'
++                    field_name = field_name[1:]
++                    
++                # Handle related field pk lookups
++                if '__pk' in field_name:
++                    parts = field_name.split('__')
++                    if len(parts) == 2 and parts[1] == 'pk':
++                        # Convert to id for compatibility
++                        field_name = f"{parts[0]}__id"
++                        
++                processed_ordering.append(f"{desc_prefix}{field_name}")
++                
++            self.ordering = tuple(processed_ordering)
+         else:
+             self.order_with_respect_to = None
+ 
+@@ -852,4 +878,4 @@ class Options:
+         return [
+             field for field in self._get_fields(forward=True, reverse=False, include_parents=PROXY_PARENTS)
+             if getattr(field, 'db_returning', False)
+-        ]
++        ]

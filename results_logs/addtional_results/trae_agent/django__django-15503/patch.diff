@@ -1,0 +1,236 @@
+diff --git a/django/db/models/fields/json.py b/django/db/models/fields/json.py
+index fdca700c9d..1fe29147cb 100644
+--- a/django/db/models/fields/json.py
++++ b/django/db/models/fields/json.py
+@@ -129,13 +129,21 @@ class JSONField(CheckFieldDefaultMixin, Field):
+ def compile_json_path(key_transforms, include_root=True):
+     path = ["$"] if include_root else []
+     for key_transform in key_transforms:
+-        try:
+-            num = int(key_transform)
+-        except ValueError:  # non-integer
+-            path.append(".")
+-            path.append(json.dumps(key_transform))
++        if isinstance(key_transform, int):
++            # If it's already an integer, treat as array index
++            path.append("[%s]" % key_transform)
+         else:
+-            path.append("[%s]" % num)
++            # Check if the key is a string representation of an integer array index
++            try:
++                idx = int(key_transform)
++                # Use array notation for integer indices
++                path.append("[%s]" % idx)
++            except (ValueError, TypeError):
++                # For non-integer string keys, use property access notation
++                # This handles regular string keys and numeric-looking string keys like "1111"
++                # when used as object properties rather than array indices
++                path.append(".")
++                path.append(json.dumps(str(key_transform)))
+     return "".join(path)
+ 
+ 
+@@ -192,7 +200,16 @@ class HasKeyLookup(PostgresOperatorLookup):
+             if isinstance(key, KeyTransform):
+                 *_, rhs_key_transforms = key.preprocess_lhs(compiler, connection)
+             else:
+-                rhs_key_transforms = [key]
++                # For numeric-looking string keys in object properties, we need to ensure they're
++                # treated as strings, not array indices
++                if connection.vendor in ('sqlite', 'mysql', 'oracle'):
++                    if not isinstance(key, int) and str(key).isdigit():
++                        # For numeric string keys, use string property access
++                        rhs_key_transforms = [str(key)]
++                    else:
++                        rhs_key_transforms = [key]
++                else:
++                    rhs_key_transforms = [key]
+             rhs_params.append(
+                 "%s%s"
+                 % (
+@@ -206,17 +223,100 @@ class HasKeyLookup(PostgresOperatorLookup):
+         return sql, tuple(lhs_params) + tuple(rhs_params)
+ 
+     def as_mysql(self, compiler, connection):
+-        return self.as_sql(
+-            compiler, connection, template="JSON_CONTAINS_PATH(%s, 'one', %%s)"
+-        )
++        # For MySQL, we need special handling for numeric keys
++        # Process JSON path from the left-hand side.
++        if isinstance(self.lhs, KeyTransform):
++            lhs, lhs_params, lhs_key_transforms = self.lhs.preprocess_lhs(
++                compiler, connection
++            )
++            lhs_json_path = compile_json_path(lhs_key_transforms)
++        else:
++            lhs, lhs_params = self.process_lhs(compiler, connection)
++            lhs_json_path = "$"
++        
++        sql_template = "JSON_CONTAINS_PATH(%s, 'one', %%s)"
++        sql = sql_template % lhs
++        
++        # Process JSON path from the right-hand side.
++        rhs = self.rhs
++        rhs_params = []
++        if not isinstance(rhs, (list, tuple)):
++            rhs = [rhs]
++        
++        for key in rhs:
++            if isinstance(key, KeyTransform):
++                *_, rhs_key_transforms = key.preprocess_lhs(compiler, connection)
++            else:
++                # For MySQL, we need to ensure numeric-looking string keys are treated as strings
++                if isinstance(key, (int, str)) and str(key).isdigit():
++                    # For numeric keys, use property access with quotes
++                    json_path = '%s."%s"' % (lhs_json_path, str(key))
++                    rhs_params.append(json_path)
++                    continue
++                else:
++                    rhs_key_transforms = [key]
++            
++            # Standard path compilation for non-numeric keys
++            json_path = "%s%s" % (
++                lhs_json_path,
++                compile_json_path(rhs_key_transforms, include_root=False),
++            )
++            rhs_params.append(json_path)
++        
++        # Add condition for each key.
++        if self.logical_operator:
++            sql = "(%s)" % self.logical_operator.join([sql_template % lhs] * len(rhs_params))
++        
++        return sql, tuple(lhs_params) * len(rhs_params) + tuple(rhs_params)
+ 
+     def as_oracle(self, compiler, connection):
+-        sql, params = self.as_sql(
+-            compiler, connection, template="JSON_EXISTS(%s, '%%s')"
+-        )
++        # For Oracle, we need special handling for numeric keys
++        # Process JSON path from the left-hand side.
++        if isinstance(self.lhs, KeyTransform):
++            lhs, lhs_params, lhs_key_transforms = self.lhs.preprocess_lhs(
++                compiler, connection
++            )
++            lhs_json_path = compile_json_path(lhs_key_transforms)
++        else:
++            lhs, lhs_params = self.process_lhs(compiler, connection)
++            lhs_json_path = "$"
++        
++        sql_template = "JSON_EXISTS(%s, '%%s')"
++        sql = sql_template % lhs
++        
++        # Process JSON path from the right-hand side.
++        rhs = self.rhs
++        rhs_params = []
++        if not isinstance(rhs, (list, tuple)):
++            rhs = [rhs]
++        
++        for key in rhs:
++            if isinstance(key, KeyTransform):
++                *_, rhs_key_transforms = key.preprocess_lhs(compiler, connection)
++            else:
++                # For Oracle, we need to ensure numeric-looking string keys are treated as strings
++                if isinstance(key, (int, str)) and str(key).isdigit():
++                    # For numeric keys, use property access with quotes
++                    json_path = '%s."%s"' % (lhs_json_path, str(key))
++                    rhs_params.append(json_path)
++                    continue
++                else:
++                    rhs_key_transforms = [key]
++            
++            # Standard path compilation for non-numeric keys
++            json_path = "%s%s" % (
++                lhs_json_path,
++                compile_json_path(rhs_key_transforms, include_root=False),
++            )
++            rhs_params.append(json_path)
++        
++        # Add condition for each key.
++        if self.logical_operator:
++            sql = "(%s)" % self.logical_operator.join([sql_template % lhs] * len(rhs_params))
++        
+         # Add paths directly into SQL because path expressions cannot be passed
+         # as bind variables on Oracle.
+-        return sql % tuple(params), []
++        return sql % tuple(rhs_params), []
+ 
+     def as_postgresql(self, compiler, connection):
+         if isinstance(self.rhs, KeyTransform):
+@@ -227,15 +327,64 @@ class HasKeyLookup(PostgresOperatorLookup):
+         return super().as_postgresql(compiler, connection)
+ 
+     def as_sqlite(self, compiler, connection):
+-        return self.as_sql(
+-            compiler, connection, template="JSON_TYPE(%s, %%s) IS NOT NULL"
+-        )
++        # For SQLite, we need special handling for numeric keys
++        # Process JSON path from the left-hand side.
++        if isinstance(self.lhs, KeyTransform):
++            lhs, lhs_params, lhs_key_transforms = self.lhs.preprocess_lhs(
++                compiler, connection
++            )
++            lhs_json_path = compile_json_path(lhs_key_transforms)
++        else:
++            lhs, lhs_params = self.process_lhs(compiler, connection)
++            lhs_json_path = "$"
++        
++        sql_template = "JSON_TYPE(%s, %%s) IS NOT NULL"
++        sql = sql_template % lhs
++        
++        # Process JSON path from the right-hand side.
++        rhs = self.rhs
++        rhs_params = []
++        if not isinstance(rhs, (list, tuple)):
++            rhs = [rhs]
++        
++        for key in rhs:
++            if isinstance(key, KeyTransform):
++                *_, rhs_key_transforms = key.preprocess_lhs(compiler, connection)
++            else:
++                # For SQLite, we need to ensure numeric-looking string keys are treated as strings
++                if isinstance(key, (int, str)) and str(key).isdigit():
++                    # For numeric keys, use property access with quotes
++                    json_path = '%s."%s"' % (lhs_json_path, str(key))
++                    rhs_params.append(json_path)
++                    continue
++                else:
++                    rhs_key_transforms = [key]
++            
++            # Standard path compilation for non-numeric keys
++            json_path = "%s%s" % (
++                lhs_json_path,
++                compile_json_path(rhs_key_transforms, include_root=False),
++            )
++            rhs_params.append(json_path)
++        
++        # Add condition for each key.
++        if self.logical_operator:
++            sql = "(%s)" % self.logical_operator.join([sql_template % lhs] * len(rhs_params))
++        
++        return sql, tuple(lhs_params) * len(rhs_params) + tuple(rhs_params)
+ 
+ 
+ class HasKey(HasKeyLookup):
+     lookup_name = "has_key"
+     postgres_operator = "?"
+     prepare_rhs = False
++    
++    def get_prep_lookup(self):
++        # Don't convert KeyTransform objects to strings
++        if hasattr(self.rhs, 'as_sql'):
++            return self.rhs
++        # Return the value as is - compile_json_path will handle the type conversion
++        return self.rhs
+ 
+ 
+ class HasKeys(HasKeyLookup):
+@@ -244,7 +393,8 @@ class HasKeys(HasKeyLookup):
+     logical_operator = " AND "
+ 
+     def get_prep_lookup(self):
+-        return [str(item) for item in self.rhs]
++        # Return items as is - compile_json_path will handle the type conversion
++        return self.rhs
+ 
+ 
+ class HasAnyKeys(HasKeys):

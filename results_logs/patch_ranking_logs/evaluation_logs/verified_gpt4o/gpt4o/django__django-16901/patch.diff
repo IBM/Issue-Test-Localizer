@@ -1,0 +1,17 @@
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index 4465765..b9033bd 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -72,6 +72,12 @@ class Q(tree.Node):
+         return self._combine(other, self.AND)
+ 
+     def __xor__(self, other):
++        # Handle XOR parity logic
++        if hasattr(other, '_children'):
++            result = self._combine(other._children[0], self.XOR)
++            for child in other._children[1:]:
++                result = result._combine(child, self.XOR)
++            return result
+         return self._combine(other, self.XOR)
+ 
+     def __invert__(self):

@@ -1,0 +1,24 @@
+diff --git a/lib/matplotlib/text.py b/lib/matplotlib/text.py
+index d4922fc517..79083cc905 100644
+--- a/lib/matplotlib/text.py
++++ b/lib/matplotlib/text.py
+@@ -1456,7 +1456,8 @@ class _AnnotationBase:
+                  xycoords='data',
+                  annotation_clip=None):
+ 
+-        self.xy = xy
++        # Make a copy of xy to prevent changes to the original array from affecting the annotation
++        self.xy = np.asarray(xy).copy()
+         self.xycoords = xycoords
+         self.set_annotation_clip(annotation_clip)
+ 
+@@ -1830,6 +1831,9 @@ or callable, default: value of *xycoords*
+         # cleanup xytext defaults
+         if xytext is None:
+             xytext = self.xy
++        else:
++            # Make a copy of xytext to prevent changes to the original array from affecting the annotation
++            xytext = np.asarray(xytext).copy()
+         x, y = xytext
+ 
+         self.arrowprops = arrowprops

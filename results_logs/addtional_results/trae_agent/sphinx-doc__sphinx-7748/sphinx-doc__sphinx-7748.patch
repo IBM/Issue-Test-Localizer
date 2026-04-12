@@ -1,0 +1,193 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index f8e4be999..7db799cfe 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -1045,30 +1045,45 @@ class DocstringSignatureMixin:
+         docstrings = self.get_doc()
+         self._new_docstrings = docstrings[:]
+         result = None
++        # Store all signatures found in docstring for overloaded methods
++        self._all_signatures = []
++        
+         for i, doclines in enumerate(docstrings):
+             # no lines in docstring, no match
+             if not doclines:
+                 continue
+-            # match first line of docstring against signature RE
+-            match = py_ext_sig_re.match(doclines[0])
+-            if not match:
+-                continue
+-            exmod, path, base, args, retann = match.groups()
+-            # the base name must match ours
+-            valid_names = [self.objpath[-1]]  # type: ignore
+-            if isinstance(self, ClassDocumenter):
+-                valid_names.append('__init__')
+-                if hasattr(self.object, '__mro__'):
+-                    valid_names.extend(cls.__name__ for cls in self.object.__mro__)
+-            if base not in valid_names:
+-                continue
+-            # re-prepare docstring to ignore more leading indentation
+-            tab_width = self.directive.state.document.settings.tab_width  # type: ignore
+-            self._new_docstrings[i] = prepare_docstring('\n'.join(doclines[1:]),
+-                                                        tabsize=tab_width)
+-            result = args, retann
+-            # don't look any further
+-            break
++            
++            # Process all lines that look like signatures at the beginning of the docstring
++            sig_lines = []
++            line_index = 0
++            
++            for line in doclines:
++                match = py_ext_sig_re.match(line)
++                if match and line_index <= len(sig_lines):  # Only consider consecutive signature lines
++                    exmod, path, base, args, retann = match.groups()
++                    # the base name must match ours
++                    valid_names = [self.objpath[-1]]  # type: ignore
++                    if isinstance(self, ClassDocumenter):
++                        valid_names.append('__init__')
++                        if hasattr(self.object, '__mro__'):
++                            valid_names.extend(cls.__name__ for cls in self.object.__mro__)
++                    
++                    if base in valid_names:
++                        sig_lines.append(line_index)
++                        self._all_signatures.append((args, retann))
++                line_index += 1
++            
++            # If we found signatures, update the docstring
++            if sig_lines:
++                # re-prepare docstring to ignore the signature lines
++                tab_width = self.directive.state.document.settings.tab_width  # type: ignore
++                self._new_docstrings[i] = prepare_docstring('\n'.join(doclines[len(sig_lines):]),
++                                                          tabsize=tab_width)
++                # Use the first signature as the primary one
++                result = self._all_signatures[0]
++                # Don't look in other docstring sections
++                break
++                
+         return result
+ 
+     def get_doc(self, encoding: str = None, ignore: int = None) -> List[List[str]]:
+@@ -1088,6 +1103,13 @@ class DocstringSignatureMixin:
+             result = self._find_signature()
+             if result is not None:
+                 self.args, self.retann = result
++                
++                # Store additional signatures for later use
++                if hasattr(self, '_all_signatures') and len(self._all_signatures) > 1:
++                    self._additional_signatures = self._all_signatures[1:]
++                else:
++                    self._additional_signatures = []
++                    
+         return super().format_signature(**kwargs)  # type: ignore
+ 
+ 
+@@ -1106,6 +1128,11 @@ class DocstringStripSignatureMixin(DocstringSignatureMixin):
+                 # DocstringSignatureMixin.format_signature.
+                 # Documenter.format_signature use self.args value to format.
+                 _args, self.retann = result
++                
++                # Store additional signatures for later use, but we'll discard them
++                # since this mixin is intended to strip signatures
++                if hasattr(self, '_all_signatures') and len(self._all_signatures) > 1:
++                    self._additional_signatures = []
+         return super().format_signature(**kwargs)
+ 
+ 
+@@ -1151,7 +1178,45 @@ class FunctionDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # typ
+ 
+     def add_directive_header(self, sig: str) -> None:
+         sourcename = self.get_sourcename()
+-        super().add_directive_header(sig)
++        
++        # Check if we have additional signatures from docstring
++        has_additional_sigs = hasattr(self, '_additional_signatures') and self._additional_signatures
++        
++        if not has_additional_sigs:
++            # Normal case, no additional signatures
++            super().add_directive_header(sig)
++        else:
++            # We have additional signatures - add the main one first
++            domain = getattr(self, 'domain', 'py')
++            directive = getattr(self, 'directivetype', self.objtype)
++            name = self.format_name()
++            
++            # Add the first signature (already processed)
++            prefix = '.. %s:%s:: ' % (domain, directive)
++            self.add_line('%s%s%s' % (prefix, name, sig), sourcename)
++            
++            # Add all additional signatures except the last one
++            for i, (args, retann) in enumerate(self._additional_signatures[:-1]):
++                additional_sig = ''
++                if args:
++                    additional_sig += '(%s)' % args
++                if retann:
++                    additional_sig += ' -> %s' % retann
++                    
++                # Use a shorter prefix without the directive type for additional signatures
++                self.add_line('.. %s:%s:: %s%s' % (domain, directive, name, additional_sig), sourcename)
++            
++            # Add the last signature with module directive
++            if self._additional_signatures:
++                args, retann = self._additional_signatures[-1]
++                additional_sig = ''
++                if args:
++                    additional_sig += '(%s)' % args
++                if retann:
++                    additional_sig += ' -> %s' % retann
++                    
++                self.add_line('.. %s:%s:: %s%s' % (domain, directive, name, additional_sig), sourcename)
++                self.add_line('   :module: %s' % self.modname, sourcename)
+ 
+         if inspect.iscoroutinefunction(self.object):
+             self.add_line('   :async:', sourcename)
+@@ -1614,8 +1679,47 @@ class MethodDocumenter(DocstringSignatureMixin, ClassLevelDocumenter):  # type:
+         return args
+ 
+     def add_directive_header(self, sig: str) -> None:
+-        super().add_directive_header(sig)
+-
++        # Check if we have additional signatures from docstring
++        has_additional_sigs = hasattr(self, '_additional_signatures') and self._additional_signatures
++        
++        if not has_additional_sigs:
++            # Normal case, no additional signatures
++            super().add_directive_header(sig)
++        else:
++            # We have additional signatures - add the main one first
++            domain = getattr(self, 'domain', 'py')
++            directive = getattr(self, 'directivetype', self.objtype)
++            name = self.format_name()
++            sourcename = self.get_sourcename()
++            
++            # Add the first signature (already processed)
++            prefix = '.. %s:%s:: ' % (domain, directive)
++            self.add_line('%s%s%s' % (prefix, name, sig), sourcename)
++            
++            # Add all additional signatures except the last one
++            for i, (args, retann) in enumerate(self._additional_signatures[:-1]):
++                additional_sig = ''
++                if args:
++                    additional_sig += '(%s)' % args
++                if retann:
++                    additional_sig += ' -> %s' % retann
++                    
++                # Use a shorter prefix without the directive type for additional signatures
++                self.add_line('.. %s:%s:: %s%s' % (domain, directive, name, additional_sig), sourcename)
++            
++            # Add the last signature with module directive
++            if self._additional_signatures:
++                args, retann = self._additional_signatures[-1]
++                additional_sig = ''
++                if args:
++                    additional_sig += '(%s)' % args
++                if retann:
++                    additional_sig += ' -> %s' % retann
++                    
++                self.add_line('.. %s:%s:: %s%s' % (domain, directive, name, additional_sig), sourcename)
++                self.add_line('   :module: %s' % self.modname, sourcename)
++
++        # Add the method properties
+         sourcename = self.get_sourcename()
+         obj = self.parent.__dict__.get(self.object_name, self.object)
+         if inspect.isabstractmethod(obj):

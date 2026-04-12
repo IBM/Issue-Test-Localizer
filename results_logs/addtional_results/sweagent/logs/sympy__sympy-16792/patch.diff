@@ -1,0 +1,39 @@
+diff --git a/sympy/utilities/codegen.py b/sympy/utilities/codegen.py
+index f0befb2bd..07bc97633 100644
+--- a/sympy/utilities/codegen.py
++++ b/sympy/utilities/codegen.py
+@@ -718,12 +718,16 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+ 
+         if argument_sequence is not None:
+             # if the user has supplied IndexedBase instances, we'll accept that
++            # but preserve the mapping for dimension information
+             new_sequence = []
++            original_arg_map = {}
+             for arg in argument_sequence:
+                 if isinstance(arg, IndexedBase):
+                     new_sequence.append(arg.label)
++                    original_arg_map[arg.label] = arg
+                 else:
+                     new_sequence.append(arg)
++                    original_arg_map[arg] = arg
+             argument_sequence = new_sequence
+ 
+             missing = [x for x in arg_list if x.name not in argument_sequence]
+@@ -739,7 +743,16 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+                 try:
+                     new_args.append(name_arg_dict[symbol])
+                 except KeyError:
+-                    new_args.append(InputArgument(symbol))
++                    # Check if the symbol is a MatrixSymbol or IndexedBase and add appropriate dimensions
++                    original_arg = original_arg_map[symbol]
++                    if isinstance(original_arg, MatrixSymbol):
++                        dims = tuple([(S.Zero, dim - 1) for dim in original_arg.shape])
++                        new_args.append(InputArgument(symbol, dimensions=dims))
++                    elif isinstance(original_arg, IndexedBase) and original_arg.shape is not None:
++                        dims = tuple([(S.Zero, dim - 1) for dim in original_arg.shape])
++                        new_args.append(InputArgument(symbol, dimensions=dims))
++                    else:
++                        new_args.append(InputArgument(symbol))
+             arg_list = new_args
+ 
+         return Routine(name, arg_list, return_val, local_vars, global_vars)

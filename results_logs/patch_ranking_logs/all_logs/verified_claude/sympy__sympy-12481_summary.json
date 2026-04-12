@@ -1,0 +1,66 @@
+{
+  "instance_id": "sympy__sympy-12481",
+  "container_id": "34d79aae1b16fab98b71b5ffcd15e0a1747ad5d91a83c2e3563533149d469bd7",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12481/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-12481",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12481/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-12481",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12481/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-12481",
+        "passed": 8,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12481/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-12481",
+        "passed": 0,
+        "failed": 9
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12481/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-12481",
+        "passed": 0,
+        "failed": 9
+      }
+    ],
+    "top_passed": 8,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "sympy/combinatorics/tests/test_permutations.py::test_args#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_Permutation#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_args#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_Permutation#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_mul#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_Permutation#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

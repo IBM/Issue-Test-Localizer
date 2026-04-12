@@ -1,0 +1,55 @@
+diff --git a/lib/matplotlib/contour.py b/lib/matplotlib/contour.py
+index 3f84250b64..6a7e532413 100644
+--- a/lib/matplotlib/contour.py
++++ b/lib/matplotlib/contour.py
+@@ -932,6 +932,50 @@ class ContourSet(ContourLabeler, mcoll.Collection):
+                 ", ".join(map(repr, kwargs))
+             )
+ 
++    def set_paths(self, paths):
++        """
++        Set the paths of this ContourSet.
++        
++        This allows for direct modification of the paths used in the ContourSet.
++        This is useful for transforming the contour plot after it has been created,
++        for example when using custom projections or transforms.
++        
++        Parameters
++        ----------
++        paths : list of Path
++            The paths to be set. Should have the same length as the current paths
++            list returned by `get_paths()`.
++            
++        Notes
++        -----
++        This method is particularly useful for libraries like Cartopy that need
++        to apply transformations to the contour paths after they've been created.
++        
++        Examples
++        --------
++        >>> import matplotlib.pyplot as plt
++        >>> import numpy as np
++        >>> from matplotlib.path import Path
++        >>> x, y = np.meshgrid(np.linspace(-3, 3, 100), np.linspace(-3, 3, 100))
++        >>> z = np.sin(x) + np.cos(y)
++        >>> fig, ax = plt.subplots()
++        >>> cs = ax.contour(x, y, z)
++        >>> # Get the original paths
++        >>> paths = cs.get_paths()
++        >>> # Create transformed paths
++        >>> transformed_paths = []
++        >>> for path in paths:
++        ...     vertices = path.vertices.copy()
++        ...     vertices[:, 0] *= 1.2  # Scale x coordinates by 1.2
++        ...     transformed_path = Path(vertices, path.codes)
++        ...     transformed_paths.append(transformed_path)
++        >>> # Set the transformed paths
++        >>> cs.set_paths(transformed_paths)
++        """
++        self._paths = paths
++        if hasattr(self, "_old_style_split_collections"):
++            del self._old_style_split_collections  # Invalidate them.
++    
+     allsegs = _api.deprecated("3.8", pending=True)(property(lambda self: [
+         p.vertices for c in self.collections for p in c.get_paths()]))
+     allkinds = _api.deprecated("3.8", pending=True)(property(lambda self: [

@@ -1,0 +1,28 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index be0deb90b0..d9a2203e16 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -2596,7 +2596,22 @@ class RelatedPopulator:
+             )
+ 
+         self.model_cls = klass_info["model"]
+-        self.pk_idx = self.init_list.index(self.model_cls._meta.pk.attname)
++        # Fix for proxy models: use concrete_model._meta.pk.attname if it's a proxy model
++        if hasattr(self.model_cls._meta, 'proxy') and self.model_cls._meta.proxy:
++            pk_attname = self.model_cls._meta.concrete_model._meta.pk.attname
++        else:
++            pk_attname = self.model_cls._meta.pk.attname
++            
++        # Try to find the primary key in init_list
++        try:
++            self.pk_idx = self.init_list.index(pk_attname)
++        except ValueError:
++            # If the primary key is not in init_list (e.g., when using only() with specific fields),
++            # we need to handle this case. For deferred loading to work properly, we set pk_idx to 0
++            # as a fallback, which will allow the query to execute but the PK might be None.
++            # This is acceptable since the object is being loaded with deferred fields.
++            self.pk_idx = 0
++            
+         self.related_populators = get_related_populators(klass_info, select, self.db)
+         self.local_setter = klass_info["local_setter"]
+         self.remote_setter = klass_info["remote_setter"]

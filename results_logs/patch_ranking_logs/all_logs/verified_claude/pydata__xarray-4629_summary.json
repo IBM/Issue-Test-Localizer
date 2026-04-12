@@ -1,0 +1,128 @@
+{
+  "instance_id": "pydata__xarray-4629",
+  "container_id": "38d04eb639997798bcf09f72f14cacec3cc02da8436dd34588b944c43a831212",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+        "inst": "pydata__xarray-4629",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "xarray/tests/test_merge.py::TestMergeMethod::test_merge_attrs_override_copy#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeMethod::test_merge_override_attrs_copy#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": false
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_override_attrs_copy#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_attrs_override_copies_not_references#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_attrs_override_copies_not_references#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

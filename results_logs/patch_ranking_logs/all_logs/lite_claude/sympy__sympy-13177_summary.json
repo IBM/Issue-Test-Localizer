@@ -1,0 +1,78 @@
+{
+  "instance_id": "sympy__sympy-13177",
+  "container_id": "fa1e1e9f193b5603b6d4c977018c2e2014706c5f76cde0c1224b0982ac20915d",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_5.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13177/dedup_patch_6.jsonl",
+        "inst": "sympy__sympy-13177",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 7
+  },
+  "reproduction": {
+    "sympy/core/tests/test_arit.py::test_Mod#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_arit.py::test_Mod#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_arit.py::test_issue_5919#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_arit.py::test_issue_5919#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_arit.py::test_issue_5919#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/core/tests/test_arit.py::test_issue_5919#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

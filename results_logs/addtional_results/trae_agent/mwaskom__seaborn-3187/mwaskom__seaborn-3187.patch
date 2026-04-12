@@ -1,0 +1,39 @@
+diff --git a/seaborn/_core/scales.py b/seaborn/_core/scales.py
+index 55874bf2..ea93e75f 100644
+--- a/seaborn/_core/scales.py
++++ b/seaborn/_core/scales.py
+@@ -378,8 +378,32 @@ class ContinuousBase(Scale):
+             axis.set_view_interval(vmin, vmax)
+             locs = axis.major.locator()
+             locs = locs[(vmin <= locs) & (locs <= vmax)]
+-            labels = axis.major.formatter.format_ticks(locs)
+-            new._legend = list(locs), list(labels)
++            formatter = axis.major.formatter
++            
++            # Get the formatted tick labels
++            labels = formatter.format_ticks(locs)
++            
++            # For ScalarFormatter, we need to check for offset
++            if isinstance(formatter, ScalarFormatter) and hasattr(formatter, 'orderOfMagnitude'):
++                # If the formatter has a non-zero order of magnitude, we need to adjust the legend values
++                if formatter.orderOfMagnitude != 0:
++                    # Get the offset as a power of 10
++                    magnitude = formatter.orderOfMagnitude
++                    
++                    # Create new labels that include the order of magnitude
++                    # Use the same format as matplotlib's offset text
++                    if magnitude > 0:
++                        suffix = f" × 10$^{{{magnitude}}}$"
++                        # Add the suffix to each label
++                        labels = [f"{label}{suffix}" for label in labels]
++                    
++                    # The actual values should be multiplied by 10^magnitude to get the true values
++                    actual_locs = [loc * (10 ** magnitude) for loc in locs]
++                    new._legend = list(actual_locs), list(labels)
++                else:
++                    new._legend = list(locs), list(labels)
++            else:
++                new._legend = list(locs), list(labels)
+ 
+         return new
+ 

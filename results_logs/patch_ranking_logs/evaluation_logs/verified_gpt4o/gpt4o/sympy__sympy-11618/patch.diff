@@ -1,0 +1,17 @@
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 7c58cbf..646babe 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -266,8 +266,10 @@ class Point(GeometryEntity):
+         sqrt(x**2 + y**2)
+ 
+         """
+-        return sqrt(sum([(a - b)**2 for a, b in zip(
+-            self.args, p.args if isinstance(p, Point) else p)]))
++        max_len = max(len(self.args), len(p.args if isinstance(p, Point) else p))
++        self_args = list(self.args) + [0] * (max_len - len(self.args))
++        p_args = list(p.args if isinstance(p, Point) else p) + [0] * (max_len - len(p.args if isinstance(p, Point) else p))
++        return sqrt(sum([(a - b)**2 for a, b in zip(self_args, p_args)]))
+ 
+     def taxicab_distance(self, p):
+         """The Taxicab Distance from self to point p.

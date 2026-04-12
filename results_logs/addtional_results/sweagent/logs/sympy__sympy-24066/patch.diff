@@ -1,0 +1,41 @@
+diff --git a/sympy/physics/units/unitsystem.py b/sympy/physics/units/unitsystem.py
+index 3daf84c108..70cabec16e 100644
+--- a/sympy/physics/units/unitsystem.py
++++ b/sympy/physics/units/unitsystem.py
+@@ -190,10 +190,32 @@ def _collect_factor_and_dimension(self, expr):
+                 dim /= idim**count
+             return factor, dim
+         elif isinstance(expr, Function):
+-            fds = [self._collect_factor_and_dimension(
+-                arg) for arg in expr.args]
+-            return (expr.func(*(f[0] for f in fds)),
+-                    *(d[1] for d in fds))
++            from sympy.functions.elementary.exponential import ExpBase, log
++            from sympy.functions.elementary.trigonometric import TrigonometricFunction, InverseTrigonometricFunction
++            from sympy.functions.elementary.hyperbolic import HyperbolicFunction, InverseHyperbolicFunction
++            
++            fds = [self._collect_factor_and_dimension(arg) for arg in expr.args]
++            
++            # For transcendental functions (exp, log, trig, hyperbolic), 
++            # the result should be dimensionless if all arguments are dimensionless
++            if (isinstance(expr, (ExpBase, TrigonometricFunction, InverseTrigonometricFunction, 
++                                HyperbolicFunction, InverseHyperbolicFunction)) or
++                expr.func == log):
++                # Check if all arguments are dimensionless
++                if all(self.get_dimension_system().is_dimensionless(d[1]) for d in fds):
++                    return expr.func(*(f[0] for f in fds)), Dimension(1)
++                else:
++                    # If arguments are not dimensionless, this is an error for transcendental functions
++                    non_dimensionless_args = [arg for arg, (f, d) in zip(expr.args, fds) 
++                                            if not self.get_dimension_system().is_dimensionless(d)]
++                    if non_dimensionless_args:
++                        raise ValueError(
++                            f"Transcendental function {expr.func.__name__} expects dimensionless arguments, "
++                            f"but got arguments with dimensions: {non_dimensionless_args}")
++            
++            # For other functions, return the function applied to factors and the first dimension
++            # (assuming all arguments should have the same dimension for consistency)
++            return expr.func(*(f[0] for f in fds)), fds[0][1] if fds else Dimension(1)
+         elif isinstance(expr, Dimension):
+             return S.One, expr
+         else:

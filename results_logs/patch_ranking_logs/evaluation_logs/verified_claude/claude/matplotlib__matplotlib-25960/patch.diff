@@ -1,0 +1,13 @@
+diff --git a/lib/matplotlib/_constrained_layout.py b/lib/matplotlib/_constrained_layout.py
+index 81fd88a..2aa369b 100644
+--- a/lib/matplotlib/_constrained_layout.py
++++ b/lib/matplotlib/_constrained_layout.py
+@@ -352,7 +352,7 @@ def make_layout_margins(layoutgrids, fig, renderer, *, w_pad=0, h_pad=0,
+                             w_pad=w_pad, h_pad=h_pad,
+                             hspace=hspace, wspace=wspace)
+ 
+-        margins = get_margin_from_padding(sfig, w_pad=0, h_pad=0,
++        margins = get_margin_from_padding(sfig, w_pad=w_pad, h_pad=h_pad,
+                                           hspace=hspace, wspace=wspace)
+         layoutgrids[gs].edit_outer_margin_mins(margins, ss)
+ 

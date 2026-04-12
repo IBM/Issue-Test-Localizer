@@ -1,0 +1,13 @@
+diff --git a/requests/models.py b/requests/models.py
+index 58593f5..d06f00a 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -695,6 +695,8 @@ class Response(object):
+         chunks = reused_chunks if self._content_consumed else stream_chunks
+ 
+         if decode_unicode:
++            if not self.encoding:
++                self.encoding = self.apparent_encoding
+             chunks = stream_decode_response_unicode(chunks, self)
+ 
+         return chunks

@@ -1,0 +1,17 @@
+diff --git a/sympy/functions/elementary/miscellaneous.py b/sympy/functions/elementary/miscellaneous.py
+index 6852819..65d519f 100644
+--- a/sympy/functions/elementary/miscellaneous.py
++++ b/sympy/functions/elementary/miscellaneous.py
+@@ -643,6 +643,12 @@ class MinMaxBase(Expr, LatticeOp):
+             l.append(df * da)
+         return Add(*l)
+ 
++    def _eval_rewrite_as_Abs(self, *args, **kwargs):
++        from sympy.functions.elementary.complexes import Abs
++        if args[0] == 0:
++            return S.NaN
++        return args[0] / Abs(args[0])
++
+     def _eval_rewrite_as_Abs(self, *args, **kwargs):
+         from sympy.functions.elementary.complexes import Abs
+         s = (args[0] + self.func(*args[1:]))/2

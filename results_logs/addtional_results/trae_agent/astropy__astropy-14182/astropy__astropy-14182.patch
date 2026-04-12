@@ -1,0 +1,85 @@
+diff --git a/astropy/io/ascii/rst.py b/astropy/io/ascii/rst.py
+index abdeba8ef..bf58a5fa1 100644
+--- a/astropy/io/ascii/rst.py
++++ b/astropy/io/ascii/rst.py
+@@ -57,10 +57,44 @@ class RST(FixedWidth):
+     data_class = SimpleRSTData
+     header_class = SimpleRSTHeader
+ 
+-    def __init__(self):
+-        super().__init__(delimiter_pad=None, bookend=False)
++    def __init__(self, header_rows=None):
++        if header_rows is None:
++            header_rows = ["name"]
++        super().__init__(delimiter_pad=None, bookend=False, header_rows=header_rows)
+ 
+     def write(self, lines):
+         lines = super().write(lines)
+-        lines = [lines[1]] + lines + [lines[1]]
+-        return lines
++        
++        # Get the separator line (line with '====')
++        separator_line = None
++        for i, line in enumerate(lines):
++            if '=' in line and not any(c.isalnum() for c in line):
++                separator_line = line
++                break
++                
++        if separator_line is None:
++            # Fallback to the original behavior if no separator line is found
++            return [lines[1]] + lines + [lines[1]]
++            
++        # Restructure the table with proper RST format
++        header_lines = []
++        data_lines = []
++        
++        # Find where the data starts (after all header rows)
++        data_start = 0
++        for i, line in enumerate(lines):
++            if i > 0 and separator_line in lines[i-1:i+1]:
++                data_start = i + 1
++                break
++        
++        header_lines = lines[:data_start-1]  # All header rows except the separator
++        data_lines = lines[data_start:]      # All data rows
++        
++        # Create the RST table structure
++        result = [separator_line]            # Top separator
++        result.extend(header_lines)          # Header rows
++        result.append(separator_line)        # Middle separator
++        result.extend(data_lines)            # Data rows
++        result.append(separator_line)        # Bottom separator
++        
++        return result
+diff --git a/astropy/io/ascii/tests/test_rst.py b/astropy/io/ascii/tests/test_rst.py
+index 84d6fed40..e2d9d5fcd 100644
+--- a/astropy/io/ascii/tests/test_rst.py
++++ b/astropy/io/ascii/tests/test_rst.py
+@@ -185,3 +185,27 @@ Col1      Col2 Col3 Col4
+ ==== ========= ==== ====
+ """,
+     )
++
++
++def test_write_with_header_rows():
++    """Write a table as a SimpleRST Table with header_rows parameter"""
++    from astropy.table import QTable
++    import astropy.units as u
++    
++    tbl = QTable({'wave': [350, 950] * u.nm, 'response': [0.7, 1.2] * u.count})
++    out = StringIO()
++    ascii.write(tbl, out, Writer=ascii.RST, header_rows=["name", "unit"])
++    
++    # Run the test to see the actual output and update the expected output
++    expected = """\
++===== ========
++ wave response
++   nm       ct
++===== ========
++350.0      0.7
++950.0      1.2
++===== ========
++"""
++    
++    result = out.getvalue()
++    assert_equal_splitlines(result, expected)

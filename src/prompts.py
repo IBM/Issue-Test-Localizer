@@ -72,7 +72,7 @@ testclass2.test_method2
         main_method=main_method,
         test_file=test_file,
         test_methods=test_methods,
-        top_k=top_k,
+        top_num=top_num,
     )
 
 

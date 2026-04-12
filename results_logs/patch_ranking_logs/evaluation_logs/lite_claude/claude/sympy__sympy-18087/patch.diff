@@ -1,0 +1,14 @@
+diff --git a/sympy/functions/elementary/trigonometric.py b/sympy/functions/elementary/trigonometric.py
+index 5205b6e..00c1730 100644
+--- a/sympy/functions/elementary/trigonometric.py
++++ b/sympy/functions/elementary/trigonometric.py
+@@ -923,8 +923,7 @@ class cos(TrigonometricFunction):
+             return True
+ 
+     def _eval_is_complex(self):
+-        if self.args[0].is_extended_real \
+-            or self.args[0].is_complex:
++        if self.args[0].is_extended_real:
+             return True
+ 
+ 

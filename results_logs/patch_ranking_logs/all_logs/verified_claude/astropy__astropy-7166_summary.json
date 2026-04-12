@@ -1,0 +1,42 @@
+{
+  "instance_id": "astropy__astropy-7166",
+  "container_id": "df046097d6611ddd0fb73895e9765f5211c01838304551d6e5283c1e118318fa",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/astropy__astropy-7166/dedup_patch_0.jsonl",
+        "inst": "astropy__astropy-7166",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "astropy/utils/tests/test_misc.py::test_inherit_docstrings#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/utils/tests/test_decorators.py::test_classproperty_docstring#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/utils/tests/test_decorators.py::test_format_doc_onClass#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/utils/tests/test_decorators.py::test_classproperty_docstring#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/utils/tests/test_decorators.py::test_classproperty_docstring#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/utils/tests/test_decorators.py::test_classproperty_docstring#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

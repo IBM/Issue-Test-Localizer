@@ -1,0 +1,21 @@
+diff --git a/lib/matplotlib/dates.py b/lib/matplotlib/dates.py
+index f565bc8..14622f9 100644
+--- a/lib/matplotlib/dates.py
++++ b/lib/matplotlib/dates.py
+@@ -592,12 +592,10 @@ def drange(dstart, dend, delta):
+ 
+ 
+ def _wrap_in_tex(text):
+-    p = r'([a-zA-Z]+)'
+-    ret_text = re.sub(p, r'}$\1$\\mathdefault{', text)
+-
+-    # Braces ensure dashes are not spaced like binary operators.
+-    ret_text = '$\\mathdefault{'+ret_text.replace('-', '{-}')+'}$'
+-    ret_text = ret_text.replace('$\\mathdefault{}$', '')
++    # Wrap the entire text in a single mathdefault command to preserve spacing
++    # Braces around dash ensure it's not spaced like a binary operator
++    text = text.replace('-', '{-}')
++    ret_text = f'$\\mathdefault{{{text}}}$'
+     return ret_text
+ 
+ 

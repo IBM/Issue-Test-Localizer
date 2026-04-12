@@ -1,0 +1,17 @@
+diff --git a/django/db/models/options.py b/django/db/models/options.py
+index c5f3683..b5cf027 100644
+--- a/django/db/models/options.py
++++ b/django/db/models/options.py
+@@ -202,9 +202,10 @@ class Options:
+             self.verbose_name_plural = format_lazy('{}s', self.verbose_name)
+         del self.meta
+ 
+-        # If the db_table wasn't provided, use the app_label + model_name.
++        # If the db_table wasn't provided, ensure it is unique by using the app_label + model_name.
+         if not self.db_table:
+-            self.db_table = "%s_%s" % (self.app_label, self.model_name)
++            unique_app_label = self.app_label if self.app_label else cls.__module__.split('.')[0]
++            self.db_table = "%s_%s" % (unique_app_label, self.model_name)
+             self.db_table = truncate_name(self.db_table, connection.ops.max_name_length())
+ 
+     def _format_names_with_class(self, cls, objs):

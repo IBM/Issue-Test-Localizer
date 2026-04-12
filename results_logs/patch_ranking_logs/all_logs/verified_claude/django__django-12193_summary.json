@@ -1,0 +1,54 @@
+{
+  "instance_id": "django__django-12193",
+  "container_id": "d7978bda232de5357d648ff6c95485b1fd6665377666915250fa7b9e80fcaac0",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12193/dedup_patch_0.jsonl",
+        "inst": "django__django-12193",
+        "passed": 11,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12193/dedup_patch_1.jsonl",
+        "inst": "django__django-12193",
+        "passed": 11,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12193/dedup_patch_2.jsonl",
+        "inst": "django__django-12193",
+        "passed": 11,
+        "failed": 0
+      }
+    ],
+    "top_passed": 11,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "postgres_tests.test_array.TestSplitFormField.test_boolean_splitarrayfield_rendering#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "postgres_tests.test_array.TestSplitFormField.test_boolean_splitarrayfield_rendering#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "postgres_tests.test_array.TestSplitFormWidget.test_splitarrayfield_boolean_field_rendering#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "postgres_tests.test_array.TestSplitFormWidget.test_boolean_array_rendering#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "postgres_tests.test_array.TestSplitFormField.test_boolean_array_field_rendering#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "postgres_tests.test_array.TestSplitFormWidget.test_boolean_splitarrayfield_rendering#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

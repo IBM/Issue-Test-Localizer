@@ -1,0 +1,159 @@
+diff --git a/debug_issue.py b/debug_issue.py
+new file mode 100644
+index 0000000000..15a99a4c4c
+--- /dev/null
++++ b/debug_issue.py
+@@ -0,0 +1,50 @@
++#!/usr/bin/env python3
++
++import sympy as sp
++from sympy import symbols, cos, sin, sqrt, trigsimp, I, simplify, Abs
++
++# Create a complex symbol
++x = symbols('x', complex=True)
++
++# The problematic expression: cos(x) + sqrt(sin(x)**2)
++expr = cos(x) + sqrt(sin(x)**2)
++
++print("Original expression:", expr)
++simplified = trigsimp(expr)
++print("Simplified expression:", simplified)
++
++# Let's check if the simplified form is equivalent to cos(x) + sin(x)
++cos_plus_sin = cos(x) + sin(x)
++print("cos(x) + sin(x) =", cos_plus_sin)
++print("trigsimp(cos(x) + sin(x)) =", trigsimp(cos_plus_sin))
++
++# Let's test with a specific complex value where sin(x) is negative
++# to see if sqrt(sin(x)**2) != sin(x)
++x_val = sp.pi + I  # This should make sin(x) have a negative real part
++
++print(f"\nTesting with x = {x_val}:")
++sin_val = sin(x_val)
++print(f"sin(x) = {sin_val.evalf()}")
++print(f"sqrt(sin(x)**2) = {sqrt(sin_val**2).evalf()}")
++print(f"Are they equal? {(sqrt(sin_val**2) - sin_val).evalf()}")
++
++original_val = cos(x_val) + sqrt(sin(x_val)**2)
++cos_plus_sin_val = cos(x_val) + sin(x_val)
++simplified_val = simplified.subs(x, x_val)
++
++print(f"\ncos(x) + sqrt(sin(x)**2) = {original_val.evalf()}")
++print(f"cos(x) + sin(x) = {cos_plus_sin_val.evalf()}")
++print(f"trigsimp result = {simplified_val.evalf()}")
++
++# Check if they're different
++diff1 = (original_val - cos_plus_sin_val).evalf()
++diff2 = (original_val - simplified_val).evalf()
++print(f"\nDifference between original and cos+sin: {diff1}")
++print(f"Difference between original and trigsimp result: {diff2}")
++
++# Let's also check what sqrt(sin(x)**2) should be for complex x
++print(f"\nFor complex x, sqrt(sin(x)**2) should be Abs(sin(x))")
++abs_sin_val = Abs(sin(x_val))
++print(f"Abs(sin(x)) = {abs_sin_val.evalf()}")
++print(f"sqrt(sin(x)**2) = {sqrt(sin(x_val)**2).evalf()}")
++print(f"Are they equal? {(abs_sin_val - sqrt(sin(x_val)**2)).evalf()}")
+\ No newline at end of file
+diff --git a/investigate_issue.py b/investigate_issue.py
+new file mode 100644
+index 0000000000..4b589c9e4b
+--- /dev/null
++++ b/investigate_issue.py
+@@ -0,0 +1,46 @@
++#!/usr/bin/env python3
++
++import sympy as sp
++from sympy import symbols, cos, sin, sqrt, trigsimp, I, simplify
++
++# Create a complex symbol
++x = symbols('x', complex=True)
++
++# The problematic expression: cos(x) + sqrt(sin(x)**2)
++expr = cos(x) + sqrt(sin(x)**2)
++
++print("Original expression:", expr)
++print("Simplified expression:", trigsimp(expr))
++
++# Let's see what happens if we simplify sqrt(sin(x)**2) alone
++sqrt_expr = sqrt(sin(x)**2)
++print(f"\nsqrt(sin(x)**2) = {sqrt_expr}")
++print(f"trigsimp(sqrt(sin(x)**2)) = {trigsimp(sqrt_expr)}")
++print(f"simplify(sqrt(sin(x)**2)) = {simplify(sqrt_expr)}")
++
++# Let's check what happens with different assumptions
++x_real = symbols('x', real=True)
++x_positive = symbols('x', real=True, positive=True)
++
++print(f"\nWith real x:")
++print(f"sqrt(sin(x)**2) = {sqrt(sin(x_real)**2)}")
++print(f"trigsimp(sqrt(sin(x)**2)) = {trigsimp(sqrt(sin(x_real)**2))}")
++
++print(f"\nWith positive real x:")
++print(f"sqrt(sin(x)**2) = {sqrt(sin(x_positive)**2)}")
++print(f"trigsimp(sqrt(sin(x)**2)) = {trigsimp(sqrt(sin(x_positive)**2))}")
++
++# Let's see what the issue really is
++print(f"\nThe issue seems to be that trigsimp converts:")
++print(f"cos(x) + sqrt(sin(x)**2) -> {trigsimp(expr)}")
++print(f"But this is wrong for complex x because sqrt(sin(x)**2) != sin(x)")
++
++# Let's test with a specific complex value to verify
++x_val = 1 + I
++original_val = cos(x_val) + sqrt(sin(x_val)**2)
++simplified_val = cos(x_val) + sin(x_val)  # What trigsimp seems to be doing
++
++print(f"\nTesting with x = {x_val}:")
++print(f"cos(x) + sqrt(sin(x)**2) = {original_val.evalf()}")
++print(f"cos(x) + sin(x) = {simplified_val.evalf()}")
++print(f"Are they equal? {sp.simplify(original_val - simplified_val).evalf()}")
+\ No newline at end of file
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 0000000000..c0ce3a234b
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,42 @@
++#!/usr/bin/env python3
++
++import sympy as sp
++from sympy import symbols, cos, sin, sqrt, trigsimp, I
++
++# Create a complex symbol
++x = symbols('x', complex=True)
++
++# The problematic expression: cos(x) + sqrt(sin(x)**2)
++expr = cos(x) + sqrt(sin(x)**2)
++
++print("Original expression:", expr)
++print("Simplified expression:", trigsimp(expr))
++
++# For comparison, let's see what happens with a real symbol
++x_real = symbols('x_real', real=True)
++expr_real = cos(x_real) + sqrt(sin(x_real)**2)
++
++print("\nWith real symbol:")
++print("Original expression:", expr_real)
++print("Simplified expression:", trigsimp(expr_real))
++
++# Let's also test with a specific complex value
++x_val = 1 + I
++expr_val = cos(x_val) + sqrt(sin(x_val)**2)
++simplified_val = trigsimp(expr_val)
++
++print(f"\nWith x = {x_val}:")
++print("Original expression:", expr_val)
++print("Simplified expression:", simplified_val)
++
++# Let's evaluate both numerically to see the difference
++print("\nNumerical evaluation:")
++print("Original:", complex(expr_val.evalf()))
++print("Simplified:", complex(simplified_val.evalf()))
++
++# The issue is that trigsimp incorrectly simplifies sqrt(sin(x)**2) to sin(x)
++# when x is complex, but sqrt(sin(x)**2) should be |sin(x)| = Abs(sin(x))
++print("\nThe issue:")
++print("sqrt(sin(x)**2) should equal |sin(x)|, not sin(x) for complex x")
++print("sqrt(sin(x)**2) =", trigsimp(sqrt(sin(x)**2)))
++print("For complex x, this should be Abs(sin(x)) =", sp.Abs(sin(x)))
+\ No newline at end of file

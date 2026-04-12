@@ -1,0 +1,69 @@
+diff --git a/django/contrib/auth/forms.py b/django/contrib/auth/forms.py
+index a0cfed0995..2befacbd64 100644
+--- a/django/contrib/auth/forms.py
++++ b/django/contrib/auth/forms.py
+@@ -62,11 +62,12 @@ class UsernameField(forms.CharField):
+         return unicodedata.normalize('NFKC', super().to_python(value))
+ 
+     def widget_attrs(self, widget):
+-        return {
+-            **super().widget_attrs(widget),
++        attrs = super().widget_attrs(widget)
++        attrs.update({
+             'autocapitalize': 'none',
+             'autocomplete': 'username',
+-        }
++        })
++        return attrs
+ 
+ 
+ class UserCreationForm(forms.ModelForm):
+@@ -194,6 +195,12 @@ class AuthenticationForm(forms.Form):
+         self.fields['username'].max_length = self.username_field.max_length or 254
+         if self.fields['username'].label is None:
+             self.fields['username'].label = capfirst(self.username_field.verbose_name)
++            
++        # Update widget attrs with current max_length - required for the maxlength HTML attribute
++        if self.fields['username'].max_length is not None:
++            self.fields['username'].widget.attrs.update({
++                'maxlength': str(self.fields['username'].max_length)
++            })
+ 
+     def clean(self):
+         username = self.cleaned_data.get('username')
+diff --git a/tests/auth_tests/test_forms.py b/tests/auth_tests/test_forms.py
+index 7085dcfa11..4e049aacee 100644
+--- a/tests/auth_tests/test_forms.py
++++ b/tests/auth_tests/test_forms.py
+@@ -3,6 +3,7 @@ import re
+ from unittest import mock
+ 
+ from django import forms
++from django.contrib.auth import get_user_model
+ from django.contrib.auth.forms import (
+     AdminPasswordChangeForm, AuthenticationForm, PasswordChangeForm,
+     PasswordResetForm, ReadOnlyPasswordHashField, ReadOnlyPasswordHashWidget,
+@@ -19,6 +20,8 @@ from django.utils import translation
+ from django.utils.text import capfirst
+ from django.utils.translation import gettext as _
+ 
++UserModel = get_user_model()
++
+ from .models.custom_user import (
+     CustomUser, CustomUserWithoutIsActiveField, ExtensionUser,
+ )
+@@ -424,6 +427,14 @@ class AuthenticationFormTest(TestDataMixin, TestCase):
+         form = AuthenticationForm(None, data)
+         self.assertEqual(form.fields['username'].max_length, 255)
+         self.assertEqual(form.errors, {})
++        
++    def test_username_field_has_maxlength_html_attribute(self):
++        """Test that the username field has the correct maxlength HTML attribute."""
++        form = AuthenticationForm()
++        html = str(form['username'])
++        self.assertIn('maxlength="', html)
++        expected_maxlength = UserModel._meta.get_field(UserModel.USERNAME_FIELD).max_length or 254
++        self.assertIn(f'maxlength="{expected_maxlength}"', html)
+ 
+     @override_settings(AUTH_USER_MODEL='auth_tests.IntegerUsernameUser')
+     def test_username_field_max_length_defaults_to_254(self):

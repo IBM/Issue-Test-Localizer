@@ -1,0 +1,433 @@
+{
+  "instance_id": "pylint-dev__pylint-7080",
+  "container_id": "419dc53b0b7de19a3ac9f9e6ebe08bb82d4b97dc6a6d246f3109038694fc2314",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_0.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_10.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_11.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_12.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_14.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_15.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_2.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_3.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_5.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_6.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_8.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_9.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_1.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_13.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_4.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_7.jsonl",
+        "inst": "pylint-dev__pylint-7080",
+        "passed": 1,
+        "failed": 2
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 12
+  },
+  "reproduction": {
+    "tests/lint/unittest_expand_modules.py::TestExpandModules::test_ignore_paths_with_recursive#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_10.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_11.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_12.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_14.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_15.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_5.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_6.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_8.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_9.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        }
+      ]
+    },
+    "tests/lint/unittest_expand_modules.py::TestExpandModules::test_expand_modules_with_ignore_paths_recursive#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_10.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_11.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_12.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_14.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_15.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_5.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_6.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_8.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_9.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        }
+      ]
+    },
+    "tests/lint/unittest_expand_modules.py::TestExpandModules::test_expand_modules_recursive_with_ignore_paths#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_10.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_11.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_12.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_14.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_15.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_5.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_6.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_8.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_9.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        }
+      ]
+    },
+    "tests/lint/unittest_expand_modules.py::TestExpandModules::test_recursive_respects_ignore_paths#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_10.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_11.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_12.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_14.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_15.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_5.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_6.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_8.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_9.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        }
+      ]
+    },
+    "tests/lint/unittest_expand_modules.py::TestExpandModules::test_recursive_respects_ignore_paths#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_0.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_10.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_11.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_12.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_14.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_15.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_2.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_3.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_5.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_6.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_8.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pylint-dev__pylint-7080/dedup_patch_9.jsonl",
+          "inst": "pylint-dev__pylint-7080",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

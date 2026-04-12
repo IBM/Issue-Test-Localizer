@@ -1,0 +1,16 @@
+diff --git a/django/template/defaultfilters.py b/django/template/defaultfilters.py
+index 693c70d..2964eeb 100644
+--- a/django/template/defaultfilters.py
++++ b/django/template/defaultfilters.py
+@@ -572,6 +572,11 @@ def dictsortreversed(value, arg):
+         return ""
+ 
+ 
++@register.filter(is_safe=False)
++def escapeseq(value):
++    """Escape each item in a list."""
++    return [conditional_escape(v) for v in value]
++
+ @register.filter(is_safe=False)
+ def first(value):
+     """Return the first item in a list."""

@@ -1,0 +1,46 @@
+diff --git a/sympy/printing/mathml.py b/sympy/printing/mathml.py
+index 1aa0ee01a2..80a446c842 100644
+--- a/sympy/printing/mathml.py
++++ b/sympy/printing/mathml.py
+@@ -477,6 +477,18 @@ def _print_int(self, p):
+         dom_element.appendChild(self.dom.createTextNode(str(p)))
+         return dom_element
+ 
++    def _print_Indexed(self, e):
++        x = self.dom.createElement('indexed')
++        x.appendChild(self._print(e.base))
++        for index in e.indices:
++            x.appendChild(self._print(index))
++        return x
++
++    def _print_IndexedBase(self, e):
++        x = self.dom.createElement('indexedbase')
++        x.appendChild(self._print(e.label))
++        return x
++
+ 
+ class MathMLPresentationPrinter(MathMLPrinterBase):
+     """Prints an expression to the Presentation MathML markup language.
+@@ -1270,6 +1282,22 @@ def _print_Lambda(self, e):
+         x.appendChild(mrow)
+         return x
+ 
++    def _print_Indexed(self, e):
++        x = self.dom.createElement('msub')
++        x.appendChild(self._print(e.base))
++        if len(e.indices) == 1:
++            x.appendChild(self._print(e.indices[0]))
++            return x
++        # For multiple indices, wrap them in mfenced
++        mfenced = self.dom.createElement('mfenced')
++        for index in e.indices:
++            mfenced.appendChild(self._print(index))
++        x.appendChild(mfenced)
++        return x
++
++    def _print_IndexedBase(self, e):
++        return self._print(e.label)
++
+ 
+ def mathml(expr, printer='content', **settings):
+     """Returns the MathML representation of expr. If printer is presentation then

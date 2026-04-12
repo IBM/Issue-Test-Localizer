@@ -1,0 +1,91 @@
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index c9e77a901f..64ff5c97b4 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -5895,6 +5895,75 @@ def _factors_product(factors):
+     return Mul(*[f.as_expr()**k for f, k in factors])
+ 
+ 
++def _group_simple_factors_by_multiplicity(factors):
++    """Group simple factors with the same multiplicity for square-free factorization.
++    
++    This function groups factors that are "simple" (like linear factors) and have
++    the same multiplicity. It's designed to handle cases like (x-2)**3 * (x-3)**3
++    which should be grouped as (x**2 - 5*x + 6)**3.
++    """
++    from collections import defaultdict
++    
++    # Separate simple factors from complex factors
++    simple_factors = defaultdict(list)  # multiplicity -> list of simple factors
++    complex_factors = []  # factors that shouldn't be grouped
++    
++    for factor, multiplicity in factors:
++        # Check if this is a "simple" factor that should be grouped
++        if _is_simple_factor_for_grouping(factor):
++            simple_factors[multiplicity].append(factor)
++        else:
++            complex_factors.append((factor, multiplicity))
++    
++    # Combine simple factors with the same multiplicity
++    result = complex_factors[:]
++    for multiplicity, factor_list in simple_factors.items():
++        if len(factor_list) == 1:
++            result.append((factor_list[0], multiplicity))
++        else:
++            # Multiply all simple factors with the same multiplicity
++            combined_factor = _factors_product([(f, 1) for f in factor_list])
++            # Convert back to Poly if needed
++            if hasattr(factor_list[0], 'as_expr'):
++                # This is a Poly object, so we need to create a new Poly
++                from sympy.polys.polytools import Poly
++                try:
++                    combined_poly = Poly(combined_factor, factor_list[0].gens, domain=factor_list[0].domain)
++                    result.append((combined_poly, multiplicity))
++                except:
++                    # If we can't create a Poly, just use the expression
++                    result.append((combined_factor, multiplicity))
++            else:
++                result.append((combined_factor, multiplicity))
++    
++    return result
++
++
++def _is_simple_factor_for_grouping(factor):
++    """Check if a factor is 'simple' enough to be grouped with other factors
++    of the same multiplicity in square-free factorization.
++    
++    We consider a factor simple if it's a univariate linear polynomial (degree 1)
++    in a single variable.
++    """
++    try:
++        if hasattr(factor, 'degree') and hasattr(factor, 'gens'):
++            # This is a Poly object
++            return factor.degree() == 1 and len(factor.gens) == 1
++        else:
++            # This is an expression, try to determine if it's univariate linear
++            from sympy.polys.polytools import degree, Poly
++            from sympy.polys.polyerrors import PolynomialError
++            try:
++                # Try to create a polynomial and check if it's univariate linear
++                poly = Poly(factor)
++                return poly.degree() == 1 and len(poly.gens) == 1
++            except (PolynomialError, TypeError):
++                return False
++    except:
++        return False
++
++
+ def _symbolic_factor_list(expr, opt, method):
+     """Helper function for :func:`_symbolic_factor`. """
+     coeff, factors = S.One, []
+@@ -5950,6 +6019,10 @@ def _symbolic_factor_list(expr, opt, method):
+ 
+                 factors.append((_factors_product(other), exp))
+ 
++    # For square-free factorization, group simple factors with the same multiplicity
++    if method == 'sqf':
++        factors = _group_simple_factors_by_multiplicity(factors)
++    
+     return coeff, factors
+ 
+ 

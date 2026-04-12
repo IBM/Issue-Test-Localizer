@@ -1,0 +1,22 @@
+diff --git a/sympy/matrices/expressions/matmul.py b/sympy/matrices/expressions/matmul.py
+index 13b44f5..f09eb84 100644
+--- a/sympy/matrices/expressions/matmul.py
++++ b/sympy/matrices/expressions/matmul.py
+@@ -135,10 +135,13 @@ class MatMul(MatrixExpr):
+ 
+ def validate(*matrices):
+     """ Checks for valid shapes for args of MatMul """
+-    for i in range(len(matrices)-1):
+-        A, B = matrices[i:i+2]
+-        if A.cols != B.rows:
+-            raise ShapeError("Matrices %s and %s are not aligned"%(A, B))
++    for i, matrix in enumerate(matrices):
++        if not hasattr(matrix, 'rows') or not hasattr(matrix, 'cols'):
++            raise ValueError(f"Argument {i} is not a matrix")
++        if i < len(matrices) - 1:
++            A, B = matrices[i:i+2]
++            if A.cols != B.rows:
++                raise ShapeError("Matrices %s and %s are not aligned"%(A, B))
+ 
+ # Rules
+ 

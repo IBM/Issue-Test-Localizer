@@ -1,0 +1,76 @@
+{
+  "instance_id": "sympy__sympy-22005",
+  "container_id": "04e4f159bca260f7ddc1d6ecdb301b1dd4c0ae32c7c4dba6eb123504d77ff209",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/sympy__sympy-22005/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-22005",
+        "passed": 0,
+        "failed": 0
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/sympy__sympy-22005/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-22005",
+          "passed": false
+        }
+      ]
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_triangulated#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_triangulated#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/sympy__sympy-22005/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-22005",
+          "passed": false
+        }
+      ]
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#8": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_polysys.py::test_solve_issue_3686#9": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new.py#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/sympy__sympy-22005/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-22005",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

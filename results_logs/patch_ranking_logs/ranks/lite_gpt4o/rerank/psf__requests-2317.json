@@ -1,0 +1,55 @@
+{
+  "instance_id": "psf__requests-2317",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_gpt4o_all_unique_patches/psf__requests-2317/dedup_patch_1.jsonl",
+    "repro_fixes": 1,
+    "repro_total_considered": 5,
+    "regression_passed": 3,
+    "occurrence": 24,
+    "normalized_occurrence": 24
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/psf__requests-2317/dedup_patch_1.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 5,
+        "regression_passed": 3,
+        "occurrence": 24,
+        "normalized_occurrence": 24
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/psf__requests-2317/dedup_patch_4.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 5,
+        "regression_passed": 3,
+        "occurrence": 10,
+        "normalized_occurrence": 11
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/psf__requests-2317/dedup_patch_0.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 5,
+        "regression_passed": 3,
+        "occurrence": 5,
+        "normalized_occurrence": 5
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/psf__requests-2317/dedup_patch_3.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 5,
+        "regression_passed": 3,
+        "occurrence": 3,
+        "normalized_occurrence": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/psf__requests-2317/dedup_patch_2.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 5,
+        "regression_passed": 3,
+        "occurrence": 1,
+        "normalized_occurrence": 11
+      }
+    ]
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "instance_id": "django__django-16139",
+  "container_id": "3e671805799439160e334c6955d659a981483afef6587da119f0bb28f2fa8c69",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+        "inst": "django__django-16139",
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "top_passed": 3,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "auth_tests.test_views.ChangelistTests.test_user_change_password#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": true
+        }
+      ]
+    },
+    "admin_views.tests.AdminSiteFinalCatchAllPatternTests.test_user_admin_password_reset_link#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "admin_views.tests.AdminSiteFinalCatchAllPatternTests.test_password_reset_link_in_user_change_form#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "admin_views.tests.AdminSiteFinalCatchAllPatternTests.test_user_admin_password_reset_link#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserCreationFormTest.test_password_help_text_with_to_field#8": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "admin_views.tests.AdminSiteFinalCatchAllPatternTests.test_user_change_password#9": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    },
+    "admin_views.tests.AdminViewBasicTest.test_user_admin_password_reset_link#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-16139/dedup_patch_0.jsonl",
+          "inst": "django__django-16139",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

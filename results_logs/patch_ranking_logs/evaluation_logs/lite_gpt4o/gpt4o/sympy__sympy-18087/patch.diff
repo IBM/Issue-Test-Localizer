@@ -1,0 +1,13 @@
+diff --git a/sympy/functions/elementary/trigonometric.py b/sympy/functions/elementary/trigonometric.py
+index 5205b6e..58d64e9 100644
+--- a/sympy/functions/elementary/trigonometric.py
++++ b/sympy/functions/elementary/trigonometric.py
+@@ -357,7 +357,7 @@ class sin(TrigonometricFunction):
+ 
+         if isinstance(arg, acos):
+             x = arg.args[0]
+-            return sqrt(1 - x**2)
++            return Abs(x)
+ 
+         if isinstance(arg, acot):
+             x = arg.args[0]

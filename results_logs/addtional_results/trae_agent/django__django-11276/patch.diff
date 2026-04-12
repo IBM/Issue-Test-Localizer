@@ -1,0 +1,54 @@
+diff --git a/django/utils/html.py b/django/utils/html.py
+index 9c519978f5..1b017a7c47 100644
+--- a/django/utils/html.py
++++ b/django/utils/html.py
+@@ -1,5 +1,6 @@
+ """HTML utilities suitable for global use."""
+ 
++import html
+ import json
+ import re
+ from html.parser import HTMLParser
+@@ -24,15 +25,6 @@ word_split_re = re.compile(r'''([\s<>"']+)''')
+ simple_url_re = re.compile(r'^https?://\[?\w', re.IGNORECASE)
+ simple_url_2_re = re.compile(r'^www\.|^(?!http)\w[^@]+\.(com|edu|gov|int|mil|net|org)($|/.*)$', re.IGNORECASE)
+ 
+-_html_escapes = {
+-    ord('&'): '&amp;',
+-    ord('<'): '&lt;',
+-    ord('>'): '&gt;',
+-    ord('"'): '&quot;',
+-    ord("'"): '&#39;',
+-}
+-
+-
+ @keep_lazy(str, SafeString)
+ def escape(text):
+     """
+@@ -43,7 +35,10 @@ def escape(text):
+     This may result in double-escaping. If this is a concern, use
+     conditional_escape() instead.
+     """
+-    return mark_safe(str(text).translate(_html_escapes))
++    # Use Python's html.escape() function which is faster
++    # Note: html.escape() uses &#x27; for single quotes while Django used &#39;
++    # These are functionally equivalent in HTML
++    return mark_safe(html.escape(str(text)))
+ 
+ 
+ _js_escapes = {
+diff --git a/tests/utils_tests/test_html.py b/tests/utils_tests/test_html.py
+index d87927cdfe..d1106da9c0 100644
+--- a/tests/utils_tests/test_html.py
++++ b/tests/utils_tests/test_html.py
+@@ -27,7 +27,9 @@ class TestUtilsHtml(SimpleTestCase):
+             ('<', '&lt;'),
+             ('>', '&gt;'),
+             ('"', '&quot;'),
+-            ("'", '&#39;'),
++            # Python's html.escape() uses &#x27; for single quotes while Django used &#39;
++            # These are functionally equivalent in HTML
++            ("'", '&#x27;'),
+         )
+         # Substitution patterns for testing the above items.
+         patterns = ("%s", "asdf%sfdsa", "%s1", "1%sb")

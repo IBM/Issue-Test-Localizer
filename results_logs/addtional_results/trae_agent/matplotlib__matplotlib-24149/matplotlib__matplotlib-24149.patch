@@ -1,0 +1,63 @@
+diff --git a/lib/matplotlib/cbook/__init__.py b/lib/matplotlib/cbook/__init__.py
+index 34c6ddb861..18f1f545f9 100644
+--- a/lib/matplotlib/cbook/__init__.py
++++ b/lib/matplotlib/cbook/__init__.py
+@@ -1746,7 +1746,14 @@ def _safe_first_finite(obj, *, skip_nonfinite=True):
+         raise RuntimeError("matplotlib does not "
+                            "support generators as input")
+     else:
+-        return next(val for val in obj if safe_isfinite(val))
++        try:
++            return next(val for val in obj if safe_isfinite(val))
++        except StopIteration:
++            # If there are no finite values, return the first value anyway
++            if len(obj) > 0:
++                return obj[0]
++            # If the object is empty, re-raise the exception
++            raise
+ 
+ 
+ def sanitize_sequence(data):
+diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
+index 9fb95cbd68..48d149e17b 100644
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -1713,8 +1713,20 @@ def test_bar_tick_label_single():
+ 
+ 
+ def test_nan_bar_values():
++    # Test that bar() works with NaN values
+     fig, ax = plt.subplots()
++    # Test with valid x and NaN height
+     ax.bar([0, 1], [np.nan, 4])
++    
++    # Test with NaN x values (this was a bug in matplotlib 3.6.1)
++    fig, ax = plt.subplots()
++    bars = ax.bar([np.nan], [0])
++    assert isinstance(bars, plt.matplotlib.container.BarContainer)
++    
++    # Test with all NaN values
++    fig, ax = plt.subplots()
++    bars = ax.bar([np.nan], [np.nan])
++    assert isinstance(bars, plt.matplotlib.container.BarContainer)
+ 
+ 
+ def test_bar_ticklabel_fail():
+diff --git a/lib/matplotlib/tests/test_cbook.py b/lib/matplotlib/tests/test_cbook.py
+index eda0c3b7eb..ef0330c565 100644
+--- a/lib/matplotlib/tests/test_cbook.py
++++ b/lib/matplotlib/tests/test_cbook.py
+@@ -897,6 +897,13 @@ def test_safe_first_element_with_none():
+     assert actual is not None and actual == datetime_lst[1]
+ 
+ 
++def test_safe_first_element_with_all_nan():
++    # Test that _safe_first_finite returns the first element when all values are NaN
++    nan_list = [np.nan, np.nan, np.nan]
++    actual = cbook._safe_first_finite(nan_list)
++    assert np.isnan(actual)
++
++
+ @pytest.mark.parametrize('fmt, value, result', [
+     ('%.2f m', 0.2, '0.20 m'),
+     ('{:.2f} m', 0.2, '0.20 m'),

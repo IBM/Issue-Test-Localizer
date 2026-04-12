@@ -1,0 +1,20 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 7c860dc..00b14da 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1423,8 +1423,15 @@ class SQLDeleteCompiler(SQLCompiler):
+         Create the SQL for this query. Return the SQL string and list of
+         parameters.
+         """
++        # Use simple DELETE FROM when:
++        # 1. We have a single alias (simple query)
++        # 2. There are no where conditions (deleting all records)
++        if self.single_alias and not self.query.where:
++            return self._as_sql(self.query)
++        # For all other cases where we have a single alias
+         if self.single_alias:
+             return self._as_sql(self.query)
++        # For complex queries with multiple aliases
+         innerq = self.query.clone()
+         innerq.__class__ = Query
+         innerq.clear_select_clause()

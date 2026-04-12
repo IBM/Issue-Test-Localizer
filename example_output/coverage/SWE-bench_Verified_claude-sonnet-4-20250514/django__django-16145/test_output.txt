@@ -1,0 +1,1607 @@
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
++++++ dirname /opt/miniconda3/bin/conda
+++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1=
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+nothing to commit, working tree clean
++ git show
+commit 93d4c9ea1de24eb391cb2b3561b6703fd46374df
+Author: Carlton Gibson <carlton.gibson@noumenal.es>
+Date:   Tue Oct 4 10:12:11 2022 +0200
+
+    Added CVE-2022-36359 to security archive.
+
+diff --git a/docs/releases/security.txt b/docs/releases/security.txt
+index f039379e0e..940f91fa0f 100644
+--- a/docs/releases/security.txt
++++ b/docs/releases/security.txt
+@@ -36,6 +36,17 @@ Issues under Django's security process
+ All security issues have been handled under versions of Django's security
+ process. These are listed below.
+ 
++October 4, 2022 - :cve:`2022-41323`
++-----------------------------------
++
++Potential denial-of-service vulnerability in internationalized URLs. `Full
++description
++<https://www.djangoproject.com/weblog/2022/oct/04/security-releases/>`__
++
++* Django 4.1 :commit:`(patch) <9d656ea51d9ea7105c0c0785783ac29d426a7d25>`
++* Django 4.0 :commit:`(patch) <23f0093125ac2e553da6c1b2f9988eb6a3dd2ea1>`
++* Django 3.2 :commit:`(patch) <5b6b257fa7ec37ff27965358800c67e2dd11c924>`
++
+ August 3, 2022 - :cve:`2022-36359`
+ ----------------------------------
+ 
++ git diff 93d4c9ea1de24eb391cb2b3561b6703fd46374df
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z x ']'
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1='(testbed) '
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=3
++++ CONDA_SHLVL=3
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=4
+++ CONDA_SHLVL=4
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_3=/opt/miniconda3
+++ CONDA_PREFIX_3=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python -m pip install -e .
+Obtaining file:///testbed
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: asgiref>=3.5.2 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Django==4.2.dev20221004081211) (3.11.1)
+Requirement already satisfied: sqlparse>=0.2.2 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Django==4.2.dev20221004081211) (0.5.5)
+Requirement already satisfied: typing_extensions>=4 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from asgiref>=3.5.2->Django==4.2.dev20221004081211) (4.15.0)
+Building wheels for collected packages: Django
+  Building editable for Django (pyproject.toml): started
+  Building editable for Django (pyproject.toml): finished with status 'done'
+  Created wheel for Django: filename=django-4.2.dev20221004081211-0.editable-py3-none-any.whl size=27254 sha256=788405829b1956e7337d862137e5923bd359f40bcfd6a36debf273f8be5145c0
+  Stored in directory: /tmp/pip-ephem-wheel-cache-rqsapzi5/wheels/7d/66/67/70d1ee2124ccf21d601c352e25cdca10f611f7c8b3f9ffb9e4
+Successfully built Django
+Installing collected packages: Django
+  Attempting uninstall: Django
+    Found existing installation: Django 4.2.dev20221004081211
+    Uninstalling Django-4.2.dev20221004081211:
+      Successfully uninstalled Django-4.2.dev20221004081211
+Successfully installed Django-4.2.dev20221004081211
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
++ echo 'Current Git Commit:'
++ git rev-parse HEAD
+Current Git Commit:
+93d4c9ea1de24eb391cb2b3561b6703fd46374df
++ python -m pip install pytest pytest-cov coverage
+Collecting pytest
+  Downloading pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+Collecting pytest-cov
+  Downloading pytest_cov-7.1.0-py3-none-any.whl.metadata (32 kB)
+Collecting coverage
+  Downloading coverage-7.10.7-cp39-cp39-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.9 kB)
+Requirement already satisfied: exceptiongroup>=1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest) (1.3.1)
+Collecting iniconfig>=1 (from pytest)
+  Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+Requirement already satisfied: packaging>=20 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest) (26.0)
+Collecting pluggy<2,>=1.5 (from pytest)
+  Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting pygments>=2.7.2 (from pytest)
+  Downloading pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+Requirement already satisfied: tomli>=1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest) (2.4.1)
+Requirement already satisfied: typing-extensions>=4.6.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from exceptiongroup>=1->pytest) (4.15.0)
+Downloading pytest-8.4.2-py3-none-any.whl (365 kB)
+Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+Downloading pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+Downloading coverage-7.10.7-cp39-cp39-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (246 kB)
+Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+Downloading pygments-2.20.0-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 60.5 MB/s  0:00:00
+Installing collected packages: pygments, pluggy, iniconfig, coverage, pytest, pytest-cov
+
+Successfully installed coverage-7.10.7 iniconfig-2.1.0 pluggy-1.6.0 pygments-2.20.0 pytest-8.4.2 pytest-cov-7.1.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
++ git diff
++ echo '[run]'
++ echo 'dynamic_context = test_function'
++ echo ''
++ echo '[report]'
++ echo 'show_missing = True'
++ echo 'ignore_errors = True'
++ echo 'omit ='
++ echo '    /testbed/generated/*'
+++ date +%s
++ start_time=1775977640
+++ date -d @1775977640
++ echo 'Start time: Sun Apr 12 07:07:20 UTC 2026'
+Start time: Sun Apr 12 07:07:20 UTC 2026
++ coverage run ./tests/runtests.py servers.tests servers.test_basehttp servers.test_liveserverthread builtin_server.tests admin_scripts.tests utils_tests.test_autoreload staticfiles_tests.test_liveserver staticfiles_tests.test_handlers test_utils.tests runtests --verbosity 2 --settings=test_sqlite --parallel 1
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/testbed/django'
+Importing application servers
+Importing application builtin_server
+Importing application test_utils
+Importing application utils_tests
+Importing application staticfiles_tests
+Importing application admin_scripts
+Found 497 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: admin_scripts, auth, builtin_server, contenttypes, messages, servers, sessions, staticfiles, staticfiles_tests, test_utils, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table servers_person
+    Creating table test_utils_car
+    Creating table test_utils_person
+    Creating table test_utils_possessedcar
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'other' ('file:memorydb_other?mode=memory&cache=shared')...
+Operations to perform:
+  Synchronize unmigrated apps: admin_scripts, auth, builtin_server, contenttypes, messages, servers, sessions, staticfiles, staticfiles_tests, test_utils, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table servers_person
+    Creating table test_utils_car
+    Creating table test_utils_person
+    Creating table test_utils_possessedcar
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_migration_warning_multiple_apps (admin_scripts.tests.ManageRunserverMigrationWarning) ... ok
+test_migration_warning_one_app (admin_scripts.tests.ManageRunserverMigrationWarning) ... ok
+test_failure (test_utils.tests.AssertNumQueriesContextManagerTests) ... ok
+test_simple (test_utils.tests.AssertNumQueriesContextManagerTests) ... ok
+test_with_client (test_utils.tests.AssertNumQueriesContextManagerTests) ... ok
+test_assert_num_queries (test_utils.tests.AssertNumQueriesTests) ... ok
+test_assert_num_queries_with_client (test_utils.tests.AssertNumQueriesTests) ... ok
+test_empty (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_flat_values_list (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_maxdiff (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_ordered (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_queryset (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_repeated_values (test_utils.tests.AssertQuerysetEqualTests)
+assertQuerysetEqual checks the number of appearance of each item ... ok
+test_repr_transform (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_transform (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_undefined_order (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_unordered (test_utils.tests.AssertQuerysetEqualTests) ... ok
+test_different_using (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_execute (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_execute_recursive (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_execute_robust (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_execute_tree (test_utils.tests.CaptureOnCommitCallbacksTests)
+A visualisation of the callback tree tested. Each node is expected to ... ok
+test_no_arguments (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_pre_callback (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_using (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_with_rolled_back_savepoint (test_utils.tests.CaptureOnCommitCallbacksTests) ... ok
+test_failure (test_utils.tests.CaptureQueriesContextManagerTests) ... ok
+test_nested (test_utils.tests.CaptureQueriesContextManagerTests) ... ok
+test_simple (test_utils.tests.CaptureQueriesContextManagerTests) ... ok
+test_with_client (test_utils.tests.CaptureQueriesContextManagerTests) ... ok
+test_within (test_utils.tests.CaptureQueriesContextManagerTests) ... ok
+test_missing_default_databases (test_utils.tests.SkippingClassTestCase) ... ok
+test_skip_class_unless_db_feature (test_utils.tests.SkippingClassTestCase) ... ok
+test_fixtures_are_skipped (test_utils.tests.SkippingExtraTests) ... skipped 'Fixture loading should not be performed for skipped tests.'
+test_failure_in_setUpTestData_should_rollback_transaction (test_utils.tests.TestBadSetUpTestData) ... ok
+test_live_server_url_is_class_property (servers.tests.LiveServerAddress) ... ok
+test_database_writes (servers.tests.LiveServerDatabase)
+Data written to the database by a view can be read. ... ok
+test_fixtures_loaded (servers.tests.LiveServerDatabase)
+Fixtures are properly loaded and visible to the live server thread. ... ok
+test_port_bind (servers.tests.LiveServerPort)
+Each LiveServerTestCase binds to a unique port or fails to start a ... ok
+test_specified_port_bind (servers.tests.LiveServerPort)
+LiveServerTestCase.port customizes the server's port. ... ok
+test_set_up_class (servers.tests.LiveServerTestCaseSetupTest) ... ok
+test_closes_connections (servers.tests.LiveServerTestCloseConnectionTest) ... skipped "the sqlite backend's close() method is a no-op when using an in-memory database"
+test_check_model_instance_from_subview (servers.tests.LiveServerThreadedTests) ... ok
+test_view_calls_subview (servers.tests.LiveServerThreadedTests) ... ok
+test_404 (servers.tests.LiveServerViews) ... ok
+test_closes_connection_without_content_length (servers.tests.LiveServerViews)
+An HTTP 1.1 server is supposed to support keep-alive. Since our ... ok
+test_environ (servers.tests.LiveServerViews) ... ok
+test_keep_alive_connection_clears_previous_request_data (servers.tests.LiveServerViews) ... ok
+test_keep_alive_on_connection_with_content_length (servers.tests.LiveServerViews)
+See `test_closes_connection_without_content_length` for details. This ... ok
+test_media_files (servers.tests.LiveServerViews) ... ok
+test_no_collectstatic_emulation (servers.tests.LiveServerViews)
+LiveServerTestCase reports a 404 status code when HTTP client ... ok
+test_protocol (servers.tests.LiveServerViews)
+Launched server serves with HTTP 1.1. ... ok
+test_static_files (servers.tests.LiveServerViews) ... ok
+test_view (servers.tests.LiveServerViews) ... ok
+test_closes_connection_with_content_length (servers.tests.SingleThreadLiveServerViews)
+Contrast to ... ok
+test_https (servers.test_basehttp.WSGIRequestHandlerTestCase) ... ok
+test_log_message (servers.test_basehttp.WSGIRequestHandlerTestCase) ... ok
+test_strips_underscore_headers (servers.test_basehttp.WSGIRequestHandlerTestCase)
+WSGIRequestHandler ignores headers containing underscores. ... ok
+test_broken_pipe_errors (servers.test_basehttp.WSGIServerTestCase)
+WSGIServer handles broken pipe errors. ... ok
+test_closes_connections (servers.test_liveserverthread.LiveServerThreadTest) ... skipped "the sqlite backend's close() method is a no-op when using an in-memory database"
+test_server_class (servers.test_liveserverthread.LiveServerThreadTest) ... ok
+test_option_then_setting (admin_scripts.tests.ArgumentOrder)
+Options passed before settings are correctly handled. ... ok
+test_option_then_setting_then_option (admin_scripts.tests.ArgumentOrder)
+Options are correctly handled when they are passed before and after ... ok
+test_setting_then_option (admin_scripts.tests.ArgumentOrder)
+Options passed after settings are correctly handled. ... ok
+test_setting_then_short_option (admin_scripts.tests.ArgumentOrder)
+Short options passed after settings are correctly handled. ... ok
+test_short_option_then_setting (admin_scripts.tests.ArgumentOrder)
+Short options passed before settings are correctly handled. ... ok
+test_app_command (admin_scripts.tests.CommandTypes)
+User AppCommands can execute when a single app name is provided ... ok
+test_app_command_invalid_app_label (admin_scripts.tests.CommandTypes)
+User AppCommands can execute when a single app name is provided ... ok
+test_app_command_multiple_apps (admin_scripts.tests.CommandTypes)
+User AppCommands raise an error when multiple app names are provided ... ok
+test_app_command_no_apps (admin_scripts.tests.CommandTypes)
+User AppCommands raise an error when no app name is provided ... ok
+test_app_command_some_invalid_app_labels (admin_scripts.tests.CommandTypes)
+User AppCommands can execute when some of the provided app names are invalid ... ok
+test_base_command (admin_scripts.tests.CommandTypes)
+User BaseCommands can execute when a label is provided ... ok
+test_base_command_multiple_label (admin_scripts.tests.CommandTypes)
+User BaseCommands can execute when no labels are provided ... ok
+test_base_command_no_label (admin_scripts.tests.CommandTypes)
+User BaseCommands can execute when no labels are provided ... ok
+test_base_command_with_option (admin_scripts.tests.CommandTypes)
+User BaseCommands can execute with options when a label is provided ... ok
+test_base_command_with_options (admin_scripts.tests.CommandTypes)
+User BaseCommands can execute with multiple options when a label is provided ... ok
+test_base_command_with_wrong_option (admin_scripts.tests.CommandTypes)
+User BaseCommands outputs command usage when wrong option is specified ... ok
+test_base_run_from_argv (admin_scripts.tests.CommandTypes)
+Test run_from_argv properly terminates even with custom execute() (#19665) ... ok
+test_color_style (admin_scripts.tests.CommandTypes) ... ok
+test_command_color (admin_scripts.tests.CommandTypes) ... ok
+test_command_no_color (admin_scripts.tests.CommandTypes)
+--no-color prevent colorization of the output ... ok
+test_custom_stderr (admin_scripts.tests.CommandTypes) ... ok
+test_custom_stdout (admin_scripts.tests.CommandTypes) ... ok
+test_force_color_command_init (admin_scripts.tests.CommandTypes) ... ok
+test_force_color_execute (admin_scripts.tests.CommandTypes) ... ok
+test_help (admin_scripts.tests.CommandTypes)
+help is handled as a special case ... ok
+test_help_alternative (admin_scripts.tests.CommandTypes)
+--help is equivalent to help ... ok
+test_help_commands (admin_scripts.tests.CommandTypes)
+help --commands shows the list of all available commands ... ok
+test_help_default_options_with_custom_arguments (admin_scripts.tests.CommandTypes) ... ok
+test_help_short_altert (admin_scripts.tests.CommandTypes)
+-h is handled as a short form of --help ... ok
+test_label_command (admin_scripts.tests.CommandTypes)
+User LabelCommands can execute when a label is provided ... ok
+test_label_command_multiple_label (admin_scripts.tests.CommandTypes)
+User LabelCommands are executed multiple times if multiple labels are provided ... ok
+test_label_command_no_label (admin_scripts.tests.CommandTypes)
+User LabelCommands raise an error if no label is provided ... ok
+test_no_color_force_color_mutually_exclusive_command_init (admin_scripts.tests.CommandTypes) ... ok
+test_no_color_force_color_mutually_exclusive_execute (admin_scripts.tests.CommandTypes) ... ok
+test_noargs (admin_scripts.tests.CommandTypes)
+NoArg Commands can be executed ... ok
+test_noargs_with_args (admin_scripts.tests.CommandTypes)
+NoArg Commands raise an error if an argument is provided ... ok
+test_run_from_argv_closes_connections (admin_scripts.tests.CommandTypes)
+A command called from the command line should close connections after ... ok
+test_run_from_argv_non_ascii_error (admin_scripts.tests.CommandTypes)
+Non-ASCII message of CommandError does not raise any ... ok
+test_specific_help (admin_scripts.tests.CommandTypes)
+--help can be used on a specific command ... ok
+test_suppress_base_options_command_defaults (admin_scripts.tests.CommandTypes) ... ok
+test_suppress_base_options_command_help (admin_scripts.tests.CommandTypes) ... ok
+test_version (admin_scripts.tests.CommandTypes)
+version is handled as a special case ... ok
+test_version_alternative (admin_scripts.tests.CommandTypes)
+--version is equivalent to version ... ok
+test_all (admin_scripts.tests.DiffSettings)
+The all option also shows settings with the default value. ... ok
+test_basic (admin_scripts.tests.DiffSettings)
+Runs without error and emits settings diff. ... ok
+test_custom_default (admin_scripts.tests.DiffSettings)
+The --default option specifies an alternate settings module for ... ok
+test_dynamic_settings_configured (admin_scripts.tests.DiffSettings) ... ok
+test_settings_configured (admin_scripts.tests.DiffSettings) ... ok
+test_unified (admin_scripts.tests.DiffSettings)
+--output=unified emits settings diff in unified mode. ... ok
+test_unified_all (admin_scripts.tests.DiffSettings)
+--output=unified --all emits settings diff in unified mode and includes ... ok
+test_precedence (admin_scripts.tests.Discovery)
+Apps listed first in INSTALLED_APPS have precedence. ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin builtin commands succeed if settings are ... ok
+test_builtin_with_settings (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin builtin commands succeed if settings are ... ok
+test_custom_command (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin can't execute user commands unless settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin can execute user commands if settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.DjangoAdminAlternateSettings)
+alternate: django-admin can execute user commands if settings are ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin builtin commands succeed if settings are provided ... ok
+test_builtin_with_settings (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin builtin commands succeed if settings are provided ... ok
+test_custom_command (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin can't execute user commands if it isn't provided ... ok
+test_custom_command_with_environment (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin can execute user commands if settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.DjangoAdminDefaultSettings)
+default: django-admin can execute user commands if settings are ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin builtin commands succeed if the environment ... ok
+test_builtin_with_settings (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin builtin commands succeed if a settings file ... ok
+test_custom_command (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin can't execute user commands unless settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin can execute user commands if settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.DjangoAdminFullPathDefaultSettings)
+fulldefault: django-admin can execute user commands if settings are ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin builtin commands fail if settings are provided in ... ok
+test_builtin_with_settings (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin builtin commands fail if settings are provided as ... ok
+test_custom_command (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin can't execute user commands unless settings are provided ... ok
+test_custom_command_with_environment (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin can't execute user commands, even if settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.DjangoAdminMinimalSettings)
+minimal: django-admin can't execute user commands, even if settings are ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin builtin commands succeed if settings are ... ok
+test_builtin_with_settings (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin builtin commands succeed if settings are ... ok
+test_custom_command (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin can't execute user commands unless settings are ... ok
+test_custom_command_with_environment (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin can execute user commands if settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.DjangoAdminMultipleSettings)
+alternate: django-admin can execute user commands if settings are ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminNoSettings)
+no settings: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminNoSettings)
+no settings: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminNoSettings)
+no settings: django-admin builtin commands fail if settings file (from ... ok
+test_commands_with_invalid_settings (admin_scripts.tests.DjangoAdminNoSettings)
+Commands that don't require settings succeed if the settings file ... ok
+test_builtin_command (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: django-admin builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: django-admin builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: django-admin builtin commands succeed if settings are ... ok
+test_builtin_with_settings (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: django-admin builtin commands succeed if settings are ... ok
+test_custom_command (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: django-admin can't execute user commands unless settings are ... ok
+test_setup_environ (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: startapp creates the correct directory ... ok
+test_setup_environ_custom_template (admin_scripts.tests.DjangoAdminSettingsDirectory)
+directory: startapp creates the correct directory with a custom template ... ok
+test_startapp_unicode_name (admin_scripts.tests.DjangoAdminSettingsDirectory)
+startapp creates the correct directory with Unicode characters. ... ok
+test_no_suggestions (admin_scripts.tests.DjangoAdminSuggestions) ... ok
+test_suggestions (admin_scripts.tests.DjangoAdminSuggestions) ... ok
+test_pks_parsing (admin_scripts.tests.Dumpdata)
+Regression for #20509 ... ok
+test_program_name_from_argv (admin_scripts.tests.ExecuteFromCommandLine)
+Program name is computed from the execute_from_command_line()'s argv ... ok
+test_program_name_in_help (admin_scripts.tests.MainModule) ... ok
+test_builtin_command (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands work if settings are provided in ... ok
+test_builtin_with_settings (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands work with settings provided as argument ... ok
+test_custom_command (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py can't execute user commands without settings ... ok
+test_custom_command_output_color (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py output syntax color can be deactivated with the ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py can execute user commands if settings are provided ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py can execute user commands if settings are provided ... ok
+test_app_with_import (admin_scripts.tests.ManageCheck)
+manage.py check does not raise errors when an app imports a base ... ok
+test_broken_app (admin_scripts.tests.ManageCheck)
+manage.py check reports an ImportError if an app's models.py ... ok
+test_complex_app (admin_scripts.tests.ManageCheck)
+manage.py check does not raise an ImportError validating a ... ok
+test_nonexistent_app (admin_scripts.tests.ManageCheck)
+check reports an error on a nonexistent app in INSTALLED_APPS. ... ok
+test_output_format (admin_scripts.tests.ManageCheck)
+All errors/warnings should be sorted by level and by message. ... ok
+test_warning_does_not_halt (admin_scripts.tests.ManageCheck)
+When there are only warnings or less serious messages, then Django ... ok
+test_builtin_command (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed when default settings are ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed if settings are provided in ... ok
+test_builtin_with_settings (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed if settings are provided as ... ok
+test_custom_command (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py can execute user commands when default settings are ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py can execute user commands when settings are provided ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py can execute user commands when settings are provided ... ok
+test_builtin_command (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed when default settings ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed if settings are ... ok
+test_builtin_with_settings (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed if settings are ... ok
+test_custom_command (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py can execute user commands when default settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py can execute user commands when settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py can execute user commands when settings are ... ok
+test_non_existent_command_output (admin_scripts.tests.ManageManuallyConfiguredSettings) ... ok
+test_builtin_command (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail with an error when no settings ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings are provided in ... ok
+test_builtin_with_settings (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings are provided as argument ... ok
+test_custom_command (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py can't execute user commands without appropriate settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py can't execute user commands, even if settings are ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py can't execute user commands, even if settings are ... ok
+test_builtin_command (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can execute builtin commands if settings are ... ok
+test_builtin_with_settings (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands succeed if settings are provided ... ok
+test_custom_command (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can't execute user commands using default settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can execute user commands if settings are provided ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can execute user commands if settings are provided ... ok
+test_builtin_command (admin_scripts.tests.ManageNoSettings)
+no settings: manage.py builtin commands fail with an error when no ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageNoSettings)
+no settings: manage.py builtin commands fail if settings file (from ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageNoSettings)
+no settings: manage.py builtin commands fail if settings file (from ... ok
+test_no_database (admin_scripts.tests.ManageRunserver)
+Ensure runserver.check_migrations doesn't choke on empty DATABASES. ... ok
+test_readonly_database (admin_scripts.tests.ManageRunserver)
+runserver.check_migrations() doesn't choke when a database is read-only. ... ok
+test_runner_addrport_ipv6 (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_ambiguous (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_custom_defaults (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_custom_defaults_ipv6 (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_hostname (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_hostname_ipv6 (admin_scripts.tests.ManageRunserver) ... ok
+test_runserver_addrport (admin_scripts.tests.ManageRunserver) ... ok
+test_skip_checks (admin_scripts.tests.ManageRunserver) ... ok
+test_empty_allowed_hosts_error (admin_scripts.tests.ManageRunserverEmptyAllowedHosts) ... ok
+test_suppressed_options (admin_scripts.tests.ManageRunserverHelpOutput)
+runserver doesn't support --verbosity and --trackback options. ... ok
+test_attribute_error (admin_scripts.tests.ManageSettingsWithSettingsErrors)
+manage.py builtin commands does not swallow attribute error due to bad ... ok
+test_help (admin_scripts.tests.ManageSettingsWithSettingsErrors)
+Test listing available commands output note when only core commands are ... ok
+test_import_error (admin_scripts.tests.ManageSettingsWithSettingsErrors)
+import error: manage.py builtin commands shows useful diagnostic info ... ok
+test_key_error (admin_scripts.tests.ManageSettingsWithSettingsErrors) ... ok
+test_params_to_runserver (admin_scripts.tests.ManageTestserver) ... ok
+test_testserver_handle_params (admin_scripts.tests.ManageTestserver) ... ok
+test_importable_name (admin_scripts.tests.StartApp)
+startapp validates that app name doesn't clash with existing Python ... ok
+test_importable_target_name (admin_scripts.tests.StartApp) ... ok
+test_invalid_name (admin_scripts.tests.StartApp)
+startapp validates that app name is a valid Python identifier. ... ok
+test_invalid_target_name (admin_scripts.tests.StartApp) ... ok
+test_overlaying_app (admin_scripts.tests.StartApp) ... ok
+test_template (admin_scripts.tests.StartApp) ... ok
+test_trailing_slash_in_target_app_directory_name (admin_scripts.tests.StartApp) ... ok
+test_custom_project_destination_missing (admin_scripts.tests.StartProject)
+Make sure an exception is raised when the provided ... ok
+test_custom_project_template (admin_scripts.tests.StartProject)
+The startproject management command is able to use a different project ... ok
+test_custom_project_template_context_variables (admin_scripts.tests.StartProject)
+Make sure template context variables are rendered with proper values ... FAIL
+test_custom_project_template_exclude_directory (admin_scripts.tests.StartProject)
+Excluded directories (in addition to .git and __pycache__) are not ... ok
+test_custom_project_template_from_tarball_by_path (admin_scripts.tests.StartProject)
+The startproject management command is able to use a different project ... ok
+test_custom_project_template_from_tarball_by_url (admin_scripts.tests.StartProject)
+The startproject management command is able to use a different project ... ok
+test_custom_project_template_from_tarball_by_url_django_user_agent (admin_scripts.tests.StartProject) ... ok
+test_custom_project_template_from_tarball_to_alternative_location (admin_scripts.tests.StartProject)
+Startproject can use a project template from a tarball and create it in ... ok
+test_custom_project_template_hidden_directory_default_excluded (admin_scripts.tests.StartProject)
+Hidden directories are excluded by default. ... ok
+test_custom_project_template_hidden_directory_included (admin_scripts.tests.StartProject)
+Template context variables in hidden directories are rendered, if not ... ok
+test_custom_project_template_with_non_ascii_templates (admin_scripts.tests.StartProject)
+The startproject management command is able to render templates with ... ok
+test_file_without_extension (admin_scripts.tests.StartProject)
+Make sure the startproject management command is able to render custom files ... ok
+test_honor_umask (admin_scripts.tests.StartProject) ... ok
+test_importable_project_name (admin_scripts.tests.StartProject)
+startproject validates that project name doesn't clash with existing ... ok
+test_invalid_project_name (admin_scripts.tests.StartProject)
+Make sure the startproject management command validates a project name ... ok
+test_no_escaping_of_project_variables (admin_scripts.tests.StartProject)
+Make sure template context variables are not html escaped ... ok
+test_project_template_tarball_url (admin_scripts.tests.StartProject)
+" ... ok
+test_simple_project (admin_scripts.tests.StartProject)
+Make sure the startproject management command creates a project ... ok
+test_simple_project_different_directory (admin_scripts.tests.StartProject)
+The startproject management command creates a project in a specific ... ok
+test_template_dir_with_trailing_slash (admin_scripts.tests.StartProject)
+Ticket 17475: Template dir passed has a trailing path separator ... ok
+test_wrong_args (admin_scripts.tests.StartProject)
+Passing the wrong kinds of arguments outputs an error and prints usage. ... ok
+test_run_loop_catches_stopiteration (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_run_loop_stop_and_return (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_wait_for_apps_ready_checks_for_exception (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_wait_for_apps_ready_without_exception (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_with_unresolvable_path (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_files_with_recursive_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_with_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watchman_available (utils_tests.test_autoreload.GetReloaderTests) ... ok
+test_watchman_unavailable (utils_tests.test_autoreload.GetReloaderTests) ... ok
+test_manage_py (utils_tests.test_autoreload.RestartWithReloaderTests) ... ok
+test_python_m_django (utils_tests.test_autoreload.RestartWithReloaderTests) ... ok
+test_calls_start_django (utils_tests.test_autoreload.RunWithReloaderTests) ... ok
+test_calls_sys_exit (utils_tests.test_autoreload.RunWithReloaderTests) ... ok
+test_swallows_keyboard_interrupt (utils_tests.test_autoreload.RunWithReloaderTests) ... ok
+test_check_errors_called (utils_tests.test_autoreload.StartDjangoTests) ... ok
+test_echo_on_called (utils_tests.test_autoreload.StartDjangoTests) ... ok
+test_starts_thread_with_args (utils_tests.test_autoreload.StartDjangoTests) ... ok
+test_glob (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_glob_recursive (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_multiple_globs (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_multiple_recursive_globs (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_nested_glob_recursive (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_overlapping_glob_recursive (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_overlapping_globs (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_snapshot_files_ignores_missing_files (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_snapshot_files_updates (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_snapshot_files_with_duplicates (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_tick_does_not_trigger_twice (utils_tests.test_autoreload.StatReloaderTests) ... ok
+test_mutates_error_files (utils_tests.test_autoreload.TestCheckErrors) ... ok
+test_entrypoint_fallback (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_exe_fallback (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_module_no_spec (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_raises_runtimeerror (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_run_as_module (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_run_as_non_django_module (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_run_as_non_django_module_non_package (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_warnoptions (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_xoptions (utils_tests.test_autoreload.TestChildArguments) ... ok
+test_common_roots (utils_tests.test_autoreload.TestCommonRoots) ... ok
+test_bytecode_conversion_to_source (utils_tests.test_autoreload.TestIterModulesAndFiles)
+.pyc and .pyo files are included in the files list. ... ok
+test_check_errors (utils_tests.test_autoreload.TestIterModulesAndFiles)
+When a file containing an error is imported in a function wrapped by ... ok
+test_check_errors_catches_all_exceptions (utils_tests.test_autoreload.TestIterModulesAndFiles)
+Since Python may raise arbitrary exceptions when importing code, ... ok
+test_file_added (utils_tests.test_autoreload.TestIterModulesAndFiles)
+When a file is added, it's returned by iter_all_python_module_files(). ... ok
+test_main_module_is_resolved (utils_tests.test_autoreload.TestIterModulesAndFiles) ... ok
+test_main_module_without_file_is_not_resolved (utils_tests.test_autoreload.TestIterModulesAndFiles) ... ok
+test_module_without_spec (utils_tests.test_autoreload.TestIterModulesAndFiles) ... ok
+test_path_with_embedded_null_bytes (utils_tests.test_autoreload.TestIterModulesAndFiles) ... ok
+test_paths_are_pathlib_instances (utils_tests.test_autoreload.TestIterModulesAndFiles) ... ok
+test_weakref_in_sys_module (utils_tests.test_autoreload.TestIterModulesAndFiles)
+iter_all_python_module_file() ignores weakref modules. ... ok
+test_zip_reload (utils_tests.test_autoreload.TestIterModulesAndFiles)
+Modules imported from zipped files have their archive location included ... ok
+test_no_exception (utils_tests.test_autoreload.TestRaiseLastException) ... ok
+test_raises_custom_exception (utils_tests.test_autoreload.TestRaiseLastException) ... ok
+test_raises_exception (utils_tests.test_autoreload.TestRaiseLastException) ... ok
+test_raises_exception_with_context (utils_tests.test_autoreload.TestRaiseLastException) ... ok
+test_sys_paths_absolute (utils_tests.test_autoreload.TestSysPathDirectories) ... ok
+test_sys_paths_directories (utils_tests.test_autoreload.TestSysPathDirectories) ... ok
+test_sys_paths_non_existing (utils_tests.test_autoreload.TestSysPathDirectories) ... ok
+test_sys_paths_with_directories (utils_tests.test_autoreload.TestSysPathDirectories) ... ok
+test_is_django_module (utils_tests.test_autoreload.TestUtilities) ... ok
+test_is_django_path (utils_tests.test_autoreload.TestUtilities) ... ok
+test_check_availability (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_check_availability_lower_version (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_check_server_status (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_check_server_status_raises_error (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_glob (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_glob_recursive (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_multiple_globs (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_multiple_recursive_globs (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_nested_glob_recursive (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_overlapping_glob_recursive (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_overlapping_globs (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_pywatchman_not_available (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_setting_timeout_from_environment_variable (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_update_watches_raises_exceptions (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_watch_glob_ignores_non_existing_directories_two_levels (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_watch_glob_multiple_patterns (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_watch_glob_uses_existing_parent_directories (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_watched_roots_contains_directory_globs (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_watched_roots_contains_files (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_watched_roots_contains_sys_path (utils_tests.test_autoreload.WatchmanReloaderTests) ... skipped 'Watchman unavailable: Cannot connect to the watchman service.'
+test_test_test (staticfiles_tests.test_liveserver.StaticLiveServerChecks) ... ok
+test_collectstatic_emulation (staticfiles_tests.test_liveserver.StaticLiveServerView)
+StaticLiveServerTestCase use of staticfiles' serve() allows it ... ok
+test_get_async_response (staticfiles_tests.test_handlers.TestASGIStaticFilesHandler) ... ok
+test_get_async_response_not_found (staticfiles_tests.test_handlers.TestASGIStaticFilesHandler) ... ok
+test_non_http_requests_passed_to_the_wrapped_application (staticfiles_tests.test_handlers.TestASGIStaticFilesHandler) ... ok
+test_allowed_database_chunked_cursor_queries (test_utils.tests.AllowedDatabaseQueriesTests) ... ok
+test_allowed_database_queries (test_utils.tests.AllowedDatabaseQueriesTests) ... ok
+test_assert_field_output (test_utils.tests.AssertFieldOutputTests) ... ok
+test_custom_required_message (test_utils.tests.AssertFieldOutputTests) ... ok
+test_assert_form_error_errors_none (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_form_error_errors_none_warning (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_form_error_old_api (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_form_error_old_api_assertion_error (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_formset_error_errors_none (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_formset_error_errors_none_warning (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_formset_error_old_api (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_assert_formset_error_old_api_assertion_error (test_utils.tests.AssertFormErrorDeprecationTests) ... ok
+test_different_non_field_errors (test_utils.tests.AssertFormErrorTests) ... ok
+test_empty_errors_invalid_form (test_utils.tests.AssertFormErrorTests) ... ok
+test_empty_errors_valid_form (test_utils.tests.AssertFormErrorTests) ... ok
+test_empty_errors_valid_form_non_field_errors (test_utils.tests.AssertFormErrorTests) ... ok
+test_error_list (test_utils.tests.AssertFormErrorTests) ... ok
+test_field_not_in_form (test_utils.tests.AssertFormErrorTests) ... ok
+test_field_with_different_error (test_utils.tests.AssertFormErrorTests) ... ok
+test_field_with_no_errors (test_utils.tests.AssertFormErrorTests) ... ok
+test_form_not_in_context (test_utils.tests.AssertFormErrorTests) ... ok
+test_non_client_response (test_utils.tests.AssertFormErrorTests) ... ok
+test_non_field_errors (test_utils.tests.AssertFormErrorTests) ... ok
+test_response_with_no_context (test_utils.tests.AssertFormErrorTests) ... ok
+test_single_error (test_utils.tests.AssertFormErrorTests) ... ok
+test_unbound_form (test_utils.tests.AssertFormErrorTests) ... ok
+test_different_non_field_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_different_non_form_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_empty_errors_invalid_formset (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_empty_errors_valid_formset (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_error_list (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_field_not_in_form (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_field_with_different_error (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_field_with_no_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_form_index_too_big (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_form_index_too_big_plural (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_formset_not_in_context (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_multiple_forms (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_no_non_field_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_no_non_form_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_non_client_response (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_non_field_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_non_form_errors (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_non_form_errors_with_field (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_response_with_no_context (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_single_error (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_unbound_formset (test_utils.tests.AssertFormsetErrorTests) ... ok
+test_default_level (test_utils.tests.AssertNoLogsTest) ... ok
+test_does_not_hide_other_failures (test_utils.tests.AssertNoLogsTest) ... ok
+test_fails_when_log_emitted (test_utils.tests.AssertNoLogsTest) ... ok
+test_int_level (test_utils.tests.AssertNoLogsTest) ... ok
+test_text_level (test_utils.tests.AssertNoLogsTest) ... ok
+test_ignores_connection_configuration_queries (test_utils.tests.AssertNumQueriesUponConnectionTests) ... ok
+test_assert_raises_message (test_utils.tests.AssertRaisesMsgTest) ... ok
+test_special_re_chars (test_utils.tests.AssertRaisesMsgTest)
+assertRaisesMessage shouldn't interpret RE special chars. ... ok
+test_assert_used_on_http_response (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_count (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_error_message (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_failure (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_msg_prefix (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_nested_usage (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_not_used (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_usage (test_utils.tests.AssertTemplateUsedContextManagerTests) ... ok
+test_equal (test_utils.tests.AssertURLEqualTests) ... ok
+test_message (test_utils.tests.AssertURLEqualTests) ... ok
+test_msg_prefix (test_utils.tests.AssertURLEqualTests) ... ok
+test_not_equal (test_utils.tests.AssertURLEqualTests) ... ok
+test_callable (test_utils.tests.AssertWarnsMessageTests) ... ok
+test_context_manager (test_utils.tests.AssertWarnsMessageTests) ... ok
+test_context_manager_failure (test_utils.tests.AssertWarnsMessageTests) ... ok
+test_special_re_chars (test_utils.tests.AssertWarnsMessageTests) ... ok
+test_all (test_utils.tests.DatabaseAliasTests) ... ok
+test_close_match (test_utils.tests.DatabaseAliasTests) ... ok
+test_match (test_utils.tests.DatabaseAliasTests) ... ok
+test_no_close_match (test_utils.tests.DatabaseAliasTests) ... ok
+test_disallowed_database_chunked_cursor_queries (test_utils.tests.DisallowedDatabaseQueriesTests) ... ok
+test_disallowed_database_connections (test_utils.tests.DisallowedDatabaseQueriesTests) ... ok
+test_disallowed_database_queries (test_utils.tests.DisallowedDatabaseQueriesTests) ... ok
+test_attributes (test_utils.tests.HTMLEqualTests) ... ok
+test_boolean_attribute (test_utils.tests.HTMLEqualTests) ... ok
+test_class_attribute (test_utils.tests.HTMLEqualTests) ... ok
+test_complex_examples (test_utils.tests.HTMLEqualTests) ... ok
+test_contains_html (test_utils.tests.HTMLEqualTests) ... ok
+test_count (test_utils.tests.HTMLEqualTests) ... ok
+test_escaped_html_errors (test_utils.tests.HTMLEqualTests) ... ok
+test_html_contain (test_utils.tests.HTMLEqualTests) ... ok
+test_html_parser (test_utils.tests.HTMLEqualTests) ... ok
+test_ignore_comments (test_utils.tests.HTMLEqualTests) ... ok
+test_non_boolean_attibutes (test_utils.tests.HTMLEqualTests) ... ok
+test_normalize_refs (test_utils.tests.HTMLEqualTests) ... ok
+test_parse_html_in_script (test_utils.tests.HTMLEqualTests) ... ok
+test_parsing_errors (test_utils.tests.HTMLEqualTests) ... FAIL
+test_root_element_escaped_html (test_utils.tests.HTMLEqualTests) ... ok
+test_self_closing_tags (test_utils.tests.HTMLEqualTests) ... ok
+test_simple_equal_html (test_utils.tests.HTMLEqualTests) ... ok
+test_unequal_html (test_utils.tests.HTMLEqualTests) ... ok
+test_unicode_handling (test_utils.tests.HTMLEqualTests) ... ok
+test_class_decoration (test_utils.tests.IsolatedAppsTests) ... ok
+test_context_manager (test_utils.tests.IsolatedAppsTests) ... ok
+test_installed_apps (test_utils.tests.IsolatedAppsTests) ... ok
+test_method_decoration (test_utils.tests.IsolatedAppsTests) ... ok
+test_nested (test_utils.tests.IsolatedAppsTests) ... ok
+test_equal_parsing_errors (test_utils.tests.JSONEqualTests) ... ok
+test_not_equal_parsing_errors (test_utils.tests.JSONEqualTests) ... ok
+test_simple_equal (test_utils.tests.JSONEqualTests) ... ok
+test_simple_equal_raise (test_utils.tests.JSONEqualTests) ... ok
+test_simple_equal_unordered (test_utils.tests.JSONEqualTests) ... ok
+test_simple_not_equal (test_utils.tests.JSONEqualTests) ... ok
+test_simple_not_equal_raise (test_utils.tests.JSONEqualTests) ... ok
+test_override_database_routers (test_utils.tests.OverrideSettingsTests)
+Overriding DATABASE_ROUTERS should update the base router. ... ok
+test_override_file_upload_directory_permissions (test_utils.tests.OverrideSettingsTests)
+Overriding the FILE_UPLOAD_DIRECTORY_PERMISSIONS setting should be ... ok
+test_override_file_upload_permissions (test_utils.tests.OverrideSettingsTests)
+Overriding the FILE_UPLOAD_PERMISSIONS setting should be reflected in ... ok
+test_override_media_root (test_utils.tests.OverrideSettingsTests)
+Overriding the MEDIA_ROOT setting should be reflected in the ... ok
+test_override_media_url (test_utils.tests.OverrideSettingsTests)
+Overriding the MEDIA_URL setting should be reflected in the ... ok
+test_override_static_root (test_utils.tests.OverrideSettingsTests)
+Overriding the STATIC_ROOT setting should be reflected in the ... ok
+test_override_static_url (test_utils.tests.OverrideSettingsTests)
+Overriding the STATIC_URL setting should be reflected in the ... ok
+test_override_staticfiles_dirs (test_utils.tests.OverrideSettingsTests)
+Overriding the STATICFILES_DIRS setting should be reflected in ... ok
+test_override_staticfiles_finders (test_utils.tests.OverrideSettingsTests)
+Overriding the STATICFILES_FINDERS setting should be reflected in ... ok
+test_override_staticfiles_storage (test_utils.tests.OverrideSettingsTests)
+Overriding the STATICFILES_STORAGE setting should be reflected in ... ok
+test_urlconf_cache (test_utils.tests.OverrideSettingsTests) ... ok
+test_urlconf_first (test_utils.tests.OverrideSettingsTests) ... ok
+test_urlconf_second (test_utils.tests.OverrideSettingsTests) ... ok
+test_allowed_hosts (test_utils.tests.SetupTestEnvironmentTests) ... ok
+test_setup_test_environment_calling_more_than_once (test_utils.tests.SetupTestEnvironmentTests) ... ok
+test_skip_if_db_feature (test_utils.tests.SkippingTestCase)
+Testing the django.test.skipIfDBFeature decorator. ... ok
+test_skip_unless_db_feature (test_utils.tests.SkippingTestCase)
+Testing the django.test.skipUnlessDBFeature decorator. ... ok
+test_cleanups_run_after_tearDown (test_utils.tests.TestContextDecoratorTests) ... ok
+test_exception_in_setup (test_utils.tests.TestContextDecoratorTests)
+An exception is setUp() is reraised after disable() is called. ... ok
+test_comment_root (test_utils.tests.XMLEqualTests) ... ok
+test_doctype_root (test_utils.tests.XMLEqualTests) ... ok
+test_parsing_errors (test_utils.tests.XMLEqualTests) ... ok
+test_processing_instruction (test_utils.tests.XMLEqualTests) ... ok
+test_simple_equal (test_utils.tests.XMLEqualTests) ... ok
+test_simple_equal_raise (test_utils.tests.XMLEqualTests) ... ok
+test_simple_equal_raises_message (test_utils.tests.XMLEqualTests) ... ok
+test_simple_equal_unordered (test_utils.tests.XMLEqualTests) ... ok
+test_simple_equal_with_leading_or_trailing_whitespace (test_utils.tests.XMLEqualTests) ... ok
+test_simple_not_equal (test_utils.tests.XMLEqualTests) ... ok
+test_simple_not_equal_raise (test_utils.tests.XMLEqualTests) ... ok
+test_simple_not_equal_with_whitespace_in_the_middle (test_utils.tests.XMLEqualTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+test_file_response_call_request_finished (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests)
+View returning a FileResponse properly closes the file and http ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+
+======================================================================
+FAIL: test_custom_project_template_context_variables (admin_scripts.tests.StartProject)
+Make sure template context variables are rendered with proper values
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/admin_scripts/tests.py", line 2623, in test_custom_project_template_context_variables
+    self.assertIn('project_directory = "%s"' % testproject_dir, content)
+AssertionError: 'project_directory = "/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpjd_i6orz/test_project/project_dir"' not found in '# The manage.py of the another_project test project\n\n# template context:\nproject_name = "another_project"\nproject_directory = (\n    "/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpjd_i6orz/test_project/project_dir"\n)\nsecret_key = "django-insecure-p^zue)2rxlh4j9_+bec#8u6a#7001-krjstb%!xt#)1smajs7#"\n'
+
+======================================================================
+FAIL: test_parsing_errors (test_utils.tests.HTMLEqualTests)
+----------------------------------------------------------------------
+AssertionError: &lt; div&gt; != <div>
+- &lt; div&gt;
++ <div>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/testbed/tests/test_utils/tests.py", line 958, in test_parsing_errors
+    self.assertHTMLEqual("< div></ div>", "<div></div>")
+  File "/opt/miniconda3/envs/testbed/lib/python3.9/contextlib.py", line 137, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/testbed/django/test/testcases.py", line 881, in _assert_raises_or_warns_cm
+    self.assertIn(expected_message, str(getattr(cm, cm_attr)))
+AssertionError: "First argument is not valid HTML:\n('Unexpected end tag `div` (Line 1, Column 6)', (1, 6))" not found in '&lt; div&gt; != <div>\n- &lt; div&gt;\n+ <div>'
+
+----------------------------------------------------------------------
+Ran 497 tests in 50.752s
+
+FAILED (failures=2, skipped=23)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'other' ('file:memorydb_other?mode=memory&cache=shared')...
+++ date +%s
++ end_time=1775977692
+++ date -d @1775977692
+End time: Sun Apr 12 07:08:12 UTC 2026
++ echo 'End time: Sun Apr 12 07:08:12 UTC 2026'
++ coverage report -m
+/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/coverage/report_core.py:113: CoverageWarning: Couldn't parse '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmp3tfwve2f/zip_import.zip/test_zipped_file.py': No source for code: '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmp3tfwve2f/zip_import.zip/test_zipped_file.py'. (couldnt-parse); see https://coverage.readthedocs.io/en/7.10.7/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/coverage/report_core.py:113: CoverageWarning: Couldn't parse '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpb6z8yojg/test_deleted_removed_module.py': No source for code: '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpb6z8yojg/test_deleted_removed_module.py'. (couldnt-parse); see https://coverage.readthedocs.io/en/7.10.7/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/coverage/report_core.py:113: CoverageWarning: Couldn't parse '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpb79ut8yv/test_exception.py': No source for code: '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpb79ut8yv/test_exception.py'. (couldnt-parse); see https://coverage.readthedocs.io/en/7.10.7/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+/opt/miniconda3/envs/testbed/lib/python3.9/site-packages/coverage/report_core.py:113: CoverageWarning: Couldn't parse '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpoau4h35z/test_compiled.py': No source for code: '/tmp/django_hxjkhvhk/django_x6dx7b_y/tmpoau4h35z/test_compiled.py'. (couldnt-parse); see https://coverage.readthedocs.io/en/7.10.7/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+Name                                                                           Stmts   Miss  Cover   Missing
+------------------------------------------------------------------------------------------------------------
+django/__init__.py                                                                12      0   100%
+django/__main__.py                                                                 3      1    67%   9
+django/apps/__init__.py                                                            3      0   100%
+django/apps/config.py                                                            117     30    74%   36, 59, 78-84, 86, 92, 146-147, 152, 163-164, 171-193, 198, 205-206, 211-212, 236-237, 259
+django/apps/registry.py                                                          176     18    90%   25, 76, 83, 93, 107, 132-138, 143, 163-164, 211, 222-234, 300, 321, 357
+django/conf/__init__.py                                                          145     42    71%   71-72, 83-85, 101, 119-120, 128-135, 159-170, 177, 207, 214, 222, 225, 233, 240, 246, 269, 275, 277, 280, 283-285, 288, 295-300, 303
+django/conf/global_settings.py                                                   149      0   100%
+django/conf/locale/__init__.py                                                     1      0   100%
+django/conf/urls/__init__.py                                                       7      0   100%
+django/contrib/__init__.py                                                         0      0   100%
+django/contrib/admin/__init__.py                                                   8      1    88%   50
+django/contrib/admin/actions.py                                                   31     21    32%   29-86
+django/contrib/admin/apps.py                                                      17      2    88%   26-27
+django/contrib/admin/checks.py                                                   456    347    24%   25-26, 38-40, 43, 51, 62, 71, 83, 85, 102, 114, 128, 140, 150, 160, 178, 198-206, 223-264, 270-275, 289-312, 319-341, 352-360, 373-406, 418-428, 431-458, 463-478, 482-487, 491-496, 507-512, 525-537, 541-546, 560-578, 583-595, 598-608, 613-618, 635-655, 661-664, 677-684, 690-697, 706-741, 746-753, 763-787, 792, 813-816, 821-824, 829-834, 843-877, 882-887, 895-928, 932-953, 956-966, 969-974, 989-1038, 1043-1051, 1056-1061, 1066-1071, 1077-1082, 1092-1143, 1148-1153, 1158-1181, 1188-1208, 1212-1228, 1233-1234, 1247-1273, 1276-1281, 1286-1289, 1294-1299, 1304-1309, 1314-1319, 1323, 1333, 1343
+django/contrib/admin/decorators.py                                                41     20    51%   31, 60, 65, 67, 71, 77, 91-111
+django/contrib/admin/exceptions.py                                                 5      0   100%
+django/contrib/admin/filters.py                                                  244    171    30%   29-31, 40, 50, 58, 67, 77-89, 92, 100, 106, 112, 115-121, 136-143, 148, 151-156, 164-167, 173-175, 182-194, 202, 205-209, 212, 218-221, 224-225, 228-244, 258-268, 273, 276-290, 306-310, 313, 316-336, 350-411, 414-417, 420-421, 438-452, 455, 458-479, 493-499, 506-517, 520-533, 536, 539-544
+django/contrib/admin/helpers.py                                                  267    192    28%   51-59, 62, 69-70, 80, 84, 88, 92, 96-99, 113-118, 122-124, 127-128, 135-147, 150-156, 159, 170-173, 176-188, 195, 203-235, 238-242, 250-262, 265-302, 323-337, 340-372, 383-416, 425-426, 442, 445, 449, 453, 457-460, 479-484, 489-490, 500, 515, 518-522, 525-527, 532-533, 536-539, 548-555
+django/contrib/admin/migrations/0001_initial.py                                    6      0   100%
+django/contrib/admin/migrations/0002_logentry_remove_auto_add.py                   5      0   100%
+django/contrib/admin/migrations/0003_logentry_add_action_flag_choices.py           4      0   100%
+django/contrib/admin/migrations/__init__.py                                        0      0   100%
+django/contrib/admin/models.py                                                    85     46    46%   36-38, 85, 88-98, 101, 104, 107, 114-171, 175, 181-190
+django/contrib/admin/options.py                                                 1058    832    21%   80-82, 86, 139, 144-147, 158-215, 222-234, 242-249, 255-281, 289-331, 338, 341-348, 361-364, 370, 376-380, 386-388, 392, 398, 404, 410, 417-422, 426, 433-487, 497-536, 543-545, 558-560, 573-575, 588-591, 596, 611, 652-655, 658, 661, 667-681, 684-695, 727, 731-742, 750, 758, 765-811, 820-822, 829-836, 859-868, 874-883, 890-894, 906-907, 912, 920-922, 937-939, 955-957, 970, 974, 978-992, 996-1008, 1017-1020, 1027-1031, 1040-1058, 1065, 1073-1081, 1088, 1095, 1102, 1110-1159, 1165-1179, 1185, 1199-1211, 1220, 1226, 1232, 1236, 1242, 1252-1254, 1259-1309, 1324-1408, 1415-1507, 1510-1521, 1528, 1535, 1547-1604, 1610-1652, 1655-1664, 1679-1713, 1719-1728, 1735-1741, 1745-1746, 1749-1880, 1885, 1888, 1892-1895, 1902-1911, 1918-2082, 2098, 2102-2103, 2107-2168, 2172-2219, 2231-2244, 2248-2279, 2306-2317, 2321-2327, 2331, 2335, 2339, 2343-2433, 2436, 2439-2442, 2451-2457, 2465-2471, 2474-2477, 2480-2483, 2486-2490
+django/contrib/admin/sites.py                                                    250    173    31%   73-77, 80, 87-98, 114-149, 157-162, 168, 174-176, 182, 189, 196, 203, 229-250, 256-314, 318, 328-332, 346-358, 364-372, 381, 389-403, 410-441, 444, 448-457, 464-529, 536-545, 552-564, 569-585, 595-596, 599
+django/contrib/admin/templatetags/__init__.py                                      0      0   100%
+django/contrib/admin/templatetags/admin_list.py                                  224    177    21%   41-46, 58-63, 75, 88-161, 177-180, 187-192, 200-291, 302-303, 307-312, 316-319, 326-331, 342, 355-450, 465, 478, 488, 499-500, 514-515, 520, 528
+django/contrib/admin/templatetags/admin_modify.py                                 62     47    24%   16-48, 53, 65-112, 117, 125, 136-150
+django/contrib/admin/templatetags/admin_urls.py                                   40     28    30%   13, 18, 23-66
+django/contrib/admin/templatetags/base.py                                         15     10    33%   13-30, 33-45
+django/contrib/admin/templatetags/log.py                                          30     21    30%   9, 12, 15-25, 47-65
+django/contrib/admin/utils.py                                                    329    277    16%   35-54, 62-67, 77, 82, 89-95, 100-103, 114-162, 167-170, 173, 176-191, 194-195, 200-212, 218-222, 229, 239-245, 260-266, 270-292, 303-321, 332-386, 390-398, 402-435, 439-456, 464-467, 478-498, 510-518, 530-575, 579-586
+django/contrib/admin/views/__init__.py                                             0      0   100%
+django/contrib/admin/views/autocomplete.py                                        58     45    22%   22-34, 49, 53, 57-64, 77-118, 122
+django/contrib/admin/views/main.py                                               329    288    12%   47-49, 74-131, 134, 144-151, 154-254, 257-272, 275-309, 312-317, 327-341, 352-388, 397-453, 461-493, 497-552, 555-564, 567-577, 580-581
+django/contrib/admin/widgets.py                                                  274    179    35%   37-39, 42-48, 59-60, 71-72, 83-86, 89-92, 108-120, 132-135, 138-169, 172-175, 178-182, 185-204, 216-220, 223, 226, 229-231, 234, 255-273, 276-280, 284, 288, 291, 298-334, 337, 340, 343, 348, 353, 358, 365-366, 369-381, 388, 397, 457-466, 480-485, 488, 498-518, 522-553, 557-563
+django/contrib/auth/__init__.py                                                  119     88    26%   21, 25-34, 38, 49-54, 60, 68-89, 100-144, 154-162, 171-176, 187-209, 228-230
+django/contrib/auth/apps.py                                                       21      0   100%
+django/contrib/auth/backends.py                                                  121     85    30%   14, 17, 20, 23, 26, 32, 41-53, 60, 63, 66-68, 76-89, 96, 103, 106-110, 113, 119, 129-157, 160-164, 169, 196-227, 236, 244, 249
+django/contrib/auth/base_user.py                                                  75     34    55%   26-33, 45-50, 53, 72, 75-78, 82, 85, 88, 107-108, 116-122, 126, 132, 138-139, 147-150, 154
+django/contrib/auth/checks.py                                                     60     27    55%   15-24, 30, 40, 59-71, 85, 95, 111, 130-133, 150-153, 170-218
+django/contrib/auth/hashers.py                                                   389    247    37%   35, 46-69, 81-91, 96-105, 110, 116-117, 127-138, 155-164, 172-174, 179, 197-210, 221-222, 226, 231-234, 243, 255, 266, 271, 284, 303-307, 310-312, 320-322, 325-326, 334-336, 339-342, 374-385, 388-396, 409-415, 418-419, 431-438, 443, 446-448, 475-476, 479-488, 491-493, 502-505, 508-509, 517-518, 521-528, 561-575, 578-582, 592-600, 603-604, 614-615, 624, 636-641, 644-646, 649-651, 658-660, 663-664, 671-672, 675, 686-688, 691-693, 700-702, 705-706, 713-714, 717, 734-739, 742, 745-748, 751-752, 759-760, 763-764, 770, 789-794, 797, 800-802, 805, 812-815, 818-819, 825, 840-845, 848, 851-858, 861-863, 870-873, 876-877, 884
+django/contrib/auth/management/__init__.py                                        66     28    58%   46, 69, 105-106, 114-121, 135-170
+django/contrib/auth/middleware.py                                                 52     33    37%   10-12, 18, 50-85, 92-98, 105-114
+django/contrib/auth/models.py                                                    220    101    54%   22-23, 30, 79, 82, 95, 130, 133, 143-156, 159-161, 164-172, 177-199, 204-209, 216-224, 231-239, 285, 293, 296, 307-311, 318-320, 328-331, 386-387, 393-394, 398, 402, 428, 431, 434, 437, 443, 448, 453, 458, 464, 468, 471, 474, 477, 480, 483-485, 488, 492, 496, 499
+django/contrib/auth/password_validation.py                                       119     80    33%   22, 26-38, 48-57, 65-69, 76-81, 89-93, 105, 108-109, 122, 153-156, 174-177, 180-205, 212, 230, 233-240, 243-244, 250, 259-260, 266
+django/contrib/auth/signals.py                                                     4      0   100%
+django/contrib/auth/validators.py                                                 14      0   100%
+django/contrib/contenttypes/__init__.py                                            0      0   100%
+django/contrib/contenttypes/apps.py                                               15      0   100%
+django/contrib/contenttypes/checks.py                                             22      4    82%   13, 24, 32, 38
+django/contrib/contenttypes/fields.py                                            349    278    20%   48-53, 56-59, 63, 70, 76-77, 80, 87-96, 99-111, 118-158, 161, 164-172, 175-214, 224-254, 257-265, 281, 319-343, 346, 357, 364-380, 383-384, 404-431, 434-440, 453-455, 468-469, 472-494, 501, 504, 510, 515-518, 524, 550, 563-765
+django/contrib/contenttypes/management/__init__.py                                77     38    51%   7-10, 13-37, 40, 43, 54, 59-60, 63, 71-75, 78, 82-87, 89, 94, 118, 132, 144-145
+django/contrib/contenttypes/models.py                                            109     56    49%   19-24, 28, 53-56, 67-105, 112-119, 149, 153-156, 160-163, 167-170, 179, 185, 188
+django/contrib/messages/__init__.py                                                2      0   100%
+django/contrib/messages/api.py                                                    34     20    41%   26-40, 48, 58-59, 69-72, 77, 88, 99, 110, 121
+django/contrib/messages/apps.py                                                   13      1    92%   10
+django/contrib/messages/constants.py                                               7      0   100%
+django/contrib/messages/middleware.py                                             12      1    92%   25
+django/contrib/messages/storage/__init__.py                                        4      0   100%
+django/contrib/messages/storage/base.py                                           80     43    46%   15-17, 24-25, 28-30, 33, 37, 41, 60, 63-67, 70, 73, 81-84, 99, 112, 121, 132, 134-135, 144-153, 162-164, 173-176
+django/contrib/messages/storage/cookie.py                                         81     52    36%   19-26, 35-43, 46-47, 52, 59, 86-92, 99-109, 124-143, 153-154, 165-174
+django/contrib/messages/storage/fallback.py                                       29     18    38%   25-38, 48-56
+django/contrib/messages/storage/session.py                                        24     11    54%   17, 30, 39-43, 46-47, 50-52
+django/contrib/messages/utils.py                                                   4      0   100%
+django/contrib/sessions/__init__.py                                                0      0   100%
+django/contrib/sessions/apps.py                                                    5      0   100%
+django/contrib/sessions/backends/__init__.py                                       0      0   100%
+django/contrib/sessions/backends/base.py                                         186    112    40%   50, 53, 56-57, 60-61, 65, 68, 71-73, 76-81, 84, 87, 90, 94, 102-113, 116-117, 120, 123, 126, 129, 135-137, 149-151, 154-156, 173, 185-193, 198, 206-225, 233-248, 265-276, 285-287, 294-296, 302-307, 315, 325, 335, 344, 352, 365
+django/contrib/sessions/backends/db.py                                            68     46    32%   22-24, 28, 31-39, 42-43, 46, 50-59, 67, 79-96, 99-106, 110
+django/contrib/sessions/base_session.py                                           29     11    62%   14-15, 18-23, 39, 43, 46-47
+django/contrib/sessions/exceptions.py                                              7      0   100%
+django/contrib/sessions/management/__init__.py                                     0      0   100%
+django/contrib/sessions/middleware.py                                             42     17    60%   32-33, 37-43, 46, 48-66
+django/contrib/sessions/models.py                                                 11      2    82%   30-32
+django/contrib/sessions/serializers.py                                             4      0   100%
+django/contrib/sites/__init__.py                                                   0      0   100%
+django/contrib/sites/apps.py                                                      13      0   100%
+django/contrib/sites/checks.py                                                     6      1    83%   9
+django/contrib/sites/management.py                                                22      9    59%   21-22, 25, 34, 43-47
+django/contrib/sites/migrations/0001_initial.py                                    6      0   100%
+django/contrib/sites/migrations/0002_alter_domain_unique.py                        5      0   100%
+django/contrib/sites/migrations/__init__.py                                        0      0   100%
+django/contrib/sites/models.py                                                    67     38    43%   17-19, 29-32, 35-46, 55-63, 73, 76, 98, 101, 108-117
+django/contrib/staticfiles/__init__.py                                             0      0   100%
+django/contrib/staticfiles/apps.py                                                10      0   100%
+django/contrib/staticfiles/checks.py                                              10      0   100%
+django/contrib/staticfiles/finders.py                                            170     41    76%   36, 45, 77-84, 86-107, 128, 140, 149-154, 173-174, 189-192, 207, 232, 234, 241, 250-251, 256-259, 266-267, 281, 302, 305, 323
+django/contrib/staticfiles/handlers.py                                            55      4    93%   55-56, 80, 99
+django/contrib/staticfiles/management/__init__.py                                  0      0   100%
+django/contrib/staticfiles/management/commands/__init__.py                         0      0   100%
+django/contrib/staticfiles/management/commands/runserver.py                       16      1    94%   35
+django/contrib/staticfiles/storage.py                                            279    199    29%   34-35, 39, 97-102, 107-136, 142-167, 173, 179-238, 255-301, 305-375, 378, 381, 387-393, 396-416, 435, 443-451, 457-460, 463-467, 470-486
+django/contrib/staticfiles/testing.py                                              4      0   100%
+django/contrib/staticfiles/utils.py                                               35     21    40%   13, 21-39, 54, 63, 69
+django/contrib/staticfiles/views.py                                               17      2    88%   31, 36
+django/core/__init__.py                                                            0      0   100%
+django/core/cache/__init__.py                                                     23      2    91%   48-49
+django/core/cache/backends/__init__.py                                             0      0   100%
+django/core/cache/backends/base.py                                               187    113    40%   39, 49-52, 64-65, 72-73, 78-79, 90-95, 105-108, 116-117, 121-123, 133, 138, 147, 150, 159, 162, 171, 176, 185, 190, 200-205, 209-214, 225-233, 237-245, 251, 256, 266-271, 275-280, 287, 290, 299, 313-315, 318-320, 328-329, 332-333, 337, 342, 349-358, 362-371, 378, 381, 388, 392-403
+django/core/cache/backends/db.py                                                 149    124    17%   19-28, 33-39, 53, 56-99, 102-103, 106-107, 110-111, 114-204, 207-208, 211-212, 215-233, 236-255, 258-280, 290-294
+django/core/cache/backends/filebased.py                                          112     83    26%   21-23, 26-29, 32-39, 42-44, 47-59, 62-76, 79, 82-89, 92-96, 104-113, 118-122, 129-130, 144-145, 151-159, 166
+django/core/cache/backends/locmem.py                                              96     69    28%   26-32, 35-42, 45-49, 52-55, 58-63, 66-77, 80-85, 88-89, 92-99, 102-107, 110-112, 115-117
+django/core/cache/utils.py                                                         9      6    33%   7-12
+django/core/checks/__init__.py                                                    15      0   100%
+django/core/checks/async_checks.py                                                 8      3    62%   14-16
+django/core/checks/caches.py                                                      49     29    41%   18, 24-58, 68-69
+django/core/checks/compatibility/__init__.py                                       0      0   100%
+django/core/checks/compatibility/django_4_0.py                                     9      2    78%   10-11
+django/core/checks/database.py                                                    11      1    91%   9
+django/core/checks/files.py                                                        9      1    89%   12
+django/core/checks/messages.py                                                    48     18    62%   12, 20, 26-38, 41, 51, 54-56, 61, 66, 81
+django/core/checks/model_checks.py                                                92     55    40%   20, 27, 38, 40, 42-43, 52-53, 63-65, 77-79, 110-212
+django/core/checks/registry.py                                                    59      6    90%   52, 85, 90, 98, 101, 110
+django/core/checks/security/__init__.py                                            0      0   100%
+django/core/checks/security/base.py                                              104     49    53%   146, 150, 157-158, 163-164, 169-170, 175-180, 185-190, 195-198, 203-204, 208, 217-223, 228-239, 244-245, 250-251, 256, 261-271, 276-283
+django/core/checks/security/csrf.py                                               30     11    63%   26, 31-32, 37-42, 52-57, 61-66
+django/core/checks/security/sessions.py                                           40     22    45%   68-77, 82-91, 95, 99
+django/core/checks/templates.py                                                   35      5    86%   42-46, 58, 65
+django/core/checks/translation.py                                                 27      3    89%   34, 63-64
+django/core/checks/urls.py                                                        57     19    67%   15, 25-28, 37, 47, 68-72, 83-93, 109, 114
+django/core/exceptions.py                                                        109     34    69%   139-144, 147-151, 158, 160, 174-176, 181, 185-190, 194-195, 204-206, 209, 212-214, 217-227
+django/core/files/__init__.py                                                      2      0   100%
+django/core/files/base.py                                                         99     69    30%   12-17, 20, 23, 26, 29, 33-46, 53-63, 73, 77-100, 103, 106, 109-115, 118, 127-129, 132, 135, 138-139, 142, 145-146, 151, 156, 161
+django/core/files/images.py                                                       50     40    20%   20, 24, 27-31, 40-88
+django/core/files/locks.py                                                        60     49    18%   26, 30-93, 102-113, 118-122, 125-126
+django/core/files/move.py                                                         42     35    17%   19-26, 44-100
+django/core/files/storage.py                                                     209    115    45%   49-59, 68, 76, 83-117, 124-131, 139, 148, 157, 166, 174, 181, 188, 197, 206, 260, 279-345, 348-355, 358-370, 376-384, 390, 393-398, 405-406, 409, 412, 415
+django/core/files/temp.py                                                         33     26    21%   32-75
+django/core/files/uploadedfile.py                                                 59     33    44%   39-43, 46, 49, 53-65, 76-80, 84, 87-93, 111-112, 115-116, 119-120, 124, 133-134, 146
+django/core/files/uploadhandler.py                                                82     47    43%   42, 45-48, 76-81, 101, 118-123, 130, 141, 150, 157, 169-170, 175, 178-180, 183-189, 206, 209-212, 216-219, 223-227, 251
+django/core/files/utils.py                                                        51     26    49%   9-24, 54, 57-61, 64-68, 71-75, 78
+django/core/handlers/__init__.py                                                   0      0   100%
+django/core/handlers/asgi.py                                                     163     87    47%   45, 51, 62, 80-81, 86, 88, 95, 106, 109, 112-114, 117, 120-122, 153-159, 166-189, 194-210, 217-227, 233-236, 245-292, 300-309, 315-317
+django/core/handlers/base.py                                                     184     90    51%   44, 51, 62-68, 73, 83, 91, 124, 127-129, 131-133, 161-172, 189, 195, 198-201, 209-224, 234-298, 307-309, 323-337, 349-353, 361-365
+django/core/handlers/exception.py                                                 76     38    50%   41-47, 66, 72-143, 156, 165-167, 177-185
+django/core/handlers/wsgi.py                                                     136     40    71%   33-42, 45-60, 63, 96-100, 112-114, 117, 126-128, 183, 195-200
+django/core/mail/__init__.py                                                      36     26    28%   50-51, 76-87, 105-114, 121-134, 141-154
+django/core/mail/message.py                                                      257    194    25%   57-75, 82-119, 131-134, 144-147, 153-154, 159-160, 163-164, 167-175, 182-183, 186-187, 214-249, 252-256, 259-283, 290, 294-298, 312-338, 351-354, 357, 360-371, 380-401, 408-417, 424-429, 459-471, 475-477, 480, 483-493
+django/core/mail/utils.py                                                         10      4    60%   14, 17-19
+django/core/management/__init__.py                                               205    102    50%   74, 111-112, 116, 132, 140-141, 158-171, 180, 206, 211-244, 256-270, 273, 303-351, 360-361, 378-379, 383-386, 393-412, 422, 424, 431-436
+django/core/management/base.py                                                   248     56    77%   65, 69-72, 82, 84, 146, 274, 409, 416-419, 445, 447, 450-457, 486-527, 530, 534, 545-546, 552, 594, 611, 619-632, 639, 661, 664-669, 676
+django/core/management/color.py                                                   45     12    73%   14, 18, 32-44
+django/core/management/commands/__init__.py                                        0      0   100%
+django/core/management/commands/check.py                                          30      8    73%   50-53, 56, 62-72
+django/core/management/commands/createcachetable.py                               66     45    32%   48-49, 54, 57-130
+django/core/management/commands/flush.py                                          38      5    87%   59, 74-75, 90-92
+django/core/management/commands/loaddata.py                                      227     53    77%   31-32, 38-39, 133-137, 158, 165, 172-174, 182-188, 203, 211-220, 222, 238, 256-265, 270, 275, 284, 288, 318, 322, 329, 336, 343, 350, 366, 371, 378, 390-394, 399-400, 409-414, 423-425, 428, 432
+django/core/management/commands/migrate.py                                       243    123    49%   100, 126-129, 140-152, 155-183, 185, 192-240, 245-259, 261-263, 265, 274, 290-296, 319, 327-352, 397, 405, 408-430, 473, 475, 492-511
+django/core/management/commands/runserver.py                                      93     19    80%   73, 82, 86, 94, 100, 107, 118, 166-183
+django/core/management/commands/shell.py                                          65     47    28%   48-50, 53-55, 58-112, 116-139
+django/core/management/commands/testserver.py                                     19      0   100%
+django/core/management/sql.py                                                     22      4    82%   28-29, 48-49
+django/core/management/utils.py                                                   94     70    26%   21-25, 45-51, 55-76, 83-84, 98-109, 120-127, 132-142, 150-157, 161, 169-172
+django/core/paginator.py                                                         125     82    34%   33-37, 40-41, 45-58, 65-71, 75-80, 89, 94-97, 102-105, 113, 119-128, 146-164, 169-171, 174, 177, 180-189, 192, 195, 198, 201, 204, 212-214, 222-224
+django/core/serializers/__init__.py                                              106     68    36%   49, 52, 69, 73-76, 86, 93-97, 101-105, 109-111, 122, 124, 133-135, 160-161, 178-254
+django/core/serializers/base.py                                                  192    133    31%   22-27, 30, 33, 57, 67-68, 75-77, 80-93, 122-172, 178, 186, 192, 200, 206, 214, 222, 231-232, 244-248, 251, 255, 278, 290-291, 298-322, 339-347, 352-383, 387-410
+django/core/serializers/json.py                                                   77     50    35%   24-32, 35-36, 39-43, 47-55, 59, 71-74, 85-106
+django/core/serializers/jsonl.py                                                  38     26    32%   19-26, 29, 33-35, 39, 44-57
+django/core/serializers/python.py                                                102     59    42%   21-22, 25, 28, 31-32, 35-39, 42-46, 49, 52-62, 65-88, 91, 110-114, 119-120, 135, 143-154, 159-170, 175-176, 188-189
+django/core/serializers/pyyaml.py                                                 44     21    52%   22-23, 28, 31, 55-58, 61-62, 66, 71-82
+django/core/serializers/xml_serializer.py                                        250    203    19%   21-22, 30-34, 40-42, 48-60, 66-67, 74-100, 107-125, 133-167, 171-172, 193-197, 201, 204-208, 214-285, 292-324, 332-366, 373-382, 391-402, 416-418, 421, 426, 430, 433, 436-441, 448, 455-458, 461-462, 469-475, 478-479, 486-490, 493-494
+django/core/servers/__init__.py                                                    0      0   100%
+django/core/servers/basehttp.py                                                  127     23    82%   46-49, 74, 82, 100-101, 185, 214-218, 231-246
+django/core/signals.py                                                             5      0   100%
+django/core/signing.py                                                           118     70    41%   65-73, 77-86, 90, 94-95, 99, 125, 128, 150, 168, 192, 203-204, 207, 210-216, 228-241, 246-254, 259, 262-263, 270-280
+django/core/validators.py                                                        297    146    51%   37, 39, 41, 52-55, 58, 111, 114-159, 170, 199, 201, 203, 212, 218-225, 231-239, 242, 272-283, 291-292, 298-304, 323-330, 360, 363-369, 372-374, 381, 384, 393, 402, 411, 426, 429, 444, 447, 479-480, 483-524, 531, 547-555, 558-563, 574, 583-589, 593, 607, 609, 613, 616
+django/core/wsgi.py                                                                5      0   100%
+django/db/__init__.py                                                             16      0   100%
+django/db/backends/__init__.py                                                     0      0   100%
+django/db/backends/base/__init__.py                                                0      0   100%
+django/db/backends/base/base.py                                                  386    101    74%   13-14, 35-39, 134, 144, 162-167, 174-179, 188, 196, 210-212, 221, 228, 242, 277, 319-321, 362-369, 387, 399, 418, 436, 446, 454, 502-506, 513, 521, 527, 544, 552, 559, 567, 580, 593-595, 607-608, 613-618, 638, 651, 699-705, 716-721, 728, 735, 739-756, 763-775, 783-787, 795-798
+django/db/backends/base/client.py                                                 13      4    69%   18, 24-28
+django/db/backends/base/creation.py                                              156     77    51%   27, 47, 71-72, 87, 94, 111, 120-142, 149-163, 181-183, 186, 192-233, 239-255, 264-265, 274, 290, 295, 322-323, 340-342, 357, 365-366, 374-380
+django/db/backends/base/features.py                                              147     14    90%   360, 365-374, 377-379
+django/db/backends/base/introspection.py                                          69     28    59%   30, 65, 75, 101, 121-122, 133-153, 161, 171, 180-181, 185-188, 209
+django/db/backends/base/operations.py                                            269    143    47%   76, 79, 92-93, 101, 108, 122, 131, 140, 151, 162, 176, 185, 192, 200-205, 228, 234, 245-247, 272-282, 291, 320, 329, 340, 351, 359, 376, 389, 419, 437, 459, 473, 477-479, 490, 516-525, 532-534, 541-547, 554-562, 569, 576, 587-597, 608-622, 634-635, 646, 653, 662-663, 666, 688, 691-695, 700-707, 713-720, 729-731, 734-743, 746-764
+django/db/backends/base/schema.py                                                670    394    41%   28-36, 41, 55-69, 149, 179, 190-196, 218, 239-240, 264, 278-282, 292, 306-316, 324, 340, 352, 374, 381, 387, 397, 402-421, 425, 435, 461-477, 481-488, 492-497, 500-507, 511-515, 519-521, 529-542, 550-563, 566-597, 605, 620, 635-701, 709-733, 744, 753, 768, 780, 782, 812-1143, 1152-1165, 1181-1202, 1222, 1237, 1252-1274, 1299-1311, 1316, 1318, 1320, 1322, 1327, 1333, 1393, 1400, 1416, 1422-1423, 1426-1430, 1461, 1464, 1471, 1479-1489, 1500-1503, 1513, 1518-1521, 1534-1558, 1585, 1595, 1597, 1605, 1623, 1637-1653, 1656, 1662, 1670, 1673, 1692-1718, 1721-1731, 1734, 1746, 1749, 1752-1756
+django/db/backends/base/validation.py                                             14      5    64%   20-28
+django/db/backends/ddl_references.py                                             137     62    55%   15, 21, 27, 33, 36, 39, 70, 73-76, 92-93, 117-118, 121-133, 150-153, 159, 164, 169-170, 173-174, 177-181, 204, 215-217, 225-232, 235-238, 241-249, 252-254
+django/db/backends/dummy/__init__.py                                               0      0   100%
+django/db/backends/dummy/base.py                                                  41      2    95%   28, 74
+django/db/backends/dummy/features.py                                               4      0   100%
+django/db/backends/signals.py                                                      2      0   100%
+django/db/backends/sqlite3/__init__.py                                             0      0   100%
+django/db/backends/sqlite3/_functions.py                                         347    243    30%   86-103, 107-122, 126-141, 145-161, 165-168, 172-175, 179-193, 197-224, 228-234, 238-243, 253-271, 275-279, 292-296, 303, 308-310, 314-316, 320-322, 326-328, 332-334, 338-340, 344-346, 350-352, 356-358, 362-364, 368-370, 374-376, 380-383, 387-392, 396-398, 402-404, 408, 412-414, 418-420, 424-426, 430-432, 436-438, 442-444, 448-450, 454-456, 460-462, 466-468, 472-474, 478-480, 484-486, 490-492
+django/db/backends/sqlite3/base.py                                               131     24    82%   34, 38, 148, 164, 214, 260-324, 372-373
+django/db/backends/sqlite3/client.py                                               7      2    71%   9-10
+django/db/backends/sqlite3/creation.py                                            99     67    32%   23, 29, 32-51, 55-70, 75-106, 111, 126, 130-158
+django/db/backends/sqlite3/features.py                                            71      9    87%   93, 121, 131-137
+django/db/backends/sqlite3/introspection.py                                      196    167    15%   21-22, 55-56, 63-74, 93-118, 136-137, 144-147, 160-163, 166-263, 268-302, 309-399, 402-407, 410-434
+django/db/backends/sqlite3/operations.py                                         220     99    55%   38, 42, 48-57, 67, 78, 89, 92, 99, 106-108, 111, 117, 123, 130, 137, 140, 153-157, 180-182, 191, 195, 239-240, 244-246, 264, 268, 272-275, 283-294, 302, 304, 306, 308, 310, 316, 318, 322-325, 328-331, 336-354, 357-359, 362, 372-376, 379-384, 391-396, 400, 406, 422
+django/db/backends/sqlite3/schema.py                                             213    114    46%   29, 47-70, 75, 86-98, 108-119, 136-172, 219-230, 233-236, 246-250, 256-263, 283, 360, 364, 378, 382-396, 404-424, 451, 464-483, 487-535, 538-546, 549-557, 560
+django/db/backends/utils.py                                                      147     65    56%   30-31, 42-43, 51-64, 72, 79, 92-94, 106-107, 123-125, 151-156, 165, 171-178, 186-203, 246-247, 270-282
+django/db/migrations/__init__.py                                                   2      0   100%
+django/db/migrations/autodetector.py                                             702    637     9%   35-38, 46-50, 58-88, 96-102, 123-208, 216-227, 235-247, 259-264, 277-378, 385-399, 405-417, 427-482, 487-491, 498-514, 522-581, 593-768, 784-798, 821-900, 910-914, 923-981, 985-1018, 1022-1025, 1028-1067, 1080-1083, 1086, 1106-1218, 1221-1299, 1310-1312, 1321-1323, 1332-1336, 1347-1360, 1370-1375, 1384-1389, 1399-1430, 1433-1471, 1480-1496, 1505, 1509, 1512-1521, 1528, 1532, 1535-1547, 1561-1587, 1596-1618, 1630-1637, 1651-1695, 1705-1722, 1731-1736
+django/db/migrations/exceptions.py                                                26      5    81%   44-46, 49, 52
+django/db/migrations/executor.py                                                 224    142    37%   34-39, 45-65, 91, 104-105, 110, 120-122, 125, 134, 141, 159, 162-166, 184-234, 244-246, 266-267, 273-288, 303-305, 314-410
+django/db/migrations/graph.py                                                    178     88    51%   21, 24, 33, 36, 55-57, 60, 97-99, 108-112, 114-118, 122, 131-157, 166-192, 207, 216-218, 228, 245-251, 283-284, 295, 298-299, 302, 307-312, 320-330
+django/db/migrations/loader.py                                                   180     78    57%   93, 97-98, 105-106, 121-128, 130, 143, 150-167, 171, 178, 184-197, 216, 218-220, 232, 244, 256-273, 277-304, 316-327, 348, 361, 370-385
+django/db/migrations/migration.py                                                102     58    43%   65, 72, 86-92, 107-115, 126-127, 136, 153-198, 206-222
+django/db/migrations/operations/__init__.py                                        4      0   100%
+django/db/migrations/operations/base.py                                           40     15    62%   48, 59, 68, 78, 86, 94, 106, 115, 125, 135-139, 142
+django/db/migrations/operations/fields.py                                        174    100    43%   20, 23, 26, 32-43, 46-60, 70, 79-80, 83-90, 93, 102-113, 116-118, 123, 127, 130-151, 158-162, 165, 168-170, 175-178, 181, 185, 188-195, 209-216, 234, 237, 240, 243, 247, 250-267, 274-276, 280, 284, 287-292, 295, 300-303, 310-313, 320, 328, 335, 340-354
+django/db/migrations/operations/models.py                                        500    314    37%   15, 27, 30, 33, 38, 69-79, 99-101, 104, 111, 114-134, 137-306, 313-316, 319, 322-324, 327-329, 334, 337, 341, 348-350, 354, 358, 361-365, 368, 371-420, 427-439, 442, 447, 451, 454-466, 473-478, 485-486, 489-493, 496, 499-512, 519, 522, 529, 536-539, 543, 546-550, 553, 560-564, 571, 574, 580, 588, 591, 606, 618, 627-628, 631-635, 638, 645-665, 671, 674, 679, 686, 712-713, 716-720, 723, 731, 734, 737, 741, 750-751, 754, 757, 760, 763, 766, 770, 778, 785-791, 794, 797-799, 802-804, 807-811, 818-824, 832, 839-840, 843, 846-850, 853-857, 860-864, 871, 875, 882-894, 898, 902, 905-913, 916-929, 934-968, 971-987, 990-994, 1001-1003, 1010-1024, 1031-1032, 1035, 1038-1040, 1043-1045, 1048, 1058, 1065, 1072-1073, 1076, 1079-1083, 1086-1090, 1093, 1103, 1107
+django/db/migrations/operations/special.py                                       124     91    27%   17-18, 21-26, 29-30, 34-40, 44-55, 60, 76-80, 83-92, 96, 99-100, 103-106, 109-114, 117, 120-133, 146-159, 162-171, 175, 180, 185-193, 196-201, 204, 208
+django/db/migrations/optimizer.py                                                 32     29     9%   30-38, 42-69
+django/db/migrations/questioner.py                                               153    115    25%   23-25, 30-55, 60, 65, 69, 73, 77, 82, 87, 94-97, 100-107, 110-124, 134-164, 168-187, 191-215, 219-220, 234-235, 242, 251-267, 271-288, 300-302, 309-310, 317-323, 327-331, 335-341
+django/db/migrations/recorder.py                                                  51      6    88%   43, 71-72, 98-99, 103
+django/db/migrations/state.py                                                    581    260    55%   30, 53, 82-89, 104, 114-116, 122, 127-140, 144-179, 182-188, 191-196, 199-201, 204-206, 209-212, 215, 218, 221-232, 235, 238, 242-253, 256-263, 267-268, 274-279, 292-345, 363, 373, 384-385, 403-409, 445-458, 467-484, 489-494, 498-510, 513-518, 521-536, 539-547, 571-575, 578, 637, 666-667, 669, 736, 741, 746, 752-753, 763-765, 776, 780-781, 794-795, 814-815, 817-821, 823, 838, 867, 875, 888, 913-914, 944-945, 959-962, 965-968, 971, 974
+django/db/migrations/utils.py                                                     55     21    62%   14-15, 18-20, 24, 36-41, 45-50, 75-91, 94-104, 107, 124
+django/db/models/__init__.py                                                      25      0   100%
+django/db/models/aggregates.py                                                   121     50    59%   38, 40, 48, 51-54, 57-58, 71-80, 86-91, 95-98, 101, 106-125, 131-136, 156, 174-175, 178, 191-192, 195
+django/db/models/base.py                                                        1072    519    52%   58, 61, 131-132, 175-178, 185, 204-226, 238, 242-243, 259-306, 322-324, 332-347, 379-394, 407, 411, 423-424, 440, 465, 478, 488, 494-498, 510, 517-522, 556-562, 564-565, 575-576, 593, 595, 598, 603, 622, 624-626, 633-641, 647-648, 657-658, 688-738, 751-755, 772, 779-787, 796-802, 836, 848, 887-913, 933, 945, 955, 972, 974, 979-981, 1018, 1020, 1054, 1060, 1069-1071, 1078, 1084, 1087-1096, 1102-1110, 1115-1118, 1123-1139, 1144-1164, 1167-1170, 1177-1181, 1190, 1197-1206, 1216-1269, 1272-1318, 1321-1349, 1352-1354, 1369-1394, 1401-1405, 1408-1422, 1430-1469, 1476-1494, 1548, 1570-1582, 1596-1597, 1646, 1667, 1686-1700, 1706-1708, 1720, 1744, 1763, 1772, 1793, 1807, 1822, 1833, 1844, 1851, 1863, 1885-1905, 1910, 1916, 1932, 1948, 1984-1985, 1998, 2012, 2030, 2042, 2078, 2085-2089, 2120, 2137, 2146, 2150-2157, 2162-2211, 2215-2227, 2234, 2243, 2263, 2284, 2303, 2323, 2344-2374, 2389-2411, 2431-2433, 2440-2443, 2447-2452, 2470
+django/db/models/constants.py                                                      5      0   100%
+django/db/models/constraints.py                                                  216    165    24%   21-25, 29, 32, 35, 38, 41, 44, 47-55, 58-59, 64-69, 72-76, 79-80, 83-84, 87, 90-95, 98, 105-111, 114-116, 125, 140-188, 192, 195-201, 204-211, 216-222, 234-240, 252-257, 268, 280-291, 294-305, 308-369
+django/db/models/deletion.py                                                     243    207    15%   12-13, 18-19, 23-31, 35, 48-49, 53-65, 69, 76, 83, 89, 98-116, 126-140, 143-148, 155, 158-160, 163-164, 170-180, 183, 198-211, 235-245, 281-392, 407-411, 414-416, 419-434, 438-522
+django/db/models/enums.py                                                         53     22    58%   15-28, 31, 35-38, 42-43, 47-48, 52, 56, 64, 68, 75, 79, 92
+django/db/models/expressions.py                                                  974    547    44%   31-33, 63-69, 76, 79, 82, 85, 88, 91, 94, 97-99, 104, 107, 110, 113-115, 120, 123-125, 130, 133, 136, 139, 142, 145, 148, 151, 156, 161, 234, 250, 286, 290, 297-298, 309-311, 327-341, 345, 357, 368-374, 380, 383-390, 393-403, 409-418, 421-426, 430, 433, 436, 439, 446-452, 461, 470-485, 488-490, 493, 624-629, 634-637, 640, 643, 646, 649, 654-666, 669-680, 685-727, 732-740, 743-757, 760-778, 785, 788-791, 805, 808, 813, 816, 819, 822, 825, 828, 843, 849-854, 857, 860, 867-869, 872, 886, 900-907, 911, 914, 917, 945-951, 959, 995, 1003, 1007, 1012, 1023, 1027, 1029, 1032-1047, 1051, 1056-1059, 1062, 1065, 1068, 1074-1083, 1090, 1108-1110, 1119-1121, 1126, 1143-1144, 1147, 1150, 1153, 1160, 1163, 1166, 1169, 1182-1186, 1189, 1193, 1200-1208, 1211-1213, 1216-1219, 1230-1231, 1234, 1237, 1240-1246, 1249, 1252, 1262-1276, 1279, 1282, 1285, 1288, 1292, 1297-1306, 1309-1325, 1333-1336, 1357-1362, 1365, 1371, 1374, 1377, 1382-1391, 1394-1396, 1401-1425, 1428-1430, 1445-1448, 1451, 1454, 1457, 1460-1462, 1466, 1469, 1472-1480, 1487-1489, 1497-1498, 1501-1503, 1509-1511, 1514-1532, 1538-1540, 1550, 1556, 1566, 1570, 1584, 1586-1595, 1609-1618, 1621-1624, 1627-1634, 1637, 1640, 1659-1685, 1688, 1691, 1694, 1697-1724, 1730-1737, 1740, 1748, 1751-1756, 1771-1772, 1775, 1778, 1781-1785, 1796, 1799, 1802-1815, 1822, 1829, 1836
+django/db/models/fields/__init__.py                                             1300    590    55%   83, 103-105, 173, 219, 244-247, 251-255, 274, 282, 290, 309, 322-324, 330-332, 348, 350, 354, 357, 367, 378, 397, 413, 427, 445, 458, 574, 576, 578, 598, 610-618, 621, 648-659, 674, 682, 686-690, 701-714, 721-745, 753-756, 798-799, 807, 811-814, 834, 889, 909, 960-979, 988, 992-1000, 1005, 1009-1054, 1058, 1073-1082, 1089-1092, 1095-1104, 1107-1113, 1135, 1147, 1161, 1169, 1180-1182, 1195, 1205-1210, 1215, 1236-1238, 1242, 1266, 1279, 1290-1315, 1346-1358, 1365, 1372, 1375-1398, 1406-1408, 1436-1438, 1441-1442, 1445, 1484, 1493, 1496-1535, 1543-1545, 1559-1569, 1579-1580, 1583, 1606-1607, 1610-1620, 1623-1644, 1647-1668, 1671-1679, 1683, 1689, 1692-1697, 1700, 1703-1722, 1725, 1730-1731, 1734, 1762, 1765-1777, 1784-1788, 1791-1794, 1797-1798, 1801, 1827, 1849-1852, 1855, 1861-1870, 1873-1886, 1889-1892, 1895, 1908, 1919-1925, 1930, 1933-1938, 1945, 1968, 1998, 2011, 2017, 2020-2021, 2030, 2033-2034, 2041, 2054, 2057, 2070, 2086-2087, 2090-2092, 2095-2098, 2101, 2118-2126, 2129, 2135-2144, 2147-2154, 2157, 2160-2169, 2172-2174, 2177-2185, 2188, 2213-2215, 2218-2221, 2246-2249, 2256, 2259, 2271, 2274, 2289, 2304-2307, 2310-2319, 2322, 2325, 2352, 2360, 2379-2381, 2384-2385, 2391, 2402, 2425-2426, 2434-2449, 2452-2460, 2463, 2466-2487, 2494-2499, 2502-2503, 2507-2509, 2512-2513, 2516, 2529-2530, 2533-2536, 2541, 2557, 2564, 2577, 2590, 2593, 2599, 2604, 2608-2610, 2621-2622, 2625-2627, 2630, 2633-2634, 2637-2644, 2647-2657, 2660, 2683, 2700, 2710, 2718, 2763, 2766, 2771, 2774
+django/db/models/fields/files.py                                                 233    161    31%   18-22, 27-29, 32, 39-40, 45-48, 51, 54, 60-61, 65-66, 70-73, 76-81, 91-98, 103-118, 124-125, 128-130, 136, 146-147, 166-217, 220, 237-256, 259, 266-276, 279-290, 293-299, 302, 305-310, 313-317, 320-321, 330-336, 343-346, 349, 365-378, 384-386, 402-403, 406, 412-427, 430-435, 438-444, 461-501, 504
+django/db/models/fields/json.py                                                  368    217    41%   35, 37, 43-46, 49-70, 73-78, 81-90, 93, 96-98, 101-104, 107-111, 118, 121, 132-141, 149-156, 164-171, 179, 183-209, 212, 217-222, 225-230, 233, 250, 261, 273-276, 279-282, 289-296, 317-318, 321-330, 333-335, 338-340, 346-354, 357-362, 374-381, 385-390, 405-415, 421-429, 432-435, 444-468, 473-494, 497-508, 555-558, 597, 600
+django/db/models/fields/mixins.py                                                 29     12    59%   10, 16-19, 28, 35-54, 57-59
+django/db/models/fields/proxy.py                                                   6      3    50%   16-18
+django/db/models/fields/related.py                                               762    201    74%   58, 136, 156, 160, 173, 198, 214, 236, 268, 284, 309, 325, 344, 383, 398, 410-421, 436, 445, 459-461, 471-483, 502-508, 546, 585, 592-593, 607, 611-612, 615, 635-639, 654-656, 679, 685, 694-695, 709, 713, 743, 752, 774, 778-779, 803, 841-843, 887, 941, 956, 983, 995, 1007, 1044, 1046, 1053, 1057, 1080-1092, 1110, 1132-1135, 1145, 1150, 1158, 1161-1167, 1192-1194, 1199, 1206-1208, 1243-1245, 1248-1255, 1275-1276, 1357, 1371, 1409, 1422, 1431, 1439, 1457, 1465, 1484, 1491-1497, 1526, 1550, 1571, 1585-1665, 1686, 1701-1722, 1737, 1739, 1746, 1759-1767, 1779-1783, 1787, 1797-1800, 1805, 1809, 1826, 1840, 1862, 1872-1876, 1893, 1899, 1964, 1967, 1970-1982, 1985, 1990, 1993
+django/db/models/fields/related_descriptors.py                                   568    427    25%   88, 93-110, 134, 148, 151, 154-185, 195-197, 210, 217-241, 244, 264, 279, 283, 300-309, 324, 332, 348-364, 367-383, 408, 422, 425, 428-443, 464-495, 513-566, 570, 595-597, 613, 618, 624, 638-891, 921, 934, 963-968, 985, 994, 1001-1005, 1010-1027, 1035, 1040-1043, 1053-1081, 1097-1109, 1119-1120, 1125-1140, 1155-1182, 1187-1190, 1195-1203, 1208-1216, 1224-1250, 1259-1269, 1285-1298, 1311-1365, 1380-1414
+django/db/models/fields/related_lookups.py                                        96     47    51%   20-26, 29, 32, 37, 40, 52, 60, 65-68, 70-72, 93-107, 116-147, 153-168, 171-185
+django/db/models/fields/reverse_related.py                                       153     44    71%   74, 82-87, 92, 100, 104, 108, 112, 115, 118, 122, 125, 133, 146-148, 151, 179-183, 203, 218, 225, 238, 286, 292-297, 365, 369, 377, 388-396
+django/db/models/functions/__init__.py                                             6      0   100%
+django/db/models/functions/comparison.py                                         114     70    39%   15, 18-19, 22-37, 40-48, 54, 62-68, 77-79, 83-87, 92-101, 112-115, 118-119, 134-136, 140, 148-151, 154-158, 161, 169-174, 195-197, 201, 209-212
+django/db/models/functions/datetime.py                                           202     98    51%   32-38, 46-51, 54-83, 88-122, 222, 227, 232, 254-256, 259-281, 286-338, 341-359, 375-376, 410-412, 422-424
+django/db/models/functions/math.py                                               116     26    78%   38-56, 64, 77, 87, 115-121, 134, 149, 162, 165, 170, 173, 182, 185-188, 191-192
+django/db/models/functions/mixins.py                                              30     20    33%   13-23, 28-31, 34-47, 52-57
+django/db/models/functions/text.py                                               165     53    68%   10, 20, 33, 47, 56, 64, 76-77, 87, 97-104, 118-121, 127-129, 142-145, 148, 151, 154, 165, 180-186, 205, 208, 216-222, 225-228, 235, 245, 262, 286, 316, 329-335, 338, 341
+django/db/models/functions/window.py                                              69     20    71%   41-53, 56-57, 79-87, 90-91, 100-102
+django/db/models/indexes.py                                                      142    113    20%   27-74, 81, 84-90, 93-118, 133, 136-149, 153-154, 164-189, 192, 206-208, 219-220, 230, 240-289, 295
+django/db/models/lookups.py                                                      436    168    61%   30, 36-39, 45-47, 50, 54, 56-63, 72, 75-78, 86-88, 93, 105, 111-116, 118-124, 132-135, 140-148, 152, 156, 159-161, 164, 169-178, 184-186, 200, 203-209, 268, 274, 281-286, 291, 293, 318-321, 332-337, 354-356, 366-369, 399-401, 422-425, 431, 441-442, 445, 452, 464, 470-487, 505-508, 558, 567-575, 584-590, 600-614, 619-628, 631, 634, 641, 644, 649, 654, 659, 664, 674-683
+django/db/models/manager.py                                                      101      9    91%   37, 40, 52, 65, 173, 186, 191, 196, 213
+django/db/models/options.py                                                      476    112    76%   208, 230, 248-253, 271, 274-279, 281, 291-307, 315-325, 341, 379-381, 384, 387, 395, 399, 401, 427-432, 438, 472-474, 477-480, 499-502, 505-508, 638-639, 669, 690-699, 708-709, 722, 725-730, 738-762, 770-784, 801, 854, 879, 911-929, 991-997
+django/db/models/query.py                                                       1309    875    33%   54-64, 75, 122, 124-125, 130-138, 150-184, 193-207, 234-236, 256-269, 316-318, 322-326, 337-343, 347-348, 351-367, 370-373, 400-405, 408-409, 414, 425, 428, 433, 439, 443-446, 449, 452-461, 464-480, 483-499, 515-518, 533-540, 551-563, 573-605, 608, 619, 624, 632, 649-653, 662, 675, 688, 693-697, 699-742, 774, 780-781, 798-812, 846, 859-905, 910, 926-941, 944, 956-985, 988, 998-1018, 1025-1040, 1043-1045, 1048, 1055-1057, 1060, 1065, 1070, 1073, 1077-1083, 1086, 1093-1128, 1131, 1138-1164, 1170, 1180-1186, 1195-1220, 1225, 1237, 1254, 1257, 1264-1278, 1281, 1285-1286, 1293, 1296, 1303-1313, 1318, 1324-1327, 1331, 1333, 1344-1353, 1372-1376, 1396-1408, 1427-1429, 1440, 1455-1456, 1460, 1471, 1485-1490, 1494-1503, 1507-1514, 1518-1523, 1527-1529, 1536-1545, 1556-1569, 1580-1594, 1601-1602, 1608-1609, 1612-1664, 1669, 1679-1686, 1698-1703, 1707-1711, 1720-1728, 1736-1749, 1768, 1778, 1810, 1852, 1896, 1914-1919, 1928-1929, 1932-1938, 1955, 1959-1963, 1973, 1979-1980, 1986, 2004, 2023-2032, 2036-2049, 2053-2058, 2061-2062, 2066-2076, 2079-2082, 2085-2086, 2089-2090, 2093-2094, 2099-2104, 2107, 2110, 2113, 2118, 2122, 2137-2147, 2152-2157, 2163-2182, 2185-2192, 2195-2196, 2199, 2202-2205, 2208-2210, 2213-2215, 2218, 2223-2230, 2238-2384, 2399-2443, 2469-2549, 2569-2620, 2623-2635, 2642-2643
+django/db/models/query_utils.py                                                  232    125    46%   56-66, 69, 72, 75, 78-80, 87-95, 102-110, 118-139, 142-151, 175-179, 188-192, 225, 236, 238, 242-249, 277-282, 294-297, 304-306, 329-350, 359-363, 399-406, 409-411, 418-421, 428, 432-434
+django/db/models/signals.py                                                       25      3    88%   21-22, 37
+django/db/models/sql/__init__.py                                                   5      0   100%
+django/db/models/sql/compiler.py                                                 995    581    42%   55, 125-172, 179-233, 258-260, 285-296, 303-311, 315-316, 322, 335, 339-348, 350-351, 358-365, 369-379, 384-394, 397-406, 414, 439-466, 475, 483-487, 506-507, 521-592, 595-688, 711-717, 721-722, 732-736, 744-749, 764-765, 769-811, 819, 827-828, 830-837, 839-840, 843, 866, 875-895, 922, 947, 949, 967-978, 1014-1039, 1079-1082, 1087-1095, 1115-1319, 1327-1425, 1466, 1495-1500, 1507-1510, 1525-1526, 1543-1552, 1555-1564, 1582, 1585, 1609-1626, 1656, 1700-1703, 1731-1732, 1734, 1745-1753, 1770, 1785, 1797, 1805-1806, 1810-1814, 1821, 1829-1833, 1840-1854, 1865, 1870-1879, 1884-1890, 1905-1907, 1938-1941, 1959-2005, 2014-2030
+django/db/models/sql/constants.py                                                  8      0   100%
+django/db/models/sql/datastructures.py                                            92     23    75%   16-18, 99-101, 103-106, 109-110, 130-131, 162, 166, 174-176, 203, 209, 214, 217, 220
+django/db/models/sql/query.py                                                   1277    691    46%   59-61, 69-73, 86-95, 98, 101, 104-107, 112-119, 122, 126-128, 131-133, 136-152, 261-265, 280-281, 288, 292-294, 298, 331, 333, 344, 346, 350, 352, 375-377, 381, 396-436, 443, 467-520, 541, 557, 563-568, 571-574, 590-599, 610-714, 717-751, 754-768, 782-790, 802-804, 808-809, 840-857, 901-931, 945-984, 1003, 1031, 1042, 1075-1095, 1099, 1113, 1117-1143, 1146-1147, 1154-1159, 1164-1174, 1178, 1186-1193, 1202-1206, 1210, 1223, 1241, 1246, 1256, 1261-1262, 1276, 1283-1287, 1293-1295, 1306, 1315-1327, 1372, 1374, 1384-1389, 1392, 1399, 1411-1412, 1430, 1436-1437, 1452, 1470-1492, 1496, 1518, 1521, 1561-1584, 1587-1615, 1642, 1646, 1648-1659, 1665, 1673-1676, 1682-1689, 1698-1702, 1705, 1709-1713, 1726, 1780, 1794-1800, 1808-1822, 1828-1829, 1855, 1876, 1892-1900, 1907, 1910-1957, 1979-2026, 2029-2031, 2047, 2051-2054, 2057, 2068, 2096-2097, 2107-2108, 2135-2156, 2174, 2176, 2178, 2180, 2184-2185, 2187, 2192, 2208, 2224-2242, 2250-2258, 2265-2291, 2309-2320, 2332-2344, 2349, 2364, 2384-2391, 2396-2397, 2401-2407, 2411-2416, 2428, 2444, 2447-2453, 2468-2530, 2561, 2575-2578, 2587, 2622
+django/db/models/sql/subqueries.py                                                90     48    47%   18-24, 34-45, 54-55, 67-69, 72-78, 86-102, 113, 122, 132-139, 170-171
+django/db/models/sql/where.py                                                    203    108    47%   47-112, 126, 133-139, 146-147, 153, 160-163, 165-168, 176, 182-185, 188, 191-192, 199-204, 210, 215-217, 220-225, 249, 253-255, 259-265, 268-271, 275-277, 281, 287-289, 292, 295, 298-302, 312, 321-322, 325-326, 336-340, 343-346
+django/db/models/utils.py                                                         24      9    62%   13, 21-22, 33-34, 38, 45-48
+django/db/transaction.py                                                         132     51    61%   35, 40, 45, 54, 62, 70, 77, 82, 121-126, 190, 202-203, 240, 248-259, 264-271, 280, 287-291, 296-299, 305, 310-313, 320, 327-331, 335-340
+django/db/utils.py                                                               152     41    73%   73-91, 110, 114-135, 152, 156, 164, 189, 211, 221-229, 242-250, 255-264
+django/dispatch/__init__.py                                                        1      0   100%
+django/dispatch/dispatcher.py                                                    114     14    88%   84-88, 150, 204, 212-219, 247, 261, 270, 299-300
+django/forms/__init__.py                                                           7      0   100%
+django/forms/boundfield.py                                                       166     93    44%   27, 32-34, 45-48, 57, 60, 63, 68-73, 80, 90-99, 110, 114, 120, 134-137, 142-151, 166-197, 209, 215-222, 227, 238-240, 249-251, 258-281, 285, 294, 313-315, 318, 321-322, 326-328, 332, 336
+django/forms/fields.py                                                           769    465    40%   147, 170, 188, 212-214, 229, 233-235, 306, 310, 312, 314, 325, 329-330, 337, 339, 341, 355-364, 367-371, 374-381, 398-400, 409-417, 420-424, 431-440, 445-447, 450-457, 460, 475-481, 484, 497-501, 504, 509-510, 521-523, 530-543, 546, 556-558, 561-577, 585-587, 590, 593-602, 632-634, 637-657, 661-678, 681-683, 686, 703-739, 742-745, 756, 759-786, 798-802, 805-806, 809-813, 833-838, 841, 846, 849, 865-867, 870, 877, 887-889, 893-895, 903-913, 918-920, 926-936, 939-940, 954-960, 964-969, 976-986, 991-993, 1000-1012, 1015-1016, 1019-1022, 1031-1037, 1044-1047, 1074-1085, 1088-1090, 1093, 1104-1151, 1162, 1165-1179, 1193-1233, 1245-1261, 1264-1277, 1282-1286, 1289-1294, 1301-1304, 1313-1315, 1318-1326, 1344-1346, 1349-1366, 1369-1376, 1379-1381, 1384-1388
+django/forms/forms.py                                                            250     87    65%   48, 115, 126-128, 144-151, 172-173, 183-184, 230-317, 321, 324-349, 388, 391-397, 404, 419, 430, 435, 447, 493-496, 503, 510, 517, 526, 533
+django/forms/formsets.py                                                         250     81    68%   114, 118, 121, 128, 158, 187, 189, 235-238, 251, 256, 260-270, 277-281, 286-298, 306-338, 346, 350, 359, 365-367, 371, 377, 381-394, 408, 426, 431, 440, 451, 457-458, 475, 482-490, 496, 510-513, 519-522, 526, 529, 557, 577
+django/forms/models.py                                                           708    593    16%   50-87, 105-115, 120-130, 179-242, 247-256, 266-329, 347-377, 384-422, 425-426, 431-459, 462-491, 498-502, 508-523, 531-547, 604-641, 669-671, 683-685, 688-690, 697-699, 702-733, 736-752, 756, 760, 764-765, 772-783, 788, 792-881, 884-889, 896, 906, 909-932, 935-946, 950-996, 1025-1064, 1083-1102, 1105-1107, 1110-1130, 1134, 1140-1141, 1144-1174, 1177-1178, 1190-1257, 1293-1323, 1341-1350, 1353-1367, 1370, 1375-1376, 1379, 1382, 1385-1387, 1392-1393, 1396-1403, 1409, 1412, 1415, 1450-1467, 1475-1477, 1480-1484, 1487, 1490-1491, 1503, 1508-1518, 1523-1528, 1531-1544, 1547, 1550-1554, 1571, 1574-1576, 1579-1593, 1601-1630, 1633-1640, 1643-1653, 1657
+django/forms/renderers.py                                                         41      8    80%   25, 28-29, 34, 38, 65-67, 102
+django/forms/utils.py                                                            120     53    56%   19, 34-43, 60, 65-75, 84, 88, 92, 96, 101, 104, 107, 126, 129, 132, 157, 160-162, 165-174, 177, 186, 195, 203-204, 215-233, 241-243
+django/forms/widgets.py                                                          632    381    40%   64-73, 76, 79, 83-87, 91, 94, 103, 113-114, 134-136, 140-142, 154-176, 179-188, 194-213, 253-254, 260-264, 267, 280-281, 284-286, 290, 300, 312, 315, 333-335, 363-364, 367-369, 386-402, 405-409, 412, 422, 426, 429, 432, 449, 455, 461, 467-468, 471-485, 488-500, 503, 514-517, 525-526, 529, 551, 566-568, 571-573, 576-585, 590, 610-614, 621-622, 626-627, 631-667, 672-680, 693-697, 704-706, 709-715, 719-723, 735-738, 743-744, 751-757, 770-775, 778-789, 792-793, 810-814, 819, 834-836, 848, 853, 871-877, 881, 884-916, 919, 922, 928, 939, 946-949, 954-956, 960, 979-989, 992-995, 1013-1015, 1037-1066, 1069-1109, 1117-1134, 1138-1150, 1153-1155, 1158-1173, 1176
+django/http/__init__.py                                                            4      0   100%
+django/http/cookie.py                                                             12      2    83%   14, 22
+django/http/multipartparser.py                                                   346    292    16%   69-111, 120-325, 331-339, 354-362, 371-373, 392-398, 401, 404-427, 436-443, 452, 455, 464-468, 478-488, 502-503, 506-513, 516, 525-526, 529, 532-535, 551-563, 566, 569-607, 618-631, 636-640, 650-693, 698-699, 702-705
+django/http/request.py                                                           384    204    47%   61-72, 75-77, 84-88, 91-96, 105, 108, 118-123, 132, 140, 150, 156-163, 168, 174, 177, 182, 196-212, 223-253, 257, 264, 269-279, 287, 296-300, 303, 310-313, 317-322, 326-334, 338-361, 364-365, 369-400, 407-408, 419-423, 426-430, 433, 436, 498-500, 504-509, 521-526, 531, 540, 543-546, 549-550, 553-556, 559-563, 582-583, 586-587, 590-591, 594-597, 601, 616-633, 638-641, 644-645, 652, 656, 659-664, 679, 694, 698, 727
+django/http/response.py                                                          361    138    62%   37-38, 52, 58-76, 80, 88, 91-92, 118-119, 130-136, 142, 149, 154, 168, 172, 183, 190, 193, 196, 208, 235-272, 276, 279-280, 287-290, 316, 327-328, 335, 338, 341, 349, 352, 355, 358, 386-390, 393, 401, 415-420, 430, 433, 436, 439, 442-443, 464, 472, 489, 495, 515-516, 541-553, 558-566, 579-580, 585, 592-596, 603, 626-627, 631-635, 654-655, 658, 700-709
+django/middleware/__init__.py                                                      0      0   100%
+django/middleware/cache.py                                                        84     67    20%   69-73, 77, 80, 84-127, 140-142, 146, 153-176, 188-211
+django/middleware/common.py                                                       68     34    50%   44-45, 55-60, 72-73, 83-98, 108, 121-143, 151, 160-178
+django/middleware/csrf.py                                                        227    145    36%   56, 64-68, 77-81, 86-99, 112-120, 128, 133, 142-146, 160-163, 168, 182, 189, 197-204, 216-225, 236-239, 251, 255-257, 260-275, 278-298, 304-346, 349-353, 359-405, 410-411, 418, 422, 433-475, 479-487
+django/shortcuts.py                                                               47     31    34%   24-25, 45-48, 61, 77-80, 86-87, 100-114, 131-155
+django/template/__init__.py                                                       11      0   100%
+django/template/autoreload.py                                                     36     24    33%   14-30, 34-38, 43-44, 49-54
+django/template/backends/__init__.py                                               0      0   100%
+django/template/backends/base.py                                                  31     13    58%   23, 29, 40, 50, 63-66, 75-81
+django/template/backends/django.py                                                75      7    91%   30, 55, 63-64, 76, 130-131
+django/template/base.py                                                          561    291    48%   103-104, 107, 117, 120, 123, 131-132, 157-158, 161, 167, 187, 201-204, 243-269, 286-291, 319-320, 331-336, 347, 384-387, 390, 392-398, 404-410, 414-415, 425-433, 446, 448, 456, 477-486, 490-491, 496-497, 506-507, 512-513, 518, 522-526, 531, 550-554, 557-568, 575-581, 587, 590, 603-606, 673, 682-700, 703, 714-727, 731-746, 750-765, 770, 773, 805, 818-821, 827-828, 833-841, 847, 852-858, 862, 865, 876-942, 956, 967-982, 991, 993-995, 1022, 1025, 1043-1050, 1057, 1060, 1063-1070, 1093-1121
+django/template/context.py                                                       168     67    60%   43, 46, 51-54, 59, 71-76, 80-83, 87, 90, 93-96, 110-112, 118-121, 127-130, 150, 164-168, 190, 196, 232-242, 246-262, 265-270, 278, 286-289
+django/template/defaultfilters.py                                                511    336    34%   47-51, 69, 76, 83, 92, 139-199, 213, 220-230, 237, 249, 260, 274-279, 286-287, 294-298, 308-312, 322-326, 336-340, 347, 361-364, 371, 383, 392, 399, 406, 413, 420, 427-431, 443, 454, 465-466, 476-480, 487, 497, 504, 530-547, 556-559, 568-571, 577-580, 586-592, 598-601, 607-610, 616-624, 630, 638-648, 673-719, 730-736, 747-757, 768-776, 782-790, 796-803, 809-814, 825, 831-833, 839, 858-873, 887-921, 947-963, 969, 975-978
+django/template/defaulttags.py                                                   626    479    23%   47, 50-57, 64, 71-89, 94-96, 99-108, 114, 119-127, 132, 135-138, 143-144, 147-156, 165-171, 174-175, 184-245, 252-253, 257-278, 284-292, 297, 300, 303-304, 308, 311-324, 329, 332-342, 350-351, 356-357, 360-373, 380, 385-386, 389-396, 401, 404-405, 410, 413-415, 431, 434, 441-444, 447, 456-483, 488, 491, 496-499, 502-524, 529-534, 537, 540-542, 552-560, 568-569, 618-662, 667, 682, 705-716, 757-765, 831-866, 871-872, 875, 878, 885-886, 889, 952-980, 1013-1022, 1026-1029, 1042-1059, 1079-1091, 1119-1138, 1153-1161, 1211-1229, 1241-1255, 1284-1286, 1314-1323, 1368-1392, 1413-1415, 1439-1452, 1481-1494
+django/template/engine.py                                                        114     21    82%   43-44, 66, 110, 114-116, 149, 178, 186-195, 202, 207-212
+django/template/exceptions.py                                                     12      0   100%
+django/template/library.py                                                       176     98    44%   31, 47, 94, 125-142, 154, 166-204, 215-218, 221-225, 232-233, 236-243, 248-249, 257-278, 298-366, 375-376, 382-383
+django/template/loader.py                                                         32     14    56%   30-49, 59
+django/template/loader_tags.py                                                   187     88    53%   20, 24, 27-30, 33, 36-39, 44, 47, 50-66, 69-80, 94, 117-122, 125, 128, 145-152, 172, 193, 200-201, 206, 218-240, 254-274, 290, 295, 320, 327-344
+django/template/loaders/__init__.py                                                0      0   100%
+django/template/loaders/app_directories.py                                         5      0   100%
+django/template/loaders/base.py                                                   21      4    81%   19-20, 42, 51
+django/template/loaders/cached.py                                                 45      8    82%   21-23, 51, 53, 91, 96, 100
+django/template/loaders/filesystem.py                                             23      2    91%   36-39
+django/template/response.py                                                       65     41    37%   28-53, 60-64, 68-73, 76, 87-89, 97-100, 109-116, 120, 123-127, 131-135, 140-141, 160-163
+django/template/smartif.py                                                       107     64    40%   23, 29, 37, 40-41, 54-56, 59-65, 80-82, 85-88, 129, 132, 135, 138, 141, 148, 159-175, 178-183, 186-191, 194-200, 203-210, 213
+django/template/utils.py                                                          56      6    89%   37-39, 58, 73-74
+django/templatetags/__init__.py                                                    0      0   100%
+django/templatetags/cache.py                                                      53     44    17%   10-14, 17-55, 84-94
+django/templatetags/i18n.py                                                      291    229    21%   15, 18-21, 26-27, 30-32, 37-38, 43-46, 49-51, 56, 59-60, 65, 68-69, 76-82, 85-101, 117-125, 128, 135-146, 149-204, 209-210, 213-215, 234-239, 257-262, 284-289, 294, 299-300, 305, 310, 327-332, 350-355, 400-453, 499-586, 610-616
+django/templatetags/l10n.py                                                       33     20    39%   13, 22, 27-28, 31, 34-38, 53-63
+django/templatetags/static.py                                                     84     53    37%   13, 16-21, 30-39, 43-49, 52-56, 74, 92, 99-104, 107, 112-113, 116-122, 126-131, 138-152, 171, 179
+django/templatetags/tz.py                                                        104     69    34%   7-8, 25-35, 54, 62, 74-113, 125-126, 129-133, 142-143, 146-148, 157, 160-161, 174-183, 201-207, 224-229
+django/test/__init__.py                                                            4      0   100%
+django/test/client.py                                                            465    256    45%   53-55, 74, 77-87, 91, 101-106, 116-119, 121-124, 167, 188-226, 250-301, 305-323, 392-401, 408-411, 417, 441-444, 450-451, 463, 474, 485-486, 497-498, 509-510, 531, 598, 623-629, 632, 634, 653, 663-666, 671-678, 687-693, 696-707, 710-732, 736-746, 749-758, 833, 841, 854-862, 866-870, 882-890, 902-910, 922-930, 942-950, 954-958, 964-1025, 1052-1093
+django/test/html.py                                                              163     10    94%   231, 234-240, 264, 268
+django/test/runner.py                                                            594    322    46%   40-41, 46-49, 52-55, 58-63, 66-73, 76-78, 81-89, 92-98, 108-109, 112-113, 116-118, 121-125, 136, 147-159, 165-170, 174, 182, 185, 211-261, 264-268, 271-272, 275-276, 279-280, 283-284, 287-289, 292-294, 299-305, 308-309, 312-313, 320-324, 327-328, 332-333, 339, 352-355, 358-363, 372-377, 383, 386-387, 412-433, 443-446, 451, 480-487, 504-549, 552, 555-559, 581-583, 586-593, 597, 600-601, 612-623, 674-675, 678, 687, 697-783, 796-798, 813, 816, 825-827, 854-874, 878, 888, 890, 901-911, 929-937, 959, 961, 983-984, 1009, 1022, 1039, 1059-1061, 1067-1071, 1084-1085, 1103-1111, 1115, 1125-1134, 1146, 1150-1154, 1198-1200, 1204-1216, 1221
+django/test/selenium.py                                                           78     39    50%   34-63, 67, 71, 75-77, 80-86, 89-96, 106, 110, 114-116, 123-125, 130-134
+django/test/signals.py                                                           139     50    64%   29-33, 61-69, 73-82, 117-119, 125-128, 130-133, 139, 145-147, 155, 196-200, 206-233
+django/test/testcases.py                                                         870     98    89%   83-85, 146, 235, 324-326, 387-388, 410-414, 416, 422-426, 454, 473-566, 605, 608, 618, 626, 652, 868, 1048-1049, 1052-1068, 1114-1116, 1195-1204, 1225-1234, 1240, 1246-1252, 1384, 1391, 1434, 1445-1447, 1474, 1480-1481, 1484, 1489, 1642, 1885-1887, 1894-1897
+django/test/utils.py                                                             516    131    75%   33-34, 60-61, 64, 67, 78-81, 86-89, 92-96, 102, 184, 213, 227-236, 242, 247-248, 263, 291, 308, 311, 329, 341, 358, 377-378, 393, 416, 419, 440, 446-451, 469, 492-494, 508-510, 528-530, 533, 540, 549, 566-567, 574-578, 597-602, 615-620, 623-631, 634-635, 668, 676, 716, 751, 791-795, 843, 855-860, 868-869, 888-889, 892-893, 896, 906-909, 912, 948, 952-958, 961-964, 981, 995-1001
+django/urls/__init__.py                                                            7      0   100%
+django/urls/base.py                                                               96     41    57%   37, 42-43, 51-82, 84, 122-125, 166-187
+django/urls/conf.py                                                               44     30    32%   17-58, 65, 70-72, 82-89
+django/urls/converters.py                                                         34      6    82%   12, 22, 29, 32, 56-57
+django/urls/exceptions.py                                                          5      0   100%
+django/urls/resolvers.py                                                         463    149    68%   64, 67, 79-83, 102, 121-124, 136, 144-147, 155-158, 168, 172-180, 209, 221, 236-237, 242, 266, 274, 281, 284-285, 315-316, 321-332, 343-344, 349, 353-357, 360-363, 366, 369, 372, 383, 386-389, 395-403, 406-422, 448, 450, 452, 479-484, 495, 506-513, 518-527, 536, 570-607, 619, 624-627, 631-634, 641, 648-650, 653-655, 666-667, 703, 718-725, 739, 743, 753-755, 758, 761-765, 767, 773-780, 782, 805, 811-817
+django/urls/utils.py                                                              33     12    64%   21, 27, 33-41, 45-46, 52, 64-65
+django/utils/__init__.py                                                           0      0   100%
+django/utils/_os.py                                                               28     16    43%   31, 44-53, 58-62
+django/utils/asyncio.py                                                           21      3    86%   23-24, 39
+django/utils/autoreload.py                                                       407    138    66%   39-40, 45-46, 97-106, 157, 164-167, 266-267, 330-344, 363, 367, 370-373, 424, 440, 452-464, 468, 471-493, 496-510, 521-536, 539-542, 545-558, 563-568, 571-583, 586-587, 590-608, 611-612, 616-620, 625, 632-637, 660
+django/utils/cache.py                                                            194    162    16%   48-101, 109-117, 121-125, 129-136, 140-162, 167-210, 217-231, 239, 246-258, 265, 278-284, 291-292, 307-322, 329-333, 338-345, 350-362, 367-372, 385-394, 410-435, 439-442
+django/utils/connection.py                                                        56      6    89%   21, 24, 27, 54, 61, 70
+django/utils/crypto.py                                                            38     22    42%   27-45, 62, 67, 72-77, 89-93
+django/utils/datastructures.py                                                   179     64    64%   29, 32, 41-42, 76, 85-86, 89-90, 93, 96, 99-105, 108, 111-114, 121-127, 141, 158-162, 182-183, 187, 191-192, 196, 200-213, 217, 239, 280, 283, 315, 323, 326, 336-346
+django/utils/dateformat.py                                                       162    105    35%   40-51, 56-66, 70, 76-78, 82-84, 92-100, 109-111, 115, 119, 123, 127, 131, 139-145, 154-158, 162, 170-173, 177, 187-196, 202, 209, 213, 217, 221, 225, 229-231, 235, 239, 243, 247, 251, 255, 259, 263, 267-276, 283-292, 296, 300-303, 307, 311, 315, 319, 323, 328-329, 334-335
+django/utils/dateparse.py                                                         55     40    27%   73-78, 90-101, 115-129, 140-154
+django/utils/dates.py                                                              8      0   100%
+django/utils/deconstruct.py                                                       23      8    65%   27-44
+django/utils/decorators.py                                                        92     42    54%   8-12, 20, 34, 43-46, 67-80, 105, 127, 131, 134-139, 141-152, 156, 170-172, 180-182, 187-189
+django/utils/deprecation.py                                                       78     38    51%   24-27, 30-39, 57-84, 89-94, 103, 109, 126, 133, 147-159
+django/utils/duration.py                                                          28     23    18%   5-15, 20-28, 32-40, 46
+django/utils/encoding.py                                                          97     57    41%   12-13, 16, 30-33, 53, 64-75, 84-87, 102, 104, 106, 135-139, 169-192, 209, 214, 226-230, 243-247, 259-260
+django/utils/formats.py                                                          146    119    18%   58-59, 64-86, 91-97, 109-144, 158, 170, 182-188, 207-221, 229-246, 272-275, 287-311
+django/utils/functional.py                                                       228     62    73%   21, 30, 43-44, 74-75, 113, 119, 135, 141, 158, 161, 165, 169, 174, 178, 182-184, 187, 192, 195, 198, 204-205, 216, 223, 234, 245, 299, 310, 314-318, 324, 343-345, 348-354, 357-363, 395, 424-428, 431-437, 440-446, 452
+django/utils/hashable.py                                                          11      3    73%   11, 25-26
+django/utils/html.py                                                             194    133    31%   27, 52, 68-79, 89-94, 103-105, 122, 132-138, 143-145, 148, 151, 154, 157, 164-167, 175-182, 188, 194-226, 261-264, 286-327, 330-332, 339-368, 374-384, 392, 402, 411, 416
+django/utils/http.py                                                             214    144    33%   60, 65-91, 121-147, 154-157, 171-173, 178-187, 195, 203-207, 216-221, 229-232, 245, 268-278, 293-301, 306-308, 319-343, 349-371, 383, 392, 409-426
+django/utils/inspect.py                                                           39     20    49%   9, 20-21, 34-49, 61, 66-69
+django/utils/ipv6.py                                                              19     14    26%   26-36, 43-47
+django/utils/itercompat.py                                                         6      0   100%
+django/utils/log.py                                                               98     50    49%   95-128, 131, 136, 142, 153, 156-158, 163, 168, 179-204, 207, 231, 235, 239
+django/utils/lorem_ipsum.py                                                       28     20    29%   234-240, 249, 260-266, 276-286
+django/utils/module_loading.py                                                    51     28    45%   26-27, 31-32, 48-71, 79-81, 86-89, 100-107
+django/utils/numberformat.py                                                      56     52     7%   28-106
+django/utils/regex_helper.py                                                     193     93    52%   75-76, 81, 84, 87, 91, 99-101, 104-108, 114-117, 123, 126, 130, 134, 143, 156, 159-178, 188-190, 213, 223, 228, 230, 234, 246-271, 279-285, 295, 297-301, 313, 320-334, 350-351
+django/utils/safestring.py                                                        28     11    61%   22, 38-41, 51-55, 69, 71
+django/utils/termcolors.py                                                        56     21    62%   50, 54-55, 184-216
+django/utils/text.py                                                             193    139    28%   17-21, 45-62, 71, 74-86, 96-109, 113-128, 136-140, 148-152, 162-231, 244-248, 265-269, 280, 286-314, 318, 323-326, 331-340, 394, 407-417, 432
+django/utils/timesince.py                                                         49     40    18%   47-94, 101
+django/utils/timezone.py                                                         126     81    36%   11-12, 49-56, 61-66, 78-82, 88, 96, 101, 109, 125-135, 144-145, 162, 165-169, 172-175, 190-196, 212-219, 232, 269, 274-293, 298-303, 317-320, 328-339, 343-353, 361
+django/utils/topological_sort.py                                                  17     13    24%   15-29, 37-42
+django/utils/translation/__init__.py                                             144     60    58%   79, 91, 99, 103, 107, 116-117, 123, 126-129, 136-137, 140-143, 146-156, 167, 175, 196, 204, 214, 218, 225, 239-243, 247, 251, 259-261, 269-290, 297, 301
+django/utils/translation/reloader.py                                              21     15    29%   11-22, 27-36
+django/utils/translation/trans_real.py                                           309    142    54%   61-63, 77-82, 85, 88, 91-92, 95-96, 105-106, 113, 117-121, 140, 153-156, 160-162, 173, 180, 183, 211-212, 226-227, 237-244, 249, 258, 262, 269-278, 297, 326-327, 339-344, 355-360, 381, 384, 390-397, 407, 413-418, 426, 430-439, 470, 509, 516-521, 531-538, 551-585, 596-610
+django/utils/tree.py                                                              50     20    60%   41-42, 45, 48-50, 55-57, 61, 69, 72, 80, 102-105, 121-122, 126
+django/utils/version.py                                                           63     16    75%   38-40, 71, 85, 98-99, 111-120
+django/utils/xmlutils.py                                                          19     11    42%   16-21, 24-30, 34-35
+django/views/__init__.py                                                           2      0   100%
+django/views/csrf.py                                                              18     10    44%   108-160
+django/views/debug.py                                                            322    264    18%   37, 53, 56, 64-70, 78, 82-83, 87-90, 96-102, 121-140, 147-151, 157-159, 168, 176-182, 189-209, 212-223, 232-277, 285, 289, 292-301, 308, 316-390, 394-397, 401-404, 407-421, 430-457, 460-463, 467-496, 499-553, 558-600, 605-613
+django/views/decorators/__init__.py                                                0      0   100%
+django/views/decorators/cache.py                                                  26     16    38%   22, 30-46, 57-64
+django/views/decorators/common.py                                                  7      1    86%   13
+django/views/decorators/csrf.py                                                   28      5    82%   18, 32, 35-38
+django/views/decorators/debug.py                                                  28     18    36%   30, 38-42, 72-96
+django/views/defaults.py                                                          55     25    55%   53-54, 64, 68, 90-99, 110-121, 138-147
+django/views/generic/__init__.py                                                   8      0   100%
+django/views/generic/base.py                                                     133     87    35%   29-32, 59-60, 64-77, 82-122, 126-130, 136-142, 145-160, 164-175, 178, 196-197, 210-216, 225-226, 243-253, 256-266, 269, 272, 275, 278, 281, 284
+django/views/generic/dates.py                                                    333    230    31%   32, 36-45, 49, 53, 61-64, 68, 82, 86-95, 99, 103, 111-117, 121, 135, 139-148, 152, 156, 164, 168, 182, 186-195, 199, 203, 211-214, 218, 226-232, 243-247, 254, 265-267, 276-280, 289-299, 309-313, 317, 326, 333-355, 362, 369-386, 398-404, 421-441, 456, 472-490, 512-548, 570-583, 590-593, 617, 634-667, 686-691, 726-787, 792-795
+django/views/generic/detail.py                                                    79     54    32%   30-59, 68-77, 81, 85-90, 94-101, 108-110, 127-171
+django/views/generic/edit.py                                                     133     76    43%   25, 29, 33, 37-39, 43-55, 59-61, 65, 69, 73-75, 85-110, 114-117, 121-131, 135-136, 144, 151-155, 160, 179-180, 183-184, 203-204, 207-208, 227-230, 234, 237-240, 259-268, 275-280, 283-285
+django/views/generic/list.py                                                      99     68    31%   29-47, 51, 55-76, 85, 91, 104, 111, 115-120, 124-147, 154-175, 188-213
+django/views/i18n.py                                                             105     73    30%   30-63, 68-84, 210-219, 222-235, 243-246, 254-258, 261-271, 274-298, 301, 308-321, 345
+django/views/static.py                                                            56     23    59%   36-38, 46, 83-110, 127-129, 132
+tests/admin_scripts/__init__.py                                                    0      0   100%
+tests/admin_scripts/another_app_waiting_migration/__init__.py                      0      0   100%
+tests/admin_scripts/another_app_waiting_migration/migrations/0001_initial.py       5      0   100%
+tests/admin_scripts/another_app_waiting_migration/migrations/__init__.py           0      0   100%
+tests/admin_scripts/another_app_waiting_migration/models.py                        5      0   100%
+tests/admin_scripts/app_waiting_migration/__init__.py                              0      0   100%
+tests/admin_scripts/app_waiting_migration/migrations/0001_initial.py               5      0   100%
+tests/admin_scripts/app_waiting_migration/migrations/__init__.py                   0      0   100%
+tests/admin_scripts/app_waiting_migration/models.py                                5      0   100%
+tests/admin_scripts/complex_app/__init__.py                                        0      0   100%
+tests/admin_scripts/complex_app/management/__init__.py                             0      0   100%
+tests/admin_scripts/complex_app/management/commands/__init__.py                    0      0   100%
+tests/admin_scripts/complex_app/management/commands/duplicate.py                   4      0   100%
+tests/admin_scripts/complex_app/models/__init__.py                                 3      0   100%
+tests/admin_scripts/complex_app/models/bar.py                                      5      0   100%
+tests/admin_scripts/complex_app/models/foo.py                                      5      0   100%
+tests/admin_scripts/management/__init__.py                                         0      0   100%
+tests/admin_scripts/simple_app/__init__.py                                         0      0   100%
+tests/admin_scripts/simple_app/management/__init__.py                              0      0   100%
+tests/admin_scripts/simple_app/management/commands/__init__.py                     0      0   100%
+tests/admin_scripts/simple_app/management/commands/duplicate.py                    4      0   100%
+tests/admin_scripts/simple_app/models.py                                           2      0   100%
+tests/admin_scripts/tests.py                                                    1492      8    99%   105-107, 1912-1915, 2891
+tests/admin_scripts/urls.py                                                        5      0   100%
+tests/builtin_server/__init__.py                                                   0      0   100%
+tests/builtin_server/tests.py                                                    102      4    96%   27, 34, 43-44
+tests/builtin_server/urls.py                                                       3      0   100%
+tests/builtin_server/views.py                                                     11      0   100%
+tests/runtests.py                                                                333    134    60%   18-19, 43, 123, 141, 154-158, 163, 173-174, 183-189, 293, 299, 310, 320, 353-365, 388, 397, 404, 408-411, 438-440, 444-460, 464-509, 513-538, 699, 703, 717-721, 725-731, 735-736, 739-752, 755, 763
+tests/servers/__init__.py                                                          0      0   100%
+tests/servers/models.py                                                            3      0   100%
+tests/servers/test_basehttp.py                                                    82      0   100%
+tests/servers/test_liveserverthread.py                                            32     14    56%   14-18, 21-32
+tests/servers/tests.py                                                           212     16    92%   53-54, 95-107, 121, 133, 347-353
+tests/servers/urls.py                                                              3      0   100%
+tests/servers/views.py                                                            30      0   100%
+tests/staticfiles_tests/__init__.py                                                0      0   100%
+tests/staticfiles_tests/apps/__init__.py                                           0      0   100%
+tests/staticfiles_tests/apps/no_label/__init__.py                                  0      0   100%
+tests/staticfiles_tests/apps/test/__init__.py                                      0      0   100%
+tests/staticfiles_tests/cases.py                                                  70     36    49%   19, 26-27, 30-32, 35-40, 43-44, 47-48, 70-79, 82-83, 86, 89, 98-101, 113-114, 121, 127, 133, 139, 145, 148
+tests/staticfiles_tests/settings.py                                                4      0   100%
+tests/staticfiles_tests/test_handlers.py                                          28      0   100%
+tests/staticfiles_tests/test_liveserver.py                                        42      1    98%   62
+tests/test_sqlite.py                                                               5      0   100%
+tests/test_utils/__init__.py                                                       0      0   100%
+tests/test_utils/models.py                                                        10      0   100%
+tests/test_utils/tests.py                                                       1345     22    98%   66-67, 80, 88, 98, 118, 126, 130, 145, 170, 181-182, 193, 198-199, 256-257, 959-960, 1143, 2208, 2447
+tests/test_utils/urls.py                                                           3      0   100%
+tests/test_utils/views.py                                                         12      0   100%
+tests/urls.py                                                                      1      0   100%
+tests/utils_tests/__init__.py                                                      0      0   100%
+tests/utils_tests/models.py                                                        5      0   100%
+tests/utils_tests/test_autoreload.py                                             590     52    91%   19-20, 59-69, 732, 740-742, 745-747, 750-752, 762-764, 774-775, 778-780, 783-785, 788, 791-794, 798-802, 806-810, 813-818, 821-832, 838
+tests/utils_tests/test_module/__init__.py                                          3      0   100%
+tests/utils_tests/test_module/__main__.py                                          0      0   100%
+tests/utils_tests/test_module/main_module.py                                       0      0   100%
+tests/utils_tests/utils.py                                                         7      2    71%   12-13
+------------------------------------------------------------------------------------------------------------
+TOTAL                                                                          53717  26831    50%
++ chmod 777 /testbed/.coverage
++ chmod 777 /testbed/.coveragerc

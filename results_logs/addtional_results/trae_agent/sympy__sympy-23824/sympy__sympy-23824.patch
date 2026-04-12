@@ -1,0 +1,34 @@
+diff --git a/sympy/physics/hep/gamma_matrices.py b/sympy/physics/hep/gamma_matrices.py
+index 23284e4a92..5bb2b1a5b6 100644
+--- a/sympy/physics/hep/gamma_matrices.py
++++ b/sympy/physics/hep/gamma_matrices.py
+@@ -694,7 +694,8 @@ def kahane_simplify(expression):
+ 
+     # If `first_dum_pos` is not zero, it means that there are trailing free gamma
+     # matrices in front of `expression`, so multiply by them:
+-    for i in range(0, first_dum_pos):
++    # Note: We need to insert them in the correct order (not reversed)
++    for i in range(first_dum_pos - 1, -1, -1):
+         [ri.insert(0, free_pos[i]) for ri in resulting_indices]
+ 
+     resulting_expr = S.Zero
+diff --git a/sympy/physics/hep/tests/test_gamma_matrices.py b/sympy/physics/hep/tests/test_gamma_matrices.py
+index 27509803f2..8014273c6e 100644
+--- a/sympy/physics/hep/tests/test_gamma_matrices.py
++++ b/sympy/physics/hep/tests/test_gamma_matrices.py
+@@ -196,6 +196,15 @@ def test_kahane_simplify1():
+     i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15 = tensor_indices('i0:16', LorentzIndex)
+     mu, nu, rho, sigma = tensor_indices("mu, nu, rho, sigma", LorentzIndex)
+     D = 4
++    
++    # Test for the leading gamma matrix order preservation
++    t = G(mu)*G(-mu)*G(rho)*G(sigma)
++    r = kahane_simplify(t)
++    assert r.equals(4*G(rho)*G(sigma))
++    
++    t = G(rho)*G(sigma)*G(mu)*G(-mu)
++    r = kahane_simplify(t)
++    assert r.equals(4*G(rho)*G(sigma))
+     t = G(i0)*G(i1)
+     r = kahane_simplify(t)
+     assert r.equals(t)

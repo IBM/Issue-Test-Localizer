@@ -1,0 +1,98 @@
+{
+  "instance_id": "django__django-15569",
+  "container_id": "40dbc37ce3ba3ba66a75cd8677fa2dbf9f1eaaa1019d172c9023d7fadf1c35e8",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+        "inst": "django__django-15569",
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "top_passed": 3,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "custom_lookups.tests.LookupTests.test_unregister_lookup_clears_cache#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": false
+        }
+      ]
+    },
+    "custom_lookups.tests.SubqueryTransformTests.test_unregister_lookup_clears_cache#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": true
+        }
+      ]
+    },
+    "custom_lookups.tests.LookupTests.test_unregister_lookup_clears_cache#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": false
+        }
+      ]
+    },
+    "custom_lookups.tests.LookupTests.test_unregister_lookup_clear_cache#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": false
+        }
+      ]
+    },
+    "custom_lookups.tests.LookupTests.test_lookups_caching#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": false
+        }
+      ]
+    },
+    "custom_lookups.tests.LookupTests.test_lookups_caching#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": false
+        }
+      ]
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": true
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15569/dedup_patch_0.jsonl",
+          "inst": "django__django-15569",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

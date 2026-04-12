@@ -1,0 +1,62 @@
+diff --git a/astropy/wcs/wcsapi/wrappers/sliced_wcs.py b/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+index d7605b078..14571fc1b 100644
+--- a/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
++++ b/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+@@ -245,13 +245,51 @@ class SlicedLowLevelWCS(BaseWCSWrapper):
+     def world_to_pixel_values(self, *world_arrays):
+         world_arrays = tuple(map(np.asanyarray, world_arrays))
+         world_arrays_new = []
+-        iworld_curr = -1
+-        for iworld in range(self._wcs.world_n_dim):
+-            if iworld in self._world_keep:
+-                iworld_curr += 1
+-                world_arrays_new.append(world_arrays[iworld_curr])
++        
++        # Check if we have the right number of world arrays
++        # If we have fewer arrays than world_n_dim, we need to use the sliced values
++        # for the missing dimensions
++        if len(world_arrays) < self._wcs.world_n_dim:
++            # Get the values for the sliced pixel coordinates
++            sliced_pixel_coords = []
++            for ipixel in range(self._wcs.pixel_n_dim):
++                if isinstance(self._slices_pixel[ipixel], numbers.Integral):
++                    sliced_pixel_coords.append(self._slices_pixel[ipixel])
++                else:
++                    sliced_pixel_coords.append(0)  # Use 0 for non-sliced dimensions
++            
++            # Get the world coordinates for the sliced pixel coordinates
++            sliced_world_coords = self._wcs.pixel_to_world_values(*sliced_pixel_coords)
++            
++            # Create a mapping of world coordinates to use for each dimension
++            world_map = {}
++            
++            # First, map the provided world coordinates to their respective dimensions
++            # based on the world_keep array
++            if len(world_arrays) == len(self._world_keep):
++                for i, idx in enumerate(self._world_keep):
++                    if i < len(world_arrays):
++                        world_map[idx] = world_arrays[i]
+             else:
+-                world_arrays_new.append(1.)
++                # If the number of world arrays doesn't match world_keep, use them in order
++                # until we run out
++                iworld_curr = 0
++                for idx in range(self._wcs.world_n_dim):
++                    if iworld_curr < len(world_arrays):
++                        world_map[idx] = world_arrays[iworld_curr]
++                        iworld_curr += 1
++            
++            # Then, for any missing dimensions, use the sliced world coordinates
++            for idx in range(self._wcs.world_n_dim):
++                if idx not in world_map:
++                    world_map[idx] = sliced_world_coords[idx]
++            
++            # Now build the world_arrays_new using the world_map
++            for idx in range(self._wcs.world_n_dim):
++                world_arrays_new.append(world_map[idx])
++        else:
++            # If we have the right number of world arrays, use them directly
++            world_arrays_new = list(world_arrays)
+ 
+         world_arrays_new = np.broadcast_arrays(*world_arrays_new)
+         pixel_arrays = list(self._wcs.world_to_pixel_values(*world_arrays_new))

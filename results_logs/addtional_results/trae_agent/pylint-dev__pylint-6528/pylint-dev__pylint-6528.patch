@@ -1,0 +1,64 @@
+diff --git a/pylint/lint/pylinter.py b/pylint/lint/pylinter.py
+index 53345a6b..00c64ed6 100644
+--- a/pylint/lint/pylinter.py
++++ b/pylint/lint/pylinter.py
+@@ -563,19 +563,47 @@ class PyLinter(
+         for msg in self.msgs_store.messages:
+             if not msg.may_be_emitted():
+                 self._msgs_state[msg.msgid] = False
++        
++        # Make sure _ignore_paths is initialized
++        if not hasattr(self, '_ignore_paths'):
++            self._ignore_paths = self.config.ignore_paths
+ 
+-    @staticmethod
+-    def _discover_files(files_or_modules: Sequence[str]) -> Iterator[str]:
++    def _discover_files(self, files_or_modules: Sequence[str]) -> Iterator[str]:
+         """Discover python modules and packages in sub-directory.
+ 
+         Returns iterator of paths to discovered modules and packages.
++        Respects ignore, ignore_patterns, and ignore_paths configurations.
+         """
++        # Helper function to check if a path should be ignored
++        def should_ignore(path: str) -> bool:
++            basename = os.path.basename(path)
++            # Check if the basename is in the ignore list
++            if basename in self.config.ignore:
++                return True
++            
++            # Check if the basename matches any pattern in ignore_patterns
++            if any(pattern.match(basename) for pattern in self.config.ignore_patterns):
++                return True
++            
++            # Check if the path matches any pattern in ignore_paths
++            if any(pattern.match(path) for pattern in self._ignore_paths):
++                return True
++                
++            return False
++
+         for something in files_or_modules:
++            # Skip if the file or directory should be ignored
++            if should_ignore(something):
++                continue
++                
+             if os.path.isdir(something) and not os.path.isfile(
+                 os.path.join(something, "__init__.py")
+             ):
+                 skip_subtrees: list[str] = []
+-                for root, _, files in os.walk(something):
++                for root, dirs, files in os.walk(something):
++                    # Skip directories that should be ignored
++                    dirs[:] = [d for d in dirs if not should_ignore(os.path.join(root, d))]
++                    
+                     if any(root.startswith(s) for s in skip_subtrees):
+                         # Skip subtree of already discovered package.
+                         continue
+@@ -586,7 +614,7 @@ class PyLinter(
+                         yield from (
+                             os.path.join(root, file)
+                             for file in files
+-                            if file.endswith(".py")
++                            if file.endswith(".py") and not should_ignore(os.path.join(root, file))
+                         )
+             else:
+                 yield something

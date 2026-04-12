@@ -1,0 +1,24 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 53e783e..e7573bf 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -109,12 +109,15 @@ def exclude_members_option(arg: Any) -> Union[object, Set[str]]:
+     return {x.strip() for x in arg.split(',') if x.strip()}
+ 
+ 
+-def inherited_members_option(arg: Any) -> Union[object, Set[str]]:
+-    """Used to convert the :members: option to auto directives."""
++def inherited_members_option(arg: Any) -> Union[str, Set[str]]:
++    """Used to convert the :inherited-members: option to auto directives.
++    
++    Returns 'object' if arg is None/True, otherwise returns a set of class names
++    to inherit from. Multiple class names can be specified as a comma-separated list.
++    """
+     if arg in (None, True):
+         return 'object'
+-    else:
+-        return arg
++    return {x.strip() for x in arg.split(',') if x.strip()}
+ 
+ 
+ def member_order_option(arg: Any) -> Optional[str]:

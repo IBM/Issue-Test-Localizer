@@ -1,0 +1,29 @@
+diff --git a/django/db/models/fields/json.py b/django/db/models/fields/json.py
+index a0dea96..3450f34 100644
+--- a/django/db/models/fields/json.py
++++ b/django/db/models/fields/json.py
+@@ -294,13 +294,13 @@ class KeyTransform(Transform):
+     def as_mysql(self, compiler, connection):
+         lhs, params, key_transforms = self.preprocess_lhs(compiler, connection)
+         json_path = compile_json_path(key_transforms)
+-        return 'JSON_EXTRACT(%s, %%s)' % lhs, tuple(params) + (json_path,)
++        return 'CAST(JSON_EXTRACT(%s, %%s) AS CHAR)' % lhs, tuple(params) + (json_path,)
+ 
+     def as_oracle(self, compiler, connection):
+         lhs, params, key_transforms = self.preprocess_lhs(compiler, connection)
+         json_path = compile_json_path(key_transforms)
+         return (
+-            "COALESCE(JSON_QUERY(%s, '%s'), JSON_VALUE(%s, '%s'))" %
++            "TO_CHAR(COALESCE(JSON_QUERY(%s, '%s'), JSON_VALUE(%s, '%s')))" %
+             ((lhs, json_path) * 2)
+         ), tuple(params) * 2
+ 
+@@ -317,7 +317,7 @@ class KeyTransform(Transform):
+     def as_sqlite(self, compiler, connection):
+         lhs, params, key_transforms = self.preprocess_lhs(compiler, connection)
+         json_path = compile_json_path(key_transforms)
+-        return 'JSON_EXTRACT(%s, %%s)' % lhs, tuple(params) + (json_path,)
++        return 'CAST(JSON_EXTRACT(%s, %%s) AS TEXT)' % lhs, tuple(params) + (json_path,)
+ 
+ 
+ class KeyTextTransform(KeyTransform):

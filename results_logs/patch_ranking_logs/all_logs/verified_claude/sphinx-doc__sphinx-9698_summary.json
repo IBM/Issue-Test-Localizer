@@ -1,0 +1,42 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9698",
+  "container_id": "8e94fdcf9c5394703a2749586ee7dd5863a778d87faaa07c5ae41b136e3c1a48",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9698/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-9698",
+        "passed": 5,
+        "failed": 1
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "tests/test_domain_py.py::test_pyproperty#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pymethod_options#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pyproperty#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pymethod_options#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pymethod_options#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_domain_py.py::test_pymethod_options#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

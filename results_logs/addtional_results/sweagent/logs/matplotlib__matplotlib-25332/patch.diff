@@ -1,0 +1,59 @@
+diff --git a/lib/matplotlib/cbook.py b/lib/matplotlib/cbook.py
+index c9699b2e21..f7ce9f2e12 100644
+--- a/lib/matplotlib/cbook.py
++++ b/lib/matplotlib/cbook.py
+@@ -846,6 +846,54 @@ class Grouper:
+         siblings = self._mapping.get(weakref.ref(a), [weakref.ref(a)])
+         return [x() for x in siblings]
+ 
++    def __getstate__(self):
++        """
++        Support for pickling.
++        
++        Convert weak references to strong references for pickling.
++        """
++        # Clean up dead references first
++        self.clean()
++        
++        # Convert the mapping from weak references to strong references
++        # We need to group the objects by their connected components
++        groups = []
++        seen = set()
++        
++        for ref_key, ref_list in self._mapping.items():
++            if id(ref_list) in seen:
++                continue
++            seen.add(id(ref_list))
++            
++            # Convert weak references back to strong references
++            group = []
++            for ref in ref_list:
++                obj = ref()
++                if obj is not None:
++                    group.append(obj)
++            
++            if group:  # Only add non-empty groups
++                groups.append(group)
++        
++        return {'groups': groups}
++
++    def __setstate__(self, state):
++        """
++        Support for unpickling.
++        
++        Recreate weak references from strong references.
++        """
++        # Initialize empty mapping
++        self._mapping = {}
++        
++        # Recreate the grouper structure from the groups
++        for group in state['groups']:
++            if group:  # Skip empty groups
++                # Join all objects in this group
++                first = group[0]
++                for obj in group[1:]:
++                    self.join(first, obj)
++
+ 
+ class GrouperView:
+     """Immutable view over a `.Grouper`."""

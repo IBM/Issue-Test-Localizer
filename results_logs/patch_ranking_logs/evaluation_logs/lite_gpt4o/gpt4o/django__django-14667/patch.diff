@@ -1,0 +1,37 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 5d0565e..1bde68d 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1197,6 +1197,10 @@ class QuerySet:
+             raise TypeError('Cannot change a query once a slice has been taken.')
+         clone = self._chain()
+         clone.query.add_extra(select, select_params, where, params, tables, order_by)
++        if clone.query.deferred_loading[1] is False:
++            only_fields = set(fields)
++            fields_to_remove = only_fields.intersection(clone.query.deferred_loading[0])
++            clone.query.deferred_loading = (clone.query.deferred_loading[0].difference(fields_to_remove), False)
+         return clone
+ 
+     def reverse(self):
+@@ -1205,6 +1209,10 @@ class QuerySet:
+             raise TypeError('Cannot reverse a query once a slice has been taken.')
+         clone = self._chain()
+         clone.query.standard_ordering = not clone.query.standard_ordering
++        if clone.query.deferred_loading[1] is False:
++            only_fields = set(fields)
++            fields_to_remove = only_fields.intersection(clone.query.deferred_loading[0])
++            clone.query.deferred_loading = (clone.query.deferred_loading[0].difference(fields_to_remove), False)
+         return clone
+ 
+     def defer(self, *fields):
+@@ -1222,6 +1230,10 @@ class QuerySet:
+             clone.query.clear_deferred_loading()
+         else:
+             clone.query.add_deferred_loading(fields)
++        if clone.query.deferred_loading[1] is False:
++            only_fields = set(fields)
++            fields_to_remove = only_fields.intersection(clone.query.deferred_loading[0])
++            clone.query.deferred_loading = (clone.query.deferred_loading[0].difference(fields_to_remove), False)
+         return clone
+ 
+     def only(self, *fields):

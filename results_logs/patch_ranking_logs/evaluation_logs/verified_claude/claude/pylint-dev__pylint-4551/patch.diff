@@ -1,0 +1,20 @@
+diff --git a/pylint/pyreverse/diagrams.py b/pylint/pyreverse/diagrams.py
+index 0111bb1..0de5c0e 100644
+--- a/pylint/pyreverse/diagrams.py
++++ b/pylint/pyreverse/diagrams.py
+@@ -84,6 +84,15 @@ class ClassDiagram(Figure, FilterMixIn):
+             for n, m in node.items()
+             if isinstance(m, astroid.FunctionDef) and decorated_with_property(m)
+         ]
++        
++        # Get type hints from __init__ parameters
++        init_method = node.locals.get('__init__', [None])[0]
++        if init_method and isinstance(init_method, astroid.FunctionDef):
++            for arg in init_method.args.args[1:]:  # Skip 'self'
++                if arg.name in node.instance_attrs and hasattr(arg, 'annotation'):
++                    if arg.annotation:
++                        node.instance_attrs_type[arg.name] = [arg.annotation]
++
+         for node_name, associated_nodes in (
+             list(node.instance_attrs_type.items())
+             + list(node.locals_type.items())

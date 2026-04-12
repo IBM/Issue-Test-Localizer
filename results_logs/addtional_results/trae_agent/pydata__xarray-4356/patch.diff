@@ -1,0 +1,61 @@
+diff --git a/xarray/core/nanops.py b/xarray/core/nanops.py
+index 41c8d258..d4f3da57 100644
+--- a/xarray/core/nanops.py
++++ b/xarray/core/nanops.py
+@@ -26,21 +26,42 @@ def _maybe_null_out(result, axis, mask, min_count=1):
+     """
+     xarray version of pandas.core.nanops._maybe_null_out
+     """
+-    if hasattr(axis, "__len__"):  # if tuple or list
+-        raise ValueError(
+-            "min_count is not available for reduction with more than one dimensions."
+-        )
+-
+-    if axis is not None and getattr(result, "ndim", False):
+-        null_mask = (mask.shape[axis] - mask.sum(axis) - min_count) < 0
+-        if null_mask.any():
+-            dtype, fill_value = dtypes.maybe_promote(result.dtype)
+-            result = result.astype(dtype)
+-            result[null_mask] = fill_value
+-
++    if axis is not None:
++        if hasattr(axis, "__len__"):  # if tuple or list
++            # For multiple axes reduction that results in a scalar
++            if not getattr(result, "ndim", False):
++                # Count valid values in the entire array
++                valid_count = mask.size - mask.sum()
++                if valid_count < min_count:
++                    return np.nan
++            else:
++                # For multiple axes reduction that results in an array
++                # First, compute the total number of elements in the reduced dimensions
++                reduced_size = np.prod([mask.shape[ax] for ax in axis])
++                
++                # Count valid values (non-masked) in the reduced dimensions
++                valid_count = reduced_size - mask.sum(axis=axis)
++                
++                # Check if the valid count is less than min_count
++                null_mask = (valid_count < min_count)
++                
++                if null_mask.any():
++                    dtype, fill_value = dtypes.maybe_promote(result.dtype)
++                    result = result.astype(dtype)
++                    result[null_mask] = fill_value
++        elif getattr(result, "ndim", False):
++            # Original logic for single axis
++            null_mask = (mask.shape[axis] - mask.sum(axis) < min_count)
++            
++            if null_mask.any():
++                dtype, fill_value = dtypes.maybe_promote(result.dtype)
++                result = result.astype(dtype)
++                result[null_mask] = fill_value
++    
+     elif getattr(result, "dtype", None) not in dtypes.NAT_TYPES:
+-        null_mask = mask.size - mask.sum()
+-        if null_mask < min_count:
++        # For scalar result (all dimensions reduced)
++        valid_count = mask.size - mask.sum()
++        if valid_count < min_count:
+             result = np.nan
+ 
+     return result

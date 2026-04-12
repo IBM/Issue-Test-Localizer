@@ -1,0 +1,144 @@
+diff --git a/lib/matplotlib/colors.py b/lib/matplotlib/colors.py
+index e0c42c5b6..8e3163853 100644
+--- a/lib/matplotlib/colors.py
++++ b/lib/matplotlib/colors.py
+@@ -1461,33 +1461,137 @@ def _make_norm_from_scale(scale_cls, base_norm_cls=None, *, init=None):
+             self._trf = self._scale.get_transform()
+ 
+         def __call__(self, value, clip=None):
++            """
++            Normalize *value* data in the ``[vmin, vmax]`` interval into the
++            ``[0.0, 1.0]`` interval and return it.
++
++            Parameters
++            ----------
++            value : array-like or scalar
++                Data to normalize.
++            clip : bool
++                If ``True``, clip the input data to ``[vmin, vmax]``.
++
++            Returns
++            -------
++            array-like or scalar
++                Normalized data.
++            """
+             value, is_scalar = self.process_value(value)
+             self.autoscale_None(value)
++            
+             if self.vmin > self.vmax:
+                 raise ValueError("vmin must be less or equal to vmax")
+             if self.vmin == self.vmax:
+                 return np.full_like(value, 0)
++            
++            # Handle LogNorm with vmin=0 case
++            if hasattr(self._scale, 'name') and self._scale.name == 'log' and self.vmin == 0:
++                # For LogNorm, vmin can't be 0 as log(0) is -inf
++                # Use a small positive number instead
++                self.vmin = min(1.0, self.vmax / 1000.0)
++            
+             if clip is None:
+                 clip = self.clip
+             if clip:
+                 value = np.clip(value, self.vmin, self.vmax)
++                
++            # Try to transform the values
+             t_value = self._trf.transform(value).reshape(np.shape(value))
+             t_vmin, t_vmax = self._trf.transform([self.vmin, self.vmax])
++            
++            # Handle non-finite transformed values
+             if not np.isfinite([t_vmin, t_vmax]).all():
+-                raise ValueError("Invalid vmin or vmax")
++                # For LogNorm with very large values, we can get overflow
++                # Try to recover by using a smaller vmax that still preserves the visualization
++                if hasattr(self._scale, 'name') and self._scale.name == 'log' and self.vmax > 1e10:
++                    # Use a more reasonable maximum value that won't overflow
++                    safe_vmax = min(1e10, self.vmax)
++                    
++                    # Recalculate with the safer vmax
++                    if clip:
++                        value = np.clip(value, self.vmin, safe_vmax)
++                    t_value = self._trf.transform(value).reshape(np.shape(value))
++                    t_vmin, t_vmax = self._trf.transform([self.vmin, safe_vmax])
++                    
++                    if not np.isfinite([t_vmin, t_vmax]).all():
++                        # Try an even smaller value
++                        safe_vmax = min(1e6, self.vmax)
++                        
++                        if clip:
++                            value = np.clip(value, self.vmin, safe_vmax)
++                        t_value = self._trf.transform(value).reshape(np.shape(value))
++                        t_vmin, t_vmax = self._trf.transform([self.vmin, safe_vmax])
++                        
++                        if not np.isfinite([t_vmin, t_vmax]).all():
++                            # If still not working, use a reasonable default range
++                            self.vmin = max(1.0, self.vmin)
++                            safe_vmax = 1000.0
++                            
++                            if clip:
++                                value = np.clip(value, self.vmin, safe_vmax)
++                            t_value = self._trf.transform(value).reshape(np.shape(value))
++                            t_vmin, t_vmax = self._trf.transform([self.vmin, safe_vmax])
++                else:
++                    raise ValueError("Invalid vmin or vmax")
++                    
+             t_value -= t_vmin
+             t_value /= (t_vmax - t_vmin)
+             t_value = np.ma.masked_invalid(t_value, copy=False)
+             return t_value[0] if is_scalar else t_value
+ 
+         def inverse(self, value):
++            """
++            Inverse of the normalization process: return data in the
++            ``[vmin, vmax]`` interval, corresponding to normalized data in the
++            ``[0, 1]`` interval.
++
++            Parameters
++            ----------
++            value : array-like or scalar
++                Normalized data in the ``[0, 1]`` interval.
++
++            Returns
++            -------
++            array-like or scalar
++                Data in the ``[vmin, vmax]`` interval.
++            """
+             if not self.scaled():
+                 raise ValueError("Not invertible until scaled")
+             if self.vmin > self.vmax:
+                 raise ValueError("vmin must be less or equal to vmax")
++            
++            # Handle LogNorm with vmin=0 case
++            if hasattr(self._scale, 'name') and self._scale.name == 'log' and self.vmin == 0:
++                # For LogNorm, vmin can't be 0 as log(0) is -inf
++                # Use a small positive number instead
++                self.vmin = min(1.0, self.vmax / 1000.0)
++                
++            # Try to transform the vmin and vmax values
+             t_vmin, t_vmax = self._trf.transform([self.vmin, self.vmax])
++            
++            # Handle non-finite transformed values
+             if not np.isfinite([t_vmin, t_vmax]).all():
+-                raise ValueError("Invalid vmin or vmax")
++                # For LogNorm with very large values, we can get overflow
++                # Try to recover by using a smaller vmax
++                if hasattr(self._scale, 'name') and self._scale.name == 'log' and self.vmax > 1e10:
++                    # Use a more reasonable maximum value that won't overflow
++                    safe_vmax = min(1e10, self.vmax)
++                    t_vmin, t_vmax = self._trf.transform([self.vmin, safe_vmax])
++                    
++                    if not np.isfinite([t_vmin, t_vmax]).all():
++                        # Try an even smaller value
++                        safe_vmax = min(1e6, self.vmax)
++                        t_vmin, t_vmax = self._trf.transform([self.vmin, safe_vmax])
++                        
++                        if not np.isfinite([t_vmin, t_vmax]).all():
++                            # If still not working, use a reasonable default range
++                            self.vmin = max(1.0, self.vmin)
++                            safe_vmax = 1000.0
++                            t_vmin, t_vmax = self._trf.transform([self.vmin, safe_vmax])
++                else:
++                    raise ValueError("Invalid vmin or vmax")
++                
+             value, is_scalar = self.process_value(value)
+             rescaled = value * (t_vmax - t_vmin)
+             rescaled += t_vmin

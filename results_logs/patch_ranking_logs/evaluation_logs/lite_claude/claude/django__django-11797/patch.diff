@@ -1,0 +1,34 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 946e695..e28e0a7 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -60,6 +60,9 @@ class SQLCompiler:
+         The logic of what exactly the GROUP BY clause contains is hard
+         to describe in other words than "if it passes the test suite,
+         then it is correct".
++
++        When a query with GROUP BY is used as a subquery, we need to ensure
++        the GROUP BY columns are preserved from the original query.
+         """
+         # Some examples:
+         #     SomeModel.objects.annotate(Count('somecol'))
+@@ -96,14 +99,16 @@ class SQLCompiler:
+         if self.query.group_by is not True:
+             # If the group by is set to a list (by .values() call most likely),
+             # then we need to add everything in it to the GROUP BY clause.
+-            # Backwards compatibility hack for setting query.group_by. Remove
+-            # when  we have public API way of forcing the GROUP BY clause.
+-            # Converts string references to expressions.
++            # These explicitly set grouping columns should be preserved even
++            # when the query is used as a subquery.
+             for expr in self.query.group_by:
+                 if not hasattr(expr, 'as_sql'):
+                     expressions.append(self.query.resolve_ref(expr))
+                 else:
+                     expressions.append(expr)
++            # When group_by is explicitly set, we should not allow it to be
++            # overridden by primary key grouping
++            return [(self.compile(expr)) for expr in expressions]
+         # Note that even if the group_by is set, it is only the minimal
+         # set to group by. So, we need to add cols in select, order_by, and
+         # having into the select in any case.

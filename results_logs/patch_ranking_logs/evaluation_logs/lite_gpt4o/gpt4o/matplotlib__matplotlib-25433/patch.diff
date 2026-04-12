@@ -1,0 +1,28 @@
+diff --git a/lib/matplotlib/widgets.py b/lib/matplotlib/widgets.py
+index f12a9a3..f2e69e9 100644
+--- a/lib/matplotlib/widgets.py
++++ b/lib/matplotlib/widgets.py
+@@ -600,7 +600,10 @@ class Slider(SliderBase):
+         int
+             Connection id (which can be used to disconnect *func*).
+         """
+-        return self._observers.connect('changed', lambda val: func(val))
++        def wrapper(val):
++            func(val)
++            self.ax.figure.canvas.draw_idle()
++        return self._observers.connect('changed', wrapper)
+ 
+ 
+ class RangeSlider(SliderBase):
+@@ -983,7 +986,10 @@ class RangeSlider(SliderBase):
+         int
+             Connection id (which can be used to disconnect *func*).
+         """
+-        return self._observers.connect('changed', lambda val: func(val))
++        def wrapper(val):
++            func(val)
++            self.ax.figure.canvas.draw_idle()
++        return self._observers.connect('changed', wrapper)
+ 
+ 
+ def _expand_text_props(props):

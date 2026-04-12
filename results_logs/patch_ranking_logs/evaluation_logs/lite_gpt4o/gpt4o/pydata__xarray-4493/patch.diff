@@ -1,0 +1,21 @@
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 8003c0d..b6431e4 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -3906,7 +3906,16 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+             If any dimensions would have inconsistent sizes in the updated
+             dataset.
+         """
++        from dask.array import Array as DaskArray
++
+         merge_result = dataset_update_method(self, other)
++
++        # Ensure that DaskArray chunking is preserved after the update
++        for var_name, var_data in merge_result.variables.items():
++            if isinstance(var_data.data, DaskArray):
++                original_var_data = self.variables.get(var_name)
++                if original_var_data is not None and isinstance(original_var_data.data, DaskArray):
++                    var_data.data = var_data.data.rechunk(original_var_data.chunks)
+         return self._replace(inplace=True, **merge_result._asdict())
+ 
+     def merge(

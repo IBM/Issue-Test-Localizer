@@ -1,0 +1,231 @@
+{
+  "instance_id": "pytest-dev__pytest-5787",
+  "container_id": "076157ee7fca7128b9a310b2d1a9a7f039536506e08e58134152f552b726e09e",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_10.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_11.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_12.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_13.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_14.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_15.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_16.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_17.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_3.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_4.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_5.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_6.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_7.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_8.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_9.jsonl",
+        "inst": "pytest-dev__pytest-5787",
+        "passed": 0,
+        "failed": 21
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 18
+  },
+  "reproduction": {
+    "testing/test_reports.py::TestReportSerialization::test_chained_exception_serialization#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_10.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_11.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_12.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_13.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_14.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_15.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_16.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_17.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_3.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_4.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_5.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_6.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_7.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_8.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5787/dedup_patch_9.jsonl",
+          "inst": "pytest-dev__pytest-5787",
+          "passed": false
+        }
+      ]
+    },
+    "testing/code/test_excinfo.py::test_no_recursion_index_on_recursion_error#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/code/test_excinfo.py::test_no_recursion_index_on_recursion_error#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/code/test_excinfo.py::test_no_recursion_index_on_recursion_error#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/code/test_excinfo.py::test_no_recursion_index_on_recursion_error#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

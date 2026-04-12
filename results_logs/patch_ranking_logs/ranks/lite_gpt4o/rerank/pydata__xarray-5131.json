@@ -1,0 +1,39 @@
+{
+  "instance_id": "pydata__xarray-5131",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pydata__xarray-5131/dedup_patch_0.jsonl",
+    "repro_fixes": 0,
+    "repro_total_considered": 11,
+    "regression_passed": 6,
+    "occurrence": 8,
+    "normalized_occurrence": 8
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pydata__xarray-5131/dedup_patch_0.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 11,
+        "regression_passed": 6,
+        "occurrence": 8,
+        "normalized_occurrence": 8
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pydata__xarray-5131/dedup_patch_2.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 11,
+        "regression_passed": 6,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pydata__xarray-5131/dedup_patch_1.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 11,
+        "regression_passed": 6,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,582 @@
+{
+  "instance_id": "django__django-16819",
+  "container_id": "04ebab0319340e9771d394c0d07653dc9aa1dd89d08d67e949c057e77a96f01f",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+        "inst": "django__django-16819",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_0.jsonl",
+        "inst": "django__django-16819",
+        "passed": 11,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_1.jsonl",
+        "inst": "django__django-16819",
+        "passed": 11,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_6.jsonl",
+        "inst": "django__django-16819",
+        "passed": 11,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_7.jsonl",
+        "inst": "django__django-16819",
+        "passed": 11,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_8.jsonl",
+        "inst": "django__django-16819",
+        "passed": 11,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_3.jsonl",
+        "inst": "django__django-16819",
+        "passed": 9,
+        "failed": 3
+      }
+    ],
+    "top_passed": 12,
+    "top_subset_size": 14
+  },
+  "reproduction": {
+    "migrations.test_optimizer.OptimizerTests.test_reduce_add_index_remove_index#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_optimizer.OptimizerTests.test_add_remove_index#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        }
+      ]
+    },
+    "migrations.test_optimizer.OptimizerTests.test_add_remove_index#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_optimizer.OptimizerTests.test_add_remove_index#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_optimizer.OptimizerTests.test_add_remove_index#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_optimizer.OptimizerTests.test_reduce_add_index_remove_index#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_10.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_11.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_12.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_13.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_14.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_15.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_16.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_17.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_18.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_19.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_2.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_4.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_5.jsonl",
+          "inst": "django__django-16819",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16819/dedup_patch_9.jsonl",
+          "inst": "django__django-16819",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

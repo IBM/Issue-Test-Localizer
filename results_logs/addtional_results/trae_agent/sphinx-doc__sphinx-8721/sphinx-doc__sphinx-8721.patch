@@ -1,0 +1,86 @@
+diff --git a/sphinx/ext/viewcode.py b/sphinx/ext/viewcode.py
+index a7d52a91c..b68707140 100644
+--- a/sphinx/ext/viewcode.py
++++ b/sphinx/ext/viewcode.py
+@@ -50,6 +50,19 @@ def _get_full_modname(app: Sphinx, modname: str, attribute: str) -> Optional[str
+         return None
+ 
+ 
++def remove_viewcode_links(doctree: Node) -> None:
++    """Remove viewcode links from the doctree."""
++    for objnode in doctree.traverse(addnodes.desc):
++        if objnode.get('domain') != 'py':
++            continue
++        for signode in objnode:
++            if not isinstance(signode, addnodes.desc_signature):
++                continue
++            for node in list(signode.findall(addnodes.only)):  # Create a list to avoid modification during iteration
++                if any('viewcode-link' in n['classes'] for n in node.findall(nodes.inline)):
++                    signode.remove(node)
++
++
+ def doctree_read(app: Sphinx, doctree: Node) -> None:
+     env = app.builder.env
+     if not hasattr(env, '_viewcode_modules'):
+@@ -57,6 +70,8 @@ def doctree_read(app: Sphinx, doctree: Node) -> None:
+     if app.builder.name == "singlehtml":
+         return
+     if app.builder.name.startswith("epub") and not env.config.viewcode_enable_epub:
++        # Remove any existing viewcode nodes from the doctree
++        remove_viewcode_links(doctree)
+         return
+ 
+     def has_tag(modname: str, fullname: str, docname: str, refname: str) -> bool:
+@@ -182,6 +197,11 @@ def collect_pages(app: Sphinx) -> Generator[Tuple[str, Dict[str, Any], str], Non
+     env = app.builder.env
+     if not hasattr(env, '_viewcode_modules'):
+         return
++    
++    # Skip if this is an EPUB builder and viewcode_enable_epub is False
++    if app.builder.name.startswith("epub") and not env.config.viewcode_enable_epub:
++        return
++        
+     highlighter = app.builder.highlighter  # type: ignore
+     urito = app.builder.get_relative_uri
+ 
+@@ -276,6 +296,31 @@ def collect_pages(app: Sphinx) -> Generator[Tuple[str, Dict[str, Any], str], Non
+     yield (posixpath.join(OUTPUT_DIRNAME, 'index'), context, 'page.html')
+ 
+ 
++def doctree_resolved(app: Sphinx, doctree: Node, docname: str) -> None:
++    """Remove viewcode links from the doctree for epub builder if viewcode_enable_epub is False."""
++    if app.builder.name.startswith("epub") and not app.builder.env.config.viewcode_enable_epub:
++        remove_viewcode_links(doctree)
++
++
++def process_html_string(html: str) -> str:
++    """Remove viewcode links from HTML string."""
++    import re
++    # Pattern to match viewcode links
++    pattern = r'<a class="reference internal" href="_modules/[^"]+"><span class="viewcode-link">\[source\]</span></a>'
++    return re.sub(pattern, '', html)
++
++
++def epub_page_context(app: Sphinx, pagename: str, templatename: str, context: Dict, doctree: Node) -> None:
++    """Remove viewcode links from the context for epub builder if viewcode_enable_epub is False."""
++    if app.builder.name.startswith("epub") and not app.builder.env.config.viewcode_enable_epub:
++        if doctree:
++            remove_viewcode_links(doctree)
++        
++        # Also process the body in the context
++        if 'body' in context:
++            context['body'] = process_html_string(context['body'])
++
++
+ def setup(app: Sphinx) -> Dict[str, Any]:
+     app.add_config_value('viewcode_import', None, False)
+     app.add_config_value('viewcode_enable_epub', False, False)
+@@ -283,6 +328,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
+     app.connect('doctree-read', doctree_read)
+     app.connect('env-merge-info', env_merge_info)
+     app.connect('html-collect-pages', collect_pages)
++    app.connect('doctree-resolved', doctree_resolved)
++    app.connect('html-page-context', epub_page_context)
+     app.connect('missing-reference', missing_reference)
+     # app.add_config_value('viewcode_include_modules', [], 'env')
+     # app.add_config_value('viewcode_exclude_modules', [], 'env')

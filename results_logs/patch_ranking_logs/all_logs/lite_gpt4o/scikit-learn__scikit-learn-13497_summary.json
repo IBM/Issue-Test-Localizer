@@ -1,0 +1,85 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13497",
+  "container_id": "9d60049d7606276f0501dad390498624ddd80426713beaee3119d856eecb301d",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13497/dedup_patch_1.jsonl",
+        "inst": "scikit-learn__scikit-learn-13497",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13497/dedup_patch_2.jsonl",
+        "inst": "scikit-learn__scikit-learn-13497",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13497/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-13497",
+        "passed": 1,
+        "failed": 1
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "sklearn/metrics/cluster/tests/test_supervised.py::test_entropy#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_options#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_classif_mixed#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_classif_mixed#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_options#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/metrics/cluster/tests/test_supervised.py::test_v_measure_and_mutual_information#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_options#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/metrics/cluster/tests/test_supervised.py::test_v_measure_and_mutual_information#8": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/feature_selection/tests/test_mutual_info.py::test_mutual_info_options#9": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/metrics/cluster/tests/test_supervised.py::test_error_messages_on_wrong_input#10": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new.py#11": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13497/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13497",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13497/dedup_patch_2.jsonl",
+          "inst": "scikit-learn__scikit-learn-13497",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

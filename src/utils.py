@@ -7,8 +7,7 @@ import subprocess
 
 from datasets import load_dataset
 
-from extract import get_call_paths
-from filter_path import related_mode
+from call_graph_generation import get_callgraph, related_mode
 
 
 class UseFinder(ast.NodeVisitor):
@@ -345,19 +344,16 @@ def cleanup_logger(logger):
         handler.close()
 
 
-def generate_call_paths_json(repo_path, call_paths_json):
-    if not os.path.exists(call_paths_json):
-        print(f"Generating call paths JSON for {repo_path}")
-        get_call_paths(repo_path, call_paths_json)
-    else:
-        print(f"Call paths JSON already exists at {call_paths_json}")
+def generate_call_paths_json(repo_path, output_dir):
+    """Generate call graph using tree-sitter. Returns path to JSON."""
+    return get_callgraph(repo_path, output_dir)
 
 
 def get_lca(repo, local_repo_path, base_commit, full_func_list):
-    repo_shotcut = repo.split("/")[-1]
-    call_paths_json = f"call_paths/{repo_shotcut}_{base_commit}_call_paths.json"
+    repo_shortcut = repo.split("/")[-1]
+    output_dir = f"call_paths/{repo_shortcut}_{base_commit}"
     local_repo_path = prepare_repo(repo, base_commit)
-    generate_call_paths_json(local_repo_path, call_paths_json)
+    call_paths_json = generate_call_paths_json(local_repo_path, output_dir)
     all_lcas = list(
         set(
             chain.from_iterable(

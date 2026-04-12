@@ -1,0 +1,23 @@
+{
+  "instance_id": "django__django-13230",
+  "container_id": "9c35ca0797ca1f9b430b4712bf0edaaac62743366b61dc7d90989e4b4bfed3e0",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-13230/dedup_patch_0.jsonl",
+        "inst": "django__django-13230",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-13230/dedup_patch_1.jsonl",
+        "inst": "django__django-13230",
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "top_passed": 3,
+    "top_subset_size": 2
+  },
+  "reproduction": {}
+}

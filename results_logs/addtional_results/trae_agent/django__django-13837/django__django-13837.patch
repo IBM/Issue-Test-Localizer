@@ -1,0 +1,50 @@
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index b8efb9f881..4aff7352b4 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -221,6 +221,18 @@ def get_child_arguments():
+     py_script = Path(sys.argv[0])
+ 
+     args = [sys.executable] + ['-W%s' % o for o in sys.warnoptions]
++    
++    # Check if Python was launched with -m
++    if hasattr(__import__('__main__'), '__spec__') and __import__('__main__').__spec__ is not None:
++        # Get the parent package name from __main__.__spec__.parent
++        parent_package = __import__('__main__').__spec__.parent
++        if parent_package:  # Not empty string
++            # The server was started with `python -m some_package runserver`.
++            args += ['-m', parent_package]
++            args += sys.argv[1:]
++            return args
++    
++    # Fallback to the old method for backward compatibility
+     if py_script == django_main_path:
+         # The server was started with `python -m django runserver`.
+         args += ['-m', 'django']
+diff --git a/tests/utils_tests/test_autoreload.py b/tests/utils_tests/test_autoreload.py
+index b9f2db7276..807602f151 100644
+--- a/tests/utils_tests/test_autoreload.py
++++ b/tests/utils_tests/test_autoreload.py
+@@ -164,6 +164,22 @@ class TestChildArguments(SimpleTestCase):
+             autoreload.get_child_arguments(),
+             [sys.executable, '-m', 'django', 'runserver']
+         )
++        
++    @mock.patch('sys.argv', ['some_script.py', 'runserver'])
++    @mock.patch('sys.warnoptions', [])
++    def test_run_as_other_module(self):
++        """Test that other packages launched with -m are correctly detected."""
++        # Create a mock __main__ module with __spec__ to simulate python -m other_package
++        mock_main = types.ModuleType('__main__')
++        mock_spec = mock.Mock()
++        mock_spec.parent = 'other_package'
++        mock_main.__spec__ = mock_spec
++        
++        with mock.patch.dict('sys.modules', {'__main__': mock_main}):
++            self.assertEqual(
++                autoreload.get_child_arguments(),
++                [sys.executable, '-m', 'other_package', 'runserver']
++            )
+ 
+     @mock.patch('sys.argv', [__file__, 'runserver'])
+     @mock.patch('sys.warnoptions', ['error'])

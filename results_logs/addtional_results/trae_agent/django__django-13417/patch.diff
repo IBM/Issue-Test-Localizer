@@ -1,0 +1,25 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 85cd8311a7..6ff3f70e33 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1225,6 +1225,10 @@ class QuerySet:
+         if self.query.extra_order_by or self.query.order_by:
+             return True
+         elif self.query.default_ordering and self.query.get_meta().ordering:
++            # When using GROUP BY with Meta.ordering, the ORDER BY is not applied
++            # See SQLCompiler.get_order_by() and SQLCompiler.as_sql()
++            if self.query.group_by:
++                return False
+             return True
+         else:
+             return False
+diff --git a/tests/annotations/tests.py b/tests/annotations/tests.py
+index 3d00a02a11..099b20fdeb 100644
+--- a/tests/annotations/tests.py
++++ b/tests/annotations/tests.py
+@@ -885,3 +885,5 @@ class AliasTests(TestCase):
+             with self.subTest(operation=operation):
+                 with self.assertRaisesMessage(FieldError, msg):
+                     getattr(qs, operation)('rating_alias')
++
++

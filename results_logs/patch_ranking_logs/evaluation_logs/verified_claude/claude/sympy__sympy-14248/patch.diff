@@ -1,0 +1,70 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index d02494c..3fd39ef 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -1477,9 +1477,16 @@ class LatexPrinter(Printer):
+             return r"%s^\dagger" % self._print(mat)
+ 
+     def _print_MatAdd(self, expr):
+-        terms = list(expr.args)
+-        tex = " + ".join(map(self._print, terms))
+-        return tex
++        terms = []
++        for term in expr.args:
++            from sympy import MatMul
++            if isinstance(term, MatMul) and term.args[0] == -1:
++                # Handle -1 coefficient specially
++                t = MatMul(*term.args[1:])
++                terms.append("-" + self._print(t))
++            else:
++                terms.append(self._print(term))
++        return " + ".join(terms)
+ 
+     def _print_MatMul(self, expr):
+         from sympy import Add, MatAdd, HadamardProduct
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 41521ad..f1f5242 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -819,7 +819,17 @@ class PrettyPrinter(Printer):
+         return self._print(B.blocks)
+ 
+     def _print_MatAdd(self, expr):
+-        return self._print_seq(expr.args, None, None, ' + ')
++        terms = []
++        for term in expr.args:
++            from sympy import MatMul
++            if isinstance(term, MatMul) and term.args[0] == -1:
++                # Handle -1 coefficient specially
++                t = MatMul(*term.args[1:])
++                pform = self._print(t)
++                terms.append(prettyForm(u"-" + str(pform)))
++            else:
++                terms.append(self._print(term))
++        return prettyForm(*stringPict.next(u" + ", *terms))
+ 
+     def _print_MatMul(self, expr):
+         args = list(expr.args)
+diff --git a/sympy/printing/str.py b/sympy/printing/str.py
+index 29d16bd..2388927 100644
+--- a/sympy/printing/str.py
++++ b/sympy/printing/str.py
+@@ -312,8 +312,16 @@ class StrPrinter(Printer):
+             for arg in expr.args])
+ 
+     def _print_MatAdd(self, expr):
+-        return ' + '.join([self.parenthesize(arg, precedence(expr))
+-            for arg in expr.args])
++        terms = []
++        for term in expr.args:
++            from sympy import MatMul
++            if isinstance(term, MatMul) and term.args[0] == -1:
++                # Handle -1 coefficient specially
++                t = self._print(MatMul(*term.args[1:]))
++                terms.append("-" + self.parenthesize(t, precedence(term)))
++            else:
++                terms.append(self.parenthesize(term, precedence(expr)))
++        return ' + '.join(terms)
+ 
+     def _print_NaN(self, expr):
+         return 'nan'

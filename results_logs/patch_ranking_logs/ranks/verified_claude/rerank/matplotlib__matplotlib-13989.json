@@ -1,0 +1,31 @@
+{
+  "instance_id": "matplotlib__matplotlib-13989",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-13989/dedup_patch_1.jsonl",
+    "repro_fixes": 7,
+    "repro_total_considered": 11,
+    "regression_passed": 5,
+    "occurrence": 37,
+    "normalized_occurrence": 37
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-13989/dedup_patch_1.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 11,
+        "regression_passed": 5,
+        "occurrence": 37,
+        "normalized_occurrence": 37
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-13989/dedup_patch_0.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 11,
+        "regression_passed": 5,
+        "occurrence": 3,
+        "normalized_occurrence": 3
+      }
+    ]
+  }
+}

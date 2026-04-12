@@ -1,0 +1,55 @@
+diff --git a/sklearn/mixture/gaussian_mixture.py b/sklearn/mixture/gaussian_mixture.py
+index 67ca063..6a87a94 100644
+--- a/sklearn/mixture/gaussian_mixture.py
++++ b/sklearn/mixture/gaussian_mixture.py
+@@ -445,8 +445,8 @@ class GaussianMixture(BaseMixture):
+ 
+     Parameters
+     ----------
+-    n_components : int, defaults to 1.
+-        The number of mixture components.
++    n_clusters : int, defaults to 1.
++        The number of mixture components (clusters).
+ 
+     covariance_type : {'full', 'tied', 'diag', 'spherical'},
+             defaults to 'full'.
+@@ -634,9 +634,9 @@ class GaussianMixture(BaseMixture):
+             X, resp, self.reg_covar, self.covariance_type)
+         weights /= n_samples
+ 
+-        self.weights_ = (weights if self.weights_init is None
+-                         else self.weights_init)
++        self.weights_ = weights if self.weights_init is None else self.weights_init
+         self.means_ = means if self.means_init is None else self.means_init
++        self.labels_ = np.argmax(resp, axis=1)
+ 
+         if self.precisions_init is None:
+             self.covariances_ = covariances
+@@ -735,6 +735,21 @@ class GaussianMixture(BaseMixture):
+         return (-2 * self.score(X) * X.shape[0] +
+                 self._n_parameters() * np.log(X.shape[0]))
+ 
++    def fit_predict(self, X, y=None):
++        """Fit the model to X and return the cluster labels.
++
++        Parameters
++        ----------
++        X : array-like, shape (n_samples, n_features)
++
++        Returns
++        -------
++        labels : array, shape (n_samples,)
++            Component labels.
++        """
++        self.fit(X)
++        return self.labels_
++
+     def aic(self, X):
+         """Akaike information criterion for the current model on the input X.
+ 
+@@ -747,4 +762,4 @@ class GaussianMixture(BaseMixture):
+         aic : float
+             The lower the better.
+         """
+-        return -2 * self.score(X) * X.shape[0] + 2 * self._n_parameters()
++        return -2 * self.score(X) * X.shape[0] + 2 * self._n_parameters()

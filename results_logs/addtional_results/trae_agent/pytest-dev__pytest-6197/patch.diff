@@ -1,0 +1,14 @@
+diff --git a/src/_pytest/python.py b/src/_pytest/python.py
+index 306e5f217..98b912eea 100644
+--- a/src/_pytest/python.py
++++ b/src/_pytest/python.py
+@@ -639,7 +639,8 @@ class Package(Module):
+         return path in self.session._initialpaths
+ 
+     def collect(self):
+-        self._mount_obj_if_needed()
++        # Only import the module when needed, not unconditionally
++        # Fixes issue #6197 - importing all __init__.py files unconditionally
+         this_path = self.fspath.dirpath()
+         init_module = this_path.join("__init__.py")
+         if init_module.check(file=1) and path_matches_patterns(

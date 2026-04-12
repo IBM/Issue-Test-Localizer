@@ -1,0 +1,67 @@
+{
+  "instance_id": "matplotlib__matplotlib-26011",
+  "container_id": "4a9a3639d35b667a29413b6f318e844faceb35b67dc01895c9d1041bcc072ea2",
+  "regression": {
+    "results": [],
+    "top_passed": 0,
+    "top_subset_size": 0
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_twin_axis_locators_formatters#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_clear#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_retick#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_retick#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_retick#8": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_retick#9": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/reproduce_bug_new.py#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

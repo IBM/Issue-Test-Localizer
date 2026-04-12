@@ -1,0 +1,16 @@
+diff --git a/sympy/matrices/matrices.py b/sympy/matrices/matrices.py
+index 97cde62e2..82a304f53 100644
+--- a/sympy/matrices/matrices.py
++++ b/sympy/matrices/matrices.py
+@@ -400,6 +400,11 @@ def det(self, method="bareiss"):
+             method = "lu"
+         if method not in ("bareiss", "berkowitz", "lu"):
+             raise ValueError("Determinant method '%s' unrecognized" % method)
++            
++        # Check if matrix contains symbolic entries and switch to berkowitz method
++        # as bareiss algorithm can encounter issues with symbolic expressions
++        if method == "bareiss" and any(not i.is_number for i in self):
++            method = "berkowitz"
+ 
+         # if methods were made internal and all determinant calculations
+         # passed through here, then these lines could be factored out of

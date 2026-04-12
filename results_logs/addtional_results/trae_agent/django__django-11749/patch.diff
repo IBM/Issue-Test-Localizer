@@ -1,0 +1,24 @@
+diff --git a/django/core/management/__init__.py b/django/core/management/__init__.py
+index 5f2e64761e..5f42c081d2 100644
+--- a/django/core/management/__init__.py
++++ b/django/core/management/__init__.py
+@@ -136,6 +136,19 @@ def call_command(command_name, *args, **options):
+         '{}={}'.format(min(opt.option_strings), arg_options[opt.dest])
+         for opt in parser_actions if opt.required and opt.dest in options
+     ]
++    
++    # Handle arguments that are part of a required mutually exclusive group
++    if hasattr(parser, '_mutually_exclusive_groups'):
++        for group in parser._mutually_exclusive_groups:
++            if group.required:
++                for action in group._group_actions:
++                    if action.dest in options:
++                        # Add this argument from the required mutually exclusive group
++                        parse_args.append('{}={}'.format(
++                            min(action.option_strings), arg_options[action.dest])
++                        )
++                        # Once we've added one argument from the group, we can break
++                        break
+     defaults = parser.parse_args(args=parse_args)
+     defaults = dict(defaults._get_kwargs(), **arg_options)
+     # Raise an error if any unknown options were passed.

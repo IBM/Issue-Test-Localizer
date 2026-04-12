@@ -1,0 +1,15 @@
+diff --git a/sklearn/ensemble/_iforest.py b/sklearn/ensemble/_iforest.py
+index d995c25..e114f33 100644
+--- a/sklearn/ensemble/_iforest.py
++++ b/sklearn/ensemble/_iforest.py
+@@ -345,6 +345,10 @@ class IsolationForest(OutlierMixin, BaseBagging):
+             return self
+ 
+         # else, define offset_ wrt contamination parameter
++        if hasattr(X, "columns"):
++            self.feature_names_in_ = np.asarray(X.columns, dtype=object)
++        else:
++            self.feature_names_in_ = None
+         self.offset_ = np.percentile(self.score_samples(X), 100.0 * self.contamination)
+ 
+         return self

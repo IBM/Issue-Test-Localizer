@@ -1,0 +1,77 @@
+diff --git a/django/db/backends/mysql/operations.py b/django/db/backends/mysql/operations.py
+index af8cfd86b5..a3d0f2aa62 100644
+--- a/django/db/backends/mysql/operations.py
++++ b/django/db/backends/mysql/operations.py
+@@ -298,7 +298,27 @@ class DatabaseOperations(BaseDatabaseOperations):
+                 converters.append(self.convert_datetimefield_value)
+         elif internal_type == 'UUIDField':
+             converters.append(self.convert_uuidfield_value)
++        elif internal_type == 'DurationField':
++            converters.append(self.convert_durationfield_value)
+         return converters
++        
++    def convert_durationfield_value(self, value, expression, connection):
++        if value is not None:
++            # If the value is already a timedelta, just return it
++            if isinstance(value, datetime.timedelta):
++                return value
++                
++            # MySQL stores durations as microseconds
++            try:
++                value = datetime.timedelta(microseconds=int(value))
++            except (ValueError, TypeError):
++                try:
++                    # Try to parse the string representation
++                    value = decimal.Decimal(value)
++                    value = datetime.timedelta(microseconds=int(value * 1000000))
++                except (decimal.InvalidOperation, ValueError, TypeError):
++                    value = datetime.timedelta(0, 0, 0)
++        return value
+ 
+     def convert_booleanfield_value(self, value, expression, connection):
+         if value in (0, 1):
+diff --git a/django/db/backends/sqlite3/base.py b/django/db/backends/sqlite3/base.py
+index 31e8a55a43..efa275aae3 100644
+--- a/django/db/backends/sqlite3/base.py
++++ b/django/db/backends/sqlite3/base.py
+@@ -561,6 +561,8 @@ def _sqlite_format_dtdelta(conn, lhs, rhs):
+         return None
+     # typecast_timestamp returns a date or a datetime without timezone.
+     # It will be formatted as "%Y-%m-%d" or "%Y-%m-%d %H:%M:%S[.%f]"
++    if isinstance(out, datetime.timedelta):
++        return duration_microseconds(out)
+     return str(out)
+ 
+ 
+diff --git a/django/db/backends/sqlite3/operations.py b/django/db/backends/sqlite3/operations.py
+index 9510b5edd9..73ef7a1a78 100644
+--- a/django/db/backends/sqlite3/operations.py
++++ b/django/db/backends/sqlite3/operations.py
+@@ -275,7 +275,27 @@ class DatabaseOperations(BaseDatabaseOperations):
+             converters.append(self.convert_uuidfield_value)
+         elif internal_type in ('NullBooleanField', 'BooleanField'):
+             converters.append(self.convert_booleanfield_value)
++        elif internal_type == 'DurationField':
++            converters.append(self.convert_durationfield_value)
+         return converters
++        
++    def convert_durationfield_value(self, value, expression, connection):
++        if value is not None:
++            # If the value is already a timedelta, just return it
++            if isinstance(value, datetime.timedelta):
++                return value
++                
++            # SQLite stores durations as microseconds
++            try:
++                value = datetime.timedelta(microseconds=int(value))
++            except (ValueError, TypeError):
++                try:
++                    # Try to parse the string representation
++                    value = decimal.Decimal(value)
++                    value = datetime.timedelta(microseconds=int(value * 1000000))
++                except (decimal.InvalidOperation, ValueError, TypeError):
++                    value = datetime.timedelta(0, 0, 0)
++        return value
+ 
+     def convert_datetimefield_value(self, value, expression, connection):
+         if value is not None:

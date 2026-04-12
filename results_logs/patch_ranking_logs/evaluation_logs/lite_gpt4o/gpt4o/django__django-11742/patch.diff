@@ -1,0 +1,58 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 16823e9..2e80228 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -239,6 +239,17 @@ class Field(RegisterLookupMixin):
+                 )
+             ]
+         else:
++            if self.max_length is not None and self.choices:
++                longest_choice = max((len(str(value)) for value, display in self.choices), default=0)
++                if longest_choice > self.max_length:
++                    return [
++                        checks.Error(
++                            f"'max_length' is too short to fit the longest value in 'choices'. "
++                            f"Longest value has {longest_choice} characters, but 'max_length' is {self.max_length}.",
++                            obj=self,
++                            id='fields.E122',
++                        )
++                    ]
+             return []
+ 
+     def _check_choices(self):
+@@ -280,6 +291,17 @@ class Field(RegisterLookupMixin):
+             if isinstance(choices_group, str):
+                 break
+         else:
++            if self.max_length is not None and self.choices:
++                longest_choice = max((len(str(value)) for value, display in self.choices), default=0)
++                if longest_choice > self.max_length:
++                    return [
++                        checks.Error(
++                            f"'max_length' is too short to fit the longest value in 'choices'. "
++                            f"Longest value has {longest_choice} characters, but 'max_length' is {self.max_length}.",
++                            obj=self,
++                            id='fields.E122',
++                        )
++                    ]
+             return []
+ 
+         return [
+@@ -976,6 +998,17 @@ class CharField(Field):
+                 )
+             ]
+         else:
++            if self.max_length is not None and self.choices:
++                longest_choice = max((len(str(value)) for value, display in self.choices), default=0)
++                if longest_choice > self.max_length:
++                    return [
++                        checks.Error(
++                            f"'max_length' is too short to fit the longest value in 'choices'. "
++                            f"Longest value has {longest_choice} characters, but 'max_length' is {self.max_length}.",
++                            obj=self,
++                            id='fields.E122',
++                        )
++                    ]
+             return []
+ 
+     def cast_db_type(self, connection):

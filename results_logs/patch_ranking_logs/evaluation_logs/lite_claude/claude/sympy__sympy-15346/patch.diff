@@ -1,0 +1,28 @@
+diff --git a/sympy/simplify/trigsimp.py b/sympy/simplify/trigsimp.py
+index 9a2774b..5bff177 100644
+--- a/sympy/simplify/trigsimp.py
++++ b/sympy/simplify/trigsimp.py
+@@ -509,6 +509,23 @@ def trigsimp(expr, **opts):
+                                polynomial=True, hints=[2, tan]))),
+         'old': lambda x: trigsimp_old(x, **opts),
+                    }[method]
++    
++    # Convert any rational numbers in trigonometric functions to symbolic expressions for simplification
++    def convert_rationals(expr):
++        from sympy import Symbol, Wild
++        w = Wild('w')
++        if expr.has(TrigonometricFunction):
++            matches = expr.find(lambda x: isinstance(x, TrigonometricFunction) and x.args[0].is_Rational)
++            for m in matches:
++                rat = m.args[0]
++                sym = Symbol('_temp')
++                expr = expr.subs(rat, sym)
++                expr = trigsimpfunc(expr)
++                expr = expr.subs(sym, rat)
++            return expr
++        return expr
++
++    expr = convert_rationals(expr)
+ 
+     return trigsimpfunc(expr)
+ 

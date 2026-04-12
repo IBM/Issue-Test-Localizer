@@ -1,0 +1,89 @@
+diff --git a/sympy/external/tests/test_autowrap.py b/sympy/external/tests/test_autowrap.py
+index adaa654e4..cfac4c7f1 100644
+--- a/sympy/external/tests/test_autowrap.py
++++ b/sympy/external/tests/test_autowrap.py
+@@ -307,3 +307,27 @@ def test_ufuncify_numpy():
+     # C compiler, which is needed.
+     has_module('Cython')
+     runtest_ufuncify('C99', 'numpy')
++
++def test_autowrap_matrix_not_in_expr():
++    """Test autowrap with matrix arguments that don't appear in the expression."""
++    if not numpy or not Cython:
++        skip("numpy or Cython not available.")
++    print("Running test_autowrap_matrix_not_in_expr...")
++
++    from sympy.matrices import MatrixSymbol
++    
++    # Test case where matrix argument doesn't appear in expression
++    x = MatrixSymbol('x', 2, 1)
++    expr = 1.0
++    f = autowrap(expr, args=(x,), backend='cython')
++    result = f(numpy.array([[1.0], [2.0]]))
++    assert result == 1.0
++    
++    # Test with multiple matrices, some not in expression
++    x = MatrixSymbol('x', 2, 1)
++    y = MatrixSymbol('y', 2, 1)
++    z = MatrixSymbol('z', 2, 1)
++    expr = x[0, 0] + y[1, 0]  # z doesn't appear in the expression
++    f = autowrap(expr, args=(x, y, z), backend='cython')
++    result = f(numpy.array([[1.0], [2.0]]), numpy.array([[3.0], [4.0]]), numpy.array([[5.0], [6.0]]))
++    assert result == 1.0 + 4.0
+diff --git a/sympy/utilities/autowrap.py b/sympy/utilities/autowrap.py
+index bd6afb12d..57b40eb95 100644
+--- a/sympy/utilities/autowrap.py
++++ b/sympy/utilities/autowrap.py
+@@ -81,6 +81,7 @@
+ from sympy.core.relational import Eq
+ from sympy.core.symbol import Dummy, Symbol
+ from sympy.tensor.indexed import Idx, IndexedBase
++from sympy.matrices import MatrixSymbol
+ from sympy.utilities.codegen import (make_routine, get_code_generator,
+                                      OutputArgument, InOutArgument,
+                                      InputArgument, CodeGenArgumentListError,
+@@ -441,9 +442,12 @@ def _prototype_arg(self, arg):
+         np_types = {'double': 'np.double_t',
+                     'int': 'np.int_t'}
+         t = arg.get_datatype('c')
+-        if arg.dimensions:
++        if arg.dimensions or isinstance(arg.name, MatrixSymbol):
+             self._need_numpy = True
+-            ndim = len(arg.dimensions)
++            if arg.dimensions:
++                ndim = len(arg.dimensions)
++            else:  # MatrixSymbol case
++                ndim = len(arg.name.shape)
+             mtype = np_types[t]
+             return mat_dec.format(mtype=mtype, ndim=ndim, name=self._string_var(arg.name))
+         else:
+@@ -454,11 +458,15 @@ def _declare_arg(self, arg):
+         if arg.dimensions:
+             shape = '(' + ','.join(self._string_var(i[1] + 1) for i in arg.dimensions) + ')'
+             return proto + " = np.empty({shape})".format(shape=shape)
++        elif isinstance(arg.name, MatrixSymbol):
++            shape = arg.name.shape
++            shape_str = '(' + ','.join(str(dim) for dim in shape) + ')'
++            return proto + " = np.empty({shape})".format(shape=shape_str)
+         else:
+             return proto + " = 0"
+ 
+     def _call_arg(self, arg):
+-        if arg.dimensions:
++        if arg.dimensions or isinstance(arg.name, MatrixSymbol):
+             t = arg.get_datatype('c')
+             return "<{0}*> {1}.data".format(t, self._string_var(arg.name))
+         elif isinstance(arg, ResultBase):
+diff --git a/sympy/utilities/codegen.py b/sympy/utilities/codegen.py
+index f0befb2bd..c36375813 100644
+--- a/sympy/utilities/codegen.py
++++ b/sympy/utilities/codegen.py
+@@ -910,7 +910,7 @@ def get_prototype(self, routine):
+         type_args = []
+         for arg in routine.arguments:
+             name = self.printer.doprint(arg.name)
+-            if arg.dimensions or isinstance(arg, ResultBase):
++            if arg.dimensions or isinstance(arg, ResultBase) or isinstance(arg.name, MatrixSymbol):
+                 type_args.append((arg.get_datatype('C'), "*%s" % name))
+             else:
+                 type_args.append((arg.get_datatype('C'), name))

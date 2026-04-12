@@ -1,0 +1,52 @@
+{
+  "instance_id": "django__django-14672",
+  "container_id": "056b1c8b1b58c2fd78297ef1b05a6330577700a28c22aec04a3f42fefedb00de",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14672/dedup_patch_0.jsonl",
+        "inst": "django__django-14672",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14672/dedup_patch_1.jsonl",
+        "inst": "django__django-14672",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14672/dedup_patch_2.jsonl",
+        "inst": "django__django-14672",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14672/dedup_patch_3.jsonl",
+        "inst": "django__django-14672",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14672/dedup_patch_4.jsonl",
+        "inst": "django__django-14672",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14672/dedup_patch_5.jsonl",
+        "inst": "django__django-14672",
+        "passed": 0,
+        "failed": 1
+      }
+    ],
+    "top_passed": 1,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "model_fields.test_manytomanyfield.ManyToManyFieldTests.test_through_fields_hashable#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

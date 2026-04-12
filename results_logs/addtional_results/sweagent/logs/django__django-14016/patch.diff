@@ -1,0 +1,43 @@
+diff --git a/django/utils/tree.py b/django/utils/tree.py
+index 302cd37d5f..22516e4dff 100644
+--- a/django/utils/tree.py
++++ b/django/utils/tree.py
+@@ -8,6 +8,27 @@ import copy
+ from django.utils.hashable import make_hashable
+ 
+ 
++def _make_pickleable(obj):
++    """
++    Convert non-pickleable objects to pickleable equivalents.
++    This is specifically needed for dict_keys, dict_values, and dict_items
++    which are not pickleable but can be converted to lists.
++    """
++    # Get the types dynamically to avoid import issues
++    dict_keys_type = type({}.keys())
++    dict_values_type = type({}.values())
++    dict_items_type = type({}.items())
++    
++    if isinstance(obj, (dict_keys_type, dict_values_type, dict_items_type)):
++        return list(obj)
++    elif isinstance(obj, (list, tuple)):
++        return type(obj)(_make_pickleable(item) for item in obj)
++    elif isinstance(obj, dict):
++        return {key: _make_pickleable(value) for key, value in obj.items()}
++    else:
++        return obj
++
++
+ class Node:
+     """
+     A single internal node in the tree graph. A Node should be viewed as a
+@@ -50,7 +71,9 @@ class Node:
+     def __deepcopy__(self, memodict):
+         obj = Node(connector=self.connector, negated=self.negated)
+         obj.__class__ = self.__class__
+-        obj.children = copy.deepcopy(self.children, memodict)
++        # Convert non-pickleable objects to pickleable equivalents before deep copying
++        pickleable_children = _make_pickleable(self.children)
++        obj.children = copy.deepcopy(pickleable_children, memodict)
+         return obj
+ 
+     def __len__(self):

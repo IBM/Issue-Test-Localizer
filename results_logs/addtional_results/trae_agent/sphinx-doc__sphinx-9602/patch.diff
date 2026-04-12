@@ -1,0 +1,24 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index 9875a9f4b..9edfc6ad3 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -178,8 +178,19 @@ def _parse_annotation(annotation: str, env: BuildEnvironment = None) -> List[Nod
+     try:
+         tree = ast_parse(annotation)
+         result = unparse(tree)
++        
++        # Check if this is a Literal type annotation
++        is_literal = False
++        if (len(result) >= 2 and isinstance(result[0], nodes.Text) and 
++            str(result[0]).strip() == "Literal"):
++            is_literal = True
++        
+         for i, node in enumerate(result):
+             if isinstance(node, nodes.Text) and node.strip():
++                # Skip converting literal values inside Literal[] to xrefs
++                if is_literal and i > 0 and i < len(result) - 1:  # Inside the brackets
++                    # Keep literal values as text nodes
++                    continue
+                 result[i] = type_to_xref(str(node), env)
+         return result
+     except SyntaxError:

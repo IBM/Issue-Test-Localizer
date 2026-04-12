@@ -1,0 +1,84 @@
+diff --git a/sympy/printing/conventions.py b/sympy/printing/conventions.py
+index c0ca33fec..3ac0c2bcd 100644
+--- a/sympy/printing/conventions.py
++++ b/sympy/printing/conventions.py
+@@ -11,7 +11,7 @@
+ _name_with_digits_p = re.compile(r'^([a-zA-Z]+)([0-9]+)$')
+ 
+ 
+-def split_super_sub(text):
++def split_super_sub(text, auto_subscript_digits=True):
+     """Split a symbol name into a name, superscripts and subscripts
+ 
+     The first part of the symbol name is considered to be its actual
+@@ -20,6 +20,15 @@ def split_super_sub(text):
+     by a "_" character.  The three return values are the actual name, a
+     list with superscripts and a list with subscripts.
+ 
++    Parameters
++    ==========
++
++    text : str
++        The symbol name to split.
++    auto_subscript_digits : bool, optional
++        If True (default), treat trailing digits as subscripts.
++        If False, do not automatically convert trailing digits to subscripts.
++
+     Examples
+     ========
+ 
+@@ -28,6 +37,10 @@ def split_super_sub(text):
+     ('a', ['1'], ['x'])
+     >>> split_super_sub('var_sub1__sup_sub2')
+     ('var', ['sup'], ['sub1', 'sub2'])
++    >>> split_super_sub('x2', auto_subscript_digits=False)
++    ('x2', [], [])
++    >>> split_super_sub('x2', auto_subscript_digits=True)
++    ('x', [], ['2'])
+ 
+     """
+     if len(text) == 0:
+@@ -63,10 +76,11 @@ def split_super_sub(text):
+ 
+     # make a little exception when a name ends with digits, i.e. treat them
+     # as a subscript too.
+-    m = _name_with_digits_p.match(name)
+-    if m:
+-        name, sub = m.groups()
+-        subs.insert(0, sub)
++    if auto_subscript_digits:
++        m = _name_with_digits_p.match(name)
++        if m:
++            name, sub = m.groups()
++            subs.insert(0, sub)
+ 
+     return name, supers, subs
+ 
+diff --git a/sympy/printing/mathml.py b/sympy/printing/mathml.py
+index 3f8b8d49e..dc124ac59 100644
+--- a/sympy/printing/mathml.py
++++ b/sympy/printing/mathml.py
+@@ -480,6 +480,11 @@ class MathMLPresentationPrinter(MathMLPrinterBase):
+     References: https://www.w3.org/TR/MathML2/chapter3.html
+     """
+     printmethod = "_mathml_presentation"
++    
++    _default_settings = MathMLPrinterBase._default_settings.copy()
++    _default_settings.update({
++        "auto_subscript_digits": False,  # Don't automatically convert trailing digits to subscripts
++    })
+ 
+     def mathml_tag(self, e):
+         """Returns the MathML tag for an expression."""
+@@ -772,7 +777,10 @@ def translate(s):
+             else:
+                 return s
+ 
+-        name, supers, subs = split_super_sub(sym.name)
++        # For symbols that end with digits (like x1, x2), don't automatically make the digits subscripts
++        # This prevents rendering issues in some browsers like Safari
++        auto_subscript_digits = self._settings.get('auto_subscript_digits', True)
++        name, supers, subs = split_super_sub(sym.name, auto_subscript_digits=auto_subscript_digits)
+         name = translate(name)
+         supers = [translate(sup) for sup in supers]
+         subs = [translate(sub) for sub in subs]

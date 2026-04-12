@@ -1,0 +1,68 @@
+diff --git a/sympy/physics/secondquant.py b/sympy/physics/secondquant.py
+index d19ee2fc63..90c73c1cd8 100644
+--- a/sympy/physics/secondquant.py
++++ b/sympy/physics/secondquant.py
+@@ -439,7 +439,7 @@ def __repr__(self):
+         return "AnnihilateBoson(%s)" % self.state
+ 
+     def _latex(self, printer):
+-        return "b_{%s}" % self.state.name
++        return "{b_{%s}}" % self.state.name
+ 
+ 
+ class CreateBoson(BosonicOperator, Creator):
+@@ -478,7 +478,7 @@ def __repr__(self):
+         return "CreateBoson(%s)" % self.state
+ 
+     def _latex(self, printer):
+-        return "b^\\dagger_{%s}" % self.state.name
++        return "{b^\\dagger_{%s}}" % self.state.name
+ 
+ B = AnnihilateBoson
+ Bd = CreateBoson
+diff --git a/sympy/physics/tests/test_secondquant.py b/sympy/physics/tests/test_secondquant.py
+index 39662ee318..310ae15660 100644
+--- a/sympy/physics/tests/test_secondquant.py
++++ b/sympy/physics/tests/test_secondquant.py
+@@ -94,7 +94,7 @@ def test_operator():
+ def test_create():
+     i, j, n, m = symbols('i,j,n,m')
+     o = Bd(i)
+-    assert latex(o) == "b^\\dagger_{i}"
++    assert latex(o) == "{b^\\dagger_{i}}"
+     assert isinstance(o, CreateBoson)
+     o = o.subs(i, j)
+     assert o.atoms(Symbol) == {j}
+@@ -102,12 +102,18 @@ def test_create():
+     assert o.apply_operator(BKet([n])) == sqrt(n + 1)*BKet([n + 1])
+     o = Bd(n)
+     assert o.apply_operator(BKet([n])) == o*BKet([n])
++    
++    # Test for proper LaTeX rendering of powers
++    a = Symbol('0')
++    expr = Commutator(Bd(a)**2, B(a))
++    latex_output = latex(expr)
++    assert "{b^\\dagger_{0}}^{2}" in latex_output
+ 
+ 
+ def test_annihilate():
+     i, j, n, m = symbols('i,j,n,m')
+     o = B(i)
+-    assert latex(o) == "b_{i}"
++    assert latex(o) == "{b_{i}}"
+     assert isinstance(o, AnnihilateBoson)
+     o = o.subs(i, j)
+     assert o.atoms(Symbol) == {j}
+@@ -115,6 +121,12 @@ def test_annihilate():
+     assert o.apply_operator(BKet([n])) == sqrt(n)*BKet([n - 1])
+     o = B(n)
+     assert o.apply_operator(BKet([n])) == o*BKet([n])
++    
++    # Test for proper LaTeX rendering of powers
++    a = Symbol('0')
++    expr = Commutator(Bd(a), B(a)**2)
++    latex_output = latex(expr)
++    assert "{b_{0}}^{2}" in latex_output
+ 
+ 
+ def test_basic_state():

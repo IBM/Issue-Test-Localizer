@@ -1,0 +1,61 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 04e430a42e..83641b0f74 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -129,6 +129,9 @@ class SQLCompiler:
+             # Skip References to the select clause, as all expressions in the
+             # select clause are already part of the group by.
+             if not is_ref:
++                # Don't include Random expressions in GROUP BY
++                if isinstance(expr, OrderBy) and isinstance(expr.expression, Random):
++                    continue
+                 expressions.extend(expr.get_group_by_cols())
+         having_group_by = self.having.get_group_by_cols() if self.having else ()
+         for expr in having_group_by:
+diff --git a/tests/aggregation/tests.py b/tests/aggregation/tests.py
+index f8aeceb2d0..2534d30e46 100644
+--- a/tests/aggregation/tests.py
++++ b/tests/aggregation/tests.py
+@@ -1315,3 +1315,42 @@ class AggregateTestCase(TestCase):
+         # with self.assertNumQueries(1) as ctx:
+         #     self.assertSequenceEqual(books_qs, [book])
+         # self.assertEqual(ctx[0]['sql'].count('SELECT'), 2)
++        
++    def test_aggregation_random_ordering(self):
++        # Test that random ordering doesn't break aggregation
++        # Create a test author
++        Author.objects.create(name='Test Author', age=40)
++        
++        # Create two books for the author
++        publisher = Publisher.objects.first()
++        Book.objects.create(
++            isbn='1234567890', name='Book 1',
++            pages=100, rating=4.0, price=Decimal('20.00'), 
++            contact_id=Author.objects.last().pk, publisher=publisher,
++            pubdate=datetime.date(2010, 1, 1)
++        )
++        Book.objects.create(
++            isbn='0987654321', name='Book 2',
++            pages=200, rating=4.5, price=Decimal('25.00'), 
++            contact_id=Author.objects.last().pk, publisher=publisher,
++            pubdate=datetime.date(2011, 1, 1)
++        )
++        
++        # Normal ordering
++        qs1 = Author.objects.annotate(num_books=Count('book')).order_by('name').values('id', 'num_books')
++        # Random ordering
++        qs2 = Author.objects.annotate(num_books=Count('book')).order_by('?').values('id', 'num_books')
++        
++        # Get the author we just created
++        test_author_id = Author.objects.get(name='Test Author').id
++        
++        # Get the book count for our test author from both querysets
++        count1 = next((item['num_books'] for item in qs1 if item['id'] == test_author_id), None)
++        count2 = next((item['num_books'] for item in qs2 if item['id'] == test_author_id), None)
++        
++        # Both counts should be 2, regardless of ordering
++        self.assertEqual(count1, 2)
++        self.assertEqual(count2, 2)
++        
++        # Check that the random ordering query doesn't have RANDOM() in GROUP BY
++        self.assertNotIn('RANDOM()', str(qs2.query).upper())

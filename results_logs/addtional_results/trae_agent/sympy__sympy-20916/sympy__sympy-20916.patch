@@ -1,0 +1,14 @@
+diff --git a/sympy/printing/conventions.py b/sympy/printing/conventions.py
+index 9a3be6bbe9..015dac878a 100644
+--- a/sympy/printing/conventions.py
++++ b/sympy/printing/conventions.py
+@@ -7,7 +7,8 @@
+ from collections.abc import Iterable
+ from sympy import Derivative
+ 
+-_name_with_digits_p = re.compile(r'^([a-zA-Z]+)([0-9]+)$')
++# Updated regex to include Greek letters (Unicode range for Greek letters: \u0370-\u03FF)
++_name_with_digits_p = re.compile(r'^((?:[a-zA-Z]|[\u0370-\u03FF])+)([0-9]+)$')
+ 
+ 
+ def split_super_sub(text):

@@ -1,0 +1,92 @@
+{
+  "instance_id": "matplotlib__matplotlib-26113",
+  "container_id": "313d3788bce71172f61776e046aea20c03fc22b50978eeca3e2278c9fab09115",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-26113/dedup_patch_0.jsonl",
+        "inst": "matplotlib__matplotlib-26113",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_axes.py::test_hexbin_empty#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_hexbin_empty#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_hexbin_empty#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_hexbin_empty#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_tick_param_labelfont#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_hexbin_empty#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-26113/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-26113",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-26113/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-26113",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-26113/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-26113",
+          "passed": true
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-26113/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-26113",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-26113/dedup_patch_0.jsonl",
+          "inst": "matplotlib__matplotlib-26113",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

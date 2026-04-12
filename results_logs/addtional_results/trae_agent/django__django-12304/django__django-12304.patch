@@ -1,0 +1,79 @@
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index f48143ddaf..9c022c0267 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -31,6 +31,9 @@ class ChoicesMeta(enum.EnumMeta):
+         # that is passed in as "self" as the value to use when looking up the
+         # label in the choices.
+         cls.label = property(lambda self: cls._value2label_map_.get(self.value))
++        # Set do_not_call_in_templates to True to prevent Django templates from calling
++        # the enum class, which would fail because it requires a value argument.
++        cls.do_not_call_in_templates = True
+         return enum.unique(cls)
+ 
+     def __contains__(cls, member):
+diff --git a/tests/model_enums/tests.py b/tests/model_enums/tests.py
+index b9356479de..df5ac488b0 100644
+--- a/tests/model_enums/tests.py
++++ b/tests/model_enums/tests.py
+@@ -148,6 +148,60 @@ class ChoicesTests(SimpleTestCase):
+             for member in test:
+                 with self.subTest(member=member):
+                     self.assertEqual(str(test[member.name]), str(member.value))
++                    
++    def test_do_not_call_in_templates(self):
++        """Test that Choices classes have do_not_call_in_templates=True."""
++        for test_class in [Suit, YearInSchool, Vehicle, Gender]:
++            with self.subTest(test_class=test_class):
++                self.assertTrue(getattr(test_class, 'do_not_call_in_templates', False))
++                
++    def test_template_usage_with_comparison(self):
++        """
++        Test that Choices classes can be used in template-like comparisons.
++        
++        This simulates the behavior of Django templates when comparing a value
++        to an enum member, like: {% if student.year_in_school == YearInSchool.FRESHMAN %}
++        """
++        # In templates, callables are called with no arguments unless do_not_call_in_templates=True
++        # This test verifies that comparing an enum value works correctly
++        year = YearInSchool.FRESHMAN
++        # This would fail without do_not_call_in_templates=True
++        self.assertTrue(year == YearInSchool.FRESHMAN)
++        
++    def test_template_rendering_with_enums(self):
++        """Test that enumeration types can be used in actual template rendering."""
++        from django.template import Context, Template
++        
++        # Create a template that compares a value to an enum
++        template_string = (
++            "{% if year == YearInSchool.FRESHMAN %}Freshman"
++            "{% elif year == YearInSchool.SOPHOMORE %}Sophomore"
++            "{% elif year == YearInSchool.JUNIOR %}Junior"
++            "{% elif year == YearInSchool.SENIOR %}Senior"
++            "{% elif year == YearInSchool.GRADUATE %}Graduate"
++            "{% else %}Unknown{% endif %}"
++        )
++        
++        template = Template(template_string)
++        
++        # Test with different enum values
++        context = Context({
++            'year': YearInSchool.FRESHMAN,
++            'YearInSchool': YearInSchool,
++        })
++        self.assertEqual(template.render(context), "Freshman")
++        
++        context = Context({
++            'year': YearInSchool.JUNIOR,
++            'YearInSchool': YearInSchool,
++        })
++        self.assertEqual(template.render(context), "Junior")
++        
++        context = Context({
++            'year': YearInSchool.GRADUATE,
++            'YearInSchool': YearInSchool,
++        })
++        self.assertEqual(template.render(context), "Graduate")
+ 
+ 
+ class Separator(bytes, models.Choices):

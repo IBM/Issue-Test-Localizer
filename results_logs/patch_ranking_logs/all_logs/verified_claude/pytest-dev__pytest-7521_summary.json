@@ -1,0 +1,98 @@
+{
+  "instance_id": "pytest-dev__pytest-7521",
+  "container_id": "e1a95d80cee9fad0ed43a927c1fdb251dd09e4712e03710d8c794593063c867e",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_3.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_4.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_5.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_6.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_7.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-7521/dedup_patch_8.jsonl",
+        "inst": "pytest-dev__pytest-7521",
+        "passed": 0,
+        "failed": 6
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 9
+  },
+  "reproduction": {
+    "testing/test_capture.py::TestFDCapture::test_capfd_sys_stdout_mode#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_capture.py::TestFDCapture::test_capfd_sys_stdout_mode#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_capture.py::test_stderr_write_returns_len#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_capture.py::test_stderr_write_returns_len#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_capture.py::TestFDCapture::test_capfd_sys_stdout_mode#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_capture.py::TestFDCapture::test_capfd_sys_stdout_mode#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

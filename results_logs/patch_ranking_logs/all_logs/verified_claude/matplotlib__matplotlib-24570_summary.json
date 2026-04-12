@@ -1,0 +1,112 @@
+{
+  "instance_id": "matplotlib__matplotlib-24570",
+  "container_id": "813c1add4a7b96a8cf0cdc89832e27c0411113c2b2e9a629a92da487363bdca9",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_0.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_1.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_10.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_2.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_3.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_4.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_5.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_6.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_7.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_8.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_9.jsonl",
+        "inst": "matplotlib__matplotlib-24570",
+        "passed": 5,
+        "failed": 0
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 11
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_offsetbox.py::test_get_packed_offsets#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_offsetbox.py::test_get_packed_offsets#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_offsetbox.py::test_arrowprops_copied#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_offsetbox.py::test_arrowprops_copied#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_offsetbox.py::test_get_packed_offsets#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_offsetbox.py::test_get_packed_offsets#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-24570/dedup_patch_3.jsonl",
+          "inst": "matplotlib__matplotlib-24570",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 9735ce10c8..8274b74f77 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -549,6 +549,63 @@ class Query(BaseExpression):
+         """
+         Perform a COUNT() query using the current filter constraints.
+         """
++        # For a plain .count() call (no annotations, no select_related, etc.), 
++        # we can just do a simple count.
++        if not (self.annotation_select or self.distinct or 
++                self.order_by or self.group_by or 
++                self.select_related or self.extra_select):
++            # No annotations or other complex parts - do a simple count
++            obj = self.clone()
++            obj.add_annotation(Count("*"), alias="__count", is_summary=True)
++            return obj.get_aggregation(using, ["__count"])["__count"]
++        
++        # If the query has values() clause, we need to respect that in the count
++        if self.values_select:
++            obj = self.clone()
++            obj.add_annotation(Count("*"), alias="__count", is_summary=True)
++            return obj.get_aggregation(using, ["__count"])["__count"]
++        
++        # If we have annotations, check if they're used in filters or ordering
++        used_annotations = set()
++        
++        # Check annotations used in where clause (filters)
++        def extract_annotation_refs_from_where(node):
++            if hasattr(node, 'children'):
++                for child in node.children:
++                    extract_annotation_refs_from_where(child)
++            elif hasattr(node, 'lhs') and hasattr(node.lhs, 'name'):
++                if node.lhs.name in self.annotations:
++                    used_annotations.add(node.lhs.name)
++        
++        # Extract annotations from the where clause
++        if self.where:
++            extract_annotation_refs_from_where(self.where)
++        
++        # Check annotations used in order_by
++        for expr in self.order_by:
++            if isinstance(expr, str) and expr.lstrip('-') in self.annotations:
++                used_annotations.add(expr.lstrip('-'))
++            elif hasattr(expr, 'refs'):
++                for ref in expr.refs:
++                    if ref in self.annotations:
++                        used_annotations.add(ref)
++        
++        # If we have annotations but none are used in filters or ordering,
++        # we can do a simple count without the annotations
++        if not used_annotations and self.annotation_select:
++            # Create a new query without annotations
++            obj = Query(self.model)
++            
++            # Copy the relevant parts from the original query
++            obj.where = self.where.clone()
++            obj.distinct = self.distinct
++            obj.distinct_fields = self.distinct_fields
++            
++            # Add the count annotation
++            obj.add_annotation(Count("*"), alias="__count", is_summary=True)
++            return obj.get_aggregation(using, ["__count"])["__count"]
++        
++        # Otherwise, use the standard approach
+         obj = self.clone()
+         obj.add_annotation(Count("*"), alias="__count", is_summary=True)
+         return obj.get_aggregation(using, ["__count"])["__count"]

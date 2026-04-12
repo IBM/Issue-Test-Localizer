@@ -1,0 +1,19 @@
+diff --git a/sympy/physics/quantum/tensorproduct.py b/sympy/physics/quantum/tensorproduct.py
+index 153c783..53bc126 100644
+--- a/sympy/physics/quantum/tensorproduct.py
++++ b/sympy/physics/quantum/tensorproduct.py
+@@ -257,6 +257,14 @@ class TensorProduct(Expr):
+         else:
+             return self
+ 
++    def _eval_power(self, exp):
++        """Evaluate powers of tensor products."""
++        if exp.is_Integer:
++            # For integer powers, we can expand the tensor product
++            args = self.args
++            return TensorProduct(*[arg**exp for arg in args])
++        return None
++
+     def _eval_trace(self, **kwargs):
+         indices = kwargs.get('indices', None)
+         exp = tensor_product_simp(self)

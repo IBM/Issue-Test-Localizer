@@ -1,0 +1,122 @@
+{
+  "instance_id": "matplotlib__matplotlib-22871",
+  "container_id": "fa34c5d9d737c67a148149184e1980ea4b97cd05c8fd085e3de7bfc1dd19c47e",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_0.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_1.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_10.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_11.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_12.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_2.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_3.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_4.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_5.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_6.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_7.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_8.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/matplotlib__matplotlib-22871/dedup_patch_9.jsonl",
+        "inst": "matplotlib__matplotlib-22871",
+        "passed": 7,
+        "failed": 1
+      }
+    ],
+    "top_passed": 7,
+    "top_subset_size": 13
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_dates.py::test_concise_formatter_show_offset#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_dates.py::test_concise_formatter_show_offset#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_dates.py::test_concise_formatter_show_offset#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_dates.py::test_concise_formatter_call#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

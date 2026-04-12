@@ -1,0 +1,149 @@
+{
+  "instance_id": "pytest-dev__pytest-5413",
+  "container_id": "4412a7c510004c7176e3fa20450d895778c1342c84aff6a4ad4a51215e916894",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-5413",
+        "passed": 0,
+        "failed": 8
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-5413",
+        "passed": 0,
+        "failed": 8
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-5413",
+        "passed": 0,
+        "failed": 8
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 3
+  },
+  "reproduction": {
+    "testing/python/raises.py::TestRaises::test_str_on_raises_context_variable#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        }
+      ]
+    },
+    "testing/python/raises.py::TestRaises::test_raises_str_representation#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/python/raises.py::TestRaises::test_str_on_raises_context_shows_full_message#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        }
+      ]
+    },
+    "testing/python/raises.py::TestRaises::test_raises_str_multiline#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        }
+      ]
+    },
+    "testing/python/raises.py::TestRaises::test_str_on_raises_context_variable#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        }
+      ]
+    },
+    "testing/python/raises.py::TestRaises::test_str_on_raises_context_variable#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_1.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": false
+        }
+      ]
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-5413/dedup_patch_2.jsonl",
+          "inst": "pytest-dev__pytest-5413",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

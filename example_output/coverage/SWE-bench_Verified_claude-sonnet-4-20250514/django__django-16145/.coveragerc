@@ -1,0 +1,8 @@
+[run]
+dynamic_context = test_function
+
+[report]
+show_missing = True
+ignore_errors = True
+omit =
+    /testbed/generated/*

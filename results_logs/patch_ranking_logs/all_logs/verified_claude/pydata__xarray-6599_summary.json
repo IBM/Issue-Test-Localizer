@@ -1,0 +1,102 @@
+{
+  "instance_id": "pydata__xarray-6599",
+  "container_id": "2ef5f18d7646b8c26ed319a84e691b27c80ba7b5b3ad7b144bff550925111144",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_0.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_1.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_10.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_2.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_4.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_5.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_6.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_7.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_8.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_9.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-6599/dedup_patch_3.jsonl",
+        "inst": "pydata__xarray-6599",
+        "passed": 4,
+        "failed": 1
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 10
+  },
+  "reproduction": {
+    "xarray/tests/test_computation.py::test_polyval#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_computation.py::test_polyval#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_computation.py::test_polyval#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_computation.py::test_polyval#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_computation.py::test_polyval_degree_dim_checks#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_computation.py::test_polyval_degree_dim_checks#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

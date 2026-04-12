@@ -1,0 +1,60 @@
+{
+  "instance_id": "sympy__sympy-23413",
+  "container_id": "b72d31eaeafdf500b600421766409ee641f9615ab73128a6a826b9bb016a1ccf",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23413/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-23413",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23413/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-23413",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23413/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-23413",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-23413/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-23413",
+        "passed": 0,
+        "failed": 0
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 4
+  },
+  "reproduction": {
+    "sympy/polys/matrices/tests/test_normalforms.py::test_hermite_normal#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/polys/matrices/tests/test_normalforms.py::test_hermite_normal#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/polys/matrices/tests/test_normalforms.py::test_smith_normal#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/polys/matrices/tests/test_normalforms.py::test_hermite_normal#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/polys/matrices/tests/test_normalforms.py::test_hermite_normal#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/polys/matrices/tests/test_normalforms.py::test_smith_normal#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

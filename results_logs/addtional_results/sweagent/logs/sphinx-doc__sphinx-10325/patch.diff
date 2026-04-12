@@ -1,0 +1,52 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index 62631f7ff..35c4e3158 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -110,11 +110,15 @@ def exclude_members_option(arg: Any) -> Union[object, Set[str]]:
+ 
+ 
+ def inherited_members_option(arg: Any) -> Union[object, Set[str]]:
+-    """Used to convert the :members: option to auto directives."""
++    """Used to convert the :inherited-members: option to auto directives."""
+     if arg in (None, True):
+-        return 'object'
++        return {'object'}
+     else:
+-        return arg
++        # Support comma-separated list of class names
++        if isinstance(arg, str):
++            return {x.strip() for x in arg.split(',') if x.strip()}
++        else:
++            return {arg}
+ 
+ 
+ def member_order_option(arg: Any) -> Optional[str]:
+@@ -680,17 +684,18 @@ class Documenter:
+         ``autodoc-skip-member`` event.
+         """
+         def is_filtered_inherited_member(name: str, obj: Any) -> bool:
+-            if inspect.isclass(self.object):
++            if inspect.isclass(self.object) and self.options.inherited_members:
+                 for cls in self.object.__mro__:
+-                    if cls.__name__ == self.options.inherited_members and cls != self.object:
+-                        # given member is a member of specified *super class*
+-                        return True
+-                    elif name in cls.__dict__:
+-                        return False
+-                    elif name in self.get_attr(cls, '__annotations__', {}):
+-                        return False
+-                    elif isinstance(obj, ObjectMember) and obj.class_ is cls:
+-                        return False
++                    if (name in cls.__dict__ or 
++                        name in self.get_attr(cls, '__annotations__', {}) or
++                        (isinstance(obj, ObjectMember) and obj.class_ is cls)):
++                        # Found where this member is defined
++                        if cls.__name__ in self.options.inherited_members and cls != self.object:
++                            # This member is from an excluded class
++                            return True
++                        else:
++                            # This member is not from an excluded class
++                            return False
+ 
+             return False
+ 

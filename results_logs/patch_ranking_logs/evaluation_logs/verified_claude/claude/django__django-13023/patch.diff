@@ -1,0 +1,22 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index b1fce64..985bba6 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -1499,9 +1499,16 @@ class DecimalField(Field):
+             return value
+         if isinstance(value, float):
+             return self.context.create_decimal_from_float(value)
++        # Handle non-string/numeric values
++        if not isinstance(value, (str, int, decimal.Decimal)):
++            raise exceptions.ValidationError(
++                self.error_messages['invalid'],
++                code='invalid',
++                params={'value': value},
++            )
+         try:
+             return decimal.Decimal(value)
+-        except decimal.InvalidOperation:
++        except (decimal.InvalidOperation, TypeError):
+             raise exceptions.ValidationError(
+                 self.error_messages['invalid'],
+                 code='invalid',

@@ -1,0 +1,29 @@
+diff --git a/sklearn/preprocessing/_encoders.py b/sklearn/preprocessing/_encoders.py
+index 1e05aba59..166237b13 100644
+--- a/sklearn/preprocessing/_encoders.py
++++ b/sklearn/preprocessing/_encoders.py
+@@ -111,6 +111,24 @@ class _BaseEncoder(BaseEstimator, TransformerMixin):
+                     # removed later.
+                     X_mask[:, i] = valid_mask
+                     Xi = Xi.copy()
++                    
++                    # Check if we're dealing with string arrays and if the replacement
++                    # value would be truncated due to dtype limitations
++                    if (np.issubdtype(Xi.dtype, np.str_) or 
++                        np.issubdtype(Xi.dtype, np.unicode_)):
++                        replacement_value = self.categories_[i][0]
++                        # Check if the replacement value would fit in the current dtype
++                        if hasattr(Xi.dtype, 'itemsize'):
++                            # For string dtypes, itemsize is the max string length * char size
++                            if np.issubdtype(Xi.dtype, np.unicode_):
++                                max_len = Xi.dtype.itemsize // 4  # Unicode chars are 4 bytes
++                            else:
++                                max_len = Xi.dtype.itemsize  # Byte strings
++                            
++                            if len(str(replacement_value)) > max_len:
++                                # Convert to object dtype to avoid truncation
++                                Xi = Xi.astype(object)
++                    
+                     Xi[~valid_mask] = self.categories_[i][0]
+             _, encoded = _encode(Xi, self.categories_[i], encode=True)
+             X_int[:, i] = encoded

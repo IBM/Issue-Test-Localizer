@@ -1,0 +1,22 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 29e33c075f..83c7d73909 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1425,6 +1425,17 @@ class SQLDeleteCompiler(SQLCompiler):
+         """
+         if self.single_alias:
+             return self._as_sql(self.query)
++            
++        # Check if this is a simple DELETE FROM table with no WHERE clause
++        # This is the case for Model.objects.all().delete()
++        if not self.query.where.children:
++            # Make sure we have a base table
++            if not hasattr(self.query, 'base_table') or self.query.base_table is None:
++                self.query.base_table = self.query.model._meta.db_table
++            # Simple case: DELETE FROM table
++            return self._as_sql(self.query)
++            
++        # Complex case: Use a subquery
+         innerq = self.query.clone()
+         innerq.__class__ = Query
+         innerq.clear_select_clause()

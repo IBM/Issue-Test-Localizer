@@ -1,0 +1,18 @@
+diff --git a/sympy/core/basic.py b/sympy/core/basic.py
+index 97eb81a..01489c4 100644
+--- a/sympy/core/basic.py
++++ b/sympy/core/basic.py
+@@ -504,7 +504,12 @@ class Basic(metaclass=ManagedProperties):
+             types = tuple(
+                 [t if isinstance(t, type) else type(t) for t in types])
+         else:
+-            types = (Atom,)
++            # Return objects with no args instead of subclasses of Atom
++            result = set()
++            for expr in preorder_traversal(self):
++                if not expr.args:
++                    result.add(expr)
++            return result
+         result = set()
+         for expr in preorder_traversal(self):
+             if isinstance(expr, types):

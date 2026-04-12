@@ -1,0 +1,30 @@
+diff --git a/sphinx/transforms/__init__.py b/sphinx/transforms/__init__.py
+index f36473084..2eb24193e 100644
+--- a/sphinx/transforms/__init__.py
++++ b/sphinx/transforms/__init__.py
+@@ -125,11 +125,20 @@ class MoveModuleTargets(SphinxTransform):
+             if not node['ids']:
+                 continue
+             if ('ismod' in node and
+-                    node.parent.__class__ is nodes.section and
+-                    # index 0 is the section title node
+-                    node.parent.index(node) == 1):
+-                node.parent['ids'][0:0] = node['ids']
+-                node.parent.remove(node)
++                    node.parent.__class__ is nodes.section):
++                # Find the title node and any preceding paragraphs that might be domain directives
++                title_node = None
++                for child_idx, child in enumerate(node.parent.children):
++                    if isinstance(child, nodes.title):
++                        title_node = child
++                        break
++                
++                # If we found the title and our target is right after it
++                # or if our target is the first non-title element
++                if ((title_node and node.parent.index(node) == node.parent.index(title_node) + 1) or
++                    (node.parent.index(node) == 1 and isinstance(node.parent[0], nodes.title))):
++                    node.parent['ids'][0:0] = node['ids']
++                    node.parent.remove(node)
+ 
+ 
+ class HandleCodeBlocks(SphinxTransform):

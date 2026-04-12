@@ -1,0 +1,17 @@
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 8003c0d..800efff 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -3907,6 +3907,12 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+             dataset.
+         """
+         merge_result = dataset_update_method(self, other)
++        variables = merge_result.variables.copy()
++        # Preserve dask arrays by copying them directly
++        for k, v in self._variables.items():
++            if k in variables and hasattr(v.data, 'chunks'):
++                variables[k] = v._replace(data=v.data)
++        merge_result = merge_result._replace(variables=variables)
+         return self._replace(inplace=True, **merge_result._asdict())
+ 
+     def merge(

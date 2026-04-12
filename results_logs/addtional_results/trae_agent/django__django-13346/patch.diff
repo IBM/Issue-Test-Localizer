@@ -1,0 +1,99 @@
+diff --git a/django/db/models/fields/json.py b/django/db/models/fields/json.py
+index fafc1beee8..6014627e54 100644
+--- a/django/db/models/fields/json.py
++++ b/django/db/models/fields/json.py
+@@ -479,6 +479,47 @@ class KeyTransformGte(KeyTransformNumericLookupMixin, lookups.GreaterThanOrEqual
+     pass
+ 
+ 
++class KeyTransformIn(lookups.In):
++    """
++    Implements the __in lookup for KeyTransform.
++    
++    This lookup correctly handles the JSON extraction for the values
++    in the IN clause, similar to how KeyTransformExact works.
++    """
++    def process_rhs(self, compiler, connection):
++        if isinstance(self.rhs, KeyTransform):
++            return super(lookups.In, self).process_rhs(compiler, connection)
++        
++        # Get the base rhs SQL and params from the parent In lookup
++        rhs, rhs_params = super().process_rhs(compiler, connection)
++        
++        # For SQLite, MySQL, and Oracle, we need to apply JSON_EXTRACT (or equivalent)
++        # to each parameter in the IN clause
++        if connection.vendor in ('sqlite', 'mysql', 'oracle'):
++            if self.rhs_is_direct_value():
++                # For direct values, apply JSON extraction to each parameter
++                if connection.vendor == 'sqlite':
++                    # SQLite uses JSON_EXTRACT
++                    func = ["JSON_EXTRACT(%s, '$')" for _ in rhs_params]
++                    rhs = rhs % tuple(func)
++                elif connection.vendor == 'mysql':
++                    # MySQL also uses JSON_EXTRACT
++                    func = ["JSON_EXTRACT(%s, '$')" for _ in rhs_params]
++                    rhs = rhs % tuple(func)
++                elif connection.vendor == 'oracle':
++                    # Oracle uses JSON_VALUE for scalar values
++                    func = []
++                    for value in rhs_params:
++                        # Oracle needs special handling for NULL values
++                        if value == 'null':
++                            func.append('%s')
++                        else:
++                            func.append("JSON_VALUE(%s, '$.value')")
++                    rhs = rhs % tuple(func)
++        
++        return rhs, rhs_params
++
++
+ KeyTransform.register_lookup(KeyTransformExact)
+ KeyTransform.register_lookup(KeyTransformIExact)
+ KeyTransform.register_lookup(KeyTransformIsNull)
+@@ -494,6 +535,7 @@ KeyTransform.register_lookup(KeyTransformLt)
+ KeyTransform.register_lookup(KeyTransformLte)
+ KeyTransform.register_lookup(KeyTransformGt)
+ KeyTransform.register_lookup(KeyTransformGte)
++KeyTransform.register_lookup(KeyTransformIn)
+ 
+ 
+ class KeyTransformFactory:
+diff --git a/tests/model_fields/test_jsonfield.py b/tests/model_fields/test_jsonfield.py
+index a7648711ac..cd9a7249a6 100644
+--- a/tests/model_fields/test_jsonfield.py
++++ b/tests/model_fields/test_jsonfield.py
+@@ -723,3 +723,34 @@ class TestQuerying(TestCase):
+                 self.assertIs(NullableJSONModel.objects.filter(
+                     **{lookup: value},
+                 ).exists(), True)
++                
++    def test_key_transform_in_lookup(self):
++        """
++        Test that the __in lookup works correctly with key transforms.
++        """
++        JSONModel.objects.create(value={"key": 0})
++        JSONModel.objects.create(value={"key": 1})
++        JSONModel.objects.create(value={"key": 2})
++        JSONModel.objects.create(value={"key": 0})
++        
++        # Regular lookup
++        regular_filter = JSONModel.objects.filter(value__key=0)
++        self.assertEqual(regular_filter.count(), 2)
++        
++        # IN lookup
++        in_filter = JSONModel.objects.filter(value__key__in=[0])
++        self.assertEqual(in_filter.count(), 2)
++        
++        # Both filters should return the same results
++        self.assertCountEqual(
++            regular_filter.values_list('id', flat=True),
++            in_filter.values_list('id', flat=True)
++        )
++        
++        # Test with multiple values
++        in_filter_multiple = JSONModel.objects.filter(value__key__in=[0, 1])
++        self.assertEqual(in_filter_multiple.count(), 3)
++        
++        # Test with empty list
++        in_filter_empty = JSONModel.objects.filter(value__key__in=[])
++        self.assertEqual(in_filter_empty.count(), 0)

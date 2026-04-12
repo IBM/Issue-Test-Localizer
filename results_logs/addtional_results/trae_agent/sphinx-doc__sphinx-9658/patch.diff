@@ -1,0 +1,26 @@
+diff --git a/sphinx/util/typing.py b/sphinx/util/typing.py
+index 87707d48f..efbb09ef0 100644
+--- a/sphinx/util/typing.py
++++ b/sphinx/util/typing.py
+@@ -115,6 +115,11 @@ def restify(cls: Optional[Type]) -> str:
+             return '...'
+         elif isinstance(cls, str):
+             return cls
++        # Handle mocked objects with __display_name__ attribute
++        elif hasattr(cls, '__sphinx_mock__') and hasattr(cls, '__display_name__'):
++            # For mocked classes, use the display_name which includes the full path
++            display_name = cls.__display_name__
++            return ':py:class:`%s`' % display_name
+         elif cls in INVALID_BUILTIN_CLASSES:
+             return ':py:class:`%s`' % INVALID_BUILTIN_CLASSES[cls]
+         elif inspect.isNewType(cls):
+@@ -144,6 +149,9 @@ def restify(cls: Optional[Type]) -> str:
+             else:
+                 return _restify_py36(cls)
+     except (AttributeError, TypeError):
++        # If we have a __display_name__ attribute, use it as a fallback
++        if hasattr(cls, '__display_name__'):
++            return ':py:class:`%s`' % cls.__display_name__
+         return repr(cls)
+ 
+ 

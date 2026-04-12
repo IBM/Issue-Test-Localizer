@@ -1,0 +1,97 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index aaf35ee37c..070ee2b44e 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -845,8 +845,46 @@ class Query(BaseExpression):
+         Change the aliases in change_map (which maps old-alias -> new-alias),
+         relabelling any references to them in select columns and the where
+         clause.
+-        """
+-        assert set(change_map).isdisjoint(change_map.values())
++        
++        The assertion below ensures that the mapping won't cause the same alias to be
++        changed multiple times. For example, if we have a change map {'T4': 'T5', 'T5': 'T6'},
++        we would first change T4 to T5, and then change T5 to T6, effectively changing
++        what was originally T4 to T6 instead of T5.
++        
++        When combining querysets with OR operation, if the right-hand side query has
++        sequential aliases (e.g., T4 and T5) and the left-hand side query also needs
++        to create aliases for the same tables, the change_map could end up with
++        overlapping keys and values, leading to the assertion error.
++        """
++        # Check if keys and values in change_map overlap
++        # If they do, we need to create a new change_map to avoid conflicts
++        if not set(change_map).isdisjoint(change_map.values()):
++            # Create a new conflict-free change_map
++            new_change_map = {}
++            used_aliases = set(self.alias_map) | set(change_map.values())
++            
++            # Process each alias change one by one to avoid conflicts
++            for old_alias, new_alias in sorted(change_map.items()):
++                if old_alias in new_change_map.values():
++                    # This old_alias is already a target in our new map
++                    # We need to find a completely new alias
++                    prefix = self.alias_prefix
++                    next_alias = None
++                    for i in range(len(self.alias_map) + len(change_map) + 1, 100000):
++                        candidate = '%s%d' % (prefix, i)
++                        if candidate not in used_aliases:
++                            next_alias = candidate
++                            used_aliases.add(candidate)
++                            break
++                    new_change_map[old_alias] = next_alias
++                else:
++                    new_change_map[old_alias] = new_alias
++                    
++            # Use the new conflict-free change_map
++            change_map = new_change_map
++        else:
++            # Original assertion - no conflicts between keys and values
++            assert set(change_map).isdisjoint(change_map.values())
+ 
+         # 1. Update references in "select" (normal columns plus aliases),
+         # "group by" and "where".
+diff --git a/tests/queries/tests.py b/tests/queries/tests.py
+index ca982b9c6a..e1b07b6ccc 100644
+--- a/tests/queries/tests.py
++++ b/tests/queries/tests.py
+@@ -2728,6 +2728,39 @@ class UnionTests(unittest.TestCase):
+         Q2 = Q(objecta__objectc__name='ein', objectc__objecta__name='three', objecta__objectb__name='trois')
+         self.check_union(ObjectB, Q1, Q2)
+ 
++    def test_queryset_or_with_alias_conflict(self):
++        """
++        Test for the fix of the issue where Query.change_aliases raises an AssertionError
++        when combining QuerySets with OR operation in a specific order.
++        
++        The issue occurs when the right-hand side query has sequential aliases (e.g., T4 and T5)
++        and the left-hand side query also needs to create aliases for the same tables. This
++        can lead to overlapping keys and values in the change_map, causing an assertion error.
++        """
++        # Create test data
++        objecta = ObjectA.objects.create(name="test_alias_conflict")
++        objectb = ObjectB.objects.create(name="test_alias_conflict_b", num=1, objecta=objecta)
++        objectc = ObjectC.objects.create(name="test_alias_conflict_c", objecta=objecta, objectb=objectb)
++        
++        # Create the two QuerySets that would cause the issue
++        qs1 = ObjectA.objects.filter(name="test_alias_conflict")
++        qs2 = ObjectA.objects.filter(
++            Q(objectb__name="test_alias_conflict_b") | Q(objectc__name="test_alias_conflict_c")
++        )
++        
++        # Test both directions of the OR operation
++        combined1 = qs2 | qs1
++        combined2 = qs1 | qs2  # This would previously raise an AssertionError
++        
++        # Both should return the same count
++        self.assertEqual(combined1.count(), combined2.count())
++        
++        # Verify that the results are the same regardless of the order
++        self.assertEqual(
++            set(combined1.values_list('id', flat=True)),
++            set(combined2.values_list('id', flat=True))
++        )
++
+ 
+ class DefaultValuesInsertTest(TestCase):
+     def test_no_extra_params(self):

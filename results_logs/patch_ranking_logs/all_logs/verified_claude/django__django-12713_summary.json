@@ -1,0 +1,48 @@
+{
+  "instance_id": "django__django-12713",
+  "container_id": "a47b86faba63baea69deb3d8eebe6d1378d08bdf054d4d0da556ca61ad817f7d",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12713/dedup_patch_0.jsonl",
+        "inst": "django__django-12713",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12713/dedup_patch_1.jsonl",
+        "inst": "django__django-12713",
+        "passed": 9,
+        "failed": 0
+      }
+    ],
+    "top_passed": 9,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "admin_widgets.tests.AdminFormfieldForDBFieldTests.test_override_widget_in_formfield_for_manytomany#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "admin_widgets.tests.AdminFormfieldForDBFieldTests.test_widget_override_for_manytomany#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "admin_widgets.tests.AdminFormfieldForDBFieldTests.test_formfield_overrides_for_manytomany#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "admin_widgets.tests.AdminFormfieldForDBFieldTests.test_widget_override_for_manytomany#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "admin_widgets.tests.AdminFormfieldForDBFieldTests.test_formfield_overrides#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "admin_widgets.tests.AdminFormfieldForDBFieldTests.test_formfield_for_manytomany_widget_override#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

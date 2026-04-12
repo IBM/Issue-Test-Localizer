@@ -1,0 +1,35 @@
+{
+  "instance_id": "django__django-16899",
+  "container_id": "05641dd8df09afec16c8c326d1e412a14ce8b10c989d444bdd89dc7a8a2b3bcb",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16899/dedup_patch_0.jsonl",
+        "inst": "django__django-16899",
+        "passed": 5,
+        "failed": 7
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16899/dedup_patch_1.jsonl",
+        "inst": "django__django-16899",
+        "passed": 5,
+        "failed": 7
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16899/dedup_patch_2.jsonl",
+        "inst": "django__django-16899",
+        "passed": 5,
+        "failed": 7
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-16899/dedup_patch_3.jsonl",
+        "inst": "django__django-16899",
+        "passed": 5,
+        "failed": 7
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 4
+  },
+  "reproduction": {}
+}

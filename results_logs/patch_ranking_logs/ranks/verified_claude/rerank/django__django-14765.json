@@ -1,0 +1,71 @@
+{
+  "instance_id": "django__django-14765",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_3.jsonl",
+    "repro_fixes": 7,
+    "repro_total_considered": 9,
+    "regression_passed": 18,
+    "occurrence": 13,
+    "normalized_occurrence": 13
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_3.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 13,
+        "normalized_occurrence": 13
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_5.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 12,
+        "normalized_occurrence": 12
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_2.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 6,
+        "normalized_occurrence": 6
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_1.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 4,
+        "normalized_occurrence": 4
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_6.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 3,
+        "normalized_occurrence": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_0.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-14765/dedup_patch_4.jsonl",
+        "repro_fixes": 7,
+        "repro_total_considered": 9,
+        "regression_passed": 18,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

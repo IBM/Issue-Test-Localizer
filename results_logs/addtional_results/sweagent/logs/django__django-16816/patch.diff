@@ -1,0 +1,27 @@
+diff --git a/django/contrib/admin/checks.py b/django/contrib/admin/checks.py
+index 0fefe65e48..ec7e6f1399 100644
+--- a/django/contrib/admin/checks.py
++++ b/django/contrib/admin/checks.py
+@@ -3,7 +3,12 @@ from itertools import chain
+ 
+ from django.apps import apps
+ from django.conf import settings
+-from django.contrib.admin.utils import NotRelationField, flatten, get_fields_from_path
++from django.contrib.admin.utils import (
++    NotRelationField,
++    _get_non_gfk_field,
++    flatten,
++    get_fields_from_path,
++)
+ from django.core import checks
+ from django.core.exceptions import FieldDoesNotExist
+ from django.db import models
+@@ -896,7 +901,7 @@ class ModelAdminChecks(BaseModelAdminChecks):
+         elif hasattr(obj, item):
+             return []
+         try:
+-            field = obj.model._meta.get_field(item)
++            field = _get_non_gfk_field(obj.model._meta, item)
+         except FieldDoesNotExist:
+             try:
+                 field = getattr(obj.model, item)

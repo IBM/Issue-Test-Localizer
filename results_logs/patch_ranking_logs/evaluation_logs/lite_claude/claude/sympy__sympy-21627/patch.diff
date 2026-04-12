@@ -1,0 +1,26 @@
+diff --git a/sympy/functions/elementary/hyperbolic.py b/sympy/functions/elementary/hyperbolic.py
+index db125b2..9791319 100644
+--- a/sympy/functions/elementary/hyperbolic.py
++++ b/sympy/functions/elementary/hyperbolic.py
+@@ -264,6 +264,10 @@ class sinh(HyperbolicFunction):
+         arg = self.args[0]
+         return arg.is_finite
+ 
++    def _eval_is_zero(self):
++        # cosh(x) is zero only for complex values
++        return False
++
+     def _eval_is_zero(self):
+         arg = self.args[0]
+         if arg.is_zero:
+@@ -499,6 +503,10 @@ class cosh(HyperbolicFunction):
+         arg = self.args[0]
+         return arg.is_finite
+ 
++    def _eval_is_zero(self):
++        # cosh(x) is zero only for complex values
++        return False
++
+ 
+ class tanh(HyperbolicFunction):
+     r"""

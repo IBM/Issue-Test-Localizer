@@ -1,0 +1,52 @@
+diff --git a/sympy/printing/mathematica.py b/sympy/printing/mathematica.py
+index ea7e3a2d9..cf418b258 100644
+--- a/sympy/printing/mathematica.py
++++ b/sympy/printing/mathematica.py
+@@ -31,7 +31,8 @@
+     "asech": [(lambda x: True, "ArcSech")],
+     "acsch": [(lambda x: True, "ArcCsch")],
+     "conjugate": [(lambda x: True, "Conjugate")],
+-
++    "Max": [(lambda *x: True, "Max")],
++    "Min": [(lambda *x: True, "Min")],
+ }
+ 
+ 
+@@ -115,6 +116,12 @@ def _print_Derivative(self, expr):
+         dexpr = expr.expr
+         dvars = [i[0] if i[1] == 1 else i for i in expr.variable_count]
+         return "Hold[D[" + ', '.join(self.doprint(a) for a in [dexpr] + dvars) + "]]"
++        
++    def _print_Max(self, expr):
++        return "Max[%s]" % self.stringify(expr.args, ", ")
++        
++    def _print_Min(self, expr):
++        return "Min[%s]" % self.stringify(expr.args, ", ")
+ 
+ 
+ def mathematica_code(expr, **settings):
+diff --git a/sympy/printing/tests/test_mathematica.py b/sympy/printing/tests/test_mathematica.py
+index dd636d062..640ec3f17 100644
+--- a/sympy/printing/tests/test_mathematica.py
++++ b/sympy/printing/tests/test_mathematica.py
+@@ -2,7 +2,7 @@
+                         Rational, Integer, Tuple, Derivative)
+ from sympy.integrals import Integral
+ from sympy.concrete import Sum
+-from sympy.functions import exp, sin, cos, conjugate
++from sympy.functions import exp, sin, cos, conjugate, Max, Min
+ 
+ from sympy import mathematica_code as mcode
+ 
+@@ -90,3 +90,11 @@ def test_Sum():
+                      (y, -oo, oo))) == \
+         "Hold[Sum[Exp[-x^2 - y^2], {x, -Infinity, Infinity}, " \
+         "{y, -Infinity, Infinity}]]"
++        
++def test_Min_Max():
++    assert mcode(Min(x, y)) == "Min[x, y]" or mcode(Min(x, y)) == "Min[y, x]"
++    assert mcode(Max(x, y)) == "Max[x, y]" or mcode(Max(x, y)) == "Max[y, x]"
++    assert mcode(Max(x, 2)) == "Max[x, 2]" or mcode(Max(x, 2)) == "Max[2, x]"
++    assert mcode(Min(x, 2)) == "Min[x, 2]" or mcode(Min(x, 2)) == "Min[2, x]"
++    assert mcode(Max(x, y, z)) in ["Max[x, y, z]", "Max[x, z, y]", "Max[y, x, z]", 
++                                   "Max[y, z, x]", "Max[z, x, y]", "Max[z, y, x]"]

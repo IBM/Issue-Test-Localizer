@@ -1,0 +1,63 @@
+{
+  "instance_id": "sympy__sympy-13852",
+  "container_id": "2bddc0f16fd1dc23a56790ab0a1f3ec5d5a98ec6d298b9bfa136dee369e30a47",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-13852/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-13852",
+        "passed": 2,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-13852/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-13852",
+        "passed": 2,
+        "failed": 1
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "sympy/functions/special/tests/test_zeta_functions.py::test_issue_10475#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/special/tests/test_zeta_functions.py::test_polylog_expansion#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/special/tests/test_zeta_functions.py::test_polylog_expansion#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/special/tests/test_zeta_functions.py::test_polylog_expansion#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/special/tests/test_zeta_functions.py::test_polylog_expansion#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/special/tests/test_zeta_functions.py::test_polylog_expansion#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-13852/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13852",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-13852/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-13852",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

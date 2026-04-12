@@ -1,0 +1,16 @@
+diff --git a/src/_pytest/capture.py b/src/_pytest/capture.py
+index 6b2d076..39fbfb4 100644
+--- a/src/_pytest/capture.py
++++ b/src/_pytest/capture.py
+@@ -442,6 +442,11 @@ class EncodedFile(object):
+         data = "".join(linelist)
+         self.write(data)
+ 
++    @property
++    def mode(self):
++        """Override mode to ensure it does not advertise binary mode."""
++        return "r+"
++
+     @property
+     def name(self):
+         """Ensure that file.name is a string."""

@@ -1,0 +1,44 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index abbb1e37cb..945562d795 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -727,7 +727,12 @@ class SQLCompiler:
+         # If we get to this point and the field is a relation to another model,
+         # append the default ordering for that model unless it is the pk
+         # shortcut or the attribute name of the field that is specified.
+-        if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk':
++        # Skip applying default ordering for _id fields (foreign key values)
++        # This is particularly important for self-referencing foreign keys
++        is_fk_value_reference = (
++            pieces[-1] == 'id' and len(pieces) >= 2 and field.is_relation
++        )
++        if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk' and not is_fk_value_reference:
+             # Firstly, avoid infinite loops.
+             already_seen = already_seen or set()
+             join_tuple = tuple(getattr(self.query.alias_map[j], 'join_cols', None) for j in joins)
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index d65141b834..6aaae29c6c 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1633,6 +1633,21 @@ class Query(BaseExpression):
+         anything on the other side of the join.
+         """
+         joins = joins[:]
++        
++        # Special case for foreign key ID references
++        # If we're ordering by a foreign key ID field directly (e.g., 'record__root_id'),
++        # we want to use the foreign key column directly without joining to the related table
++        if len(targets) == 1 and targets[0].column == 'id' and len(path) > 0 and len(joins) > 1:
++            last_path_info = path[-1]
++            if last_path_info.direct and hasattr(last_path_info.join_field, 'foreign_related_fields'):
++                # Check if this is a foreign key reference
++                for source, target in last_path_info.join_field.related_fields:
++                    if target.column == 'id':
++                        # Use the foreign key column directly
++                        self.unref_alias(joins.pop())
++                        return [source], joins[-1], joins
++        
++        # Original implementation
+         for pos, info in enumerate(reversed(path)):
+             if len(joins) == 1 or not info.direct:
+                 break

@@ -1,0 +1,29 @@
+diff --git a/sympy/solvers/polysys.py b/sympy/solvers/polysys.py
+index b9809fd4e9..73d8b3f0af 100644
+--- a/sympy/solvers/polysys.py
++++ b/sympy/solvers/polysys.py
+@@ -46,6 +46,10 @@ def solve_poly_system(seq, *gens, **args):
+     [(0, 0), (2, -sqrt(2)), (2, sqrt(2))]
+ 
+     """
++    # Handle single objects by wrapping them in a list
++    if not hasattr(seq, '__len__') or isinstance(seq, (Poly, str)):
++        seq = [seq]
++    
+     try:
+         polys, opt = parallel_poly_from_expr(seq, *gens, **args)
+     except PolificationFailed as exc:
+@@ -241,6 +245,13 @@ def _solve_reduced_system(system, gens, entry=False):
+         univariate = list(filter(_is_univariate, basis))
+ 
+         if len(univariate) == 1:
++            # Check if we have fewer equations than generators, which indicates
++            # a non-zero-dimensional system (infinite solutions)
++            if len(system) < len(gens):
++                raise NotImplementedError(filldedent('''
++                    only zero-dimensional systems supported
++                    (finite number of solutions)
++                    '''))
+             f = univariate.pop()
+         else:
+             raise NotImplementedError(filldedent('''

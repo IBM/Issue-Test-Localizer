@@ -1,0 +1,22 @@
+diff --git a/django/utils/timezone.py b/django/utils/timezone.py
+index bb2b6b9594..8e62c7981d 100644
+--- a/django/utils/timezone.py
++++ b/django/utils/timezone.py
+@@ -73,7 +73,16 @@ def get_current_timezone_name():
+ 
+ def _get_timezone_name(timezone):
+     """Return the name of ``timezone``."""
+-    return str(timezone)
++    # Special handling for Etc/GMT-X and Etc/GMT+X timezones
++    # In POSIX, Etc/GMT-X means X hours ahead of UTC (positive offset)
++    # and Etc/GMT+X means X hours behind UTC (negative offset)
++    # This is the opposite of ISO format and causes issues with PostgreSQL's AT TIME ZONE
++    tz_str = str(timezone)
++    if tz_str.startswith('Etc/GMT'):
++        sign = '-' if timezone.utcoffset(None).total_seconds() < 0 else '+'
++        hours = int(abs(timezone.utcoffset(None).total_seconds()) // 3600)
++        return f"{sign}{hours:02d}"
++    return tz_str
+ 
+ # Timezone selection functions.
+ 

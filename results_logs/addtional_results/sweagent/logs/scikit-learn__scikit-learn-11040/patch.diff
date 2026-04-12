@@ -1,0 +1,57 @@
+diff --git a/sklearn/neighbors/base.py b/sklearn/neighbors/base.py
+index 3e5e729c2..0831ab6ca 100644
+--- a/sklearn/neighbors/base.py
++++ b/sklearn/neighbors/base.py
+@@ -8,6 +8,7 @@
+ # License: BSD 3 clause (C) INRIA, University of Amsterdam
+ import warnings
+ from abc import ABCMeta, abstractmethod
++import numbers
+ 
+ import numpy as np
+ from scipy.sparse import csr_matrix, issparse
+@@ -55,6 +56,17 @@ def _check_weights(weights):
+                          "'distance', or a callable function")
+ 
+ 
++def _check_n_neighbors(n_neighbors):
++    """Check to make sure n_neighbors is a valid integer"""
++    if n_neighbors is None:
++        return n_neighbors
++    if not isinstance(n_neighbors, (numbers.Integral, np.integer)):
++        raise TypeError("n_neighbors must be an integer, got %s" % type(n_neighbors))
++    if n_neighbors <= 0:
++        raise ValueError("n_neighbors must be a positive integer, got %d" % n_neighbors)
++    return n_neighbors
++
++
+ def _get_weights(dist, weights):
+     """Get the weights from an array of distances and a parameter ``weights``
+ 
+@@ -107,7 +119,7 @@ class NeighborsBase(six.with_metaclass(ABCMeta, BaseEstimator)):
+                  algorithm='auto', leaf_size=30, metric='minkowski',
+                  p=2, metric_params=None, n_jobs=1):
+ 
+-        self.n_neighbors = n_neighbors
++        self.n_neighbors = _check_n_neighbors(n_neighbors)
+         self.radius = radius
+         self.algorithm = algorithm
+         self.leaf_size = leaf_size
+@@ -327,6 +339,8 @@ class KNeighborsMixin(object):
+ 
+         if n_neighbors is None:
+             n_neighbors = self.n_neighbors
++        else:
++            n_neighbors = _check_n_neighbors(n_neighbors)
+ 
+         if X is not None:
+             query_is_train = False
+@@ -466,6 +480,8 @@ class KNeighborsMixin(object):
+         """
+         if n_neighbors is None:
+             n_neighbors = self.n_neighbors
++        else:
++            n_neighbors = _check_n_neighbors(n_neighbors)
+ 
+         # kneighbors does the None handling.
+         if X is not None:

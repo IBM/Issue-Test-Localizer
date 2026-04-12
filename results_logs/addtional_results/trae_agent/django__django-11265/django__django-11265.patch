@@ -1,0 +1,67 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index d69c24419b..5f15445171 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1664,8 +1664,35 @@ class Query(BaseExpression):
+         filter_lhs, filter_rhs = filter_expr
+         if isinstance(filter_rhs, F):
+             filter_expr = (filter_lhs, OuterRef(filter_rhs.name))
++            
++        # Check if we're filtering on a FilteredRelation
++        filter_lhs_parts = filter_lhs.split('__')
++        is_filtered_relation = filter_lhs_parts[0] in self._filtered_relations
++        
++        # For FilteredRelation, we need to modify the approach
++        if is_filtered_relation:
++            # Get the filtered relation
++            filtered_relation = self._filtered_relations[filter_lhs_parts[0]]
++            relation_name = filtered_relation.relation_name
++            
++            # Create a subquery that gets all the authors with the filtered condition
++            subquery = Query(self.model)
++            subquery.add_q(filtered_relation.condition)
++            
++            # Build a condition that excludes the IDs found in the subquery
++            condition, needed_inner = self.build_filter(
++                ('pk__in', subquery),
++                current_negated=True, branch_negated=True, can_reuse=can_reuse)
++            return condition, needed_inner
++            
++        # For non-FilteredRelation, proceed with the original logic
+         # Generate the inner query.
+         query = Query(self.model)
++        # Copy annotations to the inner query
++        query.annotations = self.annotations.copy()
++        # Copy filtered relations to the inner query
++        query._filtered_relations = self._filtered_relations.copy()
++        
+         query.add_filter(filter_expr)
+         query.clear_ordering(True)
+         # Try to have as simple as possible subquery -> trim leading joins from
+diff --git a/tests/filtered_relation/tests.py b/tests/filtered_relation/tests.py
+index 5e85dff16c..91f4e1f8b2 100644
+--- a/tests/filtered_relation/tests.py
++++ b/tests/filtered_relation/tests.py
+@@ -97,6 +97,22 @@ class FilteredRelationTests(TestCase):
+             ).filter(book_alice__isnull=False),
+             [self.author1]
+         )
++        
++    def test_with_exclude(self):
++        self.assertSequenceEqual(
++            Author.objects.annotate(
++                book_alice=FilteredRelation('book', condition=Q(book__title__iexact='poem by alice')),
++            ).exclude(book_alice__isnull=False),
++            [self.author2]
++        )
++        
++    def test_with_negated_q(self):
++        self.assertSequenceEqual(
++            Author.objects.annotate(
++                book_alice=FilteredRelation('book', condition=Q(book__title__iexact='poem by alice')),
++            ).filter(~Q(book_alice__isnull=False)),
++            [self.author2]
++        )
+ 
+     def test_with_join_and_complex_condition(self):
+         self.assertSequenceEqual(

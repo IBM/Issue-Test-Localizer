@@ -1,0 +1,194 @@
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index 75b0646512..8aa2cb4296 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -63,6 +63,8 @@ class BaseFormSet(RenderableFormMixin):
+     template_name_p = 'django/forms/formsets/p.html'
+     template_name_table = 'django/forms/formsets/table.html'
+     template_name_ul = 'django/forms/formsets/ul.html'
++    
++    can_create = True
+ 
+     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
+                  initial=None, error_class=ErrorList, form_kwargs=None,
+@@ -396,6 +398,19 @@ class BaseFormSet(RenderableFormMixin):
+                     "Please submit at most %d forms.", self.max_num) % self.max_num,
+                     code='too_many_forms',
+                 )
++            
++            # Validate that no new forms are submitted when can_create is False
++            if not self.can_create and self.total_form_count() > self.initial_form_count():
++                # Check if any extra forms have changed data
++                for i in range(self.initial_form_count(), self.total_form_count()):
++                    form = self.forms[i]
++                    # If the form has changed and isn't marked for deletion, it's a new form submission
++                    if form.has_changed() and not (self.can_delete and self._should_delete_form(form)):
++                        raise ValidationError(
++                            "Adding new %s is not allowed." % self.model._meta.verbose_name if hasattr(self, 'model') 
++                            else "Adding new objects is not allowed.",
++                            code='no_new_objects',
++                        )
+             if (self.validate_min and
+                     self.total_form_count() - len(self.deleted_forms) - empty_forms_count < self.min_num):
+                 raise ValidationError(ngettext(
+@@ -478,7 +493,7 @@ class BaseFormSet(RenderableFormMixin):
+ def formset_factory(form, formset=BaseFormSet, extra=1, can_order=False,
+                     can_delete=False, max_num=None, validate_max=False,
+                     min_num=None, validate_min=False, absolute_max=None,
+-                    can_delete_extra=True, renderer=None):
++                    can_delete_extra=True, renderer=None, can_create=True):
+     """Return a FormSet for the given form class."""
+     if min_num is None:
+         min_num = DEFAULT_MIN_NUM
+@@ -505,6 +520,7 @@ def formset_factory(form, formset=BaseFormSet, extra=1, can_order=False,
+         'validate_min': validate_min,
+         'validate_max': validate_max,
+         'renderer': renderer or get_default_renderer(),
++        'can_create': can_create,
+     }
+     return type(form.__name__ + 'FormSet', (formset,), attrs)
+ 
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 7effb202e3..a42776f71c 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -813,6 +813,10 @@ class BaseModelFormSet(BaseFormSet):
+ 
+     def save_new_objects(self, commit=True):
+         self.new_objects = []
++        # If can_create is False, don't save any new objects
++        if not self.can_create:
++            return self.new_objects
++        
+         for form in self.extra_forms:
+             if not form.has_changed():
+                 continue
+@@ -875,8 +879,15 @@ def modelformset_factory(model, form=ModelForm, formfield_callback=None,
+                          widgets=None, validate_max=False, localized_fields=None,
+                          labels=None, help_texts=None, error_messages=None,
+                          min_num=None, validate_min=False, field_classes=None,
+-                         absolute_max=None, can_delete_extra=True, renderer=None):
+-    """Return a FormSet class for the given Django model class."""
++                         absolute_max=None, can_delete_extra=True, renderer=None,
++                         can_create=True):
++    """
++    Return a FormSet class for the given Django model class.
++    
++    The 'can_create' parameter controls whether new model instances can be created
++    through the formset. When set to False, the formset will only allow editing
++    existing instances, and will raise a ValidationError if new instances are submitted.
++    """
+     meta = getattr(form, 'Meta', None)
+     if (getattr(meta, 'fields', fields) is None and
+             getattr(meta, 'exclude', exclude) is None):
+@@ -894,7 +905,7 @@ def modelformset_factory(model, form=ModelForm, formfield_callback=None,
+                               can_order=can_order, can_delete=can_delete,
+                               validate_min=validate_min, validate_max=validate_max,
+                               absolute_max=absolute_max, can_delete_extra=can_delete_extra,
+-                              renderer=renderer)
++                              renderer=renderer, can_create=can_create)
+     FormSet.model = model
+     return FormSet
+ 
+diff --git a/tests/model_formsets/tests.py b/tests/model_formsets/tests.py
+index bb1a8a8a5e..e115ddf2bb 100644
+--- a/tests/model_formsets/tests.py
++++ b/tests/model_formsets/tests.py
+@@ -133,6 +133,97 @@ class DeletionTests(TestCase):
+         self.assertFalse(Poem.objects.filter(pk=poem.pk + 1).exists())
+ 
+ 
++class CanCreateModelFormsetTest(TestCase):
++    def test_can_create_false_prevents_new_objects(self):
++        """
++        Test that when can_create is False, new objects cannot be created through the formset.
++        """
++        qs = Author.objects.all()
++        # Create an author to edit
++        author = Author.objects.create(name="Existing Author")
++        
++        # Create a formset with can_create=False
++        AuthorFormSet = modelformset_factory(
++            Author, 
++            fields="__all__", 
++            extra=1,
++            can_create=False
++        )
++        
++        # Test valid edit of existing author
++        data = {
++            'form-TOTAL_FORMS': '2',
++            'form-INITIAL_FORMS': '1',
++            'form-MAX_NUM_FORMS': '1000',
++            'form-0-id': str(author.pk),
++            'form-0-name': 'Updated Author',
++            'form-1-name': 'New Author',  # This should be ignored/rejected
++        }
++        
++        formset = AuthorFormSet(data, queryset=qs)
++        self.assertFalse(formset.is_valid())
++        self.assertTrue(any('Adding new' in str(error) for error in formset.non_form_errors()))
++        
++        # Test that we can still edit without adding
++        data = {
++            'form-TOTAL_FORMS': '1',
++            'form-INITIAL_FORMS': '1',
++            'form-MAX_NUM_FORMS': '1000',
++            'form-0-id': str(author.pk),
++            'form-0-name': 'Updated Author',
++        }
++        
++        # Make sure to use the updated queryset
++        formset = AuthorFormSet(data, queryset=Author.objects.all())
++        self.assertTrue(formset.is_valid())
++        formset.save()
++        
++        # Verify the author was updated
++        author.refresh_from_db()
++        self.assertEqual(author.name, 'Updated Author')
++        
++        # Verify no new authors were created
++        self.assertEqual(Author.objects.count(), 1)
++    
++    def test_can_create_true_allows_new_objects(self):
++        """
++        Test that when can_create is True (default), new objects can be created through the formset.
++        """
++        qs = Author.objects.all()
++        # Create an author to edit
++        author = Author.objects.create(name="Existing Author")
++        
++        # Create a formset with default can_create=True
++        AuthorFormSet = modelformset_factory(
++            Author, 
++            fields="__all__", 
++            extra=1
++        )
++        
++        # Test adding a new author
++        data = {
++            'form-TOTAL_FORMS': '2',
++            'form-INITIAL_FORMS': '1',
++            'form-MAX_NUM_FORMS': '1000',
++            'form-0-id': str(author.pk),
++            'form-0-name': 'Updated Author',
++            'form-1-name': 'New Author',
++        }
++        
++        formset = AuthorFormSet(data, queryset=Author.objects.all())
++        self.assertTrue(formset.is_valid())
++        formset.save()
++        
++        # Verify the author was updated
++        author.refresh_from_db()
++        self.assertEqual(author.name, 'Updated Author')
++        
++        # Verify a new author was created
++        self.assertEqual(Author.objects.count(), 2)
++        new_author = Author.objects.exclude(pk=author.pk).get()
++        self.assertEqual(new_author.name, 'New Author')
++
++
+ class ModelFormsetTest(TestCase):
+     def test_modelformset_factory_without_fields(self):
+         """ Regression for #19733 """

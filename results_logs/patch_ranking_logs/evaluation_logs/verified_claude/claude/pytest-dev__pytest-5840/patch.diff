@@ -1,0 +1,13 @@
+diff --git a/src/_pytest/main.py b/src/_pytest/main.py
+index be5f299..95a09f6 100644
+--- a/src/_pytest/main.py
++++ b/src/_pytest/main.py
+@@ -640,7 +640,7 @@ class Session(nodes.FSCollector):
+                     "file or package not found: " + arg + " (missing __init__.py?)"
+                 )
+             raise UsageError("file not found: " + arg)
+-        parts[0] = path.realpath()
++        parts[0] = path.strpath
+         return parts
+ 
+     def matchnodes(self, matching, names):

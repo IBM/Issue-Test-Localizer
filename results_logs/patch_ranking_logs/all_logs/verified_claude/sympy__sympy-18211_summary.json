@@ -1,0 +1,64 @@
+{
+  "instance_id": "sympy__sympy-18211",
+  "container_id": "47b36eb21b264efa8ef16fe8567841432f974186c1e27387e0d24ddeea8dbc18",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-18211/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-18211",
+        "passed": 13,
+        "failed": 0
+      }
+    ],
+    "top_passed": 13,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sympy/solvers/tests/test_solveset.py::test_conditionset#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_solveset.py::test_conditionset#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_solveset.py::test__solveset_multi#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_solveset.py::test_conditionset#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_solveset.py::test__solveset_multi#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/solvers/tests/test_solveset.py::test_conditionset_equality#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-18211/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-18211",
+          "passed": false
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

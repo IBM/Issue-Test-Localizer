@@ -1,0 +1,17 @@
+diff --git a/xarray/core/variable.py b/xarray/core/variable.py
+index 64c1895d..c66d3b9a 100644
+--- a/xarray/core/variable.py
++++ b/xarray/core/variable.py
+@@ -218,7 +218,11 @@ def as_compatible_data(data, fastpath=False):
+         data = np.timedelta64(getattr(data, "value", data), "ns")
+ 
+     # we don't want nested self-described arrays
+-    data = getattr(data, "values", data)
++    # but for DataArray, we want to preserve dask arrays, so use .data instead of .values
++    if type(data).__name__ == 'DataArray':
++        data = data.data
++    else:
++        data = getattr(data, "values", data)
+ 
+     if isinstance(data, np.ma.MaskedArray):
+         mask = np.ma.getmaskarray(data)

@@ -1,0 +1,17 @@
+diff --git a/src/_pytest/assertion/util.py b/src/_pytest/assertion/util.py
+index c9b4ff0..ed32520 100644
+--- a/src/_pytest/assertion/util.py
++++ b/src/_pytest/assertion/util.py
+@@ -178,9 +178,10 @@ def _diff_text(left, right, verbose=0):
+     def escape_for_readable_diff(binary_text):
+         """
+         Ensures that the internal string is always valid unicode, converting any bytes safely to valid unicode.
+-        This is done using repr() which then needs post-processing to fix the encompassing quotes and un-escape
+-        newlines and carriage returns (#429).
++        For byte strings, keeps the b'' prefix to clearly indicate it's a byte string.
+         """
++        if isinstance(binary_text, bytes):
++            return repr(binary_text)
+         r = str(repr(binary_text)[1:-1])
+         r = r.replace(r"\n", "\n")
+         r = r.replace(r"\r", "\r")

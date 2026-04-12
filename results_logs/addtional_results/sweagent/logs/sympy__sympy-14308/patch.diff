@@ -1,0 +1,982 @@
+diff --git a/debug_combined.py b/debug_combined.py
+new file mode 100644
+index 0000000000..437df883a3
+--- /dev/null
++++ b/debug_combined.py
+@@ -0,0 +1,30 @@
++#!/usr/bin/env python
++
++"""
++Debug combined vector expression.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t, a = symbols('x y t a')
++
++# Test combined expression
++expr1 = (x/y)**t * e.j
++expr2 = a * e.i
++combined = expr1 + expr2
++
++print("Expression 1:", expr1)
++print("Expression 2:", expr2)
++print("Combined:", combined)
++print("Combined components:", combined.components)
++print("Combined separate:", combined.separate())
++
++printer = PrettyPrinter({'use_unicode': True})
++result = printer._print_BasisDependent(combined)
++print(f"\nActual result: {repr(result)}")
++print("Rendered:")
++print(result)
+\ No newline at end of file
+diff --git a/debug_combined2.py b/debug_combined2.py
+new file mode 100644
+index 0000000000..648821e14b
+--- /dev/null
++++ b/debug_combined2.py
+@@ -0,0 +1,120 @@
++#!/usr/bin/env python
++
++"""
++Debug combined vector expression step by step.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t, a = symbols('x y t a')
++
++# Test combined expression
++expr1 = (x/y)**t * e.j
++expr2 = a * e.i
++combined = expr1 + expr2
++
++printer = PrettyPrinter({'use_unicode': True})
++
++# Let's manually trace through the current logic
++print("Tracing current _print_BasisDependent logic:")
++
++o1 = []
++vectstrs = []
++items = combined.separate().items()
++
++for system, vect in items:
++    inneritems = list(vect.components.items())
++    inneritems.sort(key = lambda x: x[0].__str__())
++    for k, v in inneritems:
++        print(f"Processing k={k}, v={v}")
++        if v == 1:
++            result = k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        elif v == -1:
++            result = "(-1) " + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        else:
++            arg_str = printer._print(v).parens()[0]
++            result = arg_str + ' ' + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        
++        print(f"  result: {repr(result)}")
++
++print(f"\nAfter processing all components:")
++print(f"o1: {o1}")
++print(f"vectstrs: {vectstrs}")
++
++# Now the newline fixing part
++print(f"\nFixing newlines:")
++for i, partstr in enumerate(o1):
++    print(f"  Processing o1[{i}]: {repr(partstr)}")
++    if '\n' in partstr:
++        # Split the multi-line expression into lines
++        lines = partstr.split('\n')
++        print(f"    Lines: {lines}")
++        # Remove the vector string from the end of the last line if it's there
++        if lines[-1].endswith(' ' + vectstrs[i]):
++            print(f"    Removing ' {vectstrs[i]}' from end of last line")
++            lines[-1] = lines[-1][:-len(' ' + vectstrs[i])]
++        else:
++            print(f"    Last line doesn't end with ' {vectstrs[i]}'")
++        print(f"    Lines after removal: {lines}")
++        # Add the vector string to the last line, properly spaced
++        lines[-1] = lines[-1] + ' ' + vectstrs[i]
++        print(f"    Lines after adding: {lines}")
++        # Rejoin the lines
++        o1[i] = '\n'.join(lines)
++        print(f"    Final o1[{i}]: {repr(o1[i])}")
++
++print(f"\nFinal o1: {o1}")
++
++# Continue with the rest of the logic
++o1 = [x.split('\n') for x in o1]
++print(f"After splitting: {o1}")
++
++n_newlines = max([len(x) for x in o1])
++print(f"n_newlines: {n_newlines}")
++
++lengths = []
++strs = ['']
++
++# Handle multiple components
++for parts in o1:
++    lengths.append(len(parts[0]))
++    for j in range(n_newlines):
++        if j+1 <= len(parts):
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            if j == 0:
++                strs[0] += parts[0] + ' + '
++                print(f"    Added '{parts[0]} + ' to strs[0]")
++            else:
++                strs[j] += parts[j] + ' '*(lengths[-1] -
++                                           len(parts[j])+
++                                           3)
++                print(f"    Added '{parts[j]}' + spaces to strs[{j}]")
++        else:
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            strs[j] += ' '*(lengths[-1]+3)
++            print(f"    Added spaces to strs[{j}]")
++
++print(f"Final strs before removal: {strs}")
++
++# Remove the trailing ' + ' from all lines
++final_strs = [s[:-3] for s in strs]
++print(f"Final strs after removal: {final_strs}")
++
++final_result = '\n'.join(final_strs)
++print(f"Final result: {repr(final_result)}")
++print("Final result rendered:")
++print(final_result)
+\ No newline at end of file
+diff --git a/debug_multicomponent.py b/debug_multicomponent.py
+new file mode 100644
+index 0000000000..0f63aa535f
+--- /dev/null
++++ b/debug_multicomponent.py
+@@ -0,0 +1,60 @@
++#!/usr/bin/env python
++
++"""
++Debug multi-component vector printing.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++a, b = symbols('a b')
++
++# Test multi-component case
++expr = a * e.i + b * e.j
++
++printer = PrettyPrinter({'use_unicode': True})
++
++print("Expression:", expr)
++print("Components:", expr.components)
++print("Separate:", expr.separate())
++
++# Let's manually trace through the logic
++o1 = []
++vectstrs = []
++items = expr.separate().items()
++
++for system, vect in items:
++    print(f"System: {system}, Vect: {vect}")
++    inneritems = list(vect.components.items())
++    inneritems.sort(key = lambda x: x[0].__str__())
++    print(f"Inner items: {inneritems}")
++    
++    for k, v in inneritems:
++        print(f"  Processing k={k}, v={v}")
++        if v == 1:
++            result = k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        elif v == -1:
++            result = "(-1) " + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        else:
++            arg_str = printer._print(v).parens()[0]
++            result = arg_str + ' ' + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        
++        print(f"    result: {repr(result)}")
++
++print(f"\nFinal o1: {o1}")
++print(f"Final vectstrs: {vectstrs}")
++
++# Test the actual method
++result = printer._print_BasisDependent(expr)
++print(f"\nActual result: {repr(result)}")
++print("Rendered:")
++print(result)
+\ No newline at end of file
+diff --git a/debug_multicomponent2.py b/debug_multicomponent2.py
+new file mode 100644
+index 0000000000..9d100e41b9
+--- /dev/null
++++ b/debug_multicomponent2.py
+@@ -0,0 +1,141 @@
++#!/usr/bin/env python
++
++"""
++Debug multi-component vector printing step by step.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++a, b = symbols('a b')
++
++# Test multi-component case
++expr = a * e.i + b * e.j
++
++printer = PrettyPrinter({'use_unicode': True})
++
++# Let's manually trace through the current logic
++print("Tracing current _print_BasisDependent logic:")
++
++o1 = []
++vectstrs = []
++items = expr.separate().items()
++
++for system, vect in items:
++    inneritems = list(vect.components.items())
++    inneritems.sort(key = lambda x: x[0].__str__())
++    for k, v in inneritems:
++        print(f"Processing k={k}, v={v}")
++        if v == 1:
++            result = k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        elif v == -1:
++            result = "(-1) " + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        else:
++            arg_str = printer._print(v).parens()[0]
++            result = arg_str + ' ' + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        
++        print(f"  result: {repr(result)}")
++        print(f"  o1: {o1}")
++        print(f"  vectstrs: {vectstrs}")
++
++print(f"\nAfter processing all components:")
++print(f"o1: {o1}")
++print(f"vectstrs: {vectstrs}")
++
++# Now the newline fixing part
++print(f"\nFixing newlines:")
++for i, partstr in enumerate(o1):
++    print(f"  Processing o1[{i}]: {repr(partstr)}")
++    if '\n' in partstr:
++        # Split the multi-line expression into lines
++        lines = partstr.split('\n')
++        print(f"    Lines: {lines}")
++        # Remove the vector string from the end of the last line if it's there
++        if lines[-1].endswith(' ' + vectstrs[i]):
++            print(f"    Removing ' {vectstrs[i]}' from end of last line")
++            lines[-1] = lines[-1][:-len(' ' + vectstrs[i])]
++        else:
++            print(f"    Last line doesn't end with ' {vectstrs[i]}'")
++        print(f"    Lines after removal: {lines}")
++        # Add the vector string to the last line, properly spaced
++        lines[-1] = lines[-1] + ' ' + vectstrs[i]
++        print(f"    Lines after adding: {lines}")
++        # Rejoin the lines
++        o1[i] = '\n'.join(lines)
++        print(f"    Final o1[{i}]: {repr(o1[i])}")
++
++print(f"\nFinal o1: {o1}")
++
++# Continue with the rest of the logic
++o1 = [x.split('\n') for x in o1]
++print(f"After splitting: {o1}")
++
++n_newlines = max([len(x) for x in o1])
++print(f"n_newlines: {n_newlines}")
++
++lengths = []
++strs = ['']
++for part_idx, parts in enumerate(o1):
++    lengths.append(len(parts[0]))
++    is_last_part = (part_idx == len(o1) - 1)
++    print(f"Processing part {part_idx}, is_last_part: {is_last_part}")
++    for j in range(n_newlines):
++        if j+1 <= len(parts):
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            if j == 0:
++                if is_last_part:
++                    strs[0] += parts[0]
++                    print(f"    Added '{parts[0]}' to strs[0] (last part)")
++                else:
++                    strs[0] += parts[0] + ' + '
++                    print(f"    Added '{parts[0]} + ' to strs[0] (not last part)")
++            else:
++                if is_last_part:
++                    strs[j] += parts[j]
++                    print(f"    Added '{parts[j]}' to strs[{j}] (last part)")
++                else:
++                    strs[j] += parts[j] + ' '*(lengths[-1] -
++                                               len(parts[j])+
++                                               3)
++                    print(f"    Added '{parts[j]}' + spaces to strs[{j}] (not last part)")
++        else:
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            if not is_last_part:
++                strs[j] += ' '*(lengths[-1]+3)
++                print(f"    Added spaces to strs[{j}] (not last part)")
++
++print(f"Final strs: {strs}")
++
++if len(o1) == 1:
++    # For single component, don't remove anything
++    final_result = '\n'.join(strs)
++    print("Single component - no removal")
++else:
++    # For multiple components, remove the trailing ' + ' from the first line only
++    result_strs = []
++    for i, s in enumerate(strs):
++        if i == 0:
++            result_strs.append(s[:-3])  # Remove ' + ' from first line
++            print(f"Removed ' + ' from strs[0]: '{s}' -> '{s[:-3]}'")
++        else:
++            result_strs.append(s)  # Keep other lines as is
++            print(f"Kept strs[{i}] as is: '{s}'")
++    final_result = '\n'.join(result_strs)
++    print("Multi component - removed ' + ' from first line")
++
++print(f"Final result: {repr(final_result)}")
++print("Final result rendered:")
++print(final_result)
+\ No newline at end of file
+diff --git a/debug_new_approach.py b/debug_new_approach.py
+new file mode 100644
+index 0000000000..74e96cedaa
+--- /dev/null
++++ b/debug_new_approach.py
+@@ -0,0 +1,132 @@
++#!/usr/bin/env python
++
++"""
++Debug the new approach step by step.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++printer = PrettyPrinter({'use_unicode': True})
++
++# Let's manually trace through the current logic
++print("Tracing current _print_BasisDependent logic:")
++
++o1 = []
++vectstrs = []
++items = expr.separate().items()
++
++for system, vect in items:
++    inneritems = list(vect.components.items())
++    inneritems.sort(key = lambda x: x[0].__str__())
++    for k, v in inneritems:
++        print(f"Processing k={k}, v={v}")
++        if v == 1:
++            result = k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        elif v == -1:
++            result = "(-1) " + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        else:
++            arg_str = printer._print(v).parens()[0]
++            result = arg_str + ' ' + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        
++        print(f"  result: {repr(result)}")
++
++print(f"\nAfter processing all components:")
++print(f"o1: {o1}")
++print(f"vectstrs: {vectstrs}")
++
++# Now the newline fixing part
++print(f"\nFixing newlines:")
++for i, partstr in enumerate(o1):
++    print(f"  Processing o1[{i}]: {repr(partstr)}")
++    if '\n' in partstr:
++        tempstr = partstr
++        print(f"    Original tempstr: {repr(tempstr)}")
++        tempstr = tempstr.replace(vectstrs[i], '')
++        print(f"    After removing vectstrs[{i}] ({vectstrs[i]}): {repr(tempstr)}")
++        # Only replace the LAST occurrence of the closing parenthesis
++        # to avoid the duplication issue
++        upper_hook = '\N{RIGHT PARENTHESIS UPPER HOOK}'  # ⎞
++        lower_hook = '\N{RIGHT PARENTHESIS LOWER HOOK}'  # ⎠
++        
++        print(f"    Looking for upper hook: {repr(upper_hook)}")
++        print(f"    Looking for lower hook: {repr(lower_hook)}")
++        
++        # Find the last occurrence of either hook
++        last_upper_pos = tempstr.rfind(upper_hook)
++        last_lower_pos = tempstr.rfind(lower_hook)
++        
++        print(f"    Upper hook position: {last_upper_pos}")
++        print(f"    Lower hook position: {last_lower_pos}")
++        
++        if last_upper_pos > last_lower_pos:
++            # Use upper hook
++            print(f"    Using upper hook at position {last_upper_pos}")
++            tempstr = (tempstr[:last_upper_pos] + 
++                      upper_hook + ' ' + vectstrs[i] + 
++                      tempstr[last_upper_pos + 1:])
++            print(f"    After replacing upper hook: {repr(tempstr)}")
++        elif last_lower_pos >= 0:
++            # Use lower hook
++            print(f"    Using lower hook at position {last_lower_pos}")
++            tempstr = (tempstr[:last_lower_pos] + 
++                      lower_hook + ' ' + vectstrs[i] + 
++                      tempstr[last_lower_pos + 1:])
++            print(f"    After replacing lower hook: {repr(tempstr)}")
++        else:
++            # If no hook found, just add the vector string to the end
++            print(f"    No hook found, adding to end")
++            tempstr = tempstr + ' ' + vectstrs[i]
++            print(f"    After adding to end: {repr(tempstr)}")
++        o1[i] = tempstr
++        print(f"    Final o1[{i}]: {repr(o1[i])}")
++
++print(f"\nFinal o1: {o1}")
++
++# Continue with the rest of the logic
++o1 = [x.split('\n') for x in o1]
++print(f"After splitting: {o1}")
++
++n_newlines = max([len(x) for x in o1])
++print(f"n_newlines: {n_newlines}")
++
++lengths = []
++strs = ['']
++for parts in o1:
++    lengths.append(len(parts[0]))
++    for j in range(n_newlines):
++        if j+1 <= len(parts):
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            if j == 0:
++                strs[0] += parts[0] + ' + '
++            else:
++                strs[j] += parts[j] + ' '*(lengths[-1] -
++                                           len(parts[j])+
++                                           3)
++        else:
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            strs[j] += ' '*(lengths[-1]+3)
++
++print(f"Final strs: {strs}")
++final_result = '\n'.join([s[:-3] for s in strs])
++print(f"Final result: {repr(final_result)}")
++print("Final result rendered:")
++print(final_result)
+\ No newline at end of file
+diff --git a/debug_printing.py b/debug_printing.py
+new file mode 100644
+index 0000000000..bf75010d7a
+--- /dev/null
++++ b/debug_printing.py
+@@ -0,0 +1,43 @@
++#!/usr/bin/env python
++
++"""
++Script to debug the printing process step by step.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols, pprint
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++print("Expression:", expr)
++print("Type:", type(expr))
++print("Components:", expr.components)
++print("Separate:", expr.separate())
++
++# Let's manually trace through the _print_BasisDependent method
++printer = PrettyPrinter({'use_unicode': True})
++
++print("\nManual trace:")
++print("expr.separate().items():", list(expr.separate().items()))
++
++for system, vect in expr.separate().items():
++    print(f"System: {system}, Vect: {vect}")
++    print(f"Vect components: {vect.components}")
++    inneritems = list(vect.components.items())
++    print(f"Inner items: {inneritems}")
++    
++    for k, v in inneritems:
++        print(f"  k: {k}, v: {v}")
++        print(f"  k._pretty_form: {k._pretty_form}")
++        print(f"  v pretty: {printer._print(v)}")
++        arg_str = printer._print(v).parens()[0]
++        print(f"  arg_str: {repr(arg_str)}")
++        result = arg_str + ' ' + k._pretty_form
++        print(f"  result: {repr(result)}")
++        print(f"  result has newlines: {chr(10) in result}")
+\ No newline at end of file
+diff --git a/debug_printing2.py b/debug_printing2.py
+new file mode 100644
+index 0000000000..8d193bee93
+--- /dev/null
++++ b/debug_printing2.py
+@@ -0,0 +1,100 @@
++#!/usr/bin/env python
++
++"""
++Script to debug the printing process step by step - part 2.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++printer = PrettyPrinter({'use_unicode': True})
++
++# Let's trace through the exact logic in _print_BasisDependent
++print("Tracing _print_BasisDependent logic:")
++
++o1 = []
++vectstrs = []
++items = expr.separate().items()
++
++for system, vect in items:
++    inneritems = list(vect.components.items())
++    inneritems.sort(key = lambda x: x[0].__str__())
++    for k, v in inneritems:
++        print(f"Processing k={k}, v={v}")
++        if v == 1:
++            result = k._pretty_form
++        elif v == -1:
++            result = "(-1) " + k._pretty_form
++        else:
++            arg_str = printer._print(v).parens()[0]
++            result = arg_str + ' ' + k._pretty_form
++        
++        print(f"  result before append: {repr(result)}")
++        o1.append(result)
++        vectstrs.append(k._pretty_form)
++        print(f"  o1: {o1}")
++        print(f"  vectstrs: {vectstrs}")
++
++print(f"\nAfter processing all components:")
++print(f"o1: {o1}")
++print(f"vectstrs: {vectstrs}")
++
++# Now the problematic part - fixing newlines
++print(f"\nFixing newlines:")
++for i, partstr in enumerate(o1):
++    print(f"  Processing o1[{i}]: {repr(partstr)}")
++    if '\n' in partstr:
++        tempstr = partstr
++        print(f"    Original tempstr: {repr(tempstr)}")
++        tempstr = tempstr.replace(vectstrs[i], '')
++        print(f"    After removing vectstrs[{i}] ({vectstrs[i]}): {repr(tempstr)}")
++        tempstr = tempstr.replace('\N{RIGHT PARENTHESIS UPPER HOOK}',
++                                  '\N{RIGHT PARENTHESIS UPPER HOOK}'
++                                  + ' ' + vectstrs[i])
++        print(f"    After replacing hook: {repr(tempstr)}")
++        o1[i] = tempstr
++        print(f"    Final o1[{i}]: {repr(o1[i])}")
++
++print(f"\nFinal o1: {o1}")
++
++# Continue with the rest of the logic
++o1 = [x.split('\n') for x in o1]
++print(f"After splitting: {o1}")
++
++n_newlines = max([len(x) for x in o1])
++print(f"n_newlines: {n_newlines}")
++
++lengths = []
++strs = ['']
++for parts in o1:
++    lengths.append(len(parts[0]))
++    for j in range(n_newlines):
++        if j+1 <= len(parts):
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            if j == 0:
++                strs[0] += parts[0] + ' + '
++            else:
++                strs[j] += parts[j] + ' '*(lengths[-1] -
++                                           len(parts[j])+
++                                           3)
++        else:
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            strs[j] += ' '*(lengths[-1]+3)
++
++print(f"Final strs: {strs}")
++final_result = '\n'.join([s[:-3] for s in strs])
++print(f"Final result: {repr(final_result)}")
++print("Final result rendered:")
++print(final_result)
+\ No newline at end of file
+diff --git a/debug_printing3.py b/debug_printing3.py
+new file mode 100644
+index 0000000000..a7648244ee
+--- /dev/null
++++ b/debug_printing3.py
+@@ -0,0 +1,25 @@
++#!/usr/bin/env python
++
++"""
++Script to debug the current printing process.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols, pprint
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++printer = PrettyPrinter({'use_unicode': True})
++
++# Test the current implementation
++result = printer._print_BasisDependent(expr)
++print("Current result:")
++print(repr(result))
++print("Rendered:")
++print(result)
+\ No newline at end of file
+diff --git a/debug_printing4.py b/debug_printing4.py
+new file mode 100644
+index 0000000000..e653d69201
+--- /dev/null
++++ b/debug_printing4.py
+@@ -0,0 +1,110 @@
++#!/usr/bin/env python
++
++"""
++Script to debug the current printing process step by step.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols
++from sympy.printing.pretty.pretty import PrettyPrinter
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++printer = PrettyPrinter({'use_unicode': True})
++
++# Let's manually trace through the current logic
++print("Tracing current _print_BasisDependent logic:")
++
++o1 = []
++vectstrs = []
++items = expr.separate().items()
++
++for system, vect in items:
++    inneritems = list(vect.components.items())
++    inneritems.sort(key = lambda x: x[0].__str__())
++    for k, v in inneritems:
++        print(f"Processing k={k}, v={v}")
++        if v == 1:
++            result = k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        elif v == -1:
++            result = "(-1) " + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        else:
++            arg_str = printer._print(v).parens()[0]
++            result = arg_str + ' ' + k._pretty_form
++            o1.append(result)
++            vectstrs.append(k._pretty_form)
++        
++        print(f"  result: {repr(result)}")
++        print(f"  o1: {o1}")
++        print(f"  vectstrs: {vectstrs}")
++
++print(f"\nAfter processing all components:")
++print(f"o1: {o1}")
++print(f"vectstrs: {vectstrs}")
++
++# Now the newline fixing part
++print(f"\nFixing newlines:")
++for i, partstr in enumerate(o1):
++    print(f"  Processing o1[{i}]: {repr(partstr)}")
++    if '\n' in partstr:
++        # Split the multi-line expression into lines
++        lines = partstr.split('\n')
++        print(f"    Lines: {lines}")
++        # Remove the vector string from the end of the last line if it's there
++        if lines[-1].endswith(' ' + vectstrs[i]):
++            print(f"    Removing ' {vectstrs[i]}' from end of last line")
++            lines[-1] = lines[-1][:-len(' ' + vectstrs[i])]
++        else:
++            print(f"    Last line doesn't end with ' {vectstrs[i]}'")
++        print(f"    Lines after removal: {lines}")
++        # Add the vector string to the last line, properly spaced
++        lines[-1] = lines[-1] + ' ' + vectstrs[i]
++        print(f"    Lines after adding: {lines}")
++        # Rejoin the lines
++        o1[i] = '\n'.join(lines)
++        print(f"    Final o1[{i}]: {repr(o1[i])}")
++
++print(f"\nFinal o1: {o1}")
++
++# Continue with the rest of the logic
++o1 = [x.split('\n') for x in o1]
++print(f"After splitting: {o1}")
++
++n_newlines = max([len(x) for x in o1])
++print(f"n_newlines: {n_newlines}")
++
++lengths = []
++strs = ['']
++for parts in o1:
++    lengths.append(len(parts[0]))
++    for j in range(n_newlines):
++        if j+1 <= len(parts):
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            if j == 0:
++                strs[0] += parts[0] + ' + '
++            else:
++                strs[j] += parts[j] + ' '*(lengths[-1] -
++                                           len(parts[j])+
++                                           3)
++        else:
++            if j >= len(strs):
++                strs.append(' ' * (sum(lengths[:-1]) +
++                                   3*(len(lengths)-1)))
++            strs[j] += ' '*(lengths[-1]+3)
++
++print(f"Final strs: {strs}")
++final_result = '\n'.join([s[:-3] for s in strs])
++print(f"Final result: {repr(final_result)}")
++print("Final result rendered:")
++print(final_result)
+\ No newline at end of file
+diff --git a/debug_structure.py b/debug_structure.py
+new file mode 100644
+index 0000000000..6bd4acd8e8
+--- /dev/null
++++ b/debug_structure.py
+@@ -0,0 +1,33 @@
++#!/usr/bin/env python
++
++"""
++Script to debug the structure of the problematic expression.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols, pprint
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++print("Expression:", expr)
++print("Type:", type(expr))
++print("Args:", expr.args)
++print("Components:", expr.components)
++print("Separate:", expr.separate())
++
++# Let's also test a simpler case
++simple_expr = e.j
++print("\nSimple expression:", simple_expr)
++print("Type:", type(simple_expr))
++print("Components:", simple_expr.components)
++
++# And a coefficient case
++coeff_expr = 2 * e.j
++print("\nCoeff expression:", coeff_expr)
++print("Type:", type(coeff_expr))
++print("Components:", coeff_expr.components)
+\ No newline at end of file
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 0000000000..d7021c7023
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,23 @@
++#!/usr/bin/env python
++
++"""
++Script to reproduce the vector pretty printing issue described in the PR.
++"""
++
++from sympy.vector import *
++from sympy import symbols, pprint
++
++# Create coordinate system and symbols
++e = CoordSysCartesian('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++print("Expression: (x/y)**t * e.j")
++print("Pretty print output:")
++pprint(expr)
++print("\nString representation:")
++print(str(expr))
++print("\nRepr:")
++print(repr(expr))
+\ No newline at end of file
+diff --git a/reproduce_issue_new.py b/reproduce_issue_new.py
+new file mode 100644
+index 0000000000..3763713fcc
+--- /dev/null
++++ b/reproduce_issue_new.py
+@@ -0,0 +1,23 @@
++#!/usr/bin/env python
++
++"""
++Script to reproduce the vector pretty printing issue with CoordSys3D.
++"""
++
++from sympy.vector import CoordSys3D
++from sympy import symbols, pprint
++
++# Create coordinate system and symbols
++e = CoordSys3D('e')
++x, y, t = symbols('x y t')
++
++# Test the problematic expression
++expr = (x/y)**t * e.j
++
++print("Expression: (x/y)**t * e.j")
++print("Pretty print output:")
++pprint(expr)
++print("\nString representation:")
++print(str(expr))
++print("\nRepr:")
++print(repr(expr))
+\ No newline at end of file
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 09e2b00735..5f0fc3caf1 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -909,10 +909,12 @@ def _print_BasisDependent(self, expr):
+                 if v == 1:
+                     o1.append(u"" +
+                               k._pretty_form)
++                    vectstrs.append(k._pretty_form)
+                 #Same for -1
+                 elif v == -1:
+                     o1.append(u"(-1) " +
+                               k._pretty_form)
++                    vectstrs.append(k._pretty_form)
+                 #For a general expr
+                 else:
+                     #We always wrap the measure numbers in
+@@ -921,7 +923,7 @@ def _print_BasisDependent(self, expr):
+                         v).parens()[0]
+ 
+                     o1.append(arg_str + ' ' + k._pretty_form)
+-                vectstrs.append(k._pretty_form)
++                    vectstrs.append(k._pretty_form)
+ 
+         #outstr = u("").join(o1)
+         if o1[0].startswith(u" + "):
+@@ -936,9 +938,28 @@ def _print_BasisDependent(self, expr):
+             if '\n' in partstr:
+                 tempstr = partstr
+                 tempstr = tempstr.replace(vectstrs[i], '')
+-                tempstr = tempstr.replace(u'\N{RIGHT PARENTHESIS UPPER HOOK}',
+-                                          u'\N{RIGHT PARENTHESIS UPPER HOOK}'
+-                                          + ' ' + vectstrs[i])
++                # Only replace the LAST occurrence of the closing parenthesis
++                # to avoid the duplication issue
++                upper_hook = u'\N{RIGHT PARENTHESIS UPPER HOOK}'  # ⎞
++                lower_hook = u'\N{RIGHT PARENTHESIS LOWER HOOK}'  # ⎠
++                
++                # Find the last occurrence of either hook
++                last_upper_pos = tempstr.rfind(upper_hook)
++                last_lower_pos = tempstr.rfind(lower_hook)
++                
++                if last_upper_pos > last_lower_pos:
++                    # Use upper hook
++                    tempstr = (tempstr[:last_upper_pos] + 
++                              upper_hook + ' ' + vectstrs[i] + 
++                              tempstr[last_upper_pos + 1:])
++                elif last_lower_pos >= 0:
++                    # Use lower hook
++                    tempstr = (tempstr[:last_lower_pos] + 
++                              lower_hook + ' ' + vectstrs[i] + 
++                              tempstr[last_lower_pos + 1:])
++                else:
++                    # If no hook found, just add the vector string to the end
++                    tempstr = tempstr + ' ' + vectstrs[i]
+                 o1[i] = tempstr
+         o1 = [x.split('\n') for x in o1]
+         n_newlines = max([len(x) for x in o1])

@@ -1,0 +1,25 @@
+diff --git a/sympy/physics/units/prefixes.py b/sympy/physics/units/prefixes.py
+index ca6a642156..1d5f202650 100644
+--- a/sympy/physics/units/prefixes.py
++++ b/sympy/physics/units/prefixes.py
+@@ -85,15 +85,17 @@ def __mul__(self, other):
+ 
+         fact = self.scale_factor * other.scale_factor
+ 
+-        if fact == 1:
+-            return 1
+-        elif isinstance(other, Prefix):
++        if isinstance(other, Prefix):
++            # When multiplying two prefixes
++            if fact == 1:
++                return 1
+             # simplify prefix
+             for p in PREFIXES:
+                 if PREFIXES[p].scale_factor == fact:
+                     return PREFIXES[p]
+             return fact
+ 
++        # When multiplying a prefix by a quantity (unit), always return the scaled unit
+         return self.scale_factor * other
+ 
+     def __truediv__(self, other):

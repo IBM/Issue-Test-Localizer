@@ -1,0 +1,16 @@
+diff --git a/sympy/core/assumptions.py b/sympy/core/assumptions.py
+index 6a94adc..18c7fa4 100644
+--- a/sympy/core/assumptions.py
++++ b/sympy/core/assumptions.py
+@@ -198,6 +198,11 @@ _assume_rules = FactRules([
+     'infinite       ->  !finite',
+     'noninteger     ==  real & !integer',
+     'nonzero        ==  real & !zero',
++
++    # Preserve key assumptions during positive/negative transformations
++    'positive       ->  finite | infinite',
++    'negative       ->  finite | infinite',
++    'real           ->  finite | infinite',
+ ])
+ 
+ _assume_defined = _assume_rules.defined_facts.copy()

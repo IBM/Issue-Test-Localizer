@@ -1,0 +1,51 @@
+diff --git a/sklearn/model_selection/_search.py b/sklearn/model_selection/_search.py
+index 99d6096af..ace9ed596 100644
+--- a/sklearn/model_selection/_search.py
++++ b/sklearn/model_selection/_search.py
+@@ -12,6 +12,8 @@ from __future__ import division
+ #         Raghav RV <rvraghav93@gmail.com>
+ # License: BSD 3 clause
+ 
++import time
++
+ from abc import ABCMeta, abstractmethod
+ from collections import Mapping, namedtuple, defaultdict, Sequence, Iterable
+ from functools import partial, reduce
+@@ -766,10 +768,13 @@ class BaseSearchCV(six.with_metaclass(ABCMeta, BaseEstimator,
+         if self.refit:
+             self.best_estimator_ = clone(base_estimator).set_params(
+                 **self.best_params_)
++            # Time the refit on the best estimator
++            refit_start_time = time.time()
+             if y is not None:
+                 self.best_estimator_.fit(X, y, **fit_params)
+             else:
+                 self.best_estimator_.fit(X, **fit_params)
++            self.refit_time_ = time.time() - refit_start_time
+ 
+         # Store the only scorer not as a dict for single metric evaluation
+         self.scorer_ = scorers if self.multimetric_ else scorers['score']
+@@ -1042,6 +1047,11 @@ class GridSearchCV(BaseSearchCV):
+         on the left out data. Not available if ``refit=False``.
+ 
+         See ``refit`` parameter for more information on allowed values.
++        
++    refit_time_ : float
++        Seconds used for refitting the best model on the whole dataset.
++        
++        This is only available if ``refit=True``.
+ 
+     best_score_ : float
+         Mean cross-validated score of the best_estimator
+@@ -1353,6 +1363,11 @@ class RandomizedSearchCV(BaseSearchCV):
+         ``refit`` is specified.
+ 
+         See ``refit`` parameter for more information on allowed values.
++        
++    refit_time_ : float
++        Seconds used for refitting the best model on the whole dataset.
++        
++        This is only available if ``refit=True``.
+ 
+     best_score_ : float
+         Mean cross-validated score of the best_estimator.

@@ -1,0 +1,29 @@
+{
+  "instance_id": "pytest-dev__pytest-5227",
+  "container_id": "f20929fa473fb1df7ec28bd0e28eee51b35416d09db5d7a8c452dc38cefbab94",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5227/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-5227",
+        "passed": 24,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5227/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-5227",
+        "passed": 15,
+        "failed": 12
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5227/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-5227",
+        "passed": 0,
+        "failed": 27
+      }
+    ],
+    "top_passed": 24,
+    "top_subset_size": 1
+  },
+  "reproduction": {}
+}

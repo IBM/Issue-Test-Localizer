@@ -1,0 +1,43 @@
+{
+  "instance_id": "django__django-13660",
+  "container_id": "2afadfea22bbe768c3588cb2490d8c85347835da54e6749d69133135c9426039",
+  "regression": {
+    "results": [],
+    "top_passed": 0,
+    "top_subset_size": 0
+  },
+  "reproduction": {
+    "shell.tests.ShellCommandTestCase.test_command_with_function_definition#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "shell.tests.ShellCommandTestCase.test_command_option_with_function#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "shell.tests.ShellCommandTestCase.test_shell_command_with_function#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "shell.tests.ShellCommandTestCase.test_command_option#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "shell.tests.ShellCommandTestCase.test_command_option#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "shell.tests.ShellCommandTestCase.test_shell_command_with_function#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "reproduce_bug_new.py#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

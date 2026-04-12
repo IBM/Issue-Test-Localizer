@@ -1,0 +1,310 @@
+diff --git a/django/contrib/admin/helpers.py b/django/contrib/admin/helpers.py
+index 83719f4346..1bd27b55ad 100644
+--- a/django/contrib/admin/helpers.py
++++ b/django/contrib/admin/helpers.py
+@@ -257,17 +257,19 @@ class InlineAdminFormSet:
+                 original, readonly_fields_for_editing, model_admin=self.opts,
+                 view_on_site_url=view_on_site_url,
+             )
+-        for form in self.formset.extra_forms:
+-            yield InlineAdminForm(
+-                self.formset, form, self.fieldsets, self.prepopulated_fields,
+-                None, self.readonly_fields, model_admin=self.opts,
+-            )
+-        if self.has_add_permission:
+-            yield InlineAdminForm(
+-                self.formset, self.formset.empty_form,
+-                self.fieldsets, self.prepopulated_fields, None,
+-                self.readonly_fields, model_admin=self.opts,
+-            )
++        # Only show extra forms and empty form if user has change permission
++        if self.has_change_permission:
++            for form in self.formset.extra_forms:
++                yield InlineAdminForm(
++                    self.formset, form, self.fieldsets, self.prepopulated_fields,
++                    None, self.readonly_fields, model_admin=self.opts,
++                )
++            if self.has_add_permission:
++                yield InlineAdminForm(
++                    self.formset, self.formset.empty_form,
++                    self.fieldsets, self.prepopulated_fields, None,
++                    self.readonly_fields, model_admin=self.opts,
++                )
+ 
+     def fields(self):
+         fk = getattr(self.formset, "fk", None)
+@@ -300,15 +302,24 @@ class InlineAdminFormSet:
+ 
+     def inline_formset_data(self):
+         verbose_name = self.opts.verbose_name
++        options = {
++            'prefix': self.formset.prefix,
++        }
++        
++        # Only include addText if the user has change permission
++        # For view-only users, we don't want to show the "Add another" button
++        if self.has_change_permission:
++            options['addText'] = gettext('Add another %(verbose_name)s') % {
++                'verbose_name': capfirst(verbose_name),
++            }
++        
++        # Include deleteText only if the user has delete permission
++        if self.formset.can_delete and self.has_delete_permission:
++            options['deleteText'] = gettext('Remove')
++            
+         return json.dumps({
+             'name': '#%s' % self.formset.prefix,
+-            'options': {
+-                'prefix': self.formset.prefix,
+-                'addText': gettext('Add another %(verbose_name)s') % {
+-                    'verbose_name': capfirst(verbose_name),
+-                },
+-                'deleteText': gettext('Remove'),
+-            }
++            'options': options
+         })
+ 
+     @property
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 880a2cc17b..eb81671a4b 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1091,6 +1091,14 @@ class ModelAdmin(BaseModelAdmin):
+         """
+         Given an inline formset save it to the database.
+         """
++        # Check if this is a ManyToMany through model and the user has change permission
++        if hasattr(formset.model._meta, 'auto_created') and formset.model._meta.auto_created:
++            # Find the parent model that this M2M relates to
++            parent_model = form.instance.__class__
++            if not self.has_change_permission(request, form.instance):
++                # User doesn't have change permission on the parent model
++                return
++        
+         formset.save()
+ 
+     def save_related(self, request, form, formsets, change):
+@@ -1548,6 +1556,7 @@ class ModelAdmin(BaseModelAdmin):
+                 new_object = form.instance
+             formsets, inline_instances = self._create_formsets(request, new_object, change=not add)
+             if all_valid(formsets) and form_validated:
++                # No special handling needed here - the permissions are checked at the formset level
+                 self.save_model(request, new_object, form, not add)
+                 self.save_related(request, form, formsets, not add)
+                 change_message = self.construct_change_message(request, form, formsets, add)
+@@ -1994,7 +2003,7 @@ class InlineModelAdmin(BaseModelAdmin):
+     def media(self):
+         extra = '' if settings.DEBUG else '.min'
+         js = ['vendor/jquery/jquery%s.js' % extra, 'jquery.init.js',
+-              'inlines%s.js' % extra]
++              'inlines%s.js' % extra, 'inlines-view-only.js']
+         if self.filter_vertical or self.filter_horizontal:
+             js.extend(['SelectBox.js', 'SelectFilter2.js'])
+         if self.classes and 'collapse' in self.classes:
+@@ -2029,7 +2038,12 @@ class InlineModelAdmin(BaseModelAdmin):
+         # If exclude is an empty list we use None, since that's the actual
+         # default.
+         exclude = exclude or None
+-        can_delete = self.can_delete and self.has_delete_permission(request, obj)
++        # For view-only users, disable deletion
++        can_delete = self.can_delete and self.has_delete_permission(request, obj) and self.has_change_permission(request, obj)
++        # For view-only users, set extra=0 to prevent extra empty forms
++        has_change_perm = self.has_change_permission(request, obj)
++        extra = 0 if not has_change_perm else self.get_extra(request, obj, **kwargs)
++        
+         defaults = {
+             'form': self.form,
+             'formset': self.formset,
+@@ -2037,7 +2051,7 @@ class InlineModelAdmin(BaseModelAdmin):
+             'fields': fields,
+             'exclude': exclude,
+             'formfield_callback': partial(self.formfield_for_dbfield, request=request),
+-            'extra': self.get_extra(request, obj, **kwargs),
++            'extra': extra,
+             'min_num': self.get_min_num(request, obj, **kwargs),
+             'max_num': self.get_max_num(request, obj, **kwargs),
+             'can_delete': can_delete,
+@@ -2093,6 +2107,12 @@ class InlineModelAdmin(BaseModelAdmin):
+                     return False
+                 if not can_add and self.instance._state.adding:
+                     return False
++                # For ManyToMany through models, we need to check if the user has change permission
++                # on the parent model
++                if hasattr(self._meta.model._meta, 'auto_created') and self._meta.model._meta.auto_created:
++                    # This is a through model for a ManyToManyField
++                    if not can_change:
++                        return False
+                 return super().has_changed()
+ 
+         defaults['form'] = DeleteProtectedModelForm
+diff --git a/django/contrib/admin/templates/admin/edit_inline/stacked.html b/django/contrib/admin/templates/admin/edit_inline/stacked.html
+index 8af4d54791..e4b1229349 100644
+--- a/django/contrib/admin/templates/admin/edit_inline/stacked.html
++++ b/django/contrib/admin/templates/admin/edit_inline/stacked.html
+@@ -1,5 +1,5 @@
+ {% load i18n admin_urls static %}
+-<div class="js-inline-admin-formset inline-group"
++<div class="js-inline-admin-formset inline-group{% if not inline_admin_formset.has_change_permission %} view-only-permission{% endif %}"
+      id="{{ inline_admin_formset.formset.prefix }}-group"
+      data-inline-type="stacked"
+      data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
+@@ -8,18 +8,24 @@
+ {{ inline_admin_formset.formset.management_form }}
+ {{ inline_admin_formset.formset.non_form_errors }}
+ 
+-{% for inline_admin_form in inline_admin_formset %}<div class="inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
++{% for inline_admin_form in inline_admin_formset %}
++{% if not inline_admin_form.original and not inline_admin_formset.has_change_permission %}
++    {# Skip empty forms for view-only users #}
++{% else %}
++<div class="inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+   <h3><b>{{ inline_admin_formset.opts.verbose_name|capfirst }}:</b>&nbsp;<span class="inline_label">{% if inline_admin_form.original %}{{ inline_admin_form.original }}{% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %} <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">{% if inline_admin_formset.has_change_permission %}{% trans "Change" %}{% else %}{% trans "View" %}{% endif %}</a>{% endif %}
+ {% else %}#{{ forloop.counter }}{% endif %}</span>
+       {% if inline_admin_form.show_url %}<a href="{{ inline_admin_form.absolute_url }}">{% trans "View on site" %}</a>{% endif %}
+-    {% if inline_admin_formset.formset.can_delete and inline_admin_form.original %}<span class="delete">{{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}</span>{% endif %}
++    {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission and inline_admin_form.original %}<span class="delete">{{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}</span>{% endif %}
+   </h3>
+   {% if inline_admin_form.form.non_field_errors %}{{ inline_admin_form.form.non_field_errors }}{% endif %}
+   {% for fieldset in inline_admin_form %}
+-    {% include "admin/includes/fieldset.html" %}
++    {% include "admin/includes/fieldset.html" with has_change_permission=inline_admin_formset.has_change_permission %}
+   {% endfor %}
+   {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
+   {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
+-</div>{% endfor %}
++</div>
++{% endif %}
++{% endfor %}
+ </fieldset>
+ </div>
+diff --git a/django/contrib/admin/templates/admin/edit_inline/tabular.html b/django/contrib/admin/templates/admin/edit_inline/tabular.html
+index 531d7b6a21..7f395571e8 100644
+--- a/django/contrib/admin/templates/admin/edit_inline/tabular.html
++++ b/django/contrib/admin/templates/admin/edit_inline/tabular.html
+@@ -1,5 +1,5 @@
+ {% load i18n admin_urls static admin_modify %}
+-<div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group"
++<div class="js-inline-admin-formset inline-group{% if not inline_admin_formset.has_change_permission %} view-only-permission{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-group"
+      data-inline-type="tabular"
+      data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
+   <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
+@@ -17,16 +17,19 @@
+          </th>
+        {% endif %}
+      {% endfor %}
+-     {% if inline_admin_formset.formset.can_delete %}<th>{% trans "Delete?" %}</th>{% endif %}
++     {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}<th>{% trans "Delete?" %}</th>{% elif inline_admin_formset.formset.can_delete %}<th></th>{% endif %}
+      </tr></thead>
+ 
+      <tbody>
+      {% for inline_admin_form in inline_admin_formset %}
+-        {% if inline_admin_form.form.non_field_errors %}
+-        <tr><td colspan="{{ inline_admin_form|cell_count }}">{{ inline_admin_form.form.non_field_errors }}</td></tr>
+-        {% endif %}
+-        <tr class="form-row {% cycle "row1" "row2" %} {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}"
+-             id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
++        {% if not inline_admin_form.original and not inline_admin_formset.has_change_permission %}
++            {# Skip empty forms for view-only users #}
++        {% else %}
++            {% if inline_admin_form.form.non_field_errors %}
++            <tr><td colspan="{{ inline_admin_form|cell_count }}">{{ inline_admin_form.form.non_field_errors }}</td></tr>
++            {% endif %}
++            <tr class="form-row {% cycle "row1" "row2" %} {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}"
++                 id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+         <td class="original">
+           {% if inline_admin_form.original or inline_admin_form.show_url %}<p>
+           {% if inline_admin_form.original %}
+@@ -52,8 +55,8 @@
+             {% for field in line %}
+               {% if field.is_readonly or not field.field.is_hidden %}
+               <td{% if field.field.name %} class="field-{{ field.field.name }}"{% endif %}>
+-              {% if field.is_readonly %}
+-                  <p>{{ field.contents }}</p>
++              {% if field.is_readonly or not inline_admin_formset.has_change_permission %}
++                  <p>{% if field.contents %}{{ field.contents }}{% elif field.field.value %}{{ field.field.value }}{% else %}&nbsp;{% endif %}</p>
+               {% else %}
+                   {{ field.field.errors.as_ul }}
+                   {{ field.field }}
+@@ -64,9 +67,14 @@
+           {% endfor %}
+         {% endfor %}
+         {% if inline_admin_formset.formset.can_delete %}
+-          <td class="delete">{% if inline_admin_form.original %}{{ inline_admin_form.deletion_field.field }}{% endif %}</td>
++          <td class="delete">
++            {% if inline_admin_form.original and inline_admin_formset.has_delete_permission and inline_admin_formset.has_change_permission %}
++              {{ inline_admin_form.deletion_field.field }}
++            {% endif %}
++          </td>
+         {% endif %}
+         </tr>
++        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+diff --git a/django/contrib/admin/templates/admin/includes/fieldset.html b/django/contrib/admin/templates/admin/includes/fieldset.html
+index 218fd5a4c1..935178a492 100644
+--- a/django/contrib/admin/templates/admin/includes/fieldset.html
++++ b/django/contrib/admin/templates/admin/includes/fieldset.html
+@@ -13,8 +13,8 @@
+                         {{ field.field }}{{ field.label_tag }}
+                     {% else %}
+                         {{ field.label_tag }}
+-                        {% if field.is_readonly %}
+-                            <div class="readonly">{{ field.contents }}</div>
++                        {% if field.is_readonly or not has_change_permission %}
++                            <div class="readonly">{% if field.contents %}{{ field.contents }}{% elif field.field.value %}{{ field.field.value }}{% else %}&nbsp;{% endif %}</div>
+                         {% else %}
+                             {{ field.field }}
+                         {% endif %}
+diff --git a/django/contrib/admin/utils.py b/django/contrib/admin/utils.py
+index dd6b108ff3..1cb6e623ee 100644
+--- a/django/contrib/admin/utils.py
++++ b/django/contrib/admin/utils.py
+@@ -498,26 +498,30 @@ def construct_change_message(form, formsets, add):
+     if formsets:
+         with translation_override(None):
+             for formset in formsets:
+-                for added_object in formset.new_objects:
+-                    change_message.append({
+-                        'added': {
+-                            'name': str(added_object._meta.verbose_name),
+-                            'object': str(added_object),
+-                        }
+-                    })
+-                for changed_object, changed_fields in formset.changed_objects:
+-                    change_message.append({
+-                        'changed': {
++                # Some formsets may not have these attributes (e.g. ManyToMany through formsets)
++                if hasattr(formset, 'new_objects'):
++                    for added_object in formset.new_objects:
++                        change_message.append({
++                            'added': {
++                                'name': str(added_object._meta.verbose_name),
++                                'object': str(added_object),
++                            }
++                        })
++                if hasattr(formset, 'changed_objects'):
++                    for changed_object, changed_fields in formset.changed_objects:
++                        change_message.append({
++                            'changed': {
+                             'name': str(changed_object._meta.verbose_name),
+                             'object': str(changed_object),
+                             'fields': changed_fields,
+                         }
+                     })
+-                for deleted_object in formset.deleted_objects:
+-                    change_message.append({
+-                        'deleted': {
+-                            'name': str(deleted_object._meta.verbose_name),
+-                            'object': str(deleted_object),
+-                        }
+-                    })
++                if hasattr(formset, 'deleted_objects'):
++                    for deleted_object in formset.deleted_objects:
++                        change_message.append({
++                            'deleted': {
++                                'name': str(deleted_object._meta.verbose_name),
++                                'object': str(deleted_object),
++                            }
++                        })
+     return change_message

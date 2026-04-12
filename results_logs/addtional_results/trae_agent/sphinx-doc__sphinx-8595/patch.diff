@@ -1,0 +1,66 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index d85d79617..80dc3c241 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -1074,11 +1074,12 @@ class ModuleDocumenter(Documenter):
+     def get_object_members(self, want_all: bool) -> Tuple[bool, ObjectMembers]:
+         members = self.get_module_members()
+         if want_all:
+-            if not self.__all__:
++            if self.__all__ is None:
+                 # for implicit module members, check __module__ to avoid
+                 # documenting imported objects
+                 return True, list(members.values())
+             else:
++                # When __all__ is defined (even if empty), only document members in __all__
+                 for member in members.values():
+                     if member.__name__ not in self.__all__:
+                         member.skipped = True
+diff --git a/tests/test_ext_autodoc.py b/tests/test_ext_autodoc.py
+index 39897eb7d..7050a165f 100644
+--- a/tests/test_ext_autodoc.py
++++ b/tests/test_ext_autodoc.py
+@@ -2281,3 +2281,43 @@ def test_hide_value(app):
+         '   :meta hide-value:',
+         '',
+     ]
++
++
++def test_empty_all_handling():
++    """Test that an empty __all__ results in all members being skipped."""
++    options = {"members": ALL}
++    app = Mock()
++    env = Mock()
++    env.config = Mock(autodoc_mock_imports=[],
++                       autodoc_warningiserror=False)
++    env.app = app
++    
++    directive = DocumenterBridge(env, LoggingReporter(''), options, 0, 1)
++    
++    # Create a mock module with empty __all__
++    mock_module = Mock()
++    mock_module.__all__ = []
++    mock_module.__name__ = "mock_module"
++    
++    # Create the documenter
++    documenter = ModuleLevelDocumenter(directive, "mock_module")
++    documenter.object = mock_module
++    documenter.__all__ = []
++    
++    # Mock get_module_members to return some test members
++    def mock_get_module_members():
++        from sphinx.ext.autodoc import ObjectMember
++        return {
++            'foo': ObjectMember('foo', lambda: None),
++            'bar': ObjectMember('bar', lambda: None),
++            'baz': ObjectMember('baz', lambda: None),
++        }
++    
++    documenter.get_module_members = mock_get_module_members
++    
++    # Call get_object_members with want_all=True (as :members: would do)
++    _, members = documenter.get_object_members(True)
++    
++    # Check that all members are marked as skipped
++    for member in members:
++        assert member.skipped, f"Member {member.__name__} should be skipped with empty __all__"

@@ -1,0 +1,47 @@
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index b0df8749..28fd22a3 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -1961,7 +1961,13 @@ class DataArray(AbstractArray, DataWithCoords):
+         # pull variables out of datarray
+         data_dict = {}
+         for k in variables:
+-            data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
++            # For single-dimension variables, the MultiIndex may only have one level
++            # (the variable level). In this case, we need to handle it differently.
++            if idx.nlevels == 1:
++                # Drop the stacked coordinate to avoid conflicts when creating the dataset
++                data_dict[k] = self.sel({variable_dim: k}).drop(dim)
++            else:
++                data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
+ 
+         # unstacked dataset
+         return Dataset(data_dict)
+diff --git a/xarray/tests/test_dataset.py b/xarray/tests/test_dataset.py
+index 9c8d4072..63dc6bde 100644
+--- a/xarray/tests/test_dataset.py
++++ b/xarray/tests/test_dataset.py
+@@ -3054,6 +3054,23 @@ class TestDataset:
+         y = D.to_stacked_array("features", sample_dims)
+         x = y.to_unstacked_dataset("features")
+         assert_identical(D, x)
++        
++    def test_to_stacked_array_to_unstacked_dataset_single_dim(self):
++        # test when variables have only a single dimension
++        x = DataArray(np.arange(3), coords=[("x", [0, 1, 2])])
++        D = xr.Dataset({"a": x, "b": x})
++        
++        sample_dims = ["x"]
++        y = D.to_stacked_array("features", sample_dims)
++        
++        # Check that the stacked array has the expected structure
++        assert y.dims == ("x", "features")
++        assert isinstance(y.indexes["features"], pd.MultiIndex)
++        assert y.indexes["features"].names == ["variable"]
++        
++        # Test the roundtrip
++        x = y.to_unstacked_dataset("features")
++        assert_identical(D, x)
+ 
+     def test_update(self):
+         data = create_test_data(seed=0)

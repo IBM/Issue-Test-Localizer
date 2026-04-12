@@ -1,0 +1,150 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14087",
+  "container_id": "2680dd2f80a6b5ae1059aa147252096259bb4ffb5f672741513129cbcaf191db",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_1.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_11.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_3.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_5.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_6.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_10.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_2.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_4.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_7.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_8.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_9.jsonl",
+        "inst": "scikit-learn__scikit-learn-14087",
+        "passed": 12,
+        "failed": 1
+      }
+    ],
+    "top_passed": 13,
+    "top_subset_size": 5
+  },
+  "reproduction": {
+    "sklearn/linear_model/tests/test_logistic.py::test_LogisticRegressionCV_GridSearchCV_elastic_net_ovr#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_logistic.py::test_logistic_cv#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_logistic.py::test_LogisticRegressionCV_no_refit#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_logistic.py::test_LogisticRegressionCV_no_refit#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/linear_model/tests/test_logistic.py::test_LogisticRegressionCV_GridSearchCV_elastic_net_ovr#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-14087",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_11.jsonl",
+          "inst": "scikit-learn__scikit-learn-14087",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_3.jsonl",
+          "inst": "scikit-learn__scikit-learn-14087",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_5.jsonl",
+          "inst": "scikit-learn__scikit-learn-14087",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14087/dedup_patch_6.jsonl",
+          "inst": "scikit-learn__scikit-learn-14087",
+          "passed": false
+        }
+      ]
+    },
+    "sklearn/linear_model/tests/test_logistic.py::test_LogisticRegressionCV_no_refit#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

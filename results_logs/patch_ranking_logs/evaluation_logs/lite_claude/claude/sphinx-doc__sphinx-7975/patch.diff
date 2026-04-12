@@ -1,0 +1,26 @@
+diff --git a/sphinx/builders/html/__init__.py b/sphinx/builders/html/__init__.py
+index c052c27..5e2deba 100644
+--- a/sphinx/builders/html/__init__.py
++++ b/sphinx/builders/html/__init__.py
+@@ -659,6 +659,21 @@ class StandaloneHTMLBuilder(Builder):
+         # the total count of lines for each index letter, used to distribute
+         # the entries into two columns
+         genindex = IndexEntries(self.env).create_index(self)
++        
++        # Consolidate all symbol entries into a single section
++        consolidated = []
++        symbols_entries = []
++        
++        for key, entries in genindex:
++            if not key.isalpha():  # Symbol section
++                symbols_entries.extend(entries)
++            else:
++                consolidated.append((key, entries))
++                
++        if symbols_entries:
++            consolidated.insert(0, ('Symbols', symbols_entries))
++            
++        genindex = consolidated
+         indexcounts = []
+         for _k, entries in genindex:
+             indexcounts.append(sum(1 + len(subitems)

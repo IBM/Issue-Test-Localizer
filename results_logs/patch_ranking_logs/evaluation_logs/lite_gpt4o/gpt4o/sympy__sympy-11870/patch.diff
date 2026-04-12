@@ -1,0 +1,14 @@
+diff --git a/sympy/simplify/trigsimp.py b/sympy/simplify/trigsimp.py
+index bd243c1..97c638d 100644
+--- a/sympy/simplify/trigsimp.py
++++ b/sympy/simplify/trigsimp.py
+@@ -510,7 +510,8 @@ def trigsimp(expr, **opts):
+         'old': lambda x: trigsimp_old(x, **opts),
+                    }[method]
+ 
+-    return trigsimpfunc(expr)
++    simplified_expr = trigsimpfunc(expr)
++    return exptrigsimp(simplified_expr)
+ 
+ 
+ def exptrigsimp(expr):

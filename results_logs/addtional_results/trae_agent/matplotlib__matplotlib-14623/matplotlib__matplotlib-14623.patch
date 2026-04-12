@@ -1,0 +1,25 @@
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index da2dea6f5..88f802201 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -3644,10 +3644,18 @@ class _AxesBase(martist.Artist):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        # Store whether the user requested an inverted axis
++        requested_inversion = bottom > top
++        
+         bottom, top = self.yaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.yaxis.limit_range_for_scale(bottom, top)
+-
+-        self.viewLim.intervaly = (bottom, top)
++        
++        # If the user requested an inverted axis, make sure we maintain that
++        if requested_inversion and self.get_yscale() == 'log':
++            # For log scale with inversion, we need to swap the values
++            self.viewLim.intervaly = (top, bottom)
++        else:
++            self.viewLim.intervaly = (bottom, top)
+         if auto is not None:
+             self._autoscaleYon = bool(auto)
+ 

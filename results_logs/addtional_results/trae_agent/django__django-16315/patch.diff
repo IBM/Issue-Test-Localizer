@@ -1,0 +1,81 @@
+diff --git a/django/db/backends/base/operations.py b/django/db/backends/base/operations.py
+index 407681a418..fa6ae24cb6 100644
+--- a/django/db/backends/base/operations.py
++++ b/django/db/backends/base/operations.py
+@@ -769,6 +769,28 @@ class BaseDatabaseOperations:
+ 
+     def insert_statement(self, on_conflict=None):
+         return "INSERT INTO"
++        
++    def _get_field_column_mappings(self, fields, field_names):
++        """
++        Map field names to their actual column names.
++        Used by on_conflict_suffix_sql() to handle db_column correctly.
++        """
++        if not fields or not field_names:
++            return field_names
++            
++        meta = fields[0].model._meta if fields else None
++        if not meta:
++            return field_names
++            
++        columns = []
++        for field_name in field_names:
++            try:
++                field = meta.get_field(field_name)
++                columns.append(field.column)
++            except Exception:
++                columns.append(field_name)
++                
++        return columns
+ 
+     def on_conflict_suffix_sql(self, fields, on_conflict, update_fields, unique_fields):
+         return ""
+diff --git a/django/db/backends/postgresql/operations.py b/django/db/backends/postgresql/operations.py
+index 62273fc43c..342f527b2a 100644
+--- a/django/db/backends/postgresql/operations.py
++++ b/django/db/backends/postgresql/operations.py
+@@ -353,12 +353,16 @@ class DatabaseOperations(BaseDatabaseOperations):
+         if on_conflict == OnConflict.IGNORE:
+             return "ON CONFLICT DO NOTHING"
+         if on_conflict == OnConflict.UPDATE:
++            # Map field names to their actual column names
++            unique_columns = self._get_field_column_mappings(fields, unique_fields)
++            update_columns = self._get_field_column_mappings(fields, update_fields)
++            
+             return "ON CONFLICT(%s) DO UPDATE SET %s" % (
+-                ", ".join(map(self.quote_name, unique_fields)),
++                ", ".join(map(self.quote_name, unique_columns)),
+                 ", ".join(
+                     [
+-                        f"{field} = EXCLUDED.{field}"
+-                        for field in map(self.quote_name, update_fields)
++                        f"{self.quote_name(field)} = EXCLUDED.{self.quote_name(field)}"
++                        for field in update_columns
+                     ]
+                 ),
+             )
+diff --git a/django/db/backends/sqlite3/operations.py b/django/db/backends/sqlite3/operations.py
+index bb84d52071..0611aa1625 100644
+--- a/django/db/backends/sqlite3/operations.py
++++ b/django/db/backends/sqlite3/operations.py
+@@ -417,12 +417,16 @@ class DatabaseOperations(BaseDatabaseOperations):
+             on_conflict == OnConflict.UPDATE
+             and self.connection.features.supports_update_conflicts_with_target
+         ):
++            # Map field names to their actual column names
++            unique_columns = self._get_field_column_mappings(fields, unique_fields)
++            update_columns = self._get_field_column_mappings(fields, update_fields)
++            
+             return "ON CONFLICT(%s) DO UPDATE SET %s" % (
+-                ", ".join(map(self.quote_name, unique_fields)),
++                ", ".join(map(self.quote_name, unique_columns)),
+                 ", ".join(
+                     [
+-                        f"{field} = EXCLUDED.{field}"
+-                        for field in map(self.quote_name, update_fields)
++                        f"{self.quote_name(field)} = EXCLUDED.{self.quote_name(field)}"
++                        for field in update_columns
+                     ]
+                 ),
+             )

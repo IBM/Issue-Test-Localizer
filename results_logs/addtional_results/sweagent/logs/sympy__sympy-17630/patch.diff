@@ -1,0 +1,98 @@
+diff --git a/sympy/matrices/expressions/blockmatrix.py b/sympy/matrices/expressions/blockmatrix.py
+index 95302a05ca..c37b9c1e93 100644
+--- a/sympy/matrices/expressions/blockmatrix.py
++++ b/sympy/matrices/expressions/blockmatrix.py
+@@ -148,11 +148,53 @@ def blocks(self):
+ 
+     @property
+     def rowblocksizes(self):
+-        return [self.blocks[i, 0].rows for i in range(self.blockshape[0])]
++        return [self._get_block_rows(i, 0) for i in range(self.blockshape[0])]
+ 
+     @property
+     def colblocksizes(self):
+-        return [self.blocks[0, i].cols for i in range(self.blockshape[1])]
++        return [self._get_block_cols(0, i) for i in range(self.blockshape[1])]
++    
++    def _get_block_rows(self, i, j):
++        """Get the number of rows for block at position (i, j).
++        
++        If the block is a Zero object, infer the dimensions from other blocks
++        in the same row.
++        """
++        block = self.blocks[i, j]
++        if hasattr(block, 'rows'):
++            return block.rows
++        
++        # If block is Zero, find another block in the same row that has rows attribute
++        for k in range(self.blockshape[1]):
++            if k != j:
++                other_block = self.blocks[i, k]
++                if hasattr(other_block, 'rows'):
++                    return other_block.rows
++        
++        # If no other block found, this shouldn't happen in a valid BlockMatrix
++        # but let's handle it gracefully
++        raise AttributeError("Cannot determine row size for block at ({}, {})".format(i, j))
++    
++    def _get_block_cols(self, i, j):
++        """Get the number of columns for block at position (i, j).
++        
++        If the block is a Zero object, infer the dimensions from other blocks
++        in the same column.
++        """
++        block = self.blocks[i, j]
++        if hasattr(block, 'cols'):
++            return block.cols
++        
++        # If block is Zero, find another block in the same column that has cols attribute
++        for k in range(self.blockshape[0]):
++            if k != i:
++                other_block = self.blocks[k, j]
++                if hasattr(other_block, 'cols'):
++                    return other_block.cols
++        
++        # If no other block found, this shouldn't happen in a valid BlockMatrix
++        # but let's handle it gracefully
++        raise AttributeError("Cannot determine column size for block at ({}, {})".format(i, j))
+ 
+     def structurally_equal(self, other):
+         return (isinstance(other, BlockMatrix)
+@@ -164,9 +206,36 @@ def structurally_equal(self, other):
+     def _blockmul(self, other):
+         if (isinstance(other, BlockMatrix) and
+                 self.colblocksizes == other.rowblocksizes):
+-            return BlockMatrix(self.blocks*other.blocks)
++            result_blocks = self.blocks*other.blocks
++            # Convert Zero objects back to ZeroMatrix objects with proper dimensions
++            result_blocks = self._fix_zero_blocks(result_blocks, other)
++            return BlockMatrix(result_blocks)
+ 
+         return self * other
++    
++    def _fix_zero_blocks(self, result_blocks, other):
++        """Convert Zero objects in result_blocks back to ZeroMatrix objects with proper dimensions."""
++        from sympy.core.numbers import Zero
++        from sympy.matrices import Matrix
++        
++        # Create a new matrix with fixed blocks
++        fixed_blocks = []
++        for i in range(result_blocks.rows):
++            row = []
++            for j in range(result_blocks.cols):
++                block = result_blocks[i, j]
++                if isinstance(block, Zero):
++                    # Determine the dimensions for this zero block
++                    # Row dimension comes from self's i-th row block
++                    # Column dimension comes from other's j-th column block
++                    row_size = self.rowblocksizes[i]
++                    col_size = other.colblocksizes[j]
++                    row.append(ZeroMatrix(row_size, col_size))
++                else:
++                    row.append(block)
++            fixed_blocks.append(row)
++        
++        return Matrix(fixed_blocks)
+ 
+     def _blockadd(self, other):
+         if (isinstance(other, BlockMatrix)

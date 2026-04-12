@@ -1,0 +1,41 @@
+diff --git a/django/db/migrations/operations/fields.py b/django/db/migrations/operations/fields.py
+index cd3aab43ad..e2682aeac0 100644
+--- a/django/db/migrations/operations/fields.py
++++ b/django/db/migrations/operations/fields.py
+@@ -264,6 +264,10 @@ class AlterField(FieldOperation):
+                     field=self.field,
+                 ),
+             ]
++        elif isinstance(operation, AlterField) and self.is_same_field_operation(
++            operation
++        ):
++            return [operation]
+         return super().reduce(operation, app_label)
+ 
+ 
+diff --git a/tests/migrations/test_optimizer.py b/tests/migrations/test_optimizer.py
+index 6485009eb4..f10d854953 100644
+--- a/tests/migrations/test_optimizer.py
++++ b/tests/migrations/test_optimizer.py
+@@ -821,6 +821,21 @@ class OptimizerTests(SimpleTestCase):
+                 migrations.RemoveField("Foo", "age"),
+             ],
+         )
++        
++    def test_multiple_alter_field(self):
++        """
++        Multiple AlterField should optimize to the last one.
++        """
++        self.assertOptimizesTo(
++            [
++                migrations.AlterField("Foo", "name", models.CharField(max_length=255)),
++                migrations.AlterField("Foo", "name", models.CharField(max_length=225)),
++                migrations.AlterField("Foo", "name", models.CharField(max_length=225, null=True)),
++            ],
++            [
++                migrations.AlterField("Foo", "name", models.CharField(max_length=225, null=True)),
++            ],
++        )
+ 
+     def _test_create_alter_foo_field(self, alter):
+         """

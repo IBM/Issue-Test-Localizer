@@ -1,0 +1,66 @@
+{
+  "instance_id": "django__django-13658",
+  "container_id": "ccc875289021e261ceb2429646a7433d1e3619160abd4491fa4278a45cf3ba42",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13658/dedup_patch_0.jsonl",
+        "inst": "django__django-13658",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "user_commands.tests.DeprecationTests.test_prog_name_in_command_parser#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13658/dedup_patch_0.jsonl",
+          "inst": "django__django-13658",
+          "passed": false
+        }
+      ]
+    },
+    "user_commands.tests.CommandTests.test_management_utility_custom_argv#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13658/dedup_patch_0.jsonl",
+          "inst": "django__django-13658",
+          "passed": false
+        }
+      ]
+    },
+    "user_commands.tests.CommandRunTests.test_custom_argv_prog_name#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "user_commands.tests.CommandRunTests.test_custom_argv_prog_name#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13658/dedup_patch_0.jsonl",
+          "inst": "django__django-13658",
+          "passed": false
+        }
+      ]
+    },
+    "user_commands.tests.CommandTests.test_management_utility_custom_argv_prog_name#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13658/dedup_patch_0.jsonl",
+          "inst": "django__django-13658",
+          "passed": false
+        }
+      ]
+    },
+    "user_commands.tests.CommandTests.test_custom_argv_prog_name#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

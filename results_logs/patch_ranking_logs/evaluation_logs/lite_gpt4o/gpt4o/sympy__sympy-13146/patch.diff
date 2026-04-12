@@ -1,0 +1,13 @@
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index 1ed5a09..9a2e65a 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -580,7 +580,7 @@ def simplify(expr, ratio=1.7, measure=count_ops, fu=False):
+     if expr.has(Product):
+         expr = product_simplify(expr)
+ 
+-    short = shorter(powsimp(expr, combine='exp', deep=True), powsimp(expr), expr)
++    short = shorter(powsimp(expr, combine='exp', deep=True, force=True), powsimp(expr, force=True), expr)
+     short = shorter(short, factor_terms(short), expand_power_exp(expand_mul(short)))
+     if short.has(TrigonometricFunction, HyperbolicFunction, ExpBase):
+         short = exptrigsimp(short, simplify=False)

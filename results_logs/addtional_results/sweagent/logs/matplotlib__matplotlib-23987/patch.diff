@@ -1,0 +1,26 @@
+diff --git a/lib/matplotlib/figure.py b/lib/matplotlib/figure.py
+index 5bbb786984..014cef6919 100644
+--- a/lib/matplotlib/figure.py
++++ b/lib/matplotlib/figure.py
+@@ -2422,13 +2422,15 @@ class Figure(FigureBase):
+                     "The Figure parameters 'tight_layout' and "
+                     "'constrained_layout' cannot be used together. Please use "
+                     "'layout' parameter")
+-            self.set_layout_engine(layout='tight')
+-            if isinstance(tight_layout, dict):
+-                self.get_layout_engine().set(**tight_layout)
++            if tight_layout:
++                self.set_layout_engine(layout='tight')
++                if isinstance(tight_layout, dict):
++                    self.get_layout_engine().set(**tight_layout)
+         elif constrained_layout is not None:
+-            self.set_layout_engine(layout='constrained')
+-            if isinstance(constrained_layout, dict):
+-                self.get_layout_engine().set(**constrained_layout)
++            if constrained_layout:
++                self.set_layout_engine(layout='constrained')
++                if isinstance(constrained_layout, dict):
++                    self.get_layout_engine().set(**constrained_layout)
+         else:
+             # everything is None, so use default:
+             self.set_layout_engine(layout=layout)

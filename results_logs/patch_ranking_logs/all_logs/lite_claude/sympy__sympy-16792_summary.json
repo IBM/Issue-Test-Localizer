@@ -1,0 +1,84 @@
+{
+  "instance_id": "sympy__sympy-16792",
+  "container_id": "df0aac37bbaa72efcf20f2f56f0ffea821a0e0e00704e41b77e8f935067827d5",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_5.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_6.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-16792/dedup_patch_7.jsonl",
+        "inst": "sympy__sympy-16792",
+        "passed": 13,
+        "failed": 0
+      }
+    ],
+    "top_passed": 13,
+    "top_subset_size": 8
+  },
+  "reproduction": {
+    "sympy/utilities/tests/test_autowrap.py::test_autowrap_args#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/utilities/tests/test_autowrap.py::test_binary_function#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/utilities/tests/test_autowrap.py::test_autowrap_args#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/utilities/tests/test_autowrap.py::test_autowrap_args#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/utilities/tests/test_autowrap.py::test_autowrap_args#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/utilities/tests/test_autowrap.py::test_binary_function#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

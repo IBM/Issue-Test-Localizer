@@ -1,0 +1,27 @@
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index e10a5bb6d9..e0f33bfa6e 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -228,7 +228,9 @@ class FileField(Field):
+         self._primary_key_set_explicitly = 'primary_key' in kwargs
+ 
+         self.storage = storage or default_storage
++        # Keep the original callable storage for deconstruction
+         if callable(self.storage):
++            self._original_storage = self.storage
+             self.storage = self.storage()
+             if not isinstance(self.storage, Storage):
+                 raise TypeError(
+@@ -279,7 +281,11 @@ class FileField(Field):
+             del kwargs["max_length"]
+         kwargs['upload_to'] = self.upload_to
+         if self.storage is not default_storage:
+-            kwargs['storage'] = self.storage
++            # Use the original callable storage if it exists
++            if hasattr(self, '_original_storage'):
++                kwargs['storage'] = self._original_storage
++            else:
++                kwargs['storage'] = self.storage
+         return name, path, args, kwargs
+ 
+     def get_internal_type(self):

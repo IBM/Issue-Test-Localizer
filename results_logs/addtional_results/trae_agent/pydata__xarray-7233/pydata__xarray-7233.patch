@@ -1,0 +1,41 @@
+diff --git a/xarray/core/rolling.py b/xarray/core/rolling.py
+index c194ec08..4a6c8567 100644
+--- a/xarray/core/rolling.py
++++ b/xarray/core/rolling.py
+@@ -973,7 +973,8 @@ class Coarsen(CoarsenArithmetic, Generic[T_Xarray]):
+             else:
+                 reshaped[key] = var
+ 
+-        should_be_coords = set(window_dim) & set(self.obj.coords)
++        # Keep all original coordinates as coordinates, not just the ones being coarsened
++        should_be_coords = set(self.obj.coords)
+         result = reshaped.set_coords(should_be_coords)
+         if isinstance(self.obj, DataArray):
+             return self.obj._from_temp_dataset(result)
+diff --git a/xarray/tests/test_coarsen.py b/xarray/tests/test_coarsen.py
+index d4449985..fadd011c 100644
+--- a/xarray/tests/test_coarsen.py
++++ b/xarray/tests/test_coarsen.py
+@@ -318,3 +318,22 @@ def test_coarsen_construct(dask: bool) -> None:
+ 
+     with pytest.raises(ValueError):
+         ds.coarsen(time=12).construct(time=("bar",))
++
++
++def test_coarsen_construct_non_dim_coords() -> None:
++    """Test that non-dimensional coordinates remain coordinates after coarsening."""
++    # Create a dataset with a non-dimensional coordinate
++    da = xr.DataArray(np.arange(24), dims=["time"])
++    da = da.assign_coords(day=365 * da)
++    ds = da.to_dataset(name="T")
++    
++    # Apply coarsen.construct
++    result = ds.coarsen(time=12).construct(time=("year", "month"))
++    
++    # Check that 'day' is still a coordinate
++    assert "day" in result.coords
++    assert "day" not in result.data_vars
++    
++    # Check the shape of the coordinate
++    assert result.day.dims == ("year", "month")
++    assert result.day.shape == (2, 12)

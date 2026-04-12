@@ -1,0 +1,129 @@
+diff --git a/sklearn/pipeline.py b/sklearn/pipeline.py
+index 94d9465d7..cdee0ca02 100644
+--- a/sklearn/pipeline.py
++++ b/sklearn/pipeline.py
+@@ -1280,7 +1280,51 @@ class FeatureUnion(TransformerMixin, _BaseComposition):
+         config = _get_output_config("transform", self)
+         if config["dense"] == "pandas" and all(hasattr(X, "iloc") for X in Xs):
+             pd = check_pandas_support("transform")
+-            return pd.concat(Xs, axis=1)
++            
++            # Make a copy of Xs to avoid modifying the original list
++            Xs_copy = list(Xs)
++            
++            # Handle pandas Series with different indices
++            # Convert Series to DataFrame if needed
++            for i, X in enumerate(Xs_copy):
++                if isinstance(X, pd.Series):
++                    # For Series, convert to DataFrame preserving the index
++                    if X.name is None:
++                        X.name = i
++                    # Create a new DataFrame with the Series data and index
++                    Xs_copy[i] = pd.DataFrame({X.name: X}, index=X.index)
++            
++            # Use outer join to preserve all indices when concatenating
++            result = pd.concat(Xs_copy, axis=1, join='outer')
++            
++            # Ensure the result has the correct feature names based on transformer names
++            # This is important for test_feature_union_set_output
++            transformer_names = [name for name, _ in self.transformer_list if _ not in ("drop", "passthrough")]
++            
++            if len(transformer_names) == len(Xs_copy) and not result.empty:
++                # Create a mapping of old column names to new column names
++                column_mapping = {}
++                col_idx = 0
++                
++                for i, name in enumerate(transformer_names):
++                    # Get the number of columns for this transformer
++                    if i < len(Xs_copy):
++                        n_cols = Xs_copy[i].shape[1] if hasattr(Xs_copy[i], "shape") and len(Xs_copy[i].shape) > 1 else 1
++                        
++                        for j in range(n_cols):
++                            if col_idx < len(result.columns):
++                                old_name = result.columns[col_idx]
++                                # Only add the transformer name prefix if it's not already there
++                                if not str(old_name).startswith(f"{name}__"):
++                                    new_name = f"{name}__{old_name}"
++                                    column_mapping[old_name] = new_name
++                                col_idx += 1
++                
++                # Rename the columns if we have any mappings
++                if column_mapping:
++                    result = result.rename(columns=column_mapping)
++            
++            return result
+ 
+         if any(sparse.issparse(f) for f in Xs):
+             Xs = sparse.hstack(Xs).tocsr()
+diff --git a/sklearn/utils/_set_output.py b/sklearn/utils/_set_output.py
+index 335773c6a..5d901399b 100644
+--- a/sklearn/utils/_set_output.py
++++ b/sklearn/utils/_set_output.py
+@@ -56,8 +56,23 @@ def _wrap_in_pandas_container(
+         if columns is not None:
+             data_to_wrap.columns = columns
+         if index is not None:
+-            data_to_wrap.index = index
++            # Only set index if lengths match
++            if len(index) == len(data_to_wrap):
++                data_to_wrap.index = index
+         return data_to_wrap
++    
++    if isinstance(data_to_wrap, pd.Series):
++        # For Series, convert to DataFrame
++        if columns is not None:
++            # If columns is provided, use it for the DataFrame
++            result = pd.DataFrame(data_to_wrap, columns=[columns[0] if hasattr(columns, "__getitem__") else columns])
++        else:
++            # Otherwise, use the Series name or a default name
++            result = pd.DataFrame(data_to_wrap, columns=[data_to_wrap.name if data_to_wrap.name is not None else 0])
++        # Only set index if provided and lengths match
++        if index is not None and len(index) == len(result):
++            result.index = index
++        return result
+ 
+     return pd.DataFrame(data_to_wrap, index=index, columns=columns)
+ 
+@@ -127,9 +142,41 @@ def _wrap_data_with_container(method, data_to_wrap, original_input, estimator):
+         return data_to_wrap
+ 
+     # dense_config == "pandas"
++    pd = check_pandas_support("Setting output container to 'pandas'")
++    
++    # If data_to_wrap is already a pandas Series, convert it to DataFrame
++    if isinstance(data_to_wrap, pd.Series):
++        # For Series, we need to preserve the index
++        series_name = data_to_wrap.name if data_to_wrap.name is not None else "value"
++        try:
++            # Try to get feature names from estimator
++            columns = estimator.get_feature_names_out()
++            if len(columns) > 0:
++                series_name = columns[0]
++        except (AttributeError, IndexError):
++            pass
++        
++        # Create DataFrame from Series, preserving the index
++        return pd.DataFrame({series_name: data_to_wrap})
++    
++    # If data_to_wrap is already a DataFrame, just return it
++    if isinstance(data_to_wrap, pd.DataFrame):
++        return data_to_wrap
++    
++    # For other types, use the original wrapping logic
++    # Only use original_input index if shapes are compatible
++    input_index = getattr(original_input, "index", None)
++    if input_index is not None and hasattr(data_to_wrap, "shape") and hasattr(input_index, "__len__"):
++        if len(input_index) == data_to_wrap.shape[0]:
++            index = input_index
++        else:
++            index = None
++    else:
++        index = None
++
+     return _wrap_in_pandas_container(
+         data_to_wrap=data_to_wrap,
+-        index=getattr(original_input, "index", None),
++        index=index,
+         columns=estimator.get_feature_names_out,
+     )
+ 

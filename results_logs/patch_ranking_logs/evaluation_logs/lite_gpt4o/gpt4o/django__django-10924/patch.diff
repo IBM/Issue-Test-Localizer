@@ -1,0 +1,20 @@
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index 73109d9..f09828f 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -292,6 +292,15 @@ class FileField(Field):
+         super().contribute_to_class(cls, name, **kwargs)
+         setattr(cls, self.name, self.descriptor_class(self))
+ 
++    def get_directory_path(self, instance):
++        """
++        Return the directory path. If the path is a callable, call it.
++        Otherwise, return the path directly.
++        """
++        if callable(self.path):
++            return self.path(instance)
++        return self.path
++
+     def generate_filename(self, instance, filename):
+         """
+         Apply (if callable) or prepend (if a string) upload_to to the filename,

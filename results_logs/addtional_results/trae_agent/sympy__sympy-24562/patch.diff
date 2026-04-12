@@ -1,0 +1,19 @@
+diff --git a/sympy/core/numbers.py b/sympy/core/numbers.py
+index 52f7ea45ad..6f38e930bd 100644
+--- a/sympy/core/numbers.py
++++ b/sympy/core/numbers.py
+@@ -1625,6 +1625,14 @@ def __new__(cls, p, q=None, gcd=None):
+             q = 1
+             gcd = 1
+ 
++        # Handle string inputs specially to avoid double conversion issues
++        if isinstance(p, str):
++            p = fractions.Fraction(p)
++            p = Rational(p.numerator, p.denominator)
++        if isinstance(q, str):
++            q = fractions.Fraction(q)
++            q = Rational(q.numerator, q.denominator)
++
+         if not isinstance(p, SYMPY_INTS):
+             p = Rational(p)
+             q *= p.q

@@ -1,0 +1,12 @@
+diff --git a/sphinx/application.py b/sphinx/application.py
+index 6ae2a35a9..098e366f1 100644
+--- a/sphinx/application.py
++++ b/sphinx/application.py
+@@ -84,6 +84,7 @@ builtin_extensions: tuple[str, ...] = (
+     'sphinx.directives.other',
+     'sphinx.directives.patches',
+     'sphinx.extension',
++    'sphinx.ext.includeprocessor',
+     'sphinx.parsers',
+     'sphinx.registry',
+     'sphinx.roles',

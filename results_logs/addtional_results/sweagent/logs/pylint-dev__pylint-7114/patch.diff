@@ -1,0 +1,53 @@
+diff --git a/pylint/lint/expand_modules.py b/pylint/lint/expand_modules.py
+index 289e1afce..5edd5c984 100644
+--- a/pylint/lint/expand_modules.py
++++ b/pylint/lint/expand_modules.py
+@@ -91,7 +91,15 @@ def expand_modules(
+             except ImportError:
+                 modname = os.path.splitext(basename)[0]
+             if os.path.isdir(something):
+-                filepath = os.path.join(something, "__init__.py")
++                # Check if this directory has an __init__.py file
++                init_file = os.path.join(something, "__init__.py")
++                if os.path.exists(init_file):
++                    # Regular package with __init__.py
++                    filepath = init_file
++                else:
++                    # Namespace package (directory without __init__.py)
++                    # We'll handle this case later when processing submodules
++                    filepath = something
+             else:
+                 filepath = something
+         else:
+@@ -119,8 +127,13 @@ def expand_modules(
+             is_namespace = False
+             is_directory = os.path.isdir(something)
+         else:
+-            is_namespace = modutils.is_namespace(spec)
+-            is_directory = modutils.is_directory(spec)
++            # For directories, check if it's a namespace package by looking for __init__.py
++            if os.path.isdir(something):
++                is_namespace = not os.path.exists(os.path.join(something, "__init__.py"))
++                is_directory = True
++            else:
++                is_namespace = modutils.is_namespace(spec)
++                is_directory = modutils.is_directory(spec)
+         if not is_namespace:
+             result.append(
+                 {
+@@ -136,8 +149,14 @@ def expand_modules(
+             and os.path.basename(filepath) == "__init__.py"
+         )
+         if has_init or is_namespace or is_directory:
++            # For namespace packages, filepath is the directory itself
++            # For regular packages, filepath is the __init__.py file
++            if is_namespace and os.path.isdir(filepath):
++                search_dir = filepath
++            else:
++                search_dir = os.path.dirname(filepath)
+             for subfilepath in modutils.get_module_files(
+-                os.path.dirname(filepath), ignore_list, list_all=is_namespace
++                search_dir, ignore_list, list_all=is_namespace
+             ):
+                 if filepath == subfilepath:
+                     continue

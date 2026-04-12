@@ -1,0 +1,69 @@
+diff --git a/requests/models.py b/requests/models.py
+index 9926045..1aa994b 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -359,9 +359,16 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+                 raise NotImplementedError('Streamed bodies and files are mutually exclusive.')
+ 
+             if length:
+-                self.headers['Content-Length'] = length
++                # Only set Content-Length for methods that should have a body
++                if self.method not in ('GET', 'HEAD', 'OPTIONS'):
++                    self.headers['Content-Length'] = length
++                else:
++                    # For GET/HEAD/OPTIONS, don't set Content-Length even with streaming data
++                    pass
+             else:
+-                self.headers['Transfer-Encoding'] = 'chunked'
++                # Only set Transfer-Encoding for methods that should have a body
++                if self.method not in ('GET', 'HEAD', 'OPTIONS'):
++                    self.headers['Transfer-Encoding'] = 'chunked'
+         # Check if file, fo, generator, iterator.
+         # If not, run through normal process.
+ 
+@@ -369,6 +376,9 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+             # Multi-part file uploads.
+             if files:
+                 (body, content_type) = self._encode_files(files, data)
++                # Only set Content-Length for methods that should have a body
++                if self.method not in ('GET', 'HEAD', 'OPTIONS'):
++                    self.prepare_content_length(body)
+             else:
+                 if data:
+                     body = self._encode_params(data)
+@@ -376,8 +386,14 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+                         content_type = None
+                     else:
+                         content_type = 'application/x-www-form-urlencoded'
+-
+-            self.prepare_content_length(body)
++                    
++                    # Only set Content-Length for methods that should have a body
++                    if self.method not in ('GET', 'HEAD', 'OPTIONS'):
++                        self.prepare_content_length(body)
++                elif self.method not in ('GET', 'HEAD', 'OPTIONS'):
++                    # For methods that can have a body, set Content-Length to 0
++                    # if there's no data, but don't set it for GET/HEAD/OPTIONS
++                    self.headers['Content-Length'] = '0'
+ 
+             # Add content-type if it wasn't explicitly provided.
+             if (content_type) and (not 'content-type' in self.headers):
+@@ -386,13 +402,17 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+         self.body = body
+ 
+     def prepare_content_length(self, body):
+-        self.headers['Content-Length'] = '0'
++        """Prepare Content-Length header based on request body."""
+         if hasattr(body, 'seek') and hasattr(body, 'tell'):
+             body.seek(0, 2)
+             self.headers['Content-Length'] = str(body.tell())
+             body.seek(0, 0)
+         elif body is not None:
+             self.headers['Content-Length'] = str(len(body))
++        else:
++            # Only set Content-Length to 0 for methods that expect a body
++            # This is already handled in prepare_body for GET/HEAD/OPTIONS
++            pass
+ 
+     def prepare_auth(self, auth):
+         """Prepares the given HTTP auth data."""

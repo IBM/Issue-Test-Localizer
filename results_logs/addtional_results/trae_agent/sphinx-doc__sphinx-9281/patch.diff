@@ -1,0 +1,15 @@
+diff --git a/sphinx/util/inspect.py b/sphinx/util/inspect.py
+index a415a7074..637889498 100644
+--- a/sphinx/util/inspect.py
++++ b/sphinx/util/inspect.py
+@@ -457,6 +457,10 @@ def object_description(object: Any) -> str:
+         else:
+             return "frozenset({%s})" % ", ".join(object_description(x)
+                                                  for x in sorted_values)
++    # Handle Enum values specially to avoid the <EnumClass.value: number> representation
++    if object.__class__.__module__ == 'enum' or object.__class__.__bases__[0].__module__ == 'enum':
++        if hasattr(object, '__module__') and hasattr(object, '__class__') and hasattr(object, 'name'):
++            return '%s.%s' % (object.__class__.__name__, object.name)
+     try:
+         s = repr(object)
+     except Exception as exc:

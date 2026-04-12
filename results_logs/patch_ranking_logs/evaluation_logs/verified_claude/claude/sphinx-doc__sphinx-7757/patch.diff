@@ -1,0 +1,17 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index 3555587..e6dc22d 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -174,10 +174,9 @@ def _parse_arglist(arglist: str) -> addnodes.desc_parameterlist:
+         if param.default is not param.empty:
+             if param.annotation is not param.empty:
+                 node += nodes.Text(' ')
+-                node += addnodes.desc_sig_operator('', '=')
++            node += addnodes.desc_sig_operator('', '=')
++            if param.annotation is not param.empty:
+                 node += nodes.Text(' ')
+-            else:
+-                node += addnodes.desc_sig_operator('', '=')
+             node += nodes.inline('', param.default, classes=['default_value'],
+                                  support_smartquotes=False)
+ 

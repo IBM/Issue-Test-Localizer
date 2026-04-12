@@ -1,0 +1,123 @@
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 866e38df83..80717fca49 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -420,7 +420,14 @@ class In(FieldGetDbPrepValueIterableMixin, BuiltinLookup):
+ 
+         if isinstance(self.rhs, Query):
+             self.rhs.clear_ordering(clear_default=True)
+-            if not self.rhs.has_select_fields:
++            # Check if there are annotations that aren't in the select mask
++            if self.rhs.annotations:
++                # If we have aliases (annotations not in the select mask), 
++                # we need to clear the select clause and just select the pk
++                if set(self.rhs.annotations) - (self.rhs.annotation_select_mask or set()):
++                    self.rhs.clear_select_clause()
++                    self.rhs.add_fields(["pk"])
++            elif not self.rhs.has_select_fields:
+                 self.rhs.clear_select_clause()
+                 self.rhs.add_fields(["pk"])
+         return super().get_prep_lookup()
+diff --git a/tests/annotations/tests.py b/tests/annotations/tests.py
+index 8de2bf1998..6b22c06839 100644
+--- a/tests/annotations/tests.py
++++ b/tests/annotations/tests.py
+@@ -155,6 +155,98 @@ class NonAggregateAnnotationTestCase(TestCase):
+         cls.s1.books.add(cls.b1, cls.b2, cls.b3, cls.b4, cls.b5, cls.b6)
+         cls.s2.books.add(cls.b1, cls.b3, cls.b5, cls.b6)
+         cls.s3.books.add(cls.b3, cls.b4, cls.b6)
++        
++    def test_annotation_and_alias_filter_in_subquery(self):
++        long_books_qs = (
++            Book.objects.filter(
++                pages__gt=400,
++            )
++            .annotate(book_annotate=Value(1))
++            .alias(book_alias=Value(1))
++        )
++        publisher_books_qs = (
++            Publisher.objects.filter(
++                book__in=long_books_qs
++            )
++            .values("name")
++        )
++        self.assertCountEqual(
++            publisher_books_qs,
++            [
++                {'name': 'Apress'},
++                {'name': 'Sams'},
++                {'name': 'Prentice Hall'},
++                {'name': 'Morgan Kaufmann'}
++            ]
++        )
++        
++    def test_multiple_annotation_and_alias_filter_in_subquery(self):
++        """Test with multiple annotations and aliases in a subquery."""
++        long_books_qs = (
++            Book.objects.filter(
++                pages__gt=400,
++            )
++            .annotate(book_annotate1=Value(1))
++            .annotate(book_annotate2=Value(2))
++            .alias(book_alias1=Value(3))
++            .alias(book_alias2=Value(4))
++        )
++        publisher_books_qs = (
++            Publisher.objects.filter(
++                book__in=long_books_qs
++            )
++            .values("name")
++        )
++        self.assertCountEqual(
++            publisher_books_qs,
++            [
++                {'name': 'Apress'},
++                {'name': 'Sams'},
++                {'name': 'Prentice Hall'},
++                {'name': 'Morgan Kaufmann'}
++            ]
++        )
++        
++    def test_complex_annotation_alias_and_filter_in_subquery(self):
++        """Test with complex annotations, aliases, and filters in a subquery."""
++        # Create a complex query with annotations, aliases, and filters
++        long_books_qs = (
++            Book.objects.filter(
++                pages__gt=400,
++            )
++            .annotate(
++                price_per_page=F('price') / F('pages'),
++                is_expensive=Case(
++                    When(price__gt=50, then=Value(True)),
++                    default=Value(False),
++                    output_field=BooleanField(),
++                )
++            )
++            .alias(
++                publisher_awards=F('publisher__num_awards'),
++                doubled_pages=F('pages') * 2
++            )
++            .filter(
++                is_expensive=True
++            )
++        )
++        
++        # Use the complex query in a subquery
++        publisher_books_qs = (
++            Publisher.objects.filter(
++                book__in=long_books_qs
++            )
++            .values("name")
++        )
++        
++        # Only publishers with expensive books (price > 50) and pages > 400
++        self.assertCountEqual(
++            publisher_books_qs,
++            [
++                {'name': 'Prentice Hall'},
++                {'name': 'Morgan Kaufmann'}
++            ]
++        )
+ 
+     def test_basic_annotation(self):
+         books = Book.objects.annotate(is_book=Value(1))

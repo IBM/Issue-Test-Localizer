@@ -1,0 +1,14 @@
+diff --git a/sympy/physics/units/dimensions.py b/sympy/physics/units/dimensions.py
+index d505a16..b502041 100644
+--- a/sympy/physics/units/dimensions.py
++++ b/sympy/physics/units/dimensions.py
+@@ -410,7 +410,8 @@ class DimensionSystem(Basic, _QuantityMapper):
+                     else:
+                         raise TypeError("The input argument for the function {} must be dimensionless or have dimensions of angle.".format(dimension.func))
+                 else:
+-                    if all(item == {} for item in dicts):
++                    # For functions like exp, all arguments must reduce to dimensionless quantities
++                    if all(self.is_dimensionless(Dimension._from_dimensional_dependencies(item)) for item in dicts):
+                         return {}
+                     else:
+                         raise TypeError("The input arguments for the function {} must be dimensionless.".format(dimension.func))

@@ -1,0 +1,17 @@
+diff --git a/sympy/sets/conditionset.py b/sympy/sets/conditionset.py
+index 934bff8..34ac088 100644
+--- a/sympy/sets/conditionset.py
++++ b/sympy/sets/conditionset.py
+@@ -240,10 +240,11 @@ class ConditionSet(Set):
+             # the base set should be filtered and if new is not in
+             # the base set then this substitution is ignored
+             return self.func(sym, cond, base)
++        # Only substitute in the condition and base_set, preserving the bound variable
+         cond = self.condition.subs(old, new)
+         base = self.base_set.subs(old, new)
+         if cond is S.true:
+-            return ConditionSet(new, Contains(new, base), base)
++            return base
+         return self.func(self.sym, cond, base)
+ 
+     def dummy_eq(self, other, symbol=None):

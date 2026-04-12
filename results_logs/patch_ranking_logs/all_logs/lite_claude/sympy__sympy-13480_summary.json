@@ -1,0 +1,92 @@
+{
+  "instance_id": "sympy__sympy-13480",
+  "container_id": "3da84b80770420c30aa06682ff4b944cea5e6c9e5615f7b3dc562dd96968db79",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13480/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-13480",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sympy/functions/elementary/tests/test_hyperbolic.py::test_tanh_series#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/elementary/tests/test_hyperbolic.py::test_coth#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/elementary/tests/test_hyperbolic.py::test_coth#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/elementary/tests/test_hyperbolic.py::test_coth_rewrite#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/elementary/tests/test_hyperbolic.py::test_coth_rewrite#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/functions/elementary/tests/test_hyperbolic.py::test_tanh_series#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13480/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13480",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13480/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13480",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13480/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13480",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13480/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13480",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sympy__sympy-13480/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-13480",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

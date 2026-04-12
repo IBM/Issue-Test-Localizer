@@ -1,0 +1,147 @@
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 1dee8a23d9..a62793a992 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -1513,6 +1513,32 @@ class DraggableBase:
+             self.canvas.callbacks._connect_picklable(
+                 'button_release_event', self.on_release),
+         ]
++        
++    def __getstate__(self):
++        """
++        Return the state of the object for pickling.
++        
++        The canvas cannot be pickled, so we remove it from the state.
++        It will be restored when the figure is reattached to a canvas.
++        """
++        state = self.__dict__.copy()
++        # Remove the canvas which is not picklable
++        state.pop('canvas', None)
++        # Also remove any event connection IDs as they're tied to the canvas
++        state.pop('cids', None)
++        # Remove any temporary connection ID
++        state.pop('_c1', None)
++        return state
++        
++    def __setstate__(self, state):
++        """
++        Restore the state of the object after unpickling.
++        
++        The canvas will be restored when the figure is reattached to a canvas.
++        """
++        self.__dict__ = state
++        # Initialize with empty connection IDs
++        self.cids = []
+ 
+     def on_motion(self, evt):
+         if self._check_still_parented() and self.got_artist:
+@@ -1557,19 +1583,38 @@ class DraggableBase:
+         if self.ref_artist.figure is None:
+             self.disconnect()
+             return False
+-        else:
+-            return True
++        
++        # Ensure canvas is set (may be None after unpickling)
++        if not hasattr(self, 'canvas') or self.canvas is None:
++            if hasattr(self.ref_artist, 'figure') and self.ref_artist.figure is not None:
++                self.canvas = self.ref_artist.figure.canvas
++                # Reconnect events if needed
++                if not self.cids and self.canvas is not None:
++                    self.cids = [
++                        self.canvas.callbacks._connect_picklable(
++                            'pick_event', self.on_pick),
++                        self.canvas.callbacks._connect_picklable(
++                            'button_release_event', self.on_release),
++                    ]
++            else:
++                return False
++                
++        return True
+ 
+     def disconnect(self):
+         """Disconnect the callbacks."""
+-        for cid in self.cids:
+-            self.canvas.mpl_disconnect(cid)
+-        try:
+-            c1 = self._c1
+-        except AttributeError:
+-            pass
+-        else:
+-            self.canvas.mpl_disconnect(c1)
++        if hasattr(self, 'canvas') and self.canvas is not None:
++            for cid in self.cids:
++                self.canvas.mpl_disconnect(cid)
++            try:
++                c1 = self._c1
++            except AttributeError:
++                pass
++            else:
++                self.canvas.mpl_disconnect(c1)
++        
++        # Clear the connection IDs list
++        self.cids = []
+ 
+     def save_offset(self):
+         pass
+diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
+index ec6bdcc2fe..b2d2b462fb 100644
+--- a/lib/matplotlib/tests/test_pickle.py
++++ b/lib/matplotlib/tests/test_pickle.py
+@@ -282,3 +282,56 @@ def test_dynamic_norm():
+ def test_vertexselector():
+     line, = plt.plot([0, 1], picker=True)
+     pickle.loads(pickle.dumps(VertexSelector(line)))
++
++
++def test_pickle_figure_with_draggable_legend():
++    """Test that a figure with a draggable legend can be pickled and unpickled."""
++    # Create a figure with a draggable legend
++    fig = plt.figure()
++    ax = fig.add_subplot(111)
++    ax.plot([0, 1, 2, 3, 4], [40, 43, 45, 47, 48], label="speed")
++    leg = ax.legend()
++    leg.set_draggable(True)
++    
++    # Verify legend is draggable
++    assert leg.get_draggable() is True
++    
++    # Pickle the figure
++    pickle_data = pickle.dumps(fig)
++    
++    # Unpickle the figure
++    fig2 = pickle.loads(pickle_data)
++    
++    # Check if the legend is still draggable in the unpickled figure
++    ax2 = fig2.axes[0]
++    leg2 = ax2.get_legend()
++    assert leg2.get_draggable() is True
++    
++    plt.close(fig)
++    plt.close(fig2)
++
++
++def test_pickle_figure_with_draggable_annotation():
++    """Test that a figure with a draggable annotation can be pickled and unpickled."""
++    # Create a figure with a draggable annotation
++    fig = plt.figure()
++    ax = fig.add_subplot(111)
++    ax.plot([0, 1, 2, 3, 4], [40, 43, 45, 47, 48])
++    
++    # Add a draggable annotation
++    ann = ax.annotate("Test", xy=(2, 45), xytext=(3, 47),
++                     arrowprops=dict(arrowstyle="->"))
++    ann.draggable()
++    
++    # Pickle the figure
++    pickle_data = pickle.dumps(fig)
++    
++    # Unpickle the figure
++    fig2 = pickle.loads(pickle_data)
++    
++    # The unpickled figure should have an annotation
++    ax2 = fig2.axes[0]
++    assert len(ax2.texts) == 1
++    
++    plt.close(fig)
++    plt.close(fig2)

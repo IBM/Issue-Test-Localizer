@@ -1,0 +1,66 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7975",
+  "container_id": "062e723415d7b31aaa09de4d286702b2bc7df968c6add768cb2f6467fefb5ad1",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7975/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-7975",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7975/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-7975",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7975/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-7975",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7975/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-7975",
+        "passed": 1,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7975/dedup_patch_4.jsonl",
+        "inst": "sphinx-doc__sphinx-7975",
+        "passed": 1,
+        "failed": 2
+      }
+    ],
+    "top_passed": 1,
+    "top_subset_size": 5
+  },
+  "reproduction": {
+    "tests/test_environment_indexentries.py::test_create_index_by_key#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_environment_indexentries.py::test_create_single_index#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_environment_indexentries.py::test_create_index_by_key#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_environment_indexentries.py::test_create_index_by_key#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_environment_indexentries.py::test_create_index_by_key#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_environment_indexentries.py::test_create_index_by_key#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

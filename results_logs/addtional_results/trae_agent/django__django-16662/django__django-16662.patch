@@ -1,0 +1,75 @@
+diff --git a/django/db/migrations/writer.py b/django/db/migrations/writer.py
+index a59f0c8dcb..1c942140a2 100644
+--- a/django/db/migrations/writer.py
++++ b/django/db/migrations/writer.py
+@@ -173,9 +173,12 @@ class MigrationWriter:
+         else:
+             imports.add("from django.db import migrations")
+ 
+-        # Sort imports by the package / module to be imported (the part after
+-        # "from" in "from ... import ..." or after "import" in "import ...").
+-        sorted_imports = sorted(imports, key=lambda i: i.split()[1])
++        # First separate 'import X' and 'from X import Y' style imports
++        # Then sort imports by the package / module to be imported.
++        # This follows Django coding style and isort defaults.
++        import_only = sorted([i for i in imports if i.startswith('import ')])
++        from_import = sorted([i for i in imports if i.startswith('from ')])
++        sorted_imports = import_only + from_import
+         items["imports"] = "\n".join(sorted_imports) + "\n" if imports else ""
+         if migration_imports:
+             items["imports"] += (
+diff --git a/tests/migrations/test_writer.py b/tests/migrations/test_writer.py
+index 1c11c68e97..3183b53b0d 100644
+--- a/tests/migrations/test_writer.py
++++ b/tests/migrations/test_writer.py
+@@ -921,6 +921,50 @@ class WriterTests(SimpleTestCase):
+             "import datetime\nfrom django.db import migrations, models\n",
+             output,
+         )
++        
++    def test_import_ordering_style(self):
++        """
++        Tests that import statements are ordered according to Django coding style,
++        with 'import X' statements before 'from X import Y' statements.
++        """
++        migration = type(
++            "Migration",
++            (migrations.Migration,),
++            {
++                "operations": [
++                    migrations.AddField(
++                        "mymodel",
++                        "myfield",
++                        models.DateTimeField(
++                            default=datetime.datetime(
++                                2012, 1, 1, 1, 1, tzinfo=datetime.timezone.utc
++                            ),
++                        ),
++                    ),
++                    migrations.AlterField(
++                        "othermodel",
++                        "otherfield",
++                        models.IntegerField(default=42),
++                    ),
++                ]
++            },
++        )
++        writer = MigrationWriter(migration)
++        output = writer.as_string()
++        
++        # Find all import statements
++        import_lines = [line for line in output.splitlines() if line.startswith("import ") or line.startswith("from ")]
++        
++        # Verify that all 'import X' statements come before all 'from X import Y' statements
++        import_statements = [line for line in import_lines if line.startswith("import ")]
++        from_statements = [line for line in import_lines if line.startswith("from ")]
++        
++        # If there are both types of statements, ensure proper ordering
++        if import_statements and from_statements:
++            last_import_index = max(output.splitlines().index(stmt) for stmt in import_statements)
++            first_from_index = min(output.splitlines().index(stmt) for stmt in from_statements)
++            self.assertLess(last_import_index, first_from_index, 
++                            "All 'import X' statements should come before all 'from X import Y' statements")
+ 
+     def test_migration_file_header_comments(self):
+         """

@@ -1,0 +1,90 @@
+{
+  "instance_id": "astropy__astropy-14365",
+  "container_id": "54af2643d9583a81047a79de4498f2accbdead770f41667be86386ef68130283",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_0.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_2.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_3.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_4.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_5.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_6.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_7.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_8.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/astropy__astropy-14365/dedup_patch_1.jsonl",
+        "inst": "astropy__astropy-14365",
+        "passed": 0,
+        "failed": 2
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 8
+  },
+  "reproduction": {
+    "astropy/io/ascii/tests/test_qdp.py::test_get_lines_from_qdp#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/ascii/tests/test_qdp.py::test_read_example#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/ascii/tests/test_qdp.py::test_read_example#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/ascii/tests/test_qdp.py::test_read_example#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/ascii/tests/test_qdp.py::test_get_lines_from_qdp#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/ascii/tests/test_qdp.py::test_read_example#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

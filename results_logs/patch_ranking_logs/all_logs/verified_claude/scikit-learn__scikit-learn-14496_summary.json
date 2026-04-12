@@ -1,0 +1,72 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14496",
+  "container_id": "cde4379b124e40d80abca835076580c4eb0cf97630c671911f4d3a1b18b03067",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-14496",
+        "passed": 10,
+        "failed": 0
+      }
+    ],
+    "top_passed": 10,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sklearn/cluster/tests/test_optics.py::test_precomputed_dists#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/cluster/tests/test_optics.py::test_min_samples_edge_case#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/cluster/tests/test_optics.py::test_precomputed_dists#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/cluster/tests/test_optics.py::test_min_samples_edge_case#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/cluster/tests/test_optics.py::test_min_samples_edge_case#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/cluster/tests/test_optics.py::test_min_samples_edge_case#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-14496",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-14496",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/scikit-learn__scikit-learn-14496/dedup_patch_0.jsonl",
+          "inst": "scikit-learn__scikit-learn-14496",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

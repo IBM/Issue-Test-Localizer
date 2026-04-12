@@ -1,0 +1,134 @@
+{
+  "instance_id": "sympy__sympy-12489",
+  "container_id": "08d5a4ec54833aff1dcbfa7ddf94e12bc883193501afcfee383d9bef3124b8bd",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_10.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_11.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_12.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_13.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_14.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_5.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_6.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_7.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_8.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_9.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-12489/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-12489",
+        "passed": 0,
+        "failed": 7
+      }
+    ],
+    "top_passed": 7,
+    "top_subset_size": 14
+  },
+  "reproduction": {
+    "sympy/combinatorics/tests/test_permutations.py::test_printing_non_cyclic#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_Permutation#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_printing_non_cyclic#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_Permutation#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_Permutation#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/combinatorics/tests/test_permutations.py::test_args#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

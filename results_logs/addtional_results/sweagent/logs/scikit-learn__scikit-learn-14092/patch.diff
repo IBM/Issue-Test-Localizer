@@ -1,0 +1,44 @@
+diff --git a/sklearn/utils/validation.py b/sklearn/utils/validation.py
+index 8747844e5..9746b35c6 100644
+--- a/sklearn/utils/validation.py
++++ b/sklearn/utils/validation.py
+@@ -972,9 +972,37 @@ def check_scalar(x, name, target_type, min_val=None, max_val=None):
+         If the parameter's value violates the given bounds.
+     """
+ 
+-    if not isinstance(x, target_type):
++    # Handle single type or tuple of types
++    if not isinstance(target_type, tuple):
++        target_type = (target_type,)
++    
++    # Check if x matches any of the target types, with some flexibility for numpy types
++    type_matched = False
++    for t in target_type:
++        if t is int:
++            # Accept int and numpy integer types, but not float types
++            if isinstance(x, numbers.Integral):
++                type_matched = True
++                break
++        elif t is float:
++            # Accept float, numpy float types, and also int (since int can be converted to float)
++            if isinstance(x, numbers.Real):
++                type_matched = True
++                break
++        else:
++            # For other types, use exact isinstance check
++            if isinstance(x, t):
++                type_matched = True
++                break
++    
++    if not type_matched:
++        # Format target_type for error message
++        if len(target_type) == 1:
++            type_str = str(target_type[0])
++        else:
++            type_str = str(target_type)
+         raise TypeError('`{}` must be an instance of {}, not {}.'
+-                        .format(name, target_type, type(x)))
++                        .format(name, type_str, type(x)))
+ 
+     if min_val is not None and x < min_val:
+         raise ValueError('`{}`= {}, must be >= {}.'.format(name, x, min_val))

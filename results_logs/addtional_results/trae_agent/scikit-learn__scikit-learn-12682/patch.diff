@@ -1,0 +1,108 @@
+diff --git a/examples/decomposition/plot_sparse_coding.py b/examples/decomposition/plot_sparse_coding.py
+index 528817ad0..dae200576 100644
+--- a/examples/decomposition/plot_sparse_coding.py
++++ b/examples/decomposition/plot_sparse_coding.py
+@@ -79,7 +79,8 @@ for subplot, (D, title) in enumerate(zip((D_fixed, D_multi),
+     # Do a wavelet approximation
+     for title, algo, alpha, n_nonzero, color in estimators:
+         coder = SparseCoder(dictionary=D, transform_n_nonzero_coefs=n_nonzero,
+-                            transform_alpha=alpha, transform_algorithm=algo)
++                            transform_alpha=alpha, transform_algorithm=algo,
++                            transform_max_iter=5000)
+         x = coder.transform(y.reshape(1, -1))
+         density = len(np.flatnonzero(x))
+         x = np.ravel(np.dot(x, D))
+@@ -90,7 +91,7 @@ for subplot, (D, title) in enumerate(zip((D_fixed, D_multi),
+ 
+     # Soft thresholding debiasing
+     coder = SparseCoder(dictionary=D, transform_algorithm='threshold',
+-                        transform_alpha=20)
++                        transform_alpha=20, transform_max_iter=5000)
+     x = coder.transform(y.reshape(1, -1))
+     _, idx = np.where(x != 0)
+     x[0, idx], _, _, _ = np.linalg.lstsq(D[idx, :].T, y, rcond=lstsq_rcond)
+diff --git a/sklearn/decomposition/dict_learning.py b/sklearn/decomposition/dict_learning.py
+index a318c957f..664b71460 100644
+--- a/sklearn/decomposition/dict_learning.py
++++ b/sklearn/decomposition/dict_learning.py
+@@ -865,7 +865,8 @@ class SparseCodingMixin(TransformerMixin):
+                                   transform_algorithm='omp',
+                                   transform_n_nonzero_coefs=None,
+                                   transform_alpha=None, split_sign=False,
+-                                  n_jobs=None, positive_code=False):
++                                  n_jobs=None, positive_code=False,
++                                  transform_max_iter=1000):
+         self.n_components = n_components
+         self.transform_algorithm = transform_algorithm
+         self.transform_n_nonzero_coefs = transform_n_nonzero_coefs
+@@ -873,6 +874,7 @@ class SparseCodingMixin(TransformerMixin):
+         self.split_sign = split_sign
+         self.n_jobs = n_jobs
+         self.positive_code = positive_code
++        self.transform_max_iter = transform_max_iter
+ 
+     def transform(self, X):
+         """Encode the data as a sparse combination of the dictionary atoms.
+@@ -900,7 +902,7 @@ class SparseCodingMixin(TransformerMixin):
+             X, self.components_, algorithm=self.transform_algorithm,
+             n_nonzero_coefs=self.transform_n_nonzero_coefs,
+             alpha=self.transform_alpha, n_jobs=self.n_jobs,
+-            positive=self.positive_code)
++            positive=self.positive_code, max_iter=self.transform_max_iter)
+ 
+         if self.split_sign:
+             # feature vector is split into a positive and negative side
+@@ -973,6 +975,9 @@ class SparseCoder(BaseEstimator, SparseCodingMixin):
+         Whether to enforce positivity when finding the code.
+ 
+         .. versionadded:: 0.20
++        
++    transform_max_iter : int, default=1000
++        Maximum number of iterations to perform if `algorithm='lasso_cd'`.
+ 
+     Attributes
+     ----------
+@@ -991,12 +996,13 @@ class SparseCoder(BaseEstimator, SparseCodingMixin):
+ 
+     def __init__(self, dictionary, transform_algorithm='omp',
+                  transform_n_nonzero_coefs=None, transform_alpha=None,
+-                 split_sign=False, n_jobs=None, positive_code=False):
++                 split_sign=False, n_jobs=None, positive_code=False,
++                 transform_max_iter=1000):
+         self._set_sparse_coding_params(dictionary.shape[0],
+                                        transform_algorithm,
+                                        transform_n_nonzero_coefs,
+                                        transform_alpha, split_sign, n_jobs,
+-                                       positive_code)
++                                       positive_code, transform_max_iter)
+         self.components_ = dictionary
+ 
+     def fit(self, X, y=None):
+diff --git a/sklearn/decomposition/tests/test_dict_learning.py b/sklearn/decomposition/tests/test_dict_learning.py
+index f0bd4bedf..a01ce9881 100644
+--- a/sklearn/decomposition/tests/test_dict_learning.py
++++ b/sklearn/decomposition/tests/test_dict_learning.py
+@@ -451,3 +451,23 @@ def test_sparse_coder_parallel_mmap():
+ 
+     sc = SparseCoder(init_dict, transform_algorithm='omp', n_jobs=2)
+     sc.fit_transform(data)
++
++
++def test_sparse_coder_max_iter():
++    # Test that SparseCoder transform_max_iter parameter works correctly
++    n_components = 4
++    dictionary = rng_global.randn(n_components, n_features)
++    
++    # Create a coder with default max_iter (1000)
++    coder_default = SparseCoder(dictionary=dictionary, 
++                               transform_algorithm='lasso_cd')
++    assert_equal(coder_default.transform_max_iter, 1000)
++    
++    # Create a coder with custom max_iter
++    coder_custom = SparseCoder(dictionary=dictionary, 
++                              transform_algorithm='lasso_cd',
++                              transform_max_iter=500)
++    assert_equal(coder_custom.transform_max_iter, 500)
++    
++    # Test that the parameter is actually used in transform
++    coder_custom.transform(X)

@@ -1,0 +1,1408 @@
+{
+  "instance_id": "mwaskom__seaborn-2848",
+  "container_id": "2c6b6609f26d5e48265f53473f807376503169edcc9aed1a67a42692cbbd4655",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_12.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_19.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_2.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_20.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_24.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_25.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_27.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_28.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_3.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_34.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_36.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_38.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_7.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_8.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_9.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 5,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_16.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 4,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_29.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 3,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_33.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 3,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_18.jsonl",
+        "inst": "mwaskom__seaborn-2848",
+        "passed": 1,
+        "failed": 5
+      }
+    ],
+    "top_passed": 6,
+    "top_subset_size": 22
+  },
+  "reproduction": {
+    "tests/test_axisgrid.py::TestPairGrid::test_pairplot_hue_order_subset#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestJointPlot::test_pairplot_hue_order_subset#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_hue_order_subset#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_pairplot_hue_order_subset#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_pairplot_hue_order_subset#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_pairplot_hue_order_subset#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_pairplot_hue_order_subset#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_hue_order_missing_level#8": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_pairplot_hue_order_subset#9": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    },
+    "tests/test_axisgrid.py::TestPairGrid::test_hue_order_missing_level#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_0.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_1.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_10.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_11.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_13.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_14.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_15.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_17.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_21.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_22.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_23.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_26.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_30.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_31.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_32.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_35.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_37.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_39.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_4.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_40.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_5.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/mwaskom__seaborn-2848/dedup_patch_6.jsonl",
+          "inst": "mwaskom__seaborn-2848",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 02aa32b207..ad09acee7f 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -127,26 +127,62 @@ class Media:
+         """
+         # Start with a copy of list_1.
+         combined_list = list(list_1)
+-        last_insert_index = len(list_1)
+-        # Walk list_2 in reverse, inserting each element into combined_list if
+-        # it doesn't already exist.
+-        for path in reversed(list_2):
+-            try:
+-                # Does path already exist in the list?
+-                index = combined_list.index(path)
+-            except ValueError:
+-                # Add path to combined_list since it doesn't exist.
+-                combined_list.insert(last_insert_index, path)
+-            else:
+-                if index > last_insert_index:
+-                    warnings.warn(
+-                        'Detected duplicate Media files in an opposite order:\n'
+-                        '%s\n%s' % (combined_list[last_insert_index], combined_list[index]),
+-                        MediaOrderConflictWarning,
+-                    )
+-                # path already exists in the list. Update last_insert_index so
+-                # that the following elements are inserted in front of this one.
+-                last_insert_index = index
++        
++        # Check for ordering conflicts between common elements
++        common_elements = []
++        for item in list_2:
++            if item in combined_list:
++                common_elements.append(item)
++        
++        # Check if common elements appear in different relative order
++        if len(common_elements) >= 2:
++            # Get the relative order in list_1
++            list_1_indices = {item: combined_list.index(item) for item in common_elements}
++            # Get the relative order in list_2  
++            list_2_indices = {item: list_2.index(item) for item in common_elements}
++            
++            # Check for conflicts
++            for i in range(len(common_elements)):
++                for j in range(i + 1, len(common_elements)):
++                    item1, item2 = common_elements[i], common_elements[j]
++                    list_1_order = list_1_indices[item1] < list_1_indices[item2]
++                    list_2_order = list_2_indices[item1] < list_2_indices[item2]
++                    if list_1_order != list_2_order:
++                        # Show the items in the order they appear in list_1
++                        if list_1_indices[item1] < list_1_indices[item2]:
++                            first, second = item1, item2
++                        else:
++                            first, second = item2, item1
++                        warnings.warn(
++                            'Detected duplicate Media files in an opposite order:\n'
++                            '%s\n%s' % (first, second),
++                            MediaOrderConflictWarning,
++                        )
++        
++        # Now merge the lists, preserving the relative order from list_2
++        # Process list_2 in forward order
++        for item in list_2:
++            if item not in combined_list:
++                # Find the best position to insert this item
++                insert_index = len(combined_list)  # Default to end
++                
++                # Look for the next item in list_2 that exists in combined_list
++                item_index_in_list_2 = list_2.index(item)
++                for j in range(item_index_in_list_2 + 1, len(list_2)):
++                    if list_2[j] in combined_list:
++                        next_index = combined_list.index(list_2[j])
++                        insert_index = min(insert_index, next_index)
++                        break
++                
++                # Look for the previous item in list_2 that exists in combined_list
++                for j in range(item_index_in_list_2 - 1, -1, -1):
++                    if list_2[j] in combined_list:
++                        prev_index = combined_list.index(list_2[j])
++                        insert_index = max(insert_index, prev_index + 1)
++                        break
++                
++                combined_list.insert(insert_index, item)
++        
+         return combined_list
+ 
+     def __add__(self, other):

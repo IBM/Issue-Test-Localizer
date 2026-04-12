@@ -1,0 +1,30 @@
+diff --git a/xarray/core/computation.py b/xarray/core/computation.py
+index 3f7e8f74..577a380f 100644
+--- a/xarray/core/computation.py
++++ b/xarray/core/computation.py
+@@ -1858,9 +1858,22 @@ def where(cond, x, y, keep_attrs=None):
+     if keep_attrs is None:
+         keep_attrs = _get_keep_attrs(default=False)
+     if keep_attrs is True:
+-        # keep the attributes of x, the second parameter, by default to
+-        # be consistent with the `where` method of `DataArray` and `Dataset`
+-        keep_attrs = lambda attrs, context: getattr(x, "attrs", {})
++        # Define a custom function that preserves coordinate attributes
++        # but uses the attributes of x for the data variable
++        from .dataarray import DataArray
++
++        def custom_combine_attrs(attrs_list, context=None):
++            # If we're merging coordinate attributes, preserve the original ones
++            # This is determined by checking if any of the objects in attrs_list
++            # has a 'standard_name' attribute, which is typically present in coordinates
++            for attrs in attrs_list:
++                if 'standard_name' in attrs:
++                    # This is likely a coordinate, so return the original attributes
++                    return attrs
++            # For data variables, use the attributes of x
++            return getattr(x, "attrs", {})
++
++        keep_attrs = custom_combine_attrs
+ 
+     # alignment for three arguments is complicated, so don't support it yet
+     return apply_ufunc(

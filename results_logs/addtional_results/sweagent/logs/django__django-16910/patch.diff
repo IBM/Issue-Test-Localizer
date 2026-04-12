@@ -1,0 +1,866 @@
+diff --git a/debug_inheritance.py b/debug_inheritance.py
+new file mode 100644
+index 0000000000..9fadfb994d
+--- /dev/null
++++ b/debug_inheritance.py
+@@ -0,0 +1,107 @@
++#!/usr/bin/env python
++"""
++Debug the inheritance issue.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++
++# Define the models locally
++class Parent1(models.Model):
++    name1 = models.CharField(max_length=50)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Parent2(models.Model):
++    # Avoid having two "id" fields in the Child1 subclass
++    id2 = models.AutoField(primary_key=True)
++    name2 = models.CharField(max_length=50)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Child1(Parent1, Parent2):
++    value = models.IntegerField()
++    
++    class Meta:
++        app_label = '__main__'
++
++class Child4(Child1):
++    value4 = models.IntegerField()
++    
++    class Meta:
++        app_label = '__main__'
++
++def create_tables():
++    """Create the database tables"""
++    with connection.schema_editor() as schema_editor:
++        schema_editor.create_model(Parent1)
++        schema_editor.create_model(Parent2)
++        schema_editor.create_model(Child1)
++        schema_editor.create_model(Child4)
++
++def debug_inheritance():
++    """Debug the inheritance issue"""
++    
++    # Create test data
++    c = Child4.objects.create(name1="n1", name2="n2", value=1, value4=4)
++    
++    # The problematic query
++    qs = Parent2.objects.select_related("child1", "child1__child4").only(
++        "id2", "child1__value", "child1__child4__value4"
++    )
++    
++    print(f"Query deferred_loading: {qs.query.deferred_loading}")
++    print(f"Query select_related: {qs.query.select_related}")
++    
++    # Get the select mask
++    select_mask = qs.query.get_select_mask()
++    print(f"Select mask: {select_mask}")
++    
++    # Check the related objects for Parent2
++    parent2_opts = Parent2._meta
++    print(f"\nParent2 related objects:")
++    for rel_obj in parent2_opts.related_objects:
++        print(f"  {rel_obj}: field={rel_obj.field}")
++        print(f"    Related query name: {rel_obj.field.related_query_name()}")
++        print(f"    Field unique: {rel_obj.field.unique}")
++        
++        # Check if we can get the field by related_query_name
++        related_field_name = rel_obj.field.related_query_name()
++        try:
++            reverse_relation = parent2_opts.get_field(related_field_name)
++            print(f"    Reverse relation: {reverse_relation}")
++            print(f"    In select_mask: {reverse_relation in select_mask}")
++        except Exception as e:
++            print(f"    Error getting reverse relation: {e}")
++    
++    query = str(qs.query)
++    print(f"\nGenerated SQL: {query}")
++
++if __name__ == '__main__':
++    create_tables()
++    debug_inheritance()
+\ No newline at end of file
+diff --git a/debug_issue.py b/debug_issue.py
+new file mode 100644
+index 0000000000..9b1bba7ba4
+--- /dev/null
++++ b/debug_issue.py
+@@ -0,0 +1,127 @@
++#!/usr/bin/env python
++"""
++Debug script to understand the issue with QuerySet.only() not working with select_related() 
++on a reverse OneToOneField relation.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++            '__main__',  # This module
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++from django.core.management.color import no_style
++from django.db import transaction
++
++# Define the models from the PR description
++class Main(models.Model):
++    main_field_1 = models.CharField(blank=True, max_length=45)
++    main_field_2 = models.CharField(blank=True, max_length=45)
++    main_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Secondary(models.Model):
++    main = models.OneToOneField(Main, primary_key=True, related_name='secondary', on_delete=models.CASCADE)
++    secondary_field_1 = models.CharField(blank=True, max_length=45)
++    secondary_field_2 = models.CharField(blank=True, max_length=45)
++    secondary_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++def create_tables():
++    """Create the database tables"""
++    with connection.schema_editor() as schema_editor:
++        schema_editor.create_model(Main)
++        schema_editor.create_model(Secondary)
++
++def debug_only_with_select_related():
++    """Debug the issue with only() and select_related() on reverse OneToOneField"""
++    
++    # Create some test data
++    main = Main.objects.create(
++        main_field_1='main1',
++        main_field_2='main2', 
++        main_field_3='main3'
++    )
++    
++    Secondary.objects.create(
++        main=main,
++        secondary_field_1='sec1',
++        secondary_field_2='sec2',
++        secondary_field_3='sec3'
++    )
++    
++    # Test the problematic query
++    print("Debugging QuerySet.only() with select_related() on reverse OneToOneField:")
++    print("=" * 70)
++    
++    queryset = Main.objects.select_related('secondary').only('main_field_1', 'secondary__secondary_field_1')
++    
++    # Let's examine the query internals
++    print(f"Query deferred_loading: {queryset.query.deferred_loading}")
++    print(f"Query select_related: {queryset.query.select_related}")
++    
++    # Get the select mask
++    select_mask = queryset.query.get_select_mask()
++    print(f"Select mask: {select_mask}")
++    
++    # Get the compiler and examine what it does
++    compiler = queryset.query.get_compiler(using='default')
++    
++    # Let's see what get_select returns
++    select, klass_info, annotations = compiler.get_select()
++    print(f"\nSelect items:")
++    for i, (col, sql_params, alias) in enumerate(select):
++        print(f"  {i}: {col} (sql: {sql_params}, alias: {alias})")
++    
++    print(f"\nKlass info: {klass_info}")
++    
++    # Execute the query to see what fields are actually selected
++    query = str(queryset.query)
++    print(f"\nGenerated SQL query:\n{query}")
++    
++    with connection.cursor() as cursor:
++        cursor.execute(query)
++        columns = [desc[0] for desc in cursor.description]
++        print(f"\nSelected columns: {columns}")
++        
++        # Check if the issue exists
++        extra_columns = []
++        for col in columns:
++            if 'secondary_field_2' in col or 'secondary_field_3' in col:
++                extra_columns.append(col)
++        
++        if extra_columns:
++            print(f"\n❌ ISSUE REPRODUCED: Extra columns found: {extra_columns}")
++        else:
++            print(f"\n✅ NO ISSUE: Only expected columns are present.")
++            
++        return len(extra_columns) > 0
++
++if __name__ == '__main__':
++    create_tables()
++    issue_exists = debug_only_with_select_related()
++    sys.exit(1 if issue_exists else 0)
+\ No newline at end of file
+diff --git a/debug_issue2.py b/debug_issue2.py
+new file mode 100644
+index 0000000000..39993a3089
+--- /dev/null
++++ b/debug_issue2.py
+@@ -0,0 +1,116 @@
++#!/usr/bin/env python
++"""
++Debug script to understand the select_mask issue in more detail.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++            '__main__',  # This module
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++from django.core.management.color import no_style
++from django.db import transaction
++
++# Define the models from the PR description
++class Main(models.Model):
++    main_field_1 = models.CharField(blank=True, max_length=45)
++    main_field_2 = models.CharField(blank=True, max_length=45)
++    main_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Secondary(models.Model):
++    main = models.OneToOneField(Main, primary_key=True, related_name='secondary', on_delete=models.CASCADE)
++    secondary_field_1 = models.CharField(blank=True, max_length=45)
++    secondary_field_2 = models.CharField(blank=True, max_length=45)
++    secondary_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++def create_tables():
++    """Create the database tables"""
++    with connection.schema_editor() as schema_editor:
++        schema_editor.create_model(Main)
++        schema_editor.create_model(Secondary)
++
++def debug_select_mask():
++    """Debug the select_mask construction"""
++    
++    # Create some test data
++    main = Main.objects.create(
++        main_field_1='main1',
++        main_field_2='main2', 
++        main_field_3='main3'
++    )
++    
++    Secondary.objects.create(
++        main=main,
++        secondary_field_1='sec1',
++        secondary_field_2='sec2',
++        secondary_field_3='sec3'
++    )
++    
++    queryset = Main.objects.select_related('secondary').only('main_field_1', 'secondary__secondary_field_1')
++    
++    # Get the select mask
++    select_mask = queryset.query.get_select_mask()
++    print(f"Full select mask: {select_mask}")
++    
++    # Let's examine what happens for the reverse relation
++    main_opts = Main._meta
++    secondary_rel = None
++    for rel in main_opts.related_objects:
++        if rel.field.related_query_name() == 'secondary':
++            secondary_rel = rel
++            break
++    
++    print(f"\nSecondary relation: {secondary_rel}")
++    print(f"Secondary relation field: {secondary_rel.field}")
++    print(f"Secondary relation model: {secondary_rel.related_model}")
++    
++    # Check what's in the select_mask for this relation
++    if secondary_rel.field in select_mask:
++        related_select_mask = select_mask[secondary_rel.field]
++        print(f"Related select mask for secondary: {related_select_mask}")
++        
++        # Let's see what fields are in the related model
++        secondary_opts = secondary_rel.related_model._meta
++        print(f"\nSecondary model fields:")
++        for field in secondary_opts.concrete_fields:
++            print(f"  {field}: in mask = {field in related_select_mask}")
++    else:
++        print(f"Secondary relation field not found in select_mask")
++        
++    # Let's also check the reverse lookup
++    print(f"\nReverse relation lookup:")
++    for rel_obj in main_opts.related_objects:
++        print(f"  {rel_obj}: {rel_obj.field}")
++        if rel_obj.field.unique:
++            print(f"    Related query name: {rel_obj.field.related_query_name()}")
++
++if __name__ == '__main__':
++    create_tables()
++    debug_select_mask()
+\ No newline at end of file
+diff --git a/debug_issue3.py b/debug_issue3.py
+new file mode 100644
+index 0000000000..b5fb5bcfa2
+--- /dev/null
++++ b/debug_issue3.py
+@@ -0,0 +1,82 @@
++#!/usr/bin/env python
++"""
++Debug script to understand the field lookup issue.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++            '__main__',  # This module
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++
++# Define the models from the PR description
++class Main(models.Model):
++    main_field_1 = models.CharField(blank=True, max_length=45)
++    main_field_2 = models.CharField(blank=True, max_length=45)
++    main_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Secondary(models.Model):
++    main = models.OneToOneField(Main, primary_key=True, related_name='secondary', on_delete=models.CASCADE)
++    secondary_field_1 = models.CharField(blank=True, max_length=45)
++    secondary_field_2 = models.CharField(blank=True, max_length=45)
++    secondary_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++def debug_field_lookup():
++    """Debug the field lookup issue"""
++    
++    main_opts = Main._meta
++    
++    print("Main model fields:")
++    for field in main_opts.get_fields():
++        print(f"  {field.name}: {field} (type: {type(field)})")
++    
++    print(f"\nLooking up 'secondary' field:")
++    secondary_field = main_opts.get_field('secondary')
++    print(f"  Result: {secondary_field} (type: {type(secondary_field)})")
++    
++    print(f"\nRelated objects:")
++    for rel_obj in main_opts.related_objects:
++        print(f"  {rel_obj}: field={rel_obj.field}")
++        print(f"    Related query name: {rel_obj.field.related_query_name()}")
++        print(f"    Field unique: {rel_obj.field.unique}")
++    
++    # Let's see what happens in get_related_selections
++    print(f"\nIn get_related_selections, related_fields would be:")
++    related_fields = [
++        (o.field, o.related_model)
++        for o in main_opts.related_objects
++        if o.field.unique and not o.many_to_many
++    ]
++    for related_field, model in related_fields:
++        print(f"  related_field: {related_field} (type: {type(related_field)})")
++        print(f"  model: {model}")
++
++if __name__ == '__main__':
++    debug_field_lookup()
+\ No newline at end of file
+diff --git a/debug_relation_types.py b/debug_relation_types.py
+new file mode 100644
+index 0000000000..eb75ccc09f
+--- /dev/null
++++ b/debug_relation_types.py
+@@ -0,0 +1,129 @@
++#!/usr/bin/env python
++"""
++Debug different types of relations to understand when to apply our fix.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++            '__main__',
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++
++# Define the models from the PR description (simple OneToOneField case)
++class Main(models.Model):
++    main_field_1 = models.CharField(blank=True, max_length=45)
++    main_field_2 = models.CharField(blank=True, max_length=45)
++    main_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Secondary(models.Model):
++    main = models.OneToOneField(Main, primary_key=True, related_name='secondary', on_delete=models.CASCADE)
++    secondary_field_1 = models.CharField(blank=True, max_length=45)
++    secondary_field_2 = models.CharField(blank=True, max_length=45)
++    secondary_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++# Define inheritance models
++class Parent1(models.Model):
++    name1 = models.CharField(max_length=50)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Parent2(models.Model):
++    id2 = models.AutoField(primary_key=True)
++    name2 = models.CharField(max_length=50)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Child1(Parent1, Parent2):
++    value = models.IntegerField()
++    
++    class Meta:
++        app_label = '__main__'
++
++def create_tables():
++    """Create the database tables"""
++    with connection.schema_editor() as schema_editor:
++        schema_editor.create_model(Main)
++        schema_editor.create_model(Secondary)
++        schema_editor.create_model(Parent1)
++        schema_editor.create_model(Parent2)
++        schema_editor.create_model(Child1)
++
++def debug_relation_types():
++    """Debug different types of relations"""
++    
++    print("=== Simple OneToOneField Case ===")
++    main_opts = Main._meta
++    print(f"Main related objects:")
++    for rel_obj in main_opts.related_objects:
++        print(f"  {rel_obj}: field={rel_obj.field}")
++        print(f"    Related query name: {rel_obj.field.related_query_name()}")
++        print(f"    Field unique: {rel_obj.field.unique}")
++        print(f"    Field model: {rel_obj.field.model}")
++        print(f"    Related model: {rel_obj.related_model}")
++        print(f"    Field name: {rel_obj.field.name}")
++        print(f"    Field attname: {rel_obj.field.attname}")
++        print(f"    Is parent link: {getattr(rel_obj.field, 'parent_link', False)}")
++        print(f"    Is inheritance relation: {rel_obj.field.model._meta.concrete_model != rel_obj.related_model._meta.concrete_model}")
++        
++        # Check if we can get the field by related_query_name
++        related_field_name = rel_obj.field.related_query_name()
++        try:
++            reverse_relation = main_opts.get_field(related_field_name)
++            print(f"    Reverse relation: {reverse_relation}")
++        except Exception as e:
++            print(f"    Error getting reverse relation: {e}")
++    
++    print("\n=== Inheritance Case ===")
++    parent2_opts = Parent2._meta
++    print(f"Parent2 related objects:")
++    for rel_obj in parent2_opts.related_objects:
++        print(f"  {rel_obj}: field={rel_obj.field}")
++        print(f"    Related query name: {rel_obj.field.related_query_name()}")
++        print(f"    Field unique: {rel_obj.field.unique}")
++        print(f"    Field model: {rel_obj.field.model}")
++        print(f"    Related model: {rel_obj.related_model}")
++        print(f"    Field name: {rel_obj.field.name}")
++        print(f"    Field attname: {rel_obj.field.attname}")
++        print(f"    Is parent link: {getattr(rel_obj.field, 'parent_link', False)}")
++        print(f"    Is inheritance relation: {rel_obj.field.model._meta.concrete_model != rel_obj.related_model._meta.concrete_model}")
++        
++        # Check if we can get the field by related_query_name
++        related_field_name = rel_obj.field.related_query_name()
++        try:
++            reverse_relation = parent2_opts.get_field(related_field_name)
++            print(f"    Reverse relation: {reverse_relation}")
++        except Exception as e:
++            print(f"    Error getting reverse relation: {e}")
++
++if __name__ == '__main__':
++    create_tables()
++    debug_relation_types()
+\ No newline at end of file
+diff --git a/debug_test3.py b/debug_test3.py
+new file mode 100644
+index 0000000000..bee673a7b5
+--- /dev/null
++++ b/debug_test3.py
+@@ -0,0 +1,96 @@
++#!/usr/bin/env python
++"""
++Debug Test 3 issue.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++            '__main__',  # This module
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++
++# Define the models from the PR description
++class Main(models.Model):
++    main_field_1 = models.CharField(blank=True, max_length=45)
++    main_field_2 = models.CharField(blank=True, max_length=45)
++    main_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Secondary(models.Model):
++    main = models.OneToOneField(Main, primary_key=True, related_name='secondary', on_delete=models.CASCADE)
++    secondary_field_1 = models.CharField(blank=True, max_length=45)
++    secondary_field_2 = models.CharField(blank=True, max_length=45)
++    secondary_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++def create_tables():
++    """Create the database tables"""
++    with connection.schema_editor() as schema_editor:
++        schema_editor.create_model(Main)
++        schema_editor.create_model(Secondary)
++
++def debug_test3():
++    """Debug Test 3 issue"""
++    
++    # Create test data
++    main = Main.objects.create(
++        main_field_1='main1',
++        main_field_2='main2', 
++        main_field_3='main3'
++    )
++    
++    Secondary.objects.create(
++        main=main,
++        secondary_field_1='sec1',
++        secondary_field_2='sec2',
++        secondary_field_3='sec3'
++    )
++    
++    queryset = Main.objects.select_related('secondary').only('main_field_1', 'main_field_2')
++    
++    print(f"Query deferred_loading: {queryset.query.deferred_loading}")
++    print(f"Query select_related: {queryset.query.select_related}")
++    
++    # Get the select mask
++    select_mask = queryset.query.get_select_mask()
++    print(f"Select mask: {select_mask}")
++    
++    # Check if 'secondary' is in the select_mask
++    main_opts = Main._meta
++    secondary_rel = main_opts.get_field('secondary')
++    print(f"Secondary relation in select_mask: {secondary_rel in select_mask}")
++    
++    if secondary_rel in select_mask:
++        print(f"Secondary select_mask: {select_mask[secondary_rel]}")
++    
++    query = str(queryset.query)
++    print(f"Generated SQL: {query}")
++
++if __name__ == '__main__':
++    create_tables()
++    debug_test3()
+\ No newline at end of file
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index b28dc925ba..67eb4e64a8 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -4,7 +4,7 @@ import re
+ from functools import partial
+ from itertools import chain
+ 
+-from django.core.exceptions import EmptyResultSet, FieldError, FullResultSet
++from django.core.exceptions import EmptyResultSet, FieldDoesNotExist, FieldError, FullResultSet
+ from django.db import DatabaseError, NotSupportedError
+ from django.db.models.constants import LOOKUP_SEP
+ from django.db.models.expressions import F, OrderBy, RawSQL, Ref, Value
+@@ -1250,7 +1250,19 @@ class SQLCompiler:
+                 if o.field.unique and not o.many_to_many
+             ]
+             for related_field, model in related_fields:
+-                related_select_mask = select_mask.get(related_field) or {}
++                related_field_name = related_field.related_query_name()
++                # For reverse relations, the select_mask key is the reverse relation object,
++                # not the actual field. We need to look it up by the related_field_name.
++                # However, in inheritance cases, the reverse relation might not exist directly
++                # on the current model, so we need to handle that case.
++                try:
++                    reverse_relation = opts.get_field(related_field_name)
++                    related_select_mask = select_mask.get(reverse_relation) or {}
++                except FieldDoesNotExist:
++                    # In inheritance cases, the reverse relation might not exist directly
++                    # on this model, so fall back to the original behavior
++                    related_select_mask = select_mask.get(related_field) or {}
++                
+                 if not select_related_descend(
+                     related_field,
+                     restricted,
+@@ -1260,7 +1272,6 @@ class SQLCompiler:
+                 ):
+                     continue
+ 
+-                related_field_name = related_field.related_query_name()
+                 fields_found.add(related_field_name)
+ 
+                 join_info = self.query.setup_joins(
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 0000000000..98cb43dd7c
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,118 @@
++#!/usr/bin/env python
++"""
++Script to reproduce the issue with QuerySet.only() not working with select_related() 
++on a reverse OneToOneField relation.
++"""
++
++import os
++import sys
++import django
++from django.conf import settings
++
++# Configure Django settings
++if not settings.configured:
++    settings.configure(
++        DEBUG=True,
++        DATABASES={
++            'default': {
++                'ENGINE': 'django.db.backends.sqlite3',
++                'NAME': ':memory:',
++            }
++        },
++        INSTALLED_APPS=[
++            'django.contrib.contenttypes',
++            'django.contrib.auth',
++            '__main__',  # This module
++        ],
++        USE_TZ=True,
++    )
++
++django.setup()
++
++from django.db import models, connection
++from django.core.management.color import no_style
++from django.db import transaction
++
++# Define the models from the PR description
++class Main(models.Model):
++    main_field_1 = models.CharField(blank=True, max_length=45)
++    main_field_2 = models.CharField(blank=True, max_length=45)
++    main_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++class Secondary(models.Model):
++    main = models.OneToOneField(Main, primary_key=True, related_name='secondary', on_delete=models.CASCADE)
++    secondary_field_1 = models.CharField(blank=True, max_length=45)
++    secondary_field_2 = models.CharField(blank=True, max_length=45)
++    secondary_field_3 = models.CharField(blank=True, max_length=45)
++    
++    class Meta:
++        app_label = '__main__'
++
++def create_tables():
++    """Create the database tables"""
++    with connection.schema_editor() as schema_editor:
++        schema_editor.create_model(Main)
++        schema_editor.create_model(Secondary)
++
++def test_only_with_select_related():
++    """Test the issue with only() and select_related() on reverse OneToOneField"""
++    
++    # Create some test data
++    main = Main.objects.create(
++        main_field_1='main1',
++        main_field_2='main2', 
++        main_field_3='main3'
++    )
++    
++    Secondary.objects.create(
++        main=main,
++        secondary_field_1='sec1',
++        secondary_field_2='sec2',
++        secondary_field_3='sec3'
++    )
++    
++    # Test the problematic query
++    print("Testing QuerySet.only() with select_related() on reverse OneToOneField:")
++    print("=" * 70)
++    
++    queryset = Main.objects.select_related('secondary').only('main_field_1', 'secondary__secondary_field_1')
++    
++    # Capture the SQL query
++    with connection.cursor() as cursor:
++        query = str(queryset.query)
++        print(f"Generated SQL query:\n{query}")
++        
++        # Execute the query to see what fields are actually selected
++        cursor.execute(query)
++        columns = [desc[0] for desc in cursor.description]
++        print(f"\nSelected columns: {columns}")
++        
++        # Check if the issue exists
++        expected_columns = [
++            '__main___main.id',
++            '__main___main.main_field_1', 
++            '__main___secondary.main_id',
++            '__main___secondary.secondary_field_1'
++        ]
++        
++        # The issue is that we're getting extra columns that shouldn't be there
++        extra_columns = []
++        for col in columns:
++            if 'secondary_field_2' in col or 'secondary_field_3' in col:
++                extra_columns.append(col)
++        
++        if extra_columns:
++            print(f"\n❌ ISSUE REPRODUCED: Extra columns found: {extra_columns}")
++            print("These columns should not be included when using only() with specific fields.")
++        else:
++            print(f"\n✅ NO ISSUE: Only expected columns are present.")
++            
++        return len(extra_columns) > 0
++
++if __name__ == '__main__':
++    create_tables()
++    issue_exists = test_only_with_select_related()
++    sys.exit(1 if issue_exists else 0)
+\ No newline at end of file

@@ -1,0 +1,41 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 0f53d9c30b..c655486925 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -2524,7 +2524,16 @@ class AutoFieldMeta(type):
+         return isinstance(instance, self._subclasses) or super().__instancecheck__(instance)
+ 
+     def __subclasscheck__(self, subclass):
+-        return subclass in self._subclasses or super().__subclasscheck__(subclass)
++        # Check if it's a direct subclass of AutoField
++        if super().__subclasscheck__(subclass):
++            return True
++        
++        # Check if it's one of the built-in auto field types
++        if subclass in self._subclasses:
++            return True
++            
++        # Check if it's a subclass of any of the built-in auto field types
++        return any(issubclass(subclass, sc) for sc in self._subclasses)
+ 
+ 
+ class AutoField(AutoFieldMixin, IntegerField, metaclass=AutoFieldMeta):
+diff --git a/tests/model_fields/test_autofield.py b/tests/model_fields/test_autofield.py
+index 646cd2ab0a..d608c757c2 100644
+--- a/tests/model_fields/test_autofield.py
++++ b/tests/model_fields/test_autofield.py
+@@ -33,3 +33,14 @@ class AutoFieldInheritanceTests(SimpleTestCase):
+         for field in (models.BigAutoField, models.SmallAutoField):
+             with self.subTest(field.__name__):
+                 self.assertTrue(issubclass(field, models.AutoField))
++                
++    def test_subclasses_of_builtin_autofields(self):
++        """Test that subclasses of BigAutoField and SmallAutoField are recognized as AutoField subclasses."""
++        class MyBigAutoField(models.BigAutoField):
++            pass
++            
++        class MySmallAutoField(models.SmallAutoField):
++            pass
++            
++        self.assertTrue(issubclass(MyBigAutoField, models.AutoField))
++        self.assertTrue(issubclass(MySmallAutoField, models.AutoField))

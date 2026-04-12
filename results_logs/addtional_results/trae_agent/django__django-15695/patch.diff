@@ -1,0 +1,68 @@
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index d17232e4ec..ed65c5634c 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -968,6 +968,12 @@ class RenameIndex(IndexOperation):
+     def database_backwards(self, app_label, schema_editor, from_state, to_state):
+         if self.old_fields:
+             # Backward operation with unnamed index is a no-op.
++            # But we need to update the state for potential future forwards
++            to_state.add_index(
++                app_label,
++                self.model_name_lower,
++                models.Index(fields=self.old_fields, name=self.new_name),
++            )
+             return
+ 
+         self.new_name_lower, self.old_name_lower = (
+diff --git a/tests/migrations/test_operations.py b/tests/migrations/test_operations.py
+index cfd28b1b39..73ea09d50a 100644
+--- a/tests/migrations/test_operations.py
++++ b/tests/migrations/test_operations.py
+@@ -2988,6 +2988,10 @@ class OperationTests(OperationTestBase):
+         with connection.schema_editor() as editor, self.assertNumQueries(0):
+             operation.database_backwards(app_label, editor, new_state, project_state)
+         self.assertIndexNameExists(table_name, "new_pony_test_idx")
++        # Re-apply renaming.
++        with connection.schema_editor() as editor:
++            operation.database_forwards(app_label, editor, project_state, new_state)
++        self.assertIndexNameExists(table_name, "new_pony_test_idx")
+         # Deconstruction.
+         definition = operation.deconstruct()
+         self.assertEqual(definition[0], "RenameIndex")
+@@ -5330,3 +5334,35 @@ class FieldOperationTests(SimpleTestCase):
+         self.assertIs(
+             operation.references_field("Through", "second", "migrations"), True
+         )
++        
++    def test_rename_index_unnamed_index_backward_forward(self):
++        """
++        Test that RenameIndex can be applied, unapplied, and applied again
++        when dealing with unnamed indexes. This tests the fix for #15695.
++        """
++        app_label = "test_rniuibf"
++        project_state = self.set_up_test_model(app_label, index_together=True)
++        table_name = app_label + "_pony"
++        self.assertIndexNameNotExists(table_name, "new_pony_test_idx")
++        
++        # Create operation and apply it
++        operation = migrations.RenameIndex(
++            "Pony", new_name="new_pony_test_idx", old_fields=("weight", "pink")
++        )
++        new_state = project_state.clone()
++        operation.state_forwards(app_label, new_state)
++        
++        # Apply the rename operation
++        with connection.schema_editor() as editor:
++            operation.database_forwards(app_label, editor, project_state, new_state)
++        self.assertIndexNameExists(table_name, "new_pony_test_idx")
++        
++        # Unapply the operation - this is a no-op for the database but updates the state
++        with connection.schema_editor() as editor:
++            operation.database_backwards(app_label, editor, new_state, project_state)
++        self.assertIndexNameExists(table_name, "new_pony_test_idx")
++        
++        # Re-apply the rename operation - this should not crash
++        with connection.schema_editor() as editor:
++            operation.database_forwards(app_label, editor, project_state, new_state)
++        self.assertIndexNameExists(table_name, "new_pony_test_idx")

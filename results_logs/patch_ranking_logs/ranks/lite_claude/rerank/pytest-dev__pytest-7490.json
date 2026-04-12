@@ -1,0 +1,251 @@
+{
+  "instance_id": "pytest-dev__pytest-7490",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_19.jsonl",
+    "repro_fixes": 1,
+    "repro_total_considered": 1,
+    "regression_passed": 13,
+    "occurrence": 1,
+    "normalized_occurrence": 1
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_19.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ],
+    "rank_2": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_17.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 12,
+        "occurrence": 2,
+        "normalized_occurrence": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_20.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 12,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ],
+    "rank_3": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_10.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 9,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ],
+    "rank_4": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_13.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_8.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_18.jsonl",
+        "repro_fixes": 1,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ],
+    "rank_5": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_24.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_16.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_22.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_12.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 2,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_26.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_14.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 6,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_25.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 2,
+        "normalized_occurrence": 14
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_0.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_11.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_9.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_5.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_4.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_1.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_2.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_7.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 13,
+        "occurrence": 1,
+        "normalized_occurrence": 0
+      }
+    ],
+    "rank_6": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_27.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 11,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_6.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 11,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ],
+    "rank_7": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_15.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_23.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_21.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pytest-dev__pytest-7490/dedup_patch_3.jsonl",
+        "repro_fixes": 0,
+        "repro_total_considered": 1,
+        "regression_passed": 0,
+        "occurrence": 1,
+        "normalized_occurrence": 1
+      }
+    ]
+  }
+}

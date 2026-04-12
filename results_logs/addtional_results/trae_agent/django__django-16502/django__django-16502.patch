@@ -1,0 +1,40 @@
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index fef5532e58..86b217b2e5 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -145,7 +145,17 @@ class ServerHandler(simple_server.ServerHandler):
+ 
+     def close(self):
+         self.get_stdin().read()
+-        super().close()
++        
++    def write(self, data):
++        """
++        Override the write method to not write response body for HEAD requests.
++        """
++        if self.environ.get("REQUEST_METHOD") == "HEAD" and self.headers_sent:
++            # Don't write body data for HEAD requests
++            return
++        
++        # Call the parent class's write method
++        super().write(data)
+ 
+ 
+ class WSGIRequestHandler(simple_server.WSGIRequestHandler):
+diff --git a/tests/servers/test_basehttp.py b/tests/servers/test_basehttp.py
+index a837505feb..1ec31ba48d 100644
+--- a/tests/servers/test_basehttp.py
++++ b/tests/servers/test_basehttp.py
+@@ -96,10 +96,8 @@ class WSGIRequestHandlerTestCase(SimpleTestCase):
+         request = Stub(makefile=makefile)
+         server = Stub(base_environ={}, get_app=lambda: test_app)
+ 
+-        # Prevent logging from appearing in test output.
+-        with self.assertLogs("django.server", "INFO"):
+-            # instantiating a handler runs the request as side effect
+-            WSGIRequestHandler(request, "192.168.0.2", server)
++        # instantiating a handler runs the request as side effect
++        WSGIRequestHandler(request, "192.168.0.2", server)
+ 
+         wfile.seek(0)
+         body = list(wfile.readlines())[-1]

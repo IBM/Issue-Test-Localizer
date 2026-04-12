@@ -1,0 +1,31 @@
+diff --git a/astropy/io/fits/diff.py b/astropy/io/fits/diff.py
+index 0a08301..003c7e2 100644
+--- a/astropy/io/fits/diff.py
++++ b/astropy/io/fits/diff.py
+@@ -1449,16 +1449,16 @@ class TableDataDiff(_BaseDiff):
+                 arrb.dtype, np.floating
+             ):
+                 diffs = where_not_allclose(arra, arrb, rtol=self.rtol, atol=self.atol)
+-            elif "P" in col.format:
+-                diffs = (
+-                    [
+-                        idx
+-                        for idx in range(len(arra))
+-                        if not np.allclose(
+-                            arra[idx], arrb[idx], rtol=self.rtol, atol=self.atol
+-                        )
+-                    ],
+-                )
++            elif "P" in col.format or "Q" in col.format:
++                # Handle variable-length arrays (P or Q format)
++                diff_indices = [
++                    idx
++                    for idx in range(len(arra))
++                    if not np.allclose(
++                        arra[idx], arrb[idx], rtol=self.rtol, atol=self.atol
++                    )
++                ]
++                diffs = (np.array(diff_indices),)
+             else:
+                 diffs = np.where(arra != arrb)
+ 

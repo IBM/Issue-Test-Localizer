@@ -1,0 +1,45 @@
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index b9c8e61..67d4027 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -118,13 +118,38 @@ class Media:
+     def merge(list_1, list_2):
+         """
+         Merge two lists while trying to keep the relative order of the elements.
+-        Warn if the lists have the same two elements in a different relative
+-        order.
++        Warn if the lists have elements whose relative order conflicts between
++        the two lists.
+ 
+         For static assets it can be important to have them included in the DOM
+         in a certain order. In JavaScript you may not be able to reference a
+         global or in CSS you might want to override a style.
+         """
++        # Build a map of path -> index for list_1
++        list_1_order = {path: idx for idx, path in enumerate(list_1)}
++        # Start with a copy of list_1
++        combined_list = list(list_1)
++        insert_index = len(list_1)
++        
++        # Process list_2 in reverse to maintain its relative ordering
++        for path in reversed(list_2):
++            if path in list_1_order:
++                # If the path exists in list_1, check for order conflicts
++                orig_index = list_1_order[path]
++                # Look for any paths that were in list_2 after this one but
++                # were placed before this one in list_1
++                for other_path in list_2[:list_2.index(path)]:
++                    if other_path in list_1_order and list_1_order[other_path] > orig_index:
++                        warnings.warn(
++                            'Detected duplicate Media files in an opposite order:\n'
++                            '%s\n%s' % (path, other_path),
++                            MediaOrderConflictWarning,
++                        )
++                insert_index = min(insert_index, orig_index)
++            else:
++                # If the path doesn't exist in list_1, insert it at the current position
++                combined_list.insert(insert_index, path)
++        return combined_list
+         # Start with a copy of list_1.
+         combined_list = list(list_1)
+         last_insert_index = len(list_1)

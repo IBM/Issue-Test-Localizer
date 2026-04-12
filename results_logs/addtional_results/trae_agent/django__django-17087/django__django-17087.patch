@@ -1,0 +1,108 @@
+diff --git a/django/db/migrations/serializer.py b/django/db/migrations/serializer.py
+index d88cda6e20..e74a7aeb13 100644
+--- a/django/db/migrations/serializer.py
++++ b/django/db/migrations/serializer.py
+@@ -168,7 +168,15 @@ class FunctionTypeSerializer(BaseSerializer):
+         ):
+             klass = self.value.__self__
+             module = klass.__module__
+-            return "%s.%s.%s" % (module, klass.__name__, self.value.__name__), {
++            
++            # Get the qualified name of the class from the method's qualname
++            # The qualname contains the full path to the method including nested classes
++            # e.g., "OuterClass.NestedClass.default_method"
++            method_qualname = self.value.__qualname__
++            # Extract the class path by removing the method name
++            class_path = method_qualname.rsplit(".", 1)[0]
++            
++            return "%s.%s" % (module, method_qualname), {
+                 "import %s" % module
+             }
+         # Further error checking
+diff --git a/tests/migrations/test_writer.py b/tests/migrations/test_writer.py
+index bef8f64061..8fdad3d732 100644
+--- a/tests/migrations/test_writer.py
++++ b/tests/migrations/test_writer.py
+@@ -1033,3 +1033,82 @@ class WriterTests(SimpleTestCase):
+             ValueError, "'TestModel1' must inherit from 'BaseSerializer'."
+         ):
+             MigrationWriter.register_serializer(complex, TestModel1)
++            
++    def test_serialize_nested_class_method(self):
++        """Test serialization of a class method from a nested class."""
++        class OuterClass:
++            class NestedClass:
++                VALUE = "test"
++                
++                @classmethod
++                def default_method(cls):
++                    return [cls.VALUE]
++        
++        # Get the method reference
++        method_ref = OuterClass.NestedClass.default_method
++        
++        # Serialize it
++        string, imports = MigrationWriter.serialize(method_ref)
++        
++        # Check that the serialized value includes the full path to the method
++        self.assertEqual(
++            string,
++            "migrations.test_writer.WriterTests.test_serialize_nested_class_method.<locals>.OuterClass.NestedClass.default_method"
++        )
++        self.assertEqual(imports, {"import migrations.test_writer"})
++        
++    def test_serialize_model_with_nested_class_method_default(self):
++        """
++        Test serialization of a model with a field that has a default value
++        that is a class method from a nested class.
++        
++        This test reproduces the issue described in ticket #17087.
++        """
++        # Define a model with a nested class that has a class method
++        # used as a default value for a field
++        class Profile(models.Model):
++            class Meta:
++                app_label = 'migrations'
++                
++            class Capability(models.TextChoices):
++                BASIC = ("BASIC", "Basic")
++                PROFESSIONAL = ("PROFESSIONAL", "Professional")
++                
++                @classmethod
++                def default(cls) -> list:
++                    return [cls.BASIC]
++            
++            # We can't use ArrayField directly here since it's not available in sqlite
++            # But we can simulate the same serialization issue with a regular field
++            capabilities = models.CharField(
++                max_length=100,
++                default=Capability.default
++            )
++        
++        # Get the AddField operation for the capabilities field
++        from django.db.migrations.operations.fields import AddField
++        operation = AddField(
++            model_name='profile',
++            name='capabilities',
++            field=Profile._meta.get_field('capabilities'),
++        )
++        
++        # Serialize the operation using a proper Migration class
++        from django.db.migrations import Migration
++        
++        class TestMigration(Migration):
++            operations = [operation]
++            dependencies = []
++            replaces = []
++            initial = False
++            
++        writer = MigrationWriter(TestMigration('test_migration', 'migrations'))
++        
++        # Get the serialized output
++        output = writer.as_string()
++        
++        # Check that the serialized output contains the correct path to the default method
++        self.assertIn(
++            "migrations.test_writer.WriterTests.test_serialize_model_with_nested_class_method_default.<locals>.Profile.Capability.default",
++            output
++        )

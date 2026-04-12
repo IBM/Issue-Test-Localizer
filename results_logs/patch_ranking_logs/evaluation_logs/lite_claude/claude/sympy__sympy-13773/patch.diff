@@ -1,0 +1,21 @@
+diff --git a/sympy/matrices/dense.py b/sympy/matrices/dense.py
+index 8faef3a..6d83b14 100644
+--- a/sympy/matrices/dense.py
++++ b/sympy/matrices/dense.py
+@@ -276,6 +276,16 @@ class DenseMatrix(MatrixBase):
+         mat = [a*other for a in self._mat]
+         return self._new(self.rows, self.cols, mat, copy=False)
+ 
++    def __matmul__(self, other):
++        if not getattr(other, 'is_Matrix', False):
++            raise ValueError("Scalar operands are not allowed, use '*' instead")
++        return self._eval_matrix_mul(other)
++
++    def __rmatmul__(self, other):
++        if not getattr(other, 'is_Matrix', False):
++            raise ValueError("Scalar operands are not allowed, use '*' instead")
++        return NotImplemented
++
+     def _eval_tolist(self):
+         mat = list(self._mat)
+         cols = self.cols

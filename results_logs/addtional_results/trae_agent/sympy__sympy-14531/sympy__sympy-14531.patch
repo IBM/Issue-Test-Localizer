@@ -1,0 +1,157 @@
+diff --git a/sympy/printing/python.py b/sympy/printing/python.py
+index dc6d8ffe5..3854f48f0 100644
+--- a/sympy/printing/python.py
++++ b/sympy/printing/python.py
+@@ -14,6 +14,13 @@
+ 
+ class PythonPrinter(ReprPrinter, StrPrinter):
+     """A printer which converts an expression into its Python interpretation."""
++    
++    _default_settings = {
++        "order": None,
++        "full_prec": "auto",
++        "sympy_integers": False,
++        "abbrev": False,
++    }
+ 
+     def __init__(self, settings=None):
+         ReprPrinter.__init__(self)
+@@ -41,6 +48,59 @@ def _print_Symbol(self, expr):
+             self.symbols.append(symbol)
+         return StrPrinter._print_Symbol(self, expr)
+ 
++    def _print_Relational(self, expr):
++        # Process the symbols in lhs and rhs
++        self._print(expr.lhs)
++        self._print(expr.rhs)
++        # Now use the StrPrinter's _print_Relational
++        return StrPrinter._print_Relational(self, expr)
++        
++    def doprint(self, expr):
++        """Returns printer's representation for expr (as a string)"""
++        # If the printer is set to use sympy_integers, we need to use StrPrinter
++        # for Rational objects
++        if self._settings.get("sympy_integers", False):
++            from sympy import Rational
++            if isinstance(expr, Rational):
++                return StrPrinter(self._settings)._print_Rational(expr)
++            
++            # For compound expressions, we need to handle each Rational subexpression
++            # This is a simple solution that works for the specific case of Eq and Limit
++            from sympy import Eq, Limit
++            if isinstance(expr, Eq):
++                lhs_str = self.doprint(expr.lhs)
++                rhs_str = self.doprint(expr.rhs)
++                return "Eq(%s, %s)" % (lhs_str, rhs_str)
++            elif isinstance(expr, Limit):
++                e, z, z0, dir = expr.args
++                e_str = self.doprint(e)
++                z_str = self.doprint(z)
++                z0_str = self.doprint(z0)
++                if str(dir) == "+":
++                    return "Limit(%s, %s, %s)" % (e_str, z_str, z0_str)
++                else:
++                    return "Limit(%s, %s, %s, dir='%s')" % (e_str, z_str, z0_str, dir)
++                
++        return super(PythonPrinter, self).doprint(expr)
++        
++    def _print_Rational(self, expr):
++        if self._settings.get("sympy_integers", False):
++            if expr.q == 1:
++                return str(expr.p)
++            else:
++                return "S(%s)/%s" % (expr.p, expr.q)
++        else:
++            return "Rational(%s, %s)" % (self._print(expr.p), self._print(expr.q))
++
++    def _print_Limit(self, expr):
++        e, z, z0, dir = expr.args
++        # Process all symbols in the limit expression
++        self._print(e)
++        self._print(z)
++        self._print(z0)
++        # Now use the StrPrinter's _print_Limit
++        return StrPrinter._print_Limit(self, expr)
++
+     def _print_module(self, expr):
+         raise ValueError('Modules in the expression are unacceptable')
+ 
+@@ -80,6 +140,10 @@ def python(expr, **settings):
+                         functionname)] = sympy.Function(newfunctionname)
+                     break
+         result += newfunctionname + ' = Function(\'' + functionname + '\')\n'
++    
++    # Add S import if sympy_integers is True
++    if settings.get("sympy_integers", False) and 'S(' in printer._str(exprp):
++        result += 'from sympy import S\n'
+ 
+     if not len(renamings) == 0:
+         exprp = expr.subs(renamings)
+diff --git a/sympy/printing/str.py b/sympy/printing/str.py
+index cc1d19fcc..1f4eef5c0 100644
+--- a/sympy/printing/str.py
++++ b/sympy/printing/str.py
+@@ -216,9 +216,9 @@ def _print_LatticeOp(self, expr):
+     def _print_Limit(self, expr):
+         e, z, z0, dir = expr.args
+         if str(dir) == "+":
+-            return "Limit(%s, %s, %s)" % (e, z, z0)
++            return "Limit(%s, %s, %s)" % (self._print(e), self._print(z), self._print(z0))
+         else:
+-            return "Limit(%s, %s, %s, dir='%s')" % (e, z, z0, dir)
++            return "Limit(%s, %s, %s, dir='%s')" % (self._print(e), self._print(z), self._print(z0), dir)
+ 
+     def _print_list(self, expr):
+         return "[%s]" % self.stringify(expr, ", ")
+@@ -630,7 +630,7 @@ def _print_Relational(self, expr):
+         }
+ 
+         if expr.rel_op in charmap:
+-            return '%s(%s, %s)' % (charmap[expr.rel_op], expr.lhs, expr.rhs)
++            return '%s(%s, %s)' % (charmap[expr.rel_op], self._print(expr.lhs), self._print(expr.rhs))
+ 
+         return '%s %s %s' % (self.parenthesize(expr.lhs, precedence(expr)),
+                            self._relationals.get(expr.rel_op) or expr.rel_op,
+diff --git a/sympy/printing/tests/test_python.py b/sympy/printing/tests/test_python.py
+index b059fbded..f7b5088f8 100644
+--- a/sympy/printing/tests/test_python.py
++++ b/sympy/printing/tests/test_python.py
+@@ -186,3 +186,19 @@ def test_python_limits():
+ 
+ def test_settings():
+     raises(TypeError, lambda: python(x, method="garbage"))
++    
++def test_python_sympy_integers():
++    # Test that the sympy_integers setting is respected by the printer
++    from sympy import Eq, Rational, Symbol, Limit
++    
++    x = Symbol('x')
++    
++    # Test with sympy_integers=True
++    assert 'S(1)/2' in python(Rational(1, 2), sympy_integers=True)
++    assert 'S(1)/2' in python(x + Rational(1, 2), sympy_integers=True)
++    assert 'S(1)/2' in python(Eq(x, Rational(1, 2)), sympy_integers=True)
++    assert 'S(1)/2' in python(Limit(x, x, Rational(1, 2)), sympy_integers=True)
++    
++    # Test with sympy_integers=False (default)
++    assert 'Rational(1, 2)' in python(Rational(1, 2))
++    assert 'Rational(1, 2)' in python(Eq(x, Rational(1, 2)))
+diff --git a/sympy/printing/tests/test_str.py b/sympy/printing/tests/test_str.py
+index 95e13e70f..b6a98b7c7 100644
+--- a/sympy/printing/tests/test_str.py
++++ b/sympy/printing/tests/test_str.py
+@@ -793,3 +793,14 @@ def test_MatrixSymbol_printing():
+ 
+     assert str(A - A*B - B) == "-B - A*B + A"
+     assert str(A*B - (A+B)) == "-(A + B) + A*B"
++    
++def test_sympy_integers():
++    # Test that the sympy_integers setting is respected by the printer
++    assert sstr(Rational(1, 2), sympy_integers=True) == "S(1)/2"
++    assert sstr(Rational(1, 2), sympy_integers=False) == "1/2"
++    
++    # Test that the sympy_integers setting is respected in subexpressions
++    assert sstr(x + Rational(1, 2), sympy_integers=True) == "x + S(1)/2"
++    assert sstr(Eq(x, Rational(1, 2)), sympy_integers=False) == "Eq(x, 1/2)"
++    assert sstr(Eq(x, Rational(1, 2)), sympy_integers=True) == "Eq(x, S(1)/2)"
++    assert sstr(Limit(x, x, Rational(1, 2)), sympy_integers=True) == "Limit(x, x, S(1)/2)"

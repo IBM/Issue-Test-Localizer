@@ -1,0 +1,13 @@
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 1e17b93..f94e9aa 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -3441,6 +3441,8 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+ 
+         """
+         stacking_dims = tuple(dim for dim in self.dims if dim not in sample_dims)
++        if not stacking_dims:
++            stacking_dims = (new_dim,)
+ 
+         for variable in self:
+             dims = self[variable].dims

@@ -1,0 +1,74 @@
+{
+  "instance_id": "pallets__flask-5014",
+  "container_id": "564b9dabe6cbbfc5a1afa6e517b7884653ff182d6c8371cf8c7416fe4d1091be",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_0.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_1.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_2.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_3.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_4.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_5.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pallets__flask-5014/dedup_patch_6.jsonl",
+        "inst": "pallets__flask-5014",
+        "passed": 0,
+        "failed": 0
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 7
+  },
+  "reproduction": {
+    "tests/test_blueprints.py::test_unique_blueprint_names#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_blueprints.py::test_unique_blueprint_names#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_blueprints.py::test_blueprint_renaming#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_blueprints.py::test_unique_blueprint_names#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_blueprints.py::test_unique_blueprint_names#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

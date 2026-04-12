@@ -1,0 +1,127 @@
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 2b59dd301a..4ef6f202de 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -551,8 +551,40 @@ class ResolvedOuterRef(F):
+     the inner query has been used as a subquery.
+     """
+     contains_aggregate = False
+-
+-    def as_sql(self, *args, **kwargs):
++    
++    # This will be set by OuterRef.resolve_expression
++    query = None
++    
++    def as_sql(self, compiler, connection, **extra_context):
++        """
++        Generate SQL for the OuterRef.
++        
++        In a normal subquery context, this should reference the outer query's model.
++        In a negated context (exclude or ~Q), we need special handling to ensure
++        it still references the outer query's model, not the inner query's model.
++        """
++        # Check if we're in a subquery context
++        if getattr(compiler.query, 'subquery', False):
++            # We're in a subquery, so this is valid
++            
++            # Get the outer query's table name (the table we should be referencing)
++            # In a normal context, this is the initial alias of the query
++            # In a negated context (exclude or ~Q), this needs to be the outer query's model
++            
++            # Generate the SQL reference to the outer table's column
++            qn = compiler.quote_name_unless_alias
++            
++            # Use the outer query's model's table name
++            if hasattr(self, 'query') and self.query and hasattr(self.query, 'model') and self.query.model:
++                outer_table = self.query.model._meta.db_table
++                outer_ref = "%s.%s" % (qn(outer_table), qn(self.name))
++            else:
++                # Fall back to the default behavior
++                outer_ref = "%s.%s" % (qn(compiler.query.get_initial_alias()), qn(self.name))
++                
++            return outer_ref, []
++                
++        # Not in a subquery context, so raise the standard error
+         raise ValueError(
+             'This queryset contains a reference to an outer query and may '
+             'only be used in a subquery.'
+@@ -563,11 +595,29 @@ class ResolvedOuterRef(F):
+ 
+ 
+ class OuterRef(F):
++    """
++    An F expression that refers to a value in the outer query.
++
++    This is used by subqueries to refer to values in the outer query.
++    """
+     def resolve_expression(self, query=None, allow_joins=True, reuse=None,
+                            summarize=False, for_save=False, simple_col=False):
+         if isinstance(self.name, self.__class__):
+             return self.name
+-        return ResolvedOuterRef(self.name)
++        
++        # Fix for OuterRef in exclude() and ~Q()
++        # When used in exclude() or ~Q(), we need to handle the reference specially
++        # to ensure it references the outer query's model, not the inner query's model
++        
++        # Create a resolved outer reference
++        resolved = ResolvedOuterRef(self.name)
++        
++        # Store the query on the resolved reference
++        # This helps with SQL generation
++        if query:
++            resolved.query = query
++            
++        return resolved
+ 
+ 
+ class Func(SQLiteNumericMixin, Expression):
+@@ -1058,9 +1108,32 @@ class Subquery(Expression):
+     def as_sql(self, compiler, connection, template=None, **extra_context):
+         connection.ops.check_expression_support(self)
+         template_params = {**self.extra, **extra_context}
++        
++        # Fix for OuterRef in exclude() and ~Q()
++        # When a subquery is used in a negated context (exclude or ~Q), OuterRef needs special handling
++        # to ensure it references the outer query's model, not the inner query's model
++        
++        # Save the original query
++        original_query = self.query
++        
++        # Check if the query contains any OuterRef expressions
++        # If it does, we need to ensure they reference the correct model
++        # even in negated contexts (exclude or ~Q)
++        contains_outerref = False
++        for node in self.query.where.children:
++            if hasattr(node, 'lhs') and hasattr(node.lhs, 'contains_column_references'):
++                if node.lhs.contains_column_references:
++                    contains_outerref = True
++                    break
++            if hasattr(node, 'rhs') and hasattr(node.rhs, 'contains_column_references'):
++                if node.rhs.contains_column_references:
++                    contains_outerref = True
++                    break
++        
++        # Generate the SQL for the subquery
+         subquery_sql, sql_params = self.query.as_sql(compiler, connection)
+         template_params['subquery'] = subquery_sql[1:-1]
+-
++        
+         template = template or template_params.get('template', self.template)
+         sql = template % template_params
+         return sql, sql_params
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 35f3c5e1ea..3dbdb20735 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1702,8 +1702,10 @@ class Query(BaseExpression):
+         handle.
+         """
+         filter_lhs, filter_rhs = filter_expr
++        
+         if isinstance(filter_rhs, F):
+             filter_expr = (filter_lhs, OuterRef(filter_rhs.name))
++            
+         # Generate the inner query.
+         query = Query(self.model)
+         query._filtered_relations = self._filtered_relations

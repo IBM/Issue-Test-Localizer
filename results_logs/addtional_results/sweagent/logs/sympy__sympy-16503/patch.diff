@@ -1,0 +1,43 @@
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 7a3de33522..08732e46e3 100644
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -584,12 +584,16 @@ def adjust(s, wid=None, how='<^>'):
+         if f.is_Add:  # add parens
+             prettyF = prettyForm(*prettyF.parens())
+ 
++        # Save the original height of the function for baseline decision
++        original_height = prettyF.height()
++
+         H = prettyF.height() + 2
+ 
+         # \sum \sum \sum ...
+         first = True
+         max_upper = 0
+         sign_height = 0
++        function_position = 0  # Track where the function appears in the sum structure
+ 
+         for lim in expr.limits:
+             if len(lim) == 3:
+@@ -612,6 +616,7 @@ def adjust(s, wid=None, how='<^>'):
+ 
+             if first:
+                 sign_height = prettySign.height()
++                function_position = d  # Save the position where function appears
+ 
+             prettySign = prettyForm(*prettySign.above(prettyUpper))
+             prettySign = prettyForm(*prettySign.below(prettyLower))
+@@ -629,7 +634,12 @@ def adjust(s, wid=None, how='<^>'):
+             # put the present prettyF to the right
+             prettyF = prettyForm(*prettySign.right(prettyF))
+ 
+-        prettyF.baseline = max_upper + sign_height//2
++        # For simple functions (height 1), align the function properly in additions
++        # For complex functions, keep the original centering behavior
++        if original_height == 1:
++            prettyF.baseline = max_upper + function_position
++        else:
++            prettyF.baseline = max_upper + sign_height//2
+         prettyF.binding = prettyForm.MUL
+         return prettyF
+ 

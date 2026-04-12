@@ -1,0 +1,69 @@
+diff --git a/sphinx/ext/napoleon/docstring.py b/sphinx/ext/napoleon/docstring.py
+index 11409e6f6..99276c4d8 100644
+--- a/sphinx/ext/napoleon/docstring.py
++++ b/sphinx/ext/napoleon/docstring.py
+@@ -225,7 +225,8 @@ class GoogleDocstring:
+             line = self._line_iter.peek()
+         return lines
+ 
+-    def _consume_field(self, parse_type: bool = True, prefer_type: bool = False
++    def _consume_field(self, parse_type: bool = True, prefer_type: bool = False,
++                       escape_args: bool = True
+                        ) -> Tuple[str, str, List[str]]:
+         line = next(self._line_iter)
+ 
+@@ -238,7 +239,8 @@ class GoogleDocstring:
+                 _name = match.group(1)
+                 _type = match.group(2)
+ 
+-        _name = self._escape_args_and_kwargs(_name)
++        if escape_args:
++            _name = self._escape_args_and_kwargs(_name)
+ 
+         if prefer_type and not _type:
+             _type, _name = _name, _type
+@@ -247,12 +249,13 @@ class GoogleDocstring:
+         _descs = self.__class__(_descs, self._config).lines()
+         return _name, _type, _descs
+ 
+-    def _consume_fields(self, parse_type: bool = True, prefer_type: bool = False
++    def _consume_fields(self, parse_type: bool = True, prefer_type: bool = False,
++                        escape_args: bool = True
+                         ) -> List[Tuple[str, str, List[str]]]:
+         self._consume_empty()
+         fields = []
+         while not self._is_section_break():
+-            _name, _type, _desc = self._consume_field(parse_type, prefer_type)
++            _name, _type, _desc = self._consume_field(parse_type, prefer_type, escape_args)
+             if _name or _type or _desc:
+                 fields.append((_name, _type, _desc,))
+         return fields
+@@ -577,7 +580,7 @@ class GoogleDocstring:
+ 
+     def _parse_attributes_section(self, section: str) -> List[str]:
+         lines = []
+-        for _name, _type, _desc in self._consume_fields():
++        for _name, _type, _desc in self._consume_fields(escape_args=False):
+             if self._config.napoleon_use_ivar:
+                 _name = self._qualify_name(_name, self._obj)
+                 field = ':ivar %s: ' % _name
+@@ -876,7 +879,8 @@ class NumpyDocstring(GoogleDocstring):
+         self._directive_sections = ['.. index::']
+         super().__init__(docstring, config, app, what, name, obj, options)
+ 
+-    def _consume_field(self, parse_type: bool = True, prefer_type: bool = False
++    def _consume_field(self, parse_type: bool = True, prefer_type: bool = False,
++                       escape_args: bool = True
+                        ) -> Tuple[str, str, List[str]]:
+         line = next(self._line_iter)
+         if parse_type:
+@@ -884,7 +888,8 @@ class NumpyDocstring(GoogleDocstring):
+         else:
+             _name, _type = line, ''
+         _name, _type = _name.strip(), _type.strip()
+-        _name = self._escape_args_and_kwargs(_name)
++        if escape_args:
++            _name = self._escape_args_and_kwargs(_name)
+ 
+         if prefer_type and not _type:
+             _type, _name = _name, _type

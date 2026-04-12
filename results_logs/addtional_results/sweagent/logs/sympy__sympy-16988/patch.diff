@@ -1,0 +1,46 @@
+diff --git a/sympy/sets/sets.py b/sympy/sets/sets.py
+index 03cf57a30b..f1f342b6ff 100644
+--- a/sympy/sets/sets.py
++++ b/sympy/sets/sets.py
+@@ -1070,9 +1070,24 @@ def __new__(cls, *args, **kwargs):
+ 
+         # Reduce sets using known rules
+         if evaluate:
+-            args = list(cls._new_args_filter(args))
++            # Remove duplicates while preserving order
++            filtered_args = list(cls._new_args_filter(args))
++            seen = set()
++            args = []
++            for arg in filtered_args:
++                if arg not in seen:
++                    seen.add(arg)
++                    args.append(arg)
+             return simplify_union(args)
+ 
++        # Remove duplicates even in non-evaluate case for consistency
++        filtered_args = list(cls._new_args_filter(args))
++        seen = set()
++        args = []
++        for arg in filtered_args:
++            if arg not in seen:
++                seen.add(arg)
++                args.append(arg)
+         args = list(ordered(args, Set._infimum_key))
+ 
+         obj = Basic.__new__(cls, *args)
+@@ -1264,7 +1279,14 @@ def __new__(cls, *args, **kwargs):
+ 
+         # Reduce sets using known rules
+         if evaluate:
+-            args = list(cls._new_args_filter(args))
++            # Remove duplicates while preserving order
++            filtered_args = list(cls._new_args_filter(args))
++            seen = set()
++            args = []
++            for arg in filtered_args:
++                if arg not in seen:
++                    seen.add(arg)
++                    args.append(arg)
+             return simplify_intersection(args)
+ 
+         args = list(ordered(args, Set._infimum_key))

@@ -1,0 +1,65 @@
+{
+  "instance_id": "django__django-15789",
+  "selected_patch": {
+    "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_0.jsonl",
+    "repro_fixes": 9,
+    "repro_total_considered": 10,
+    "regression_passed": 3,
+    "occurrence": 5,
+    "normalized_occurrence": 40
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_0.jsonl",
+        "repro_fixes": 9,
+        "repro_total_considered": 10,
+        "regression_passed": 3,
+        "occurrence": 5,
+        "normalized_occurrence": 40
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_2.jsonl",
+        "repro_fixes": 9,
+        "repro_total_considered": 10,
+        "regression_passed": 3,
+        "occurrence": 1,
+        "normalized_occurrence": 40
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_5.jsonl",
+        "repro_fixes": 9,
+        "repro_total_considered": 10,
+        "regression_passed": 3,
+        "occurrence": 1,
+        "normalized_occurrence": 40
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_1.jsonl",
+        "repro_fixes": 9,
+        "repro_total_considered": 10,
+        "regression_passed": 3,
+        "occurrence": 2,
+        "normalized_occurrence": 40
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_4.jsonl",
+        "repro_fixes": 9,
+        "repro_total_considered": 10,
+        "regression_passed": 3,
+        "occurrence": 7,
+        "normalized_occurrence": 40
+      }
+    ],
+    "rank_2": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-15789/dedup_patch_3.jsonl",
+        "repro_fixes": 5,
+        "repro_total_considered": 10,
+        "regression_passed": 3,
+        "occurrence": 24,
+        "normalized_occurrence": 40
+      }
+    ]
+  }
+}

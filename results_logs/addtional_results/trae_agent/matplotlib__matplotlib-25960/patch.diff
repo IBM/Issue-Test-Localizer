@@ -1,0 +1,31 @@
+diff --git a/lib/matplotlib/figure.py b/lib/matplotlib/figure.py
+index dab2bc4a5a..eb865e0ae8 100644
+--- a/lib/matplotlib/figure.py
++++ b/lib/matplotlib/figure.py
+@@ -31,6 +31,7 @@ list of examples) .  More information about Figures can be found at
+ """
+ 
+ from contextlib import ExitStack
++import copy
+ import inspect
+ import itertools
+ import logging
+@@ -1581,6 +1582,18 @@ default: %(va)s
+             relative height of ``height_ratios[i] / sum(height_ratios)``.
+             If not given, all rows will have the same height.
+         """
++        # Update the subplot parameters with the provided wspace and hspace
++        # Only if the figure doesn't use a layout engine that's incompatible with subplots_adjust
++        if (wspace is not None or hspace is not None) and not hasattr(self, '_layoutbox'):
++            # Create a custom SubplotParams object with our wspace/hspace values
++            if hasattr(self, 'subplotpars'):
++                subplotpars = copy.copy(self.subplotpars)
++                if wspace is not None:
++                    subplotpars.wspace = wspace
++                if hspace is not None:
++                    subplotpars.hspace = hspace
++                self.subplotpars = subplotpars
++            
+         gs = GridSpec(nrows=nrows, ncols=ncols, figure=self,
+                       wspace=wspace, hspace=hspace,
+                       width_ratios=width_ratios,

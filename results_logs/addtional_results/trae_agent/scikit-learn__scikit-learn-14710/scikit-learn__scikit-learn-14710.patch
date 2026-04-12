@@ -1,0 +1,33 @@
+diff --git a/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py b/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py
+index ad6a5a8ca..7776f25e2 100644
+--- a/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py
++++ b/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py
+@@ -426,13 +426,26 @@ class BaseHistGradientBoosting(BaseEstimator, ABC):
+ 
+         Scores are computed on validation data or on training data.
+         """
++        # For classification with string targets, we need to convert the integer-encoded
++        # targets back to their original form before scoring
++        if hasattr(self, 'classes_'):
++            y_small_train_for_score = self.classes_[y_small_train.astype(int)]
++        else:
++            y_small_train_for_score = y_small_train
++            
+         self.train_score_.append(
+-            self.scorer_(self, X_binned_small_train, y_small_train)
++            self.scorer_(self, X_binned_small_train, y_small_train_for_score)
+         )
+ 
+         if self._use_validation_data:
++            # Same conversion for validation data
++            if hasattr(self, 'classes_'):
++                y_val_for_score = self.classes_[y_val.astype(int)]
++            else:
++                y_val_for_score = y_val
++                
+             self.validation_score_.append(
+-                self.scorer_(self, X_binned_val, y_val)
++                self.scorer_(self, X_binned_val, y_val_for_score)
+             )
+             return self._should_stop(self.validation_score_)
+         else:

@@ -1,0 +1,26 @@
+diff --git a/sphinx/domains/std.py b/sphinx/domains/std.py
+index 4bde57930..5535b5690 100644
+--- a/sphinx/domains/std.py
++++ b/sphinx/domains/std.py
+@@ -852,8 +852,19 @@ class StandardDomain(Domain):
+             if fignumber is None:
+                 return contnode
+         except ValueError:
+-            logger.warning(__("no number is assigned for %s: %s"), figtype, labelid,
+-                           location=node)
++            # Check if the node should have a number assigned
++            if figtype == 'section':
++                # For sections, only warn if the document should have numbered sections
++                # but this specific section doesn't have a number
++                if docname in env.toc_secnumbers:
++                    logger.warning(__("no number is assigned for %s: %s"), figtype, labelid,
++                                   location=node)
++            else:
++                # For other enumerable nodes (figures, tables, code-blocks),
++                # only warn if the node has a caption/title (i.e., should be numbered)
++                if self.get_numfig_title(target_node):
++                    logger.warning(__("no number is assigned for %s: %s"), figtype, labelid,
++                                   location=node)
+             return contnode
+ 
+         try:

@@ -1,0 +1,94 @@
+diff --git a/sphinx/writers/html.py b/sphinx/writers/html.py
+index 30db1c2..d1480a0 100644
+--- a/sphinx/writers/html.py
++++ b/sphinx/writers/html.py
+@@ -494,8 +494,35 @@ class HTMLTranslator(SphinxTranslator, BaseTranslator):
+     # overwritten
+     def visit_literal(self, node: Element) -> None:
+         if 'kbd' in node['classes']:
+-            self.body.append(self.starttag(node, 'kbd', '',
++            text = node.astext()
++            # Split only if it's a compound keystroke (contains more than one key)
++            if any(sep in text for sep in ['-', '+', '^']) and len(text.strip()) > 1:
++                parts = []
++                current = ''
++                for char in text:
++                    if char in ['-', '+', '^']:
++                        if current:
++                            parts.append(current)
++                        parts.append(char)
++                        current = ''
++                    else:
++                        current += char
++                if current:
++                    parts.append(current)
++                
++                self.body.append(self.starttag(node, 'kbd', '',
+                                            CLASS='docutils literal notranslate'))
++                for i, part in enumerate(parts):
++                    if part in ['-', '+', '^']:
++                        self.body.append(part)
++                    else:
++                        self.body.append('<kbd class="docutils literal notranslate">%s</kbd>' % 
++                                       self.encode(part.strip()))
++            else:
++                # Single keystroke - no splitting needed
++                self.body.append(self.starttag(node, 'kbd', '',
++                                           CLASS='docutils literal notranslate'))
++                self.body.append(self.encode(text))
+         else:
+             self.body.append(self.starttag(node, 'code', '',
+                                            CLASS='docutils literal notranslate'))
+@@ -841,4 +868,4 @@ class HTMLTranslator(SphinxTranslator, BaseTranslator):
+             depart(self, node)
+ 
+     def unknown_visit(self, node: Node) -> None:
+-        raise NotImplementedError('Unknown node: ' + node.__class__.__name__)
++        raise NotImplementedError('Unknown node: ' + node.__class__.__name__)
+diff --git a/sphinx/writers/html5.py b/sphinx/writers/html5.py
+index d9975c6..f522d0c 100644
+--- a/sphinx/writers/html5.py
++++ b/sphinx/writers/html5.py
+@@ -445,8 +445,35 @@ class HTML5Translator(SphinxTranslator, BaseTranslator):
+     # overwritten
+     def visit_literal(self, node: Element) -> None:
+         if 'kbd' in node['classes']:
+-            self.body.append(self.starttag(node, 'kbd', '',
++            text = node.astext()
++            # Split only if it's a compound keystroke (contains more than one key)
++            if any(sep in text for sep in ['-', '+', '^']) and len(text.strip()) > 1:
++                parts = []
++                current = ''
++                for char in text:
++                    if char in ['-', '+', '^']:
++                        if current:
++                            parts.append(current)
++                        parts.append(char)
++                        current = ''
++                    else:
++                        current += char
++                if current:
++                    parts.append(current)
++                
++                self.body.append(self.starttag(node, 'kbd', '',
+                                            CLASS='docutils literal notranslate'))
++                for i, part in enumerate(parts):
++                    if part in ['-', '+', '^']:
++                        self.body.append(part)
++                    else:
++                        self.body.append('<kbd class="docutils literal notranslate">%s</kbd>' % 
++                                       self.encode(part.strip()))
++            else:
++                # Single keystroke - no splitting needed
++                self.body.append(self.starttag(node, 'kbd', '',
++                                           CLASS='docutils literal notranslate'))
++                self.body.append(self.encode(text))
+         else:
+             self.body.append(self.starttag(node, 'code', '',
+                                            CLASS='docutils literal notranslate'))
+@@ -789,4 +816,4 @@ class HTML5Translator(SphinxTranslator, BaseTranslator):
+             depart(self, node)
+ 
+     def unknown_visit(self, node: Node) -> None:
+-        raise NotImplementedError('Unknown node: ' + node.__class__.__name__)
++        raise NotImplementedError('Unknown node: ' + node.__class__.__name__)

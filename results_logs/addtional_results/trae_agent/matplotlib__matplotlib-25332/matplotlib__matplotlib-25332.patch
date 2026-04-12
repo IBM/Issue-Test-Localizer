@@ -1,0 +1,126 @@
+diff --git a/lib/matplotlib/cbook.py b/lib/matplotlib/cbook.py
+index c9699b2e21..a253dc61af 100644
+--- a/lib/matplotlib/cbook.py
++++ b/lib/matplotlib/cbook.py
+@@ -845,6 +845,41 @@ class Grouper:
+         self.clean()
+         siblings = self._mapping.get(weakref.ref(a), [weakref.ref(a)])
+         return [x() for x in siblings]
++        
++    def __reduce__(self):
++        """
++        Enable pickling support.
++        
++        When unpickling, recreate the Grouper and add all the objects that
++        were in the original Grouper. Note that we only pickle strong references
++        to the objects, not the weak references themselves.
++        """
++        # Get all objects in the grouper as strong references
++        groups = []
++        for group in self:
++            # Only include non-None objects (in case weak references are dead)
++            groups.append([obj for obj in group if obj is not None])
++        
++        # Return a tuple of (constructor, constructor arguments)
++        return (_grouper_from_groups, (groups,))
++        
++def _grouper_from_groups(groups):
++    """
++    Helper function to recreate a Grouper from a list of groups.
++    
++    This is used by Grouper.__reduce__ for pickling support.
++    """
++    g = Grouper()
++    
++    # For each group, join all objects in that group
++    for group in groups:
++        if not group:  # Skip empty groups
++            continue
++        first, *rest = group
++        if rest:  # Only call join if there are objects to join
++            g.join(first, *rest)
++    
++    return g
+ 
+ 
+ class GrouperView:
+diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
+index ec6bdcc2fe..b3ec37508e 100644
+--- a/lib/matplotlib/tests/test_pickle.py
++++ b/lib/matplotlib/tests/test_pickle.py
+@@ -282,3 +282,75 @@ def test_dynamic_norm():
+ def test_vertexselector():
+     line, = plt.plot([0, 1], picker=True)
+     pickle.loads(pickle.dumps(VertexSelector(line)))
++
++
++def test_pickle_after_align_labels():
++    """Test that a figure can be pickled after calling align_labels()."""
++    # Create a simple figure with two subplots
++    fig = plt.figure()
++    ax1 = fig.add_subplot(211)
++    ax2 = fig.add_subplot(212)
++    ax1.plot([0, 1, 2, 3, 4], [40000, 4300, 4500, 4700, 4800])
++    ax1.set_ylabel('speed')
++    ax2.plot([0, 1, 2, 3, 4], [10, 11, 12, 13, 14])
++    ax2.set_ylabel('acc')
++    
++    # Call align_labels
++    fig.align_labels()
++    
++    # Pickle and unpickle the figure
++    pickle_data = pickle.dumps(fig)
++    fig_unpickled = pickle.loads(pickle_data)
++    
++    # Check that the unpickled figure has the same number of axes
++    assert len(fig_unpickled.axes) == len(fig.axes)
++    
++    # Check that the unpickled figure has the same _align_label_groups structure
++    assert set(fig_unpickled._align_label_groups.keys()) == set(fig._align_label_groups.keys())
++    
++    # Close the figures to avoid memory leaks
++    plt.close(fig)
++    plt.close(fig_unpickled)
++
++
++def test_pickle_roundtrip_with_align_labels():
++    """Test that a figure with aligned labels can be pickled and unpickled."""
++    # Create a figure
++    fig = plt.figure()
++    ax1 = fig.add_subplot(211)
++    ax2 = fig.add_subplot(212)
++    ax1.plot([0, 1, 2, 3, 4], [40000, 4300, 4500, 4700, 4800])
++    ax1.set_ylabel('speed')
++    ax2.plot([0, 1, 2, 3, 4], [10, 11, 12, 13, 14])
++    ax2.set_ylabel('acc')
++    
++    # Align labels
++    fig.align_labels()
++    
++    # Get the positions of the labels before pickling
++    y1_pos_before = ax1.yaxis.label.get_position()
++    y2_pos_before = ax2.yaxis.label.get_position()
++    
++    # Pickle and unpickle the figure
++    pickle_data = pickle.dumps(fig)
++    fig_unpickled = pickle.loads(pickle_data)
++    
++    # Get the unpickled axes
++    ax1_unpickled = fig_unpickled.axes[0]
++    ax2_unpickled = fig_unpickled.axes[1]
++    
++    # Get the positions of the labels after unpickling
++    y1_pos_after = ax1_unpickled.yaxis.label.get_position()
++    y2_pos_after = ax2_unpickled.yaxis.label.get_position()
++    
++    # Check that the label positions are preserved
++    assert y1_pos_before == y1_pos_after
++    assert y2_pos_before == y2_pos_after
++    
++    # Check that the _align_label_groups attribute exists and has the expected structure
++    assert hasattr(fig_unpickled, '_align_label_groups')
++    assert set(fig_unpickled._align_label_groups.keys()) == {'x', 'y'}
++    
++    # Close the figures to avoid memory leaks
++    plt.close(fig)
++    plt.close(fig_unpickled)

@@ -1,0 +1,37 @@
+diff --git a/astropy/io/fits/card.py b/astropy/io/fits/card.py
+index 1b3285ddc..8aeee4948 100644
+--- a/astropy/io/fits/card.py
++++ b/astropy/io/fits/card.py
+@@ -768,7 +768,31 @@ class Card(_Verify):
+         if m.group("bool") is not None:
+             value = m.group("bool") == "T"
+         elif m.group("strg") is not None:
+-            value = re.sub("''", "'", m.group("strg"))
++            # The issue is that when a string with double quotes ('') is split across
++            # multiple cards, the double quotes are not correctly preserved when the
++            # card is parsed back using fromstring().
++            
++            # Get the original string from the regex match
++            strg = m.group("strg")
++            
++            # Check if this is a multi-card string (has CONTINUE parts)
++            if len(self._image) > CARD_LENGTH and "CONTINUE" in self._image:
++                # For multi-card strings with double quotes, we need to handle them specially
++                
++                # Check for the specific pattern that causes issues with triple quotes
++                if "'''" in strg:
++                    # This is the pattern where triple quotes need to be fixed to double quotes
++                    value = strg.replace("'''", "''")
++                elif "''" in strg:
++                    # For other cases with double quotes, create a new Card to get correct handling
++                    temp_card = Card(self.keyword, strg)
++                    value = temp_card.value
++                else:
++                    # For strings without double quotes, use the standard replacement
++                    value = re.sub("''", "'", strg)
++            else:
++                # For single-card strings, the standard behavior is fine
++                value = re.sub("''", "'", strg)
+         elif m.group("numr") is not None:
+             #  Check for numbers with leading 0s.
+             numr = self._number_NFSC_RE.match(m.group("numr"))

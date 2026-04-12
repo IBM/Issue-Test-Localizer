@@ -1,0 +1,37 @@
+diff --git a/sympy/simplify/cse_main.py b/sympy/simplify/cse_main.py
+index fa99708..1f4c6b4 100644
+--- a/sympy/simplify/cse_main.py
++++ b/sympy/simplify/cse_main.py
+@@ -774,6 +774,7 @@ def cse(exprs, symbols=None, optimizations=None, postprocess=None,
+     """
+     from sympy.matrices import (MatrixBase, Matrix, ImmutableMatrix,
+                                 SparseMatrix, ImmutableSparseMatrix)
++    from sympy.matrices.expressions.matexpr import MatrixSymbol, matrix_symbols
+ 
+     if not list:
+         return _cse_homogeneous(exprs,
+@@ -807,6 +808,14 @@ def cse(exprs, symbols=None, optimizations=None, postprocess=None,
+     # Preprocess the expressions to give us better optimization opportunities.
+     reduced_exprs = [preprocess_for_cse(e, optimizations) for e in exprs]
+ 
++    # Skip creating substitutions for entire MatrixSymbols when only elements are used
++    def filter_matrix_substitutions(subs):
++        # Keep substitutions that aren't just direct assignments of MatrixSymbols
++        return [(sym, expr) for sym, expr in subs if not (
++            isinstance(expr, MatrixSymbol) or
++            (isinstance(expr, Symbol) and any(
++                expr == m for m in matrix_symbols(exprs))))]
++
+     if symbols is None:
+         symbols = numbered_symbols(cls=Symbol)
+     else:
+@@ -820,6 +829,9 @@ def cse(exprs, symbols=None, optimizations=None, postprocess=None,
+     # Main CSE algorithm.
+     replacements, reduced_exprs = tree_cse(reduced_exprs, symbols, opt_subs,
+                                            order, ignore)
++    
++    # Filter out unnecessary matrix symbol substitutions
++    replacements = filter_matrix_substitutions(replacements)
+ 
+     # Postprocess the expressions to return the expressions to canonical form.
+     exprs = copy

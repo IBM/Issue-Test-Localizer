@@ -1,0 +1,104 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 9ce46e3f73..958019dbde 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -955,6 +955,7 @@ class CharField(Field):
+         return [
+             *super().check(**kwargs),
+             *self._check_max_length_attribute(**kwargs),
++            *self._check_choices_max_length(**kwargs),
+         ]
+ 
+     def _check_max_length_attribute(self, **kwargs):
+@@ -978,6 +979,35 @@ class CharField(Field):
+         else:
+             return []
+ 
++    def _check_choices_max_length(self, **kwargs):
++        if self.choices is None or self.max_length is None:
++            return []
++        
++        choice_max_length = 0
++        longest_choice = None
++        
++        for choice_value, choice_display in self.flatchoices:
++            # Convert choice value to string to check its length
++            choice_str = str(choice_value) if choice_value is not None else ''
++            choice_length = len(choice_str)
++            
++            if choice_length > choice_max_length:
++                choice_max_length = choice_length
++                longest_choice = choice_value
++        
++        if choice_max_length > self.max_length:
++            return [
++                checks.Error(
++                    "'max_length' is too small to fit the longest value "
++                    "in 'choices' (%s characters)." % choice_max_length,
++                    hint="Increase 'max_length' to at least %s characters." % choice_max_length,
++                    obj=self,
++                    id='fields.E009',
++                )
++            ]
++        else:
++            return []
++
+     def cast_db_type(self, connection):
+         if self.max_length is None:
+             return connection.ops.cast_char_field_without_max_length
+@@ -2187,7 +2217,11 @@ class BinaryField(Field):
+             self.validators.append(validators.MaxLengthValidator(self.max_length))
+ 
+     def check(self, **kwargs):
+-        return [*super().check(**kwargs), *self._check_str_default_value()]
++        return [
++            *super().check(**kwargs), 
++            *self._check_str_default_value(),
++            *self._check_choices_max_length(**kwargs),
++        ]
+ 
+     def _check_str_default_value(self):
+         if self.has_default() and isinstance(self.default, str):
+@@ -2201,6 +2235,42 @@ class BinaryField(Field):
+             ]
+         return []
+ 
++    def _check_choices_max_length(self, **kwargs):
++        if self.choices is None or self.max_length is None:
++            return []
++        
++        choice_max_length = 0
++        longest_choice = None
++        
++        for choice_value, choice_display in self.flatchoices:
++            # For BinaryField, choice values should be bytes
++            if choice_value is not None:
++                if isinstance(choice_value, bytes):
++                    choice_length = len(choice_value)
++                else:
++                    # Convert to bytes if it's not already
++                    choice_str = str(choice_value)
++                    choice_length = len(choice_str.encode('utf-8'))
++            else:
++                choice_length = 0
++            
++            if choice_length > choice_max_length:
++                choice_max_length = choice_length
++                longest_choice = choice_value
++        
++        if choice_max_length > self.max_length:
++            return [
++                checks.Error(
++                    "'max_length' is too small to fit the longest value "
++                    "in 'choices' (%s bytes)." % choice_max_length,
++                    hint="Increase 'max_length' to at least %s bytes." % choice_max_length,
++                    obj=self,
++                    id='fields.E009',
++                )
++            ]
++        else:
++            return []
++
+     def deconstruct(self):
+         name, path, args, kwargs = super().deconstruct()
+         if self.editable:

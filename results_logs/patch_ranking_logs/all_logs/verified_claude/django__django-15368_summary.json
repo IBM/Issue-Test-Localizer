@@ -1,0 +1,114 @@
+{
+  "instance_id": "django__django-15368",
+  "container_id": "b942a0fae78b4413ea130d5e996bcd8e2c26ab92473717d7a74ed1a55cd241a6",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+        "inst": "django__django-15368",
+        "passed": 10,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+        "inst": "django__django-15368",
+        "passed": 10,
+        "failed": 0
+      }
+    ],
+    "top_passed": 10,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "queries.test_bulk_update.BulkUpdateTests.test_field_references#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        }
+      ]
+    },
+    "queries.test_bulk_update.BulkUpdateTests.test_field_references#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        }
+      ]
+    },
+    "queries.test_bulk_update.BulkUpdateTests.test_plain_f_expression#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        }
+      ]
+    },
+    "queries.test_bulk_update.BulkUpdateTests.test_plain_f_expression#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        }
+      ]
+    },
+    "queries.test_bulk_update.BulkUpdateTests.test_plain_f_expression#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        }
+      ]
+    },
+    "queries.test_bulk_update.BulkUpdateTests.test_plain_f_expressions#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_0.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-15368/dedup_patch_1.jsonl",
+          "inst": "django__django-15368",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

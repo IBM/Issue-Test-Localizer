@@ -1,0 +1,15 @@
+diff --git a/django/contrib/auth/forms.py b/django/contrib/auth/forms.py
+index 4d607f6..4f34c69 100644
+--- a/django/contrib/auth/forms.py
++++ b/django/contrib/auth/forms.py
+@@ -58,6 +58,10 @@ class ReadOnlyPasswordHashField(forms.Field):
+ 
+ 
+ class UsernameField(forms.CharField):
++    def __init__(self, **kwargs):
++        kwargs.setdefault('max_length', 150)
++        super().__init__(**kwargs)
++
+     def to_python(self, value):
+         return unicodedata.normalize('NFKC', super().to_python(value))
+ 

@@ -1,0 +1,27 @@
+diff --git a/sympy/simplify/trigsimp.py b/sympy/simplify/trigsimp.py
+index bd243c1..84b15e7 100644
+--- a/sympy/simplify/trigsimp.py
++++ b/sympy/simplify/trigsimp.py
+@@ -596,6 +596,22 @@ def exptrigsimp(expr):
+     if newexpr.has(TrigonometricFunction):
+         newexpr = TR2i(newexpr)
+ 
++    # Handle exponential forms of sin/cos with I
++    if newexpr.is_Mul or newexpr.is_Add:
++        from sympy import expand
++        expanded = expand(newexpr)
++        if expanded.is_Add:
++            terms = expanded.args
++            for i in range(len(terms)):
++                if (I in terms[i].free_symbols and 
++                    any(isinstance(arg, exp) for arg in terms[i].args)):
++                    # Try to identify sin/cos patterns with I
++                    coeff = S.Half
++                    rest = expand(newexpr/(coeff))
++                    if rest == -I*exp(I*rest.free_symbols.pop()) + I*exp(-I*rest.free_symbols.pop()):
++                        from sympy import sin
++                        return coeff * sin(rest.free_symbols.pop())
++
+     # can we ever generate an I where there was none previously?
+     if not (newexpr.has(I) and not expr.has(I)):
+         expr = newexpr

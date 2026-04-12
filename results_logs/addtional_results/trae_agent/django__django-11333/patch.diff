@@ -1,0 +1,41 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 247e3680c0..72b7ef3435 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -63,11 +63,34 @@ class ResolverMatch:
+         )
+ 
+ 
+-@functools.lru_cache(maxsize=None)
++# Define a wrapper function that normalizes the urlconf parameter
++def _get_resolver_inner(urlconf):
++    return URLResolver(RegexPattern(r'^/'), urlconf)
++
++# Use a key function to normalize None to settings.ROOT_URLCONF
++def _get_resolver_key_func(urlconf):
++    if urlconf is None:
++        return settings.ROOT_URLCONF
++    return urlconf
++
++# Cache the inner function with the key function
++_get_resolver_cached = functools.lru_cache(maxsize=None)(_get_resolver_inner)
++
+ def get_resolver(urlconf=None):
++    """
++    Return a URLResolver instance for the specified urlconf or the default.
++    
++    If urlconf is None, the default urlconf from settings.ROOT_URLCONF is used.
++    This function is cached using lru_cache to avoid creating multiple URLResolver
++    instances for the same urlconf.
++    """
+     if urlconf is None:
+         urlconf = settings.ROOT_URLCONF
+-    return URLResolver(RegexPattern(r'^/'), urlconf)
++    return _get_resolver_cached(urlconf)
++
++# Add the cache_clear and cache_info methods to get_resolver
++get_resolver.cache_clear = _get_resolver_cached.cache_clear
++get_resolver.cache_info = _get_resolver_cached.cache_info
+ 
+ 
+ @functools.lru_cache(maxsize=None)

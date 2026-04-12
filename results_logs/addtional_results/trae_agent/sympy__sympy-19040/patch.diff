@@ -1,0 +1,66 @@
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index 68b69d1a24..c428138ed3 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -6324,6 +6324,34 @@ def factor(f, *gens, **args):
+ 
+     """
+     f = sympify(f)
++    
++    # Fix for issue #18895: factor with extension=True drops a factor of y-1
++    if 'extension' in args and args['extension'] is not True and not f.is_Number and not f.is_Symbol:
++        # Check if this is a multivariate expression
++        free_symbols = f.free_symbols
++        if len(free_symbols) > 1:
++            try:
++                # First try factoring without extension to get all factors
++                regular_args = args.copy()
++                extension_value = regular_args.pop('extension')
++                regular_factors = factor(f, *gens, **regular_args)
++                
++                if isinstance(regular_factors, Mul):
++                    # Process each factor separately to apply extension where it helps
++                    new_factors = []
++                    for term in regular_factors.args:
++                        try:
++                            # Try factoring with extension
++                            ext_term = factor(term, extension=extension_value)
++                            new_factors.append(ext_term)
++                        except Exception:
++                            new_factors.append(term)
++                    
++                    return Mul(*new_factors)
++            except Exception:
++                # If anything goes wrong, continue with normal factorization
++                pass
++    
+     if args.pop('deep', False):
+         from sympy.simplify.simplify import bottom_up
+         def _try_factor(expr):
+diff --git a/sympy/polys/tests/test_polytools.py b/sympy/polys/tests/test_polytools.py
+index b0b4cd6132..ba094d990a 100644
+--- a/sympy/polys/tests/test_polytools.py
++++ b/sympy/polys/tests/test_polytools.py
+@@ -2368,6 +2368,22 @@ def test_factor():
+     assert factor((2*x**2 + 2)**7) == 128*(x**2 + 1)**7
+ 
+     assert factor(f) == u*v**2*w
++    
++    # Test factorization with extension parameter
++    f_xy = expand((x-1)*(y-1))
++    assert factor(f_xy) == (x-1)*(y-1)
++    assert factor(f_xy, extension=[I]) == (x-1)*(y-1)
++    assert factor(f_xy, extension=True) == (x-1)*(y-1)
++    
++    # Test for issue #18895: factor with extension=True drops a factor of y-1
++    f_x2y = expand((x**2 + 1)*(y-1))
++    assert factor(f_x2y) == (x**2 + 1)*(y-1)
++    assert factor(f_x2y, extension=[I]) == (x-I)*(x+I)*(y-1)
++    
++    # Test with a different extension
++    f_x2y2 = expand((x**2 - 2)*(y-1))
++    assert factor(f_x2y2) == (x**2 - 2)*(y-1)
++    assert factor(f_x2y2, extension=sqrt(2)) == (x-sqrt(2))*(x+sqrt(2))*(y-1)
+     assert factor(f, x) == u*v**2*w
+     assert factor(f, (x,)) == u*v**2*w
+ 

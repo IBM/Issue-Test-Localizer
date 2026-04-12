@@ -1,0 +1,39 @@
+diff --git a/sympy/simplify/trigsimp.py b/sympy/simplify/trigsimp.py
+index 34a3bab3fc..abcc3edd89 100644
+--- a/sympy/simplify/trigsimp.py
++++ b/sympy/simplify/trigsimp.py
+@@ -510,7 +510,17 @@ def traverse(e):
+         'old': lambda x: trigsimp_old(x, **opts),
+                    }[method]
+ 
+-    return trigsimpfunc(expr)
++    result = trigsimpfunc(expr)
++    
++    # If the expression contains exponential functions, also try exptrigsimp
++    # to catch cases like 1/2 * (-I*exp(I*k) + I*exp(-I*k)) -> sin(k)
++    if expr.has(exp):
++        exptrig_result = exptrigsimp(expr)
++        # Choose the simpler result
++        if count_ops(exptrig_result) < count_ops(result):
++            result = exptrig_result
++    
++    return result
+ 
+ 
+ def exptrigsimp(expr):
+@@ -537,7 +547,14 @@ def exp_trig(e):
+         choices = [e]
+         if e.has(*_trigs):
+             choices.append(e.rewrite(exp))
+-        choices.append(e.rewrite(cos))
++        rewritten_cos = e.rewrite(cos)
++        choices.append(rewritten_cos)
++        # Also try expanding the rewritten form to catch cases like
++        # 1/2 * (-I*exp(I*k) + I*exp(-I*k)) -> sin(k)
++        if rewritten_cos != e:
++            expanded = expand(rewritten_cos)
++            if expanded != rewritten_cos:
++                choices.append(expanded)
+         return min(*choices, key=count_ops)
+     newexpr = bottom_up(expr, exp_trig)
+ 

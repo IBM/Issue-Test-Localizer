@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+"""Run regression tests for the current instance."""
+
+import sys
+import os
+
+# Add lib to path
+bundle_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(bundle_dir, "lib"))
+
+from test_runner import RegressionTestRunner
+
+
+def main():
+    # Parse arguments - test names are space-separated
+    test_names = None
+    if len(sys.argv) > 1 and sys.argv[1].strip():
+        test_names = sys.argv[1].split()
+
+    runner = RegressionTestRunner()
+
+    # Debug info
+    print(f"Instance ID: {runner.instance_id}")
+    print(f"Framework: {runner.framework}")
+    print(f"Test file: {runner.test_file} (exists: {runner.test_file.exists()})")
+    print(f"Total instances in JSON: {len(runner.all_tests)}")
+    print(f"Base test command: {' '.join(runner.test_cmd)}")
+
+    # If no tests specified and no instance tests found, show helpful message
+    if test_names is None:
+        instance_tests = runner.get_instance_tests()
+        if not instance_tests:
+            print(f"\nNo tests found for instance '{runner.instance_id}'")
+            if runner.all_tests:
+                available = list(runner.all_tests.keys())[:5]
+                print(f"Available instances: {available}...")
+            else:
+                print("The tests JSON file is empty or not loaded.")
+            sys.exit(1)
+        test_names = instance_tests
+
+    print(f"\nRunning {len(test_names)} test(s)...")
+    print("Test names:")
+    for name in test_names:
+        print(f"  - {name}")
+
+    # Show the command that will be run
+    converted_names = runner.convert_test_names(test_names)
+    full_cmd = runner.test_cmd + converted_names
+    print(f"\nFull command:")
+    print(f"  {' '.join(full_cmd)}")
+
+    print("-" * 50)
+
+    # Run all tests in batch mode for efficiency
+    result = runner.run_all_tests_batch(test_names)
+
+    if result.get("error"):
+        print(f"Error: {result['error']}")
+        sys.exit(1)
+
+    # Print output
+    if result["stdout"]:
+        print(result["stdout"])
+
+    if result["stderr"]:
+        print(result["stderr"], file=sys.stderr)
+
+    # Print summary
+    print("-" * 50)
+    if result["passed"]:
+        print(f"PASSED: All {result['total']} test(s) passed")
+        sys.exit(0)
+    else:
+        failure_reason = result.get("failure_reason", "")
+        if failure_reason:
+            print(f"FAILED: {failure_reason}")
+        else:
+            print(f"FAILED: Some tests failed (return code: {result.get('returncode', 'unknown')})")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

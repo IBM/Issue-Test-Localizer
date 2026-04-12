@@ -1,0 +1,15 @@
+diff --git a/sympy/parsing/mathematica.py b/sympy/parsing/mathematica.py
+index 3e3bc62..77077b6 100644
+--- a/sympy/parsing/mathematica.py
++++ b/sympy/parsing/mathematica.py
+@@ -615,7 +615,9 @@ class MathematicaParser:
+         tokens.extend(map(re.escape, tokens_escape))
+         tokens.append(",")
+         tokens.append("\n")
+-        tokenizer = re.compile("(" + "|".join(tokens) + ")")
++        # Add support for Unicode characters
++        tokens.append(r"\w+")  # This will match Unicode word characters
++        tokenizer = re.compile("(" + "|".join(tokens) + ")", re.UNICODE)
+         self._regex_tokenizer = tokenizer
+         return self._regex_tokenizer
+ 

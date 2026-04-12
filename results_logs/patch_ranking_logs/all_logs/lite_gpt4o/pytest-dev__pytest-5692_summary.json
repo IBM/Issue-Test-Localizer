@@ -1,0 +1,106 @@
+{
+  "instance_id": "pytest-dev__pytest-5692",
+  "container_id": "1946a7553a4dae25b5f12b0817cbde832b1e385db8f17f64e7dcfd5b771ebad4",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_0.jsonl",
+        "inst": "pytest-dev__pytest-5692",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_1.jsonl",
+        "inst": "pytest-dev__pytest-5692",
+        "passed": 3,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_2.jsonl",
+        "inst": "pytest-dev__pytest-5692",
+        "passed": 3,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_3.jsonl",
+        "inst": "pytest-dev__pytest-5692",
+        "passed": 3,
+        "failed": 1
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "testing/test_junitxml.py::test_record_testsuite_property#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_record_testsuite_property#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_global_properties#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_url_property#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_record_testsuite_property#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_record_testsuite_property_type_checking#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_record_testsuite_property#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_global_properties#8": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_record_testsuite_property#9": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/test_junitxml.py::test_record_testsuite_property#10": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "testing/reproduce_bug_new3.py#11": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5692",
+          "passed": false
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5692",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/pytest-dev__pytest-5692/dedup_patch_0.jsonl",
+          "inst": "pytest-dev__pytest-5692",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

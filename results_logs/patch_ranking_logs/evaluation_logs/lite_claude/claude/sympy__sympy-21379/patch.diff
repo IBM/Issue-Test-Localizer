@@ -1,0 +1,40 @@
+diff --git a/sympy/functions/elementary/hyperbolic.py b/sympy/functions/elementary/hyperbolic.py
+index 1f2a00b..13a3003 100644
+--- a/sympy/functions/elementary/hyperbolic.py
++++ b/sympy/functions/elementary/hyperbolic.py
+@@ -244,6 +244,11 @@ class sinh(HyperbolicFunction):
+         arg = self.args[0]
+         if arg.is_real:
+             return True
++            
++        # Don't decompose into real/imag if there's a Piecewise
++        from sympy import Piecewise
++        if arg.has(Piecewise):
++            return None
+ 
+         # if `im` is of the form n*pi
+         # else, check if it is a number
+@@ -433,6 +438,11 @@ class cosh(HyperbolicFunction):
+         if arg.is_real or arg.is_imaginary:
+             return True
+ 
++        # Don't decompose into real/imag if there's a Piecewise
++        from sympy import Piecewise
++        if arg.has(Piecewise):
++            return None
++
+         # cosh(a+ib) = cos(b)*cosh(a) + i*sin(b)*sinh(a)
+         # the imaginary part can be an expression like n*pi
+         # if not, check if the imaginary part is a number
+@@ -655,6 +665,11 @@ class tanh(HyperbolicFunction):
+         if arg.is_real:
+             return True
+ 
++        # Don't decompose into real/imag if there's a Piecewise
++        from sympy import Piecewise
++        if arg.has(Piecewise):
++            return None
++
+         re, im = arg.as_real_imag()
+ 
+         # if denom = 0, tanh(arg) = zoo

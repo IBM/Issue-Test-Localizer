@@ -1,0 +1,13 @@
+diff --git a/lib/matplotlib/layout_engine.py b/lib/matplotlib/layout_engine.py
+index 2a777f2..43f0872 100644
+--- a/lib/matplotlib/layout_engine.py
++++ b/lib/matplotlib/layout_engine.py
+@@ -115,7 +115,7 @@ class PlaceHolderLayoutEngine(LayoutEngine):
+         layout engine it is replacing.
+ 
+     """
+-    def __init__(self, adjust_compatible, colorbar_gridspec, **kwargs):
++    def __init__(self, adjust_compatible=True, colorbar_gridspec=True, **kwargs):
+         self._adjust_compatible = adjust_compatible
+         self._colorbar_gridspec = colorbar_gridspec
+         super().__init__(**kwargs)

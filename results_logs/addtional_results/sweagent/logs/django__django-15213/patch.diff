@@ -1,0 +1,36 @@
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 8642e1f151..83caf046fc 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -981,6 +981,15 @@ class ExpressionWrapper(SQLiteNumericMixin, Expression):
+     def as_sql(self, compiler, connection):
+         return compiler.compile(self.expression)
+ 
++    def select_format(self, compiler, sql, params):
++        # Delegate to the wrapped expression's select_format if it has one
++        # Only delegate to WhereNode (which handles Q objects) to avoid
++        # triggering output_field resolution issues in other expressions
++        from django.db.models.sql.where import WhereNode
++        if isinstance(self.expression, WhereNode):
++            return self.expression.select_format(compiler, sql, params)
++        return super().select_format(compiler, sql, params)
++
+     def __repr__(self):
+         return "{}({})".format(self.__class__.__name__, self.expression)
+ 
+diff --git a/django/db/models/sql/where.py b/django/db/models/sql/where.py
+index 50ff13be75..ef73d28bb5 100644
+--- a/django/db/models/sql/where.py
++++ b/django/db/models/sql/where.py
+@@ -214,7 +214,10 @@ class WhereNode(tree.Node):
+         # Wrap filters with a CASE WHEN expression if a database backend
+         # (e.g. Oracle) doesn't support boolean expression in SELECT or GROUP
+         # BY list.
+-        if not compiler.connection.features.supports_boolean_expr_in_select_clause:
++        if not sql:
++            # Empty SQL means "always true" - return appropriate true value
++            sql = '1'
++        elif not compiler.connection.features.supports_boolean_expr_in_select_clause:
+             sql = f'CASE WHEN {sql} THEN 1 ELSE 0 END'
+         return sql, params
+ 

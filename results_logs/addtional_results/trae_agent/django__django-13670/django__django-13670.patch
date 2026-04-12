@@ -1,0 +1,34 @@
+diff --git a/django/utils/dateformat.py b/django/utils/dateformat.py
+index afd36d79e0..526414363b 100644
+--- a/django/utils/dateformat.py
++++ b/django/utils/dateformat.py
+@@ -326,7 +326,7 @@ class DateFormat(TimeFormat):
+ 
+     def y(self):
+         "Year, 2 digits; e.g. '99'"
+-        return str(self.data.year)[2:]
++        return '%02d' % (self.data.year % 100)
+ 
+     def Y(self):
+         "Year, 4 digits; e.g. '1999'"
+diff --git a/tests/utils_tests/test_dateformat.py b/tests/utils_tests/test_dateformat.py
+index d050ac4352..eb8ebb6474 100644
+--- a/tests/utils_tests/test_dateformat.py
++++ b/tests/utils_tests/test_dateformat.py
+@@ -104,6 +104,16 @@ class DateFormatTests(SimpleTestCase):
+         self.assertEqual(dateformat.format(my_birthday, 'y'), '79')
+         self.assertEqual(dateformat.format(my_birthday, 'Y'), '1979')
+         self.assertEqual(dateformat.format(my_birthday, 'z'), '189')
++        
++    def test_small_year_formats(self):
++        """Test that years < 1000 are formatted correctly."""
++        year_123 = datetime(123, 4, 5, 6, 7)
++        year_45 = datetime(45, 4, 5, 6, 7)
++        year_6 = datetime(6, 4, 5, 6, 7)
++        
++        self.assertEqual(dateformat.format(year_123, 'y'), '23')
++        self.assertEqual(dateformat.format(year_45, 'y'), '45')
++        self.assertEqual(dateformat.format(year_6, 'y'), '06')
+ 
+     def test_dateformat(self):
+         my_birthday = datetime(1979, 7, 8, 22, 00)

@@ -1,0 +1,78 @@
+{
+  "instance_id": "django__django-13109",
+  "container_id": "caa99aeac3c3908860b39dba9de7447d73f739894b546d94b45928ac06a1b747",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+        "inst": "django__django-13109",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "top_passed": 2,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "model_forms.tests.OtherModelFormTests.test_foreignkey_validates_with_base_manager#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+          "inst": "django__django-13109",
+          "passed": false
+        }
+      ]
+    },
+    "model_forms.tests.OtherModelFormTests.test_foreignkey_validate_base_manager#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+          "inst": "django__django-13109",
+          "passed": false
+        }
+      ]
+    },
+    "model_forms.tests.ModelFormBaseTest.test_foreignkey_validate_uses_base_manager#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+          "inst": "django__django-13109",
+          "passed": false
+        }
+      ]
+    },
+    "model_forms.tests.ModelToDictTests.test_foreign_key_validation_with_base_manager#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+          "inst": "django__django-13109",
+          "passed": false
+        }
+      ]
+    },
+    "validation.tests.BaseModelValidationTests.test_FK_validate_with_base_manager#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+          "inst": "django__django-13109",
+          "passed": false
+        }
+      ]
+    },
+    "model_forms.tests.CustomCleanTests.test_foreignkey_validation_with_base_manager#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-13109/dedup_patch_0.jsonl",
+          "inst": "django__django-13109",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

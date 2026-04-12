@@ -1,0 +1,34 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index e15e64cde4..7941f7e36f 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -2218,6 +2218,9 @@ def get_order_dir(field, default='ASC'):
+     prefix) should sort. The '-' prefix always sorts the opposite way.
+     """
+     dirn = ORDER_DIR[default]
++    # Check if field is an expression (e.g., F() or OrderBy)
++    if hasattr(field, 'resolve_expression'):
++        return field, dirn[0]  # Return the expression as-is with default direction
+     if field[0] == '-':
+         return field[1:], dirn[1]
+     return field, dirn[0]
+diff --git a/tests/ordering/models.py b/tests/ordering/models.py
+index 8b71983c44..2fe0f14a1a 100644
+--- a/tests/ordering/models.py
++++ b/tests/ordering/models.py
+@@ -59,3 +59,15 @@ class Reference(models.Model):
+ 
+     class Meta:
+         ordering = ('article',)
++
++
++# Models for reproducing the bug with expressions in Meta.ordering during inheritance
++class MyModel(models.Model):
++    time_stamp = models.DateTimeField(null=True)
++
++    class Meta:
++        ordering = [models.F('time_stamp').desc(nulls_last=True)]
++
++
++class MyChildModel(MyModel):
++    name = models.CharField(max_length=144)

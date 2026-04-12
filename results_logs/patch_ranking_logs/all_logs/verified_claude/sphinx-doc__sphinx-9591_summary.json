@@ -1,0 +1,164 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9591",
+  "container_id": "21882b4fef392a1bbeb2e4b0897b0f5641691acb514845009f30d7a2605b43ef",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_21.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 6,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_10.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_11.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_12.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_13.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_14.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_16.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_17.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_18.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_19.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_20.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_4.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_5.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_6.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_7.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_8.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_9.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 4,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sphinx-doc__sphinx-9591/dedup_patch_15.jsonl",
+        "inst": "sphinx-doc__sphinx-9591",
+        "passed": 3,
+        "failed": 4
+      }
+    ],
+    "top_passed": 7,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "tests/test_ext_autodoc_autoproperty.py::test_properties#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_autoproperty.py::test_cached_properties#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_autoproperty.py::test_properties#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_events.py::test_skip_module_member#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "tests/test_ext_autodoc_autoproperty.py::test_properties#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

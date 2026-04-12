@@ -1,0 +1,132 @@
+{
+  "instance_id": "pydata__xarray-4629",
+  "container_id": "f7742f566b3cd75256c6184a660d241154b257406cb70e25f2eb3fc9901e2530",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+        "inst": "pydata__xarray-4629",
+        "passed": 1,
+        "failed": 0
+      }
+    ],
+    "top_passed": 1,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_override_attrs_copy#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "reproduce_bug.py#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_override_attrs_copy#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_override_attrs#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_override_preserve_attrs#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": false
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeFunction::test_merge_override_attrs#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "xarray/tests/test_merge.py::TestMergeMethod::test_merge_override_attrs#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_gpt4o_all_unique_patches/pydata__xarray-4629/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4629",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index 982816be3a..96157d313e 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -320,11 +320,21 @@ class RenameModel(ModelOperation):
+         new_model = to_state.apps.get_model(app_label, self.new_name)
+         if self.allow_migrate_model(schema_editor.connection.alias, new_model):
+             old_model = from_state.apps.get_model(app_label, self.old_name)
++            
++            # If both models have the same db_table, this operation
++            # is a no-op as far as the database is concerned.
++            # This can happen if the model has a custom db_table that doesn't
++            # change when the model is renamed.
++            old_db_table = old_model._meta.db_table
++            new_db_table = new_model._meta.db_table
++            if old_db_table == new_db_table:
++                return
++                
+             # Move the main table
+             schema_editor.alter_db_table(
+                 new_model,
+-                old_model._meta.db_table,
+-                new_model._meta.db_table,
++                old_db_table,
++                new_db_table,
+             )
+             # Alter the fields pointing to us
+             for related_object in old_model._meta.related_objects:
+@@ -368,11 +378,14 @@ class RenameModel(ModelOperation):
+                 )
+ 
+     def database_backwards(self, app_label, schema_editor, from_state, to_state):
++        # Swap the names for the backwards operation
+         self.new_name_lower, self.old_name_lower = self.old_name_lower, self.new_name_lower
+         self.new_name, self.old_name = self.old_name, self.new_name
+ 
++        # Use the same implementation for backwards
+         self.database_forwards(app_label, schema_editor, from_state, to_state)
+ 
++        # Restore the original names
+         self.new_name_lower, self.old_name_lower = self.old_name_lower, self.new_name_lower
+         self.new_name, self.old_name = self.old_name, self.new_name
+ 

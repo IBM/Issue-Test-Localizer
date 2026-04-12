@@ -1,0 +1,106 @@
+diff --git a/src/_pytest/assertion/rewrite.py b/src/_pytest/assertion/rewrite.py
+index 4810cdd..9e8f3cb 100644
+--- a/src/_pytest/assertion/rewrite.py
++++ b/src/_pytest/assertion/rewrite.py
+@@ -965,6 +965,47 @@ warn_explicit(
+         return res, explanation
+ 
+     def visit_Call_35(self, call):
++        def unroll_iterable_for_all_any(call, func_name):
++            func_name_node = ast.Name(id=func_name, ctx=ast.Load())
++            if isinstance(call.func, ast.Name) and call.func.id == func_name:
++                if len(call.args) == 1 and isinstance(call.args[0], ast.GeneratorExp):
++                    generator = call.args[0]
++                    variable_name = self.variable()
++                    loop_body = []
++                    for expr in generator.elt:
++                        res, expl = self.visit(expr)
++                        loop_body.append(
++                            ast.If(
++                                test=ast.UnaryOp(op=ast.Not(), operand=res),
++                                body=[ast.Raise(
++                                    exc=ast.Call(
++                                        func=ast.Name(id='AssertionError', ctx=ast.Load()),
++                                        args=[ast.Str(s=f"assert {func_name}({expl})")],
++                                        keywords=[]
++                                    ),
++                                    cause=None
++                                )],
++                                orelse=[]
++                            )
++                        )
++                    loop = ast.For(
++                        target=generator.target,
++                        iter=generator.iter,
++                        body=loop_body,
++                        orelse=[]
++                    )
++                    return [loop]
++            return None
++
++        # Unroll 'all' calls
++        unrolled = unroll_iterable_for_all_any(call, 'all')
++        if unrolled:
++            return unrolled
++
++        # Unroll 'any' calls
++        unrolled = unroll_iterable_for_all_any(call, 'any')
++        if unrolled:
++            return unrolled
+         """
+         visit `ast.Call` nodes on Python3.5 and after
+         """
+@@ -998,6 +1039,47 @@ warn_explicit(
+         return new_starred, "*" + expl
+ 
+     def visit_Call_legacy(self, call):
++        def unroll_iterable_for_all_any(call, func_name):
++            func_name_node = ast.Name(id=func_name, ctx=ast.Load())
++            if isinstance(call.func, ast.Name) and call.func.id == func_name:
++                if len(call.args) == 1 and isinstance(call.args[0], ast.GeneratorExp):
++                    generator = call.args[0]
++                    variable_name = self.variable()
++                    loop_body = []
++                    for expr in generator.elt:
++                        res, expl = self.visit(expr)
++                        loop_body.append(
++                            ast.If(
++                                test=ast.UnaryOp(op=ast.Not(), operand=res),
++                                body=[ast.Raise(
++                                    exc=ast.Call(
++                                        func=ast.Name(id='AssertionError', ctx=ast.Load()),
++                                        args=[ast.Str(s=f"assert {func_name}({expl})")],
++                                        keywords=[]
++                                    ),
++                                    cause=None
++                                )],
++                                orelse=[]
++                            )
++                        )
++                    loop = ast.For(
++                        target=generator.target,
++                        iter=generator.iter,
++                        body=loop_body,
++                        orelse=[]
++                    )
++                    return [loop]
++            return None
++
++        # Unroll 'all' calls
++        unrolled = unroll_iterable_for_all_any(call, 'all')
++        if unrolled:
++            return unrolled
++
++        # Unroll 'any' calls
++        unrolled = unroll_iterable_for_all_any(call, 'any')
++        if unrolled:
++            return unrolled
+         """
+         visit `ast.Call nodes on 3.4 and below`
+         """
+@@ -1081,4 +1163,4 @@ warn_explicit(
+             res = ast.BoolOp(ast.And(), load_names)
+         else:
+             res = load_names[0]
+-        return res, self.explanation_param(self.pop_format_context(expl_call))
++        return res, self.explanation_param(self.pop_format_context(expl_call))

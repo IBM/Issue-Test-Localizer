@@ -1,0 +1,60 @@
+diff --git a/reproduce_issue.py b/reproduce_issue.py
+new file mode 100644
+index 00000000..9726ab8f
+--- /dev/null
++++ b/reproduce_issue.py
+@@ -0,0 +1,40 @@
++#!/usr/bin/env python3
++"""
++Script to reproduce the trailing whitespace issue in DatasetGroupBy text representation.
++"""
++
++import xarray as xr
++import numpy as np
++
++# Create the dataset as shown in the PR description
++ds = xr.Dataset(
++    {"foo": (("x", "y"), np.random.rand(4, 3))},
++    coords={"x": [10, 20, 30, 40], "letters": ("x", list("abba"))},
++)
++
++# Create the groupby object
++groupby_obj = ds.groupby("letters")
++
++# Print the representation
++print("DatasetGroupBy representation:")
++print(repr(groupby_obj))
++print()
++
++# Convert to string and show the trailing whitespace issue
++str_repr = str(groupby_obj)
++print("String representation:")
++print(f"'{str_repr}'")
++print()
++
++# Show the issue more clearly by checking if there's trailing whitespace
++lines = str_repr.split('\n')
++first_line = lines[0]
++print(f"First line: '{first_line}'")
++print(f"First line ends with space: {first_line.endswith(' ')}")
++print(f"Length of first line: {len(first_line)}")
++
++# Show the exact characters at the end
++if len(first_line) > 0:
++    print(f"Last character of first line: '{first_line[-1]}' (ord: {ord(first_line[-1])})")
++    if len(first_line) > 1:
++        print(f"Second to last character: '{first_line[-2]}' (ord: {ord(first_line[-2])})")
+\ No newline at end of file
+diff --git a/xarray/core/groupby.py b/xarray/core/groupby.py
+index 8a097251..af5abd9a 100644
+--- a/xarray/core/groupby.py
++++ b/xarray/core/groupby.py
+@@ -436,7 +436,7 @@ class GroupBy(SupportsArithmetic):
+         return zip(self._unique_coord.values, self._iter_grouped())
+ 
+     def __repr__(self):
+-        return "{}, grouped over {!r} \n{!r} groups with labels {}.".format(
++        return "{}, grouped over {!r}\n{!r} groups with labels {}.".format(
+             self.__class__.__name__,
+             self._unique_coord.name,
+             self._unique_coord.size,

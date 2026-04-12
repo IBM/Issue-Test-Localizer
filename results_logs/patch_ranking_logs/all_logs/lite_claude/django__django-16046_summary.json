@@ -1,0 +1,120 @@
+{
+  "instance_id": "django__django-16046",
+  "container_id": "533292578c3affd2a8a1ad079826b20d7a7fe32ddfa4dccfdde6a8be6b936978",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_0.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_1.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_10.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_11.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_12.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_2.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_3.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_4.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_5.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_6.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_7.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_8.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_9.jsonl",
+        "inst": "django__django-16046",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 13
+  },
+  "reproduction": {
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_11.jsonl",
+          "inst": "django__django-16046",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_12.jsonl",
+          "inst": "django__django-16046",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_2.jsonl",
+          "inst": "django__django-16046",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_7.jsonl",
+          "inst": "django__django-16046",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/django__django-16046/dedup_patch_9.jsonl",
+          "inst": "django__django-16046",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

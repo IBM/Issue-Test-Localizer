@@ -1,0 +1,31 @@
+diff --git a/sphinx/builders/linkcheck.py b/sphinx/builders/linkcheck.py
+index 9b54afc7c..8e247e623 100644
+--- a/sphinx/builders/linkcheck.py
++++ b/sphinx/builders/linkcheck.py
+@@ -163,13 +163,20 @@ class CheckExternalLinksBuilder(Builder):
+ 
+             try:
+                 if anchor and self.app.config.linkcheck_anchors:
+-                    # Read the whole document and see if #anchor exists
+-                    response = requests.get(req_url, stream=True, config=self.app.config,
+-                                            auth=auth_info, **kwargs)
+-                    found = check_anchor(response, unquote(anchor))
++                    try:
++                        # Read the whole document and see if #anchor exists
++                        response = requests.get(req_url, stream=True, config=self.app.config,
++                                                auth=auth_info, **kwargs)
++                        # Check for HTTP errors first
++                        response.raise_for_status()
++                        found = check_anchor(response, unquote(anchor))
+ 
+-                    if not found:
+-                        raise Exception(__("Anchor '%s' not found") % anchor)
++                        if not found:
++                            raise Exception(__("Anchor '%s' not found") % anchor)
++                    except HTTPError:
++                        # If we get an HTTP error, don't try to check the anchor
++                        # Just re-raise to be caught by the outer exception handler
++                        raise
+                 else:
+                     try:
+                         # try a HEAD request first, which should be easier on

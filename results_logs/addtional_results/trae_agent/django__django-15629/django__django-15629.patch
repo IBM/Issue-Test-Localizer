@@ -1,0 +1,80 @@
+diff --git a/django/db/backends/mysql/schema.py b/django/db/backends/mysql/schema.py
+index 562b209eef..f0f77f61cc 100644
+--- a/django/db/backends/mysql/schema.py
++++ b/django/db/backends/mysql/schema.py
+@@ -1,5 +1,6 @@
+ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
+ from django.db.models import NOT_PROVIDED
++from django.apps import apps
+ 
+ 
+ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+@@ -100,7 +101,31 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+             return "(%s)"
+         return super()._column_default_sql(field)
+ 
++    def create_model(self, model):
++        # Before creating the model, ensure that any foreign key fields
++        # inherit the collation from their target fields
++        for field in model._meta.local_fields:
++            if field.remote_field and field.db_constraint:
++                try:
++                    target_field = field.remote_field.model._meta.get_field(field.remote_field.field_name)
++                    if hasattr(target_field, 'db_collation') and target_field.db_collation:
++                        # Set the same collation on this field
++                        field.db_collation = target_field.db_collation
++                except Exception:
++                    # If the target field can't be found, just continue
++                    pass
++        
++        super().create_model(model)
++    
+     def add_field(self, model, field):
++        # If this is a foreign key field, check if the target field has a collation
++        # and if so, make sure this field gets the same collation
++        if field.remote_field and field.db_constraint:
++            target_field = field.remote_field.model._meta.get_field(field.remote_field.field_name)
++            if hasattr(target_field, 'db_collation') and target_field.db_collation:
++                # Set the same collation on this field
++                field.db_collation = target_field.db_collation
++        
+         super().add_field(model, field)
+ 
+         # Simulate the effect of a one-off default.
+@@ -172,3 +197,36 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+     def _rename_field_sql(self, table, old_field, new_field, new_type):
+         new_type = self._set_field_new_type_null_status(old_field, new_type)
+         return super()._rename_field_sql(table, old_field, new_field, new_type)
++        
++    def _alter_column_collation_sql(self, model, new_field, new_type, new_collation):
++        # Call the parent method to get the SQL for altering the column collation
++        sql, params = super()._alter_column_collation_sql(model, new_field, new_type, new_collation)
++        
++        # If this is a primary key field, we need to also update the collation of any foreign key fields
++        # that reference this field
++        if new_field.primary_key:
++            # Get all related objects that have a foreign key to this model
++            for relation in model._meta.related_objects:
++                if relation.field.is_relation and hasattr(relation.field, 'column'):
++                    # This is a foreign key referencing our model
++                    related_model = relation.related_model
++                    related_field = relation.field
++                    
++                    # Add SQL to update the collation of the foreign key field
++                    fk_column = related_field.column
++                    fk_type = related_field.db_type(self.connection)
++                    
++                    # Add SQL to update the collation of the foreign key field
++                    fk_sql = self.sql_alter_column_collate % {
++                        'column': self.quote_name(fk_column),
++                        'type': fk_type,
++                        'collation': " " + self._collate_sql(new_collation),
++                    }
++                    self.execute(
++                        self.sql_alter_column % {
++                            'table': self.quote_name(related_model._meta.db_table),
++                            'changes': fk_sql,
++                        }
++                    )
++        
++        return sql, params

@@ -1,0 +1,21 @@
+diff --git a/src/_pytest/tmpdir.py b/src/_pytest/tmpdir.py
+index 29c7e19d7..8945636b5 100644
+--- a/src/_pytest/tmpdir.py
++++ b/src/_pytest/tmpdir.py
+@@ -154,9 +154,15 @@ def get_user() -> Optional[str]:
+     import getpass
+ 
+     try:
+-        return getpass.getuser()
++        user = getpass.getuser()
+     except (ImportError, KeyError):
+         return None
++    
++    # Sanitize the username by replacing characters that are illegal for directory names.
++    # This is especially important on Windows where characters like backslash (\) are not allowed.
++    # Common illegal characters for directory names: < > : " | ? * \ /
++    # We replace them with underscores to ensure directory creation works.
++    return re.sub(r'[<>:"|?*\\/]', '_', user)
+ 
+ 
+ def pytest_configure(config: Config) -> None:

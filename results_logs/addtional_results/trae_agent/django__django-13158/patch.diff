@@ -1,0 +1,20 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 07d6ffd4ca..66efa4634e 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -919,6 +919,15 @@ class QuerySet:
+     def none(self):
+         """Return an empty QuerySet."""
+         clone = self._chain()
++        
++        # Clear any combined_queries attribute that might exist for combined querysets
++        if hasattr(clone.query, 'combined_queries'):
++            clone.query.combined_queries = ()
++        
++        # Clear combinator if it exists (for union, intersection, difference)
++        if hasattr(clone.query, 'combinator'):
++            clone.query.combinator = None
++        
+         clone.query.set_empty()
+         return clone
+ 

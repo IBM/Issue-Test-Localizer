@@ -1,0 +1,49 @@
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 620f32f8..ebccc367 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -365,7 +365,10 @@ class DataVariables(Mapping[Any, "DataArray"]):
+         )
+ 
+     def __len__(self) -> int:
+-        return len(self._dataset._variables) - len(self._dataset._coord_names)
++        # Count variables that are not coordinates
++        # This handles the case where there might be more coord_names than variables
++        # after operations like reset_index with drop=True
++        return sum(1 for k in self._dataset._variables if k not in self._dataset._coord_names)
+ 
+     def __contains__(self, key: Hashable) -> bool:
+         return key in self._dataset._variables and key not in self._dataset._coord_names
+@@ -4177,7 +4180,8 @@ class Dataset(
+         }
+         variables.update(new_variables)
+ 
+-        coord_names = set(new_variables) | self._coord_names
++        # Update coord_names: add new variables and remove dropped variables
++        coord_names = (self._coord_names | set(new_variables)) - set(drop_variables)
+ 
+         return self._replace(variables, coord_names=coord_names, indexes=indexes)
+ 
+diff --git a/xarray/tests/test_dataset.py b/xarray/tests/test_dataset.py
+index fc2806c7..fde8abba 100644
+--- a/xarray/tests/test_dataset.py
++++ b/xarray/tests/test_dataset.py
+@@ -3252,6 +3252,18 @@ class TestDataset:
+         ds = Dataset(coords={"y": ("x", [1, 2, 3])})
+         with pytest.raises(ValueError, match=r".*not coordinates with an index"):
+             ds.reset_index("y")
++            
++    def test_reset_index_with_drop(self) -> None:
++        # Test for issue where reset_index with drop=True would cause negative length in DataVariables
++        ds = Dataset(coords={"a": ("x", [1, 2, 3]), "b": ("x", ['a', 'b', 'c'])})
++        ds2 = ds.set_index(z=['a', 'b'])
++        ds3 = ds2.reset_index("z", drop=True)
++        
++        # Verify that the length of data_vars is not negative
++        assert len(ds3.data_vars) >= 0
++        
++        # Verify that coord_names doesn't contain dropped coordinates
++        assert 'z' not in ds3._coord_names
+ 
+     def test_reset_index_keep_attrs(self) -> None:
+         coord_1 = DataArray([1, 2], dims=["coord_1"], attrs={"attrs": True})

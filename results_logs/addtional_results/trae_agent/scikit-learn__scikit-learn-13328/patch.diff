@@ -1,0 +1,54 @@
+diff --git a/sklearn/linear_model/huber.py b/sklearn/linear_model/huber.py
+index 65c686400..64fa1dee9 100644
+--- a/sklearn/linear_model/huber.py
++++ b/sklearn/linear_model/huber.py
+@@ -90,7 +90,12 @@ def _huber_loss_and_gradient(w, X, y, epsilon, alpha, sample_weight=None):
+         grad = np.zeros(n_features + 1)
+ 
+     # Gradient due to the squared loss.
+-    X_non_outliers = -axis0_safe_slice(X, ~outliers_mask, n_non_outliers)
++    X_slice = axis0_safe_slice(X, ~outliers_mask, n_non_outliers)
++    # Use negative of X_slice, but handle boolean arrays correctly
++    if X_slice.dtype == np.bool:
++        X_non_outliers = np.logical_not(X_slice).astype(float)
++    else:
++        X_non_outliers = -X_slice
+     grad[:n_features] = (
+         2. / sigma * safe_sparse_dot(weighted_non_outliers, X_non_outliers))
+ 
+@@ -252,6 +257,11 @@ class HuberRegressor(LinearModel, RegressorMixin, BaseEstimator):
+         """
+         X, y = check_X_y(
+             X, y, copy=False, accept_sparse=['csr'], y_numeric=True)
++        
++        # Convert boolean arrays to float to avoid issues with the optimizer
++        if X.dtype == np.bool:
++            X = X.astype(np.float64)
++            
+         if sample_weight is not None:
+             sample_weight = np.array(sample_weight)
+             check_consistent_length(y, sample_weight)
+diff --git a/sklearn/linear_model/tests/test_huber.py b/sklearn/linear_model/tests/test_huber.py
+index 6a8b26133..885e26a40 100644
+--- a/sklearn/linear_model/tests/test_huber.py
++++ b/sklearn/linear_model/tests/test_huber.py
+@@ -199,3 +199,19 @@ def test_huber_better_r2_score():
+ 
+     # The huber model should also fit poorly on the outliers.
+     assert_greater(ridge_outlier_score, huber_outlier_score)
++
++
++def test_huber_with_boolean_features():
++    # Test that HuberRegressor works with boolean features
++    X, y = make_regression_with_outliers()
++    X_bool = X > 0
++    X_bool_as_float = np.asarray(X_bool, dtype=float)
++
++    # Fit with boolean features
++    huber_bool = HuberRegressor().fit(X_bool, y)
++    
++    # Fit with float features (converted from boolean)
++    huber_float = HuberRegressor().fit(X_bool_as_float, y)
++    
++    # The coefficients should be similar
++    assert_array_almost_equal(huber_bool.coef_, huber_float.coef_)

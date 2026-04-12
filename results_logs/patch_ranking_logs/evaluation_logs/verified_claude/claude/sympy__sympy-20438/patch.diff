@@ -1,0 +1,14 @@
+diff --git a/sympy/sets/handlers/issubset.py b/sympy/sets/handlers/issubset.py
+index 90605e6..b081c2b 100644
+--- a/sympy/sets/handlers/issubset.py
++++ b/sympy/sets/handlers/issubset.py
+@@ -10,6 +10,9 @@ _inf_sets = [S.Naturals, S.Naturals0, S.Integers, S.Rationals, S.Reals, S.Comple
+ 
+ @dispatch(Set, Set)  # type: ignore # noqa:F811
+ def is_subset_sets(a, b): # noqa:F811
++    # If the sets are equal, then they are subsets of each other
++    if a == b:
++        return True
+     return None
+ 
+ @dispatch(Interval, Interval)  # type: ignore # noqa:F811

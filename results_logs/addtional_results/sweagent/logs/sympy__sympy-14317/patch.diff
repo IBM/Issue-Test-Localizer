@@ -1,0 +1,48 @@
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 737e16cc74..7085be3c19 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -1854,7 +1854,42 @@ def _print_PolynomialRingBase(self, expr):
+ 
+     def _print_Poly(self, poly):
+         cls = poly.__class__.__name__
+-        expr = self._print(poly.as_expr())
++        
++        # Build the expression manually to preserve term ordering
++        from sympy import Mul, Pow
++        terms = []
++        
++        for monom, coeff in poly.terms():
++            # Build the monomial part as a sympy expression
++            monom_expr = 1
++            for i, exp in enumerate(monom):
++                if exp > 0:
++                    if exp == 1:
++                        monom_expr *= poly.gens[i]
++                    else:
++                        monom_expr *= Pow(poly.gens[i], exp)
++            
++            # Create the term as coefficient * monomial
++            if monom_expr == 1:
++                term_expr = coeff
++            else:
++                term_expr = Mul(coeff, monom_expr, evaluate=False)
++            
++            # Print the term
++            term_latex = self._print(term_expr)
++            terms.append(term_latex)
++        
++        # Join terms with proper signs
++        if not terms:
++            expr = "0"
++        else:
++            expr = terms[0]
++            for term in terms[1:]:
++                if term.startswith('-'):
++                    expr += " " + term  # term already has the minus sign
++                else:
++                    expr += " + " + term
++        
+         gens = list(map(self._print, poly.gens))
+         domain = "domain=%s" % self._print(poly.get_domain())
+ 

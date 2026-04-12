@@ -1,0 +1,21 @@
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a26bee7..7eaf862 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -471,9 +471,15 @@ class SQLCompiler:
+         if not parts:
+             raise EmptyResultSet
+         combinator_sql = self.connection.ops.set_operators[combinator]
++
++        if self.query.distinct and self.query.distinct_fields:
++            distinct_fields, distinct_params = self.get_distinct()
++            if distinct_fields:
++                result.append('DISTINCT ON ({})'.format(', '.join(distinct_fields)))
++                params.extend(distinct_params)
+         if all and combinator == 'union':
+             combinator_sql += ' ALL'
+-        braces = '({})' if features.supports_slicing_ordering_in_compound else '{}'
++        braces = '({})' if features.supports_slicing_ordering_in_compound or self.query.distinct else '{}'
+         sql_parts, args_parts = zip(*((braces.format(sql), args) for sql, args in parts))
+         result = [' {} '.format(combinator_sql).join(sql_parts)]
+         params = []

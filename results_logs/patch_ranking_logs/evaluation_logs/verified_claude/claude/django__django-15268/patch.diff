@@ -1,0 +1,23 @@
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index d7bf75e..b004f3d 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -528,6 +528,18 @@ class AlterTogetherOptionOperation(ModelOptionOperation):
+     def migration_name_fragment(self):
+         return 'alter_%s_%s' % (self.name_lower, self.option_name)
+ 
++    def reduce(self, operation, app_label):
++        if (
++            isinstance(operation, self.__class__) and
++            self.name == operation.name and
++            self.option_value == set() and
++            operation.option_value is not None
++        ):
++            return [
++                operation,
++            ]
++        return super().reduce(operation, app_label)
++
+ 
+ class AlterUniqueTogether(AlterTogetherOptionOperation):
+     """

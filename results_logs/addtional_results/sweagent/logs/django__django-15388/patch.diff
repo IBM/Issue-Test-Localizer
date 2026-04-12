@@ -1,0 +1,75 @@
+diff --git a/django/template/autoreload.py b/django/template/autoreload.py
+index cf1b20ba95..955629668c 100644
+--- a/django/template/autoreload.py
++++ b/django/template/autoreload.py
+@@ -9,26 +9,63 @@ from django.utils.autoreload import (
+ )
+ 
+ 
++def is_directory_overly_broad(directory):
++    """
++    Return True if watching this directory would be overly broad and
++    potentially cause performance issues.
++    
++    A directory is considered overly broad if:
++    1. It's the current working directory (typically the project root)
++    2. It contains common non-template directories that shouldn't be watched
++    """
++    try:
++        cwd = Path.cwd()
++        directory = Path(directory).resolve()
++        
++        # If the directory is the current working directory, it's likely the project root
++        # and watching it would include everything in the project
++        if directory == cwd:
++            return True
++            
++        # If the directory is a parent of the current working directory,
++        # it's even broader than the project root
++        if directory in cwd.parents:
++            return True
++            
++        return False
++    except (OSError, ValueError):
++        # If we can't resolve the paths, err on the side of caution
++        return False
++
++
+ def get_template_directories():
+     # Iterate through each template backend and find
+     # any template_loader that has a 'get_dirs' method.
+-    # Collect the directories, filtering out Django templates.
++    # Collect the directories, filtering out Django templates and overly broad directories.
+     cwd = Path.cwd()
+     items = set()
+     for backend in engines.all():
+         if not isinstance(backend, DjangoTemplates):
+             continue
+ 
+-        items.update(cwd / to_path(dir) for dir in backend.engine.dirs)
++        for dir in backend.engine.dirs:
++            dir_path = Path(to_path(dir))
++            if not dir_path.is_absolute():
++                dir_path = cwd / dir_path
++            if not is_directory_overly_broad(dir_path):
++                items.add(dir_path)
+ 
+         for loader in backend.engine.template_loaders:
+             if not hasattr(loader, 'get_dirs'):
+                 continue
+-            items.update(
+-                cwd / to_path(directory)
+-                for directory in loader.get_dirs()
+-                if not is_django_path(directory)
+-            )
++            for directory in loader.get_dirs():
++                if is_django_path(directory):
++                    continue
++                dir_path = Path(to_path(directory))
++                if not dir_path.is_absolute():
++                    dir_path = cwd / dir_path
++                if not is_directory_overly_broad(dir_path):
++                    items.add(dir_path)
+     return items
+ 
+ 

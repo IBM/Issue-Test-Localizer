@@ -1,0 +1,15 @@
+diff --git a/sympy/core/basic.py b/sympy/core/basic.py
+index 0977e81..0e6f7ab 100644
+--- a/sympy/core/basic.py
++++ b/sympy/core/basic.py
+@@ -920,6 +920,10 @@ class Basic(with_metaclass(ManagedProperties)):
+                 rv = rv._subs(old, new, **kwargs)
+                 if not isinstance(rv, Basic):
+                     break
++                # Check for undefined expressions after substitution
++                if hasattr(rv, 'is_extended_real') and rv.is_extended_real is False:
++                    from sympy import nan
++                    return nan
+             return rv
+ 
+     @cacheit

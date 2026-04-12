@@ -1,0 +1,97 @@
+{
+  "instance_id": "sympy__sympy-24213",
+  "container_id": "69ef3b51428d49d7bcebeed6bfe5a725e917f40c9063bda504cc1ee362d14e9f",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_0.jsonl",
+        "inst": "sympy__sympy-24213",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_1.jsonl",
+        "inst": "sympy__sympy-24213",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_3.jsonl",
+        "inst": "sympy__sympy-24213",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_5.jsonl",
+        "inst": "sympy__sympy-24213",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_2.jsonl",
+        "inst": "sympy__sympy-24213",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_4.jsonl",
+        "inst": "sympy__sympy-24213",
+        "passed": 1,
+        "failed": 4
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 4
+  },
+  "reproduction": {
+    "sympy/physics/units/tests/test_unitsystem.py::test_is_consistent#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/units/tests/test_unitsystem.py::test_is_consistent#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/units/tests/test_unitsystem.py::test_is_consistent#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/units/tests/test_unitsystem.py::test_derived_units_must_exist_in_unit_system#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/units/tests/test_unitsystem.py::test_convert_to#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sympy/physics/units/tests/test_unitsystem.py::test_derived_units_must_exist_in_unit_system#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_0.jsonl",
+          "inst": "sympy__sympy-24213",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_1.jsonl",
+          "inst": "sympy__sympy-24213",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_3.jsonl",
+          "inst": "sympy__sympy-24213",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/sympy__sympy-24213/dedup_patch_5.jsonl",
+          "inst": "sympy__sympy-24213",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

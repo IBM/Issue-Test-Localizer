@@ -1,0 +1,25 @@
+diff --git a/sympy/core/mod.py b/sympy/core/mod.py
+index b4f3de2523..17bc1a8daa 100644
+--- a/sympy/core/mod.py
++++ b/sympy/core/mod.py
+@@ -166,10 +166,16 @@ def doit(p, q):
+         # XXX other possibilities?
+ 
+         # extract gcd; any further simplification should be done by the user
+-        G = gcd(p, q)
+-        if G != 1:
+-            p, q = [
+-                gcd_terms(i/G, clear=False, fraction=False) for i in (p, q)]
++        # Skip gcd computation if either expression contains Piecewise
++        # since polynomial operations don't support Piecewise generators
++        from sympy.functions.elementary.piecewise import Piecewise
++        if p.has(Piecewise) or q.has(Piecewise):
++            G = S.One
++        else:
++            G = gcd(p, q)
++            if G != 1:
++                p, q = [
++                    gcd_terms(i/G, clear=False, fraction=False) for i in (p, q)]
+         pwas, qwas = p, q
+ 
+         # simplify terms

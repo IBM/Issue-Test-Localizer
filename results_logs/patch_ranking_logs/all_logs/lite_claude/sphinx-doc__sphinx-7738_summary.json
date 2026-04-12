@@ -1,0 +1,61 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7738",
+  "container_id": "7b9c2639e9fa970d908997686f19c57f2b7f863bf72d24646a30a8403759a9a7",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_0.jsonl",
+        "inst": "sphinx-doc__sphinx-7738",
+        "passed": 19,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_1.jsonl",
+        "inst": "sphinx-doc__sphinx-7738",
+        "passed": 19,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_2.jsonl",
+        "inst": "sphinx-doc__sphinx-7738",
+        "passed": 19,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_3.jsonl",
+        "inst": "sphinx-doc__sphinx-7738",
+        "passed": 19,
+        "failed": 1
+      }
+    ],
+    "top_passed": 19,
+    "top_subset_size": 4
+  },
+  "reproduction": {
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_0.jsonl",
+          "inst": "sphinx-doc__sphinx-7738",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_1.jsonl",
+          "inst": "sphinx-doc__sphinx-7738",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_2.jsonl",
+          "inst": "sphinx-doc__sphinx-7738",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/sphinx-doc__sphinx-7738/dedup_patch_3.jsonl",
+          "inst": "sphinx-doc__sphinx-7738",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

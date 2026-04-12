@@ -1,0 +1,17 @@
+diff --git a/xarray/core/variable.py b/xarray/core/variable.py
+index 45553eb9..49228a0e 100644
+--- a/xarray/core/variable.py
++++ b/xarray/core/variable.py
+@@ -218,7 +218,11 @@ def as_compatible_data(data, fastpath=False):
+         data = np.timedelta64(getattr(data, "value", data), "ns")
+ 
+     # we don't want nested self-described arrays
+-    data = getattr(data, "values", data)
++    # Only extract .values for array-like objects, not arbitrary objects with a .values attribute
++    if hasattr(data, "values") and (
++        hasattr(data, "dims") or hasattr(data, "shape") or hasattr(data, "__array__")
++    ):
++        data = data.values
+ 
+     if isinstance(data, np.ma.MaskedArray):
+         mask = np.ma.getmaskarray(data)

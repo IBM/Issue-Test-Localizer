@@ -1,0 +1,55 @@
+diff --git a/django/core/management/base.py b/django/core/management/base.py
+index 0c3a981290..dc646cb781 100644
+--- a/django/core/management/base.py
++++ b/django/core/management/base.py
+@@ -95,7 +95,7 @@ class DjangoHelpFormatter(HelpFormatter):
+     """
+     show_last = {
+         '--version', '--verbosity', '--traceback', '--settings', '--pythonpath',
+-        '--no-color', '--force-color',
++        '--no-color', '--force-color', '--skip-checks',
+     }
+ 
+     def _reordered_actions(self, actions):
+@@ -286,6 +286,10 @@ class BaseCommand:
+             '--force-color', action='store_true',
+             help='Force colorization of the command output.',
+         )
++        parser.add_argument(
++            '--skip-checks', action='store_true',
++            help='Skip system checks.',
++        )
+         self.add_arguments(parser)
+         return parser
+ 
+diff --git a/tests/user_commands/tests.py b/tests/user_commands/tests.py
+index 2d1f8f834d..2c111a7312 100644
+--- a/tests/user_commands/tests.py
++++ b/tests/user_commands/tests.py
+@@ -176,6 +176,26 @@ class CommandTests(SimpleTestCase):
+                 self.assertTrue(check_migrations.called)
+         finally:
+             dance.Command.requires_migrations_checks = requires_migrations_checks
++            
++    def test_skip_checks_command_line_option(self):
++        """
++        The --skip-checks command line option should be properly recognized
++        and prevent system checks from being performed.
++        """
++        requires_system_checks = dance.Command.requires_system_checks
++        self.assertIs(requires_system_checks, True)
++        try:
++            with mock.patch.object(BaseCommand, 'check') as check_mock:
++                # Without --skip-checks, checks should run
++                management.ManagementUtility(['manage.py', 'dance']).execute()
++                self.assertTrue(check_mock.called)
++                check_mock.reset_mock()
++                
++                # With --skip-checks, checks should not run
++                management.ManagementUtility(['manage.py', 'dance', '--skip-checks']).execute()
++                self.assertFalse(check_mock.called)
++        finally:
++            dance.Command.requires_system_checks = requires_system_checks
+ 
+     def test_call_command_unrecognized_option(self):
+         msg = (

@@ -1,0 +1,35 @@
+diff --git a/lib/matplotlib/text.py b/lib/matplotlib/text.py
+index c2b18d4..793e3d3 100644
+--- a/lib/matplotlib/text.py
++++ b/lib/matplotlib/text.py
+@@ -151,6 +151,7 @@ class Text(Artist):
+             rotation_mode=rotation_mode,
+         )
+         self.update(kwargs)
++        self._antialiased = mpl.rcParams['text.antialiased']
+ 
+     def _reset_visual_defaults(
+         self,
+@@ -770,6 +771,22 @@ class Text(Artist):
+         renderer.close_group('text')
+         self.stale = False
+ 
++    def get_antialiased(self):
++        """Return the antialiased setting for the text."""
++        return self._antialiased
++
++    def set_antialiased(self, b):
++        """
++        Set the antialiased setting for the text.
++
++        Parameters
++        ----------
++        b : bool or None
++            Whether to use antialiasing for the text.
++        """
++        self._antialiased = bool(b)
++        self.stale = True
++
+     def get_color(self):
+         """Return the color of the text."""
+         return self._color

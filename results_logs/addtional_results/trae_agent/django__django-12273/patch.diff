@@ -1,0 +1,28 @@
+diff --git a/docs/topics/db/examples/index.txt b/docs/topics/db/examples/index.txt
+index 321e539e4a..b18a03cdb0 100644
+--- a/docs/topics/db/examples/index.txt
++++ b/docs/topics/db/examples/index.txt
+@@ -8,3 +8,4 @@ Examples of model relationship API usage
+    many_to_many
+    many_to_one
+    one_to_one
++   resetting_pk/README
+diff --git a/docs/topics/db/models.txt b/docs/topics/db/models.txt
+index a047f58b78..b0584e4f21 100644
+--- a/docs/topics/db/models.txt
++++ b/docs/topics/db/models.txt
+@@ -1098,6 +1098,14 @@ You can override that field by declaring your own
+ :class:`~django.db.models.OneToOneField` with :attr:`parent_link=True
+ <django.db.models.OneToOneField.parent_link>` on ``Restaurant``.
+ 
++.. note::
++
++    When using multi-table inheritance, if you want to reset the primary key to
++    create a new object on save (instead of updating the existing one), you need
++    to reset both the primary key and the parent link field. See the
++    :doc:`resetting primary keys example </topics/db/examples/resetting_pk/README>`
++    for more details.
++
+ .. _meta-and-multi-table-inheritance:
+ 
+ ``Meta`` and multi-table inheritance

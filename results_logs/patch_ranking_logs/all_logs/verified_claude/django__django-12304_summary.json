@@ -1,0 +1,186 @@
+{
+  "instance_id": "django__django-12304",
+  "container_id": "64f2f4803e7810c946c8b015fd51305ecb39e3540b12bab282fcb343117a1266",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+        "inst": "django__django-12304",
+        "passed": 0,
+        "failed": 5
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+        "inst": "django__django-12304",
+        "passed": 0,
+        "failed": 5
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+        "inst": "django__django-12304",
+        "passed": 0,
+        "failed": 5
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+        "inst": "django__django-12304",
+        "passed": 0,
+        "failed": 5
+      }
+    ],
+    "top_passed": 0,
+    "top_subset_size": 4
+  },
+  "reproduction": {
+    "template_tests.syntax_tests.test_if.IfTagTests.test_enumeration_comparison_in_template#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        }
+      ]
+    },
+    "template_tests.syntax_tests.test_if.IfTagTests.test_if_tag_with_enum#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        }
+      ]
+    },
+    "template_tests.syntax_tests.test_if.IfTagTests.test_if_tag_enum_comparison#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        }
+      ]
+    },
+    "template_tests.syntax_tests.test_if.IfTagTests.test_if_tag_with_enum_comparison#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        }
+      ]
+    },
+    "template_tests.syntax_tests.test_if.IfTagTests.test_if_tag_with_enum#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        }
+      ]
+    },
+    "template_tests.syntax_tests.test_if.IfTagTests.test_if_tag_with_enum#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_0.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_1.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_2.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-12304/dedup_patch_3.jsonl",
+          "inst": "django__django-12304",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

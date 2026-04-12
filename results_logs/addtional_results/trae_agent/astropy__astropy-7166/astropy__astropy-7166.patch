@@ -1,0 +1,39 @@
+diff --git a/astropy/utils/misc.py b/astropy/utils/misc.py
+index de3fb01d1..cceaeb957 100644
+--- a/astropy/utils/misc.py
++++ b/astropy/utils/misc.py
+@@ -528,7 +528,7 @@ class InheritDocstrings(type):
+                 not key.startswith('_'))
+ 
+         for key, val in dct.items():
+-            if (inspect.isfunction(val) and
++            if ((inspect.isfunction(val) or isinstance(val, property)) and
+                 is_public_member(key) and
+                 val.__doc__ is None):
+                 for base in cls.__mro__[1:]:
+diff --git a/astropy/utils/tests/test_misc.py b/astropy/utils/tests/test_misc.py
+index 4f632e8d1..578262fde 100644
+--- a/astropy/utils/tests/test_misc.py
++++ b/astropy/utils/tests/test_misc.py
+@@ -87,6 +87,21 @@ def test_inherit_docstrings():
+     if Base.__call__.__doc__ is not None:
+         # TODO: Maybe if __doc__ is None this test should be skipped instead?
+         assert Subclass.__call__.__doc__ == "FOO"
++        
++def test_inherit_property_docstrings():
++    class Base(metaclass=misc.InheritDocstrings):
++        @property
++        def prop(self):
++            """Property docstring"""
++            return 42
++
++    class Subclass(Base):
++        @property
++        def prop(self):
++            return 43
++
++    if Base.prop.__doc__ is not None:
++        assert Subclass.prop.__doc__ == "Property docstring"
+ 
+ 
+ def test_set_locale():

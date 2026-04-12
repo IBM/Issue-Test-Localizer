@@ -1,0 +1,26 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 9b00e24509..47bedb7c7a 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -45,12 +45,18 @@ class ResolverMatch:
+         self.namespaces = [x for x in namespaces if x] if namespaces else []
+         self.namespace = ':'.join(self.namespaces)
+ 
+-        if not hasattr(func, '__name__'):
++        # Unwrap functools.partial objects to get the underlying function
++        # for a more helpful representation
++        func_for_path = func
++        while isinstance(func_for_path, functools.partial):
++            func_for_path = func_for_path.func
++
++        if not hasattr(func_for_path, '__name__'):
+             # A class-based view
+-            self._func_path = func.__class__.__module__ + '.' + func.__class__.__name__
++            self._func_path = func_for_path.__class__.__module__ + '.' + func_for_path.__class__.__name__
+         else:
+             # A function-based view
+-            self._func_path = func.__module__ + '.' + func.__name__
++            self._func_path = func_for_path.__module__ + '.' + func_for_path.__name__
+ 
+         view_path = url_name or self._func_path
+         self.view_name = ':'.join(self.namespaces + [view_path])

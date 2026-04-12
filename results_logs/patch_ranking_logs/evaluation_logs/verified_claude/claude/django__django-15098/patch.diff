@@ -1,0 +1,13 @@
+diff --git a/django/utils/translation/trans_real.py b/django/utils/translation/trans_real.py
+index 488a2d8..678e50b 100644
+--- a/django/utils/translation/trans_real.py
++++ b/django/utils/translation/trans_real.py
+@@ -39,7 +39,7 @@ accept_language_re = _lazy_re_compile(r'''
+         ''', re.VERBOSE)
+ 
+ language_code_re = _lazy_re_compile(
+-    r'^[a-z]{1,8}(?:-[a-z0-9]{1,8})*(?:@[a-z0-9]{1,20})?$',
++    r'^[a-z]{1,8}(?:-[A-Za-z0-9]{1,8})*(?:@[a-z0-9]{1,20})?$',
+     re.IGNORECASE
+ )
+ 

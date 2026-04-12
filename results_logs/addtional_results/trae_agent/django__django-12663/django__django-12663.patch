@@ -1,0 +1,28 @@
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index caa03665ea..f154696a12 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -802,8 +802,21 @@ class Field(RegisterLookupMixin):
+ 
+     def get_prep_value(self, value):
+         """Perform preliminary non-db specific value checks and conversions."""
+-        if isinstance(value, Promise):
+-            value = value._proxy____cast()
++        from django.utils.functional import Promise, LazyObject, empty
++        from django.db.models import Model
++        
++        # Handle lazy objects
++        if isinstance(value, Promise) and hasattr(value, '__cast'):
++            value = value.__cast()
++        elif isinstance(value, LazyObject):
++            if value._wrapped is empty:
++                value._setup()
++            value = value._wrapped
++        
++        # If the value is a model instance, use its primary key
++        if isinstance(value, Model):
++            value = value.pk
++            
+         return value
+ 
+     def get_db_prep_value(self, value, connection, prepared=False):

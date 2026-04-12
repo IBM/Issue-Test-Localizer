@@ -1,0 +1,19 @@
+diff --git a/sympy/printing/repr.py b/sympy/printing/repr.py
+index b3c364b..3c27934 100644
+--- a/sympy/printing/repr.py
++++ b/sympy/printing/repr.py
+@@ -218,6 +218,14 @@ class ReprPrinter(Printer):
+         r = mlib_to_str(expr._mpf_, repr_dps(expr._prec))
+         return "%s('%s', precision=%i)" % (expr.__class__.__name__, r, expr._prec)
+ 
++    def _print_dict(self, expr):
++        items = ', '.join(f"{self._print(key)}: {self._print(value)}" for key, value in expr.items())
++        return f"{{{items}}}"
++
++    def _print_set(self, expr):
++        items = ', '.join(self._print(item) for item in expr)
++        return f"{{{items}}}"
++
+     def _print_Sum2(self, expr):
+         return "Sum2(%s, (%s, %s, %s))" % (self._print(expr.f), self._print(expr.i),
+                                            self._print(expr.a), self._print(expr.b))

@@ -1,0 +1,18 @@
+diff --git a/requests/sessions.py b/requests/sessions.py
+index 7fdc4a9..ffc444c 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -88,7 +88,12 @@ class SessionRedirectMixin(object):
+         i = 0
+ 
+         while resp.is_redirect:
+-            prepared_request = req.copy()
++            if i > 0:
++                # Use the previous prepared request for subsequent redirects
++                prepared_request = prepared_request.copy()
++            else:
++                # Only copy the original request for the first iteration
++                prepared_request = req.copy()
+ 
+             resp.content  # Consume socket so it can be released
+ 

@@ -1,0 +1,52 @@
+diff --git a/sympy/simplify/simplify.py b/sympy/simplify/simplify.py
+index c6b511f20..2de960792 100644
+--- a/sympy/simplify/simplify.py
++++ b/sympy/simplify/simplify.py
+@@ -251,8 +251,14 @@ def posify(eq):
+             eq[i] = e.subs(reps)
+         return f(eq), {r: s for s, r in reps.items()}
+ 
+-    reps = {s: Dummy(s.name, positive=True)
+-                 for s in eq.free_symbols if s.is_positive is None}
++    reps = {}
++    for s in eq.free_symbols:
++        if s.is_positive is None:
++            # Create a new Dummy symbol with all the original assumptions
++            # plus positive=True
++            assumptions = s._assumptions.copy()
++            assumptions['positive'] = True
++            reps[s] = Dummy(s.name, **assumptions)
+     eq = eq.subs(reps)
+     return eq, {r: s for s, r in reps.items()}
+ 
+diff --git a/sympy/simplify/tests/test_simplify.py b/sympy/simplify/tests/test_simplify.py
+index 5fe9352b9..739f8a80e 100644
+--- a/sympy/simplify/tests/test_simplify.py
++++ b/sympy/simplify/tests/test_simplify.py
+@@ -508,6 +508,26 @@ def test_posify():
+ 
+     assert str(Integral(posify(1/x + y)[0], (y, 1, 3)).expand()) == \
+         'Integral(1/_x, (y, 1, 3)) + Integral(_y, (y, 1, 3))'
++        
++    # Test that important assumptions are preserved
++    x_finite = Symbol('x', finite=True)
++    x_integer = Symbol('x', integer=True)
++    x_prime = Symbol('x', prime=True)
++    
++    # Test finite assumption
++    new_sym, _ = posify(x_finite)
++    assert new_sym.is_finite is True
++    assert new_sym.is_positive is True
++    
++    # Test integer assumption
++    new_sym, _ = posify(x_integer)
++    assert new_sym.is_integer is True
++    assert new_sym.is_positive is True
++    
++    # Test prime assumption
++    new_sym, _ = posify(x_prime)
++    assert new_sym.is_prime is True
++    assert new_sym.is_positive is True
+     assert str(Sum(posify(1/x**n)[0], (n,1,3)).expand()) == \
+         'Sum(_x**(-n), (n, 1, 3))'
+ 

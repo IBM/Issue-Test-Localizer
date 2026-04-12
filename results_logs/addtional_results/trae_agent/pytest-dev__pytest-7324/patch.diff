@@ -1,0 +1,59 @@
+diff --git a/src/_pytest/mark/expression.py b/src/_pytest/mark/expression.py
+index 04c73411a..536c098c9 100644
+--- a/src/_pytest/mark/expression.py
++++ b/src/_pytest/mark/expression.py
+@@ -161,7 +161,30 @@ def not_expr(s: Scanner) -> ast.expr:
+         return ret
+     ident = s.accept(TokenType.IDENT)
+     if ident:
+-        return ast.Name(ident.value, ast.Load())
++        # In pytest's expression evaluation context, we want to treat all identifiers
++        # as variable names that can be looked up in the matcher, including Python keywords
++        # like "True", "False", and "None". However, when these are used directly in AST
++        # construction, Python's compiler has special handling for them.
++        # 
++        # To avoid the assertion error in Python's debug builds, we need to create a special
++        # node for these constants when they appear alone as an expression, but we still want
++        # the expression evaluator to look them up in the matcher.
++        #
++        # Solution: We use ast.Subscript to create an expression that accesses the matcher
++        # with the keyword as a string literal, which is equivalent to matcher[keyword]
++        # This avoids the assertion error while maintaining the expected behavior.
++        
++        if ident.value in ("True", "False", "None"):
++            # Create the equivalent of matcher[keyword] using ast.Subscript
++            # This is equivalent to the Name node but avoids the assertion error
++            value_str = ast.Str(s=ident.value)
++            return ast.Subscript(
++                value=ast.Name(id="_pytestmark_", ctx=ast.Load()),
++                slice=ast.Index(value=value_str),
++                ctx=ast.Load(),
++            )
++        else:
++            return ast.Name(ident.value, ast.Load())
+     s.reject((TokenType.NOT, TokenType.LPAREN, TokenType.IDENT))
+ 
+ 
+@@ -170,6 +193,9 @@ class MatcherAdapter(Mapping[str, bool]):
+ 
+     def __init__(self, matcher: Callable[[str], bool]) -> None:
+         self.matcher = matcher
++        # The special _pytestmark_ object is used to access the matcher
++        # for Python keywords like True, False, and None
++        self._pytestmark_ = self
+ 
+     def __getitem__(self, key: str) -> bool:
+         return self.matcher(key)
+@@ -212,7 +238,11 @@ class Expression:
+ 
+         Returns whether the expression matches or not.
+         """
++        adapter = MatcherAdapter(matcher)
++        # Create a globals dict that includes the _pytestmark_ object
++        # This is needed for our special handling of Python keywords
++        globals_dict = {"__builtins__": {}, "_pytestmark_": adapter}
+         ret = eval(
+-            self.code, {"__builtins__": {}}, MatcherAdapter(matcher)
++            self.code, globals_dict, adapter
+         )  # type: bool
+         return ret

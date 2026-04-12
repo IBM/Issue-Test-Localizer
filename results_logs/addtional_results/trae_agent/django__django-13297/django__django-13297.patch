@@ -1,0 +1,130 @@
+diff --git a/django/db/backends/sqlite3/base.py b/django/db/backends/sqlite3/base.py
+index 8a105d4f35..0ef4206792 100644
+--- a/django/db/backends/sqlite3/base.py
++++ b/django/db/backends/sqlite3/base.py
+@@ -408,12 +408,42 @@ class SQLiteCursorWrapper(Database.Cursor):
+     def execute(self, query, params=None):
+         if params is None:
+             return Database.Cursor.execute(self, query)
++        
++        # Handle SimpleLazyObject instances in params
++        params = self._resolve_lazy_objects(params)
++        
+         query = self.convert_query(query)
+         return Database.Cursor.execute(self, query, params)
+ 
+     def executemany(self, query, param_list):
++        # Handle SimpleLazyObject instances in param_list
++        param_list = [self._resolve_lazy_objects(params) for params in param_list]
++        
+         query = self.convert_query(query)
+         return Database.Cursor.executemany(self, query, param_list)
++        
++    def _resolve_lazy_objects(self, params):
++        """
++        Convert any SimpleLazyObject instances in params to their resolved values.
++        This prevents database errors when using lazy objects in queries.
++        """
++        from django.utils.functional import Promise
++        
++        if params is None:
++            return params
++            
++        if isinstance(params, (list, tuple)):
++            return type(params)(
++                str(param) if isinstance(param, Promise) else param
++                for param in params
++            )
++        elif isinstance(params, dict):
++            return {
++                key: str(value) if isinstance(value, Promise) else value
++                for key, value in params.items()
++            }
++        
++        return params
+ 
+     def convert_query(self, query):
+         return FORMAT_QMARK_REGEX.sub('?', query).replace('%%', '%')
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 659fa87314..ba52edf23d 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1064,6 +1064,12 @@ class Query(BaseExpression):
+         return sql, params
+ 
+     def resolve_lookup_value(self, value, can_reuse, allow_joins):
++        # Handle SimpleLazyObject instances by converting them to strings
++        # This prevents database errors when using lazy objects in filters
++        from django.utils.functional import Promise
++        if isinstance(value, Promise):
++            value = str(value)
++            
+         if hasattr(value, 'resolve_expression'):
+             value = value.resolve_expression(
+                 self, reuse=can_reuse, allow_joins=allow_joins,
+diff --git a/django/shortcuts.py b/django/shortcuts.py
+index eda6f8813c..1d2b6f755e 100644
+--- a/django/shortcuts.py
++++ b/django/shortcuts.py
+@@ -72,8 +72,17 @@ def get_object_or_404(klass, *args, **kwargs):
+             "First argument to get_object_or_404() must be a Model, Manager, "
+             "or QuerySet, not '%s'." % klass__name
+         )
++    
++    # Resolve any SimpleLazyObject instances in kwargs to prevent database errors
++    resolved_kwargs = {}
++    for key, value in kwargs.items():
++        if isinstance(value, Promise):
++            resolved_kwargs[key] = str(value)
++        else:
++            resolved_kwargs[key] = value
++            
+     try:
+-        return queryset.get(*args, **kwargs)
++        return queryset.get(*args, **resolved_kwargs)
+     except queryset.model.DoesNotExist:
+         raise Http404('No %s matches the given query.' % queryset.model._meta.object_name)
+ 
+@@ -93,7 +102,16 @@ def get_list_or_404(klass, *args, **kwargs):
+             "First argument to get_list_or_404() must be a Model, Manager, or "
+             "QuerySet, not '%s'." % klass__name
+         )
+-    obj_list = list(queryset.filter(*args, **kwargs))
++    
++    # Resolve any SimpleLazyObject instances in kwargs to prevent database errors
++    resolved_kwargs = {}
++    for key, value in kwargs.items():
++        if isinstance(value, Promise):
++            resolved_kwargs[key] = str(value)
++        else:
++            resolved_kwargs[key] = value
++            
++    obj_list = list(queryset.filter(*args, **resolved_kwargs))
+     if not obj_list:
+         raise Http404('No %s matches the given query.' % queryset.model._meta.object_name)
+     return obj_list
+diff --git a/django/utils/functional.py b/django/utils/functional.py
+index 6d38f932f9..09409709b5 100644
+--- a/django/utils/functional.py
++++ b/django/utils/functional.py
+@@ -401,6 +401,20 @@ class SimpleLazyObject(LazyObject):
+             memo[id(self)] = result
+             return result
+         return copy.deepcopy(self._wrapped, memo)
++        
++    # Add special method to make SimpleLazyObject work with SQLite
++    # This allows SimpleLazyObject to be used directly in database queries
++    def __conform__(self, protocol):
++        """
++        Protocol adaptation hook for SQLite. This method is called when
++        a SimpleLazyObject is used as a parameter in a SQLite query.
++        We force evaluation and return the string representation.
++        """
++        if self._wrapped is empty:
++            self._setup()
++        if hasattr(self._wrapped, '__conform__'):
++            return self._wrapped.__conform__(protocol)
++        return str(self._wrapped)
+ 
+ 
+ def partition(predicate, values):

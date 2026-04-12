@@ -1,0 +1,33 @@
+diff --git a/sympy/matrices/expressions/blockmatrix.py b/sympy/matrices/expressions/blockmatrix.py
+index 11aebbc59f..d231c947cc 100644
+--- a/sympy/matrices/expressions/blockmatrix.py
++++ b/sympy/matrices/expressions/blockmatrix.py
+@@ -288,7 +288,17 @@ class BlockDiagMatrix(BlockMatrix):
+     sympy.matrices.dense.diag
+     """
+     def __new__(cls, *mats):
+-        return Basic.__new__(BlockDiagMatrix, *mats)
++        from sympy.matrices.immutable import ImmutableDenseMatrix
++        from sympy.matrices.matrices import MatrixBase
++        # Convert mutable matrices to immutable to ensure hashability
++        immutable_mats = []
++        for mat in mats:
++            if isinstance(mat, MatrixBase) and not hasattr(mat, '_hash'):
++                # Convert mutable matrix to immutable
++                immutable_mats.append(ImmutableDenseMatrix(mat))
++            else:
++                immutable_mats.append(mat)
++        return Basic.__new__(BlockDiagMatrix, *immutable_mats)
+ 
+     @property
+     def diag(self):
+@@ -301,6 +311,9 @@ def blocks(self):
+         data = [[mats[i] if i == j else ZeroMatrix(mats[i].rows, mats[j].cols)
+                         for j in range(len(mats))]
+                         for i in range(len(mats))]
++        # For single matrix case, use explicit dimensions to preserve block structure
++        if len(mats) == 1:
++            return ImmutableDenseMatrix(1, 1, [mats[0]], copy=False)
+         return ImmutableDenseMatrix(data)
+ 
+     @property

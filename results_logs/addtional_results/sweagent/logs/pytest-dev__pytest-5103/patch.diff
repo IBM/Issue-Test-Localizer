@@ -1,0 +1,295 @@
+diff --git a/src/_pytest/assertion/rewrite.py b/src/_pytest/assertion/rewrite.py
+index 2903b8995..5480d3825 100644
+--- a/src/_pytest/assertion/rewrite.py
++++ b/src/_pytest/assertion/rewrite.py
+@@ -526,6 +526,24 @@ def _should_repr_global_name(obj):
+         return True
+ 
+ 
++def _pytest_unroll_all(iterable, func):
++    """Helper function for unrolling all() calls with better error messages."""
++    for item in iterable:
++        result = func(item)
++        if not result:
++            return False
++    return True
++
++
++def _pytest_unroll_any(iterable, func):
++    """Helper function for unrolling any() calls with better error messages."""
++    for item in iterable:
++        result = func(item)
++        if result:
++            return True
++    return False
++
++
+ def _format_boolop(explanations, is_or):
+     explanation = "(" + (is_or and " or " or " and ").join(explanations) + ")"
+     if isinstance(explanation, six.text_type):
+@@ -964,10 +982,251 @@ warn_explicit(
+         res = self.assign(ast.BinOp(left_expr, binop.op, right_expr))
+         return res, explanation
+ 
++    def _visit_all_any_call(self, call):
++        """
++        Handle all() and any() calls with generator expressions or list comprehensions
++        by unrolling them into for loops for better error messages.
++        """
++        func_name = call.func.id  # 'all' or 'any'
++        comprehension = call.args[0]
++        
++        # Extract the comprehension parts
++        if isinstance(comprehension, ast.GeneratorExp):
++            element = comprehension.elt
++            generators = comprehension.generators
++        else:  # ast.ListComp
++            element = comprehension.elt
++            generators = comprehension.generators
++        
++        # For now, handle only simple cases with one generator
++        if len(generators) != 1:
++            # Fall back to default behavior for complex cases
++            return self._visit_call_default(call)
++        
++        generator = generators[0]
++        target = generator.target
++        iter_expr = generator.iter
++        
++        # Check for conditions (ifs) in the generator - fall back if present
++        if generator.ifs:
++            return self._visit_call_default(call)
++        
++        # Visit the iterable expression
++        iter_res, iter_expl = self.visit(iter_expr)
++        
++        # Create a variable to store the result
++        result_var = self.variable()
++        
++        # For all(), we start with True and look for the first False
++        # For any(), we start with False and look for the first True
++        if func_name == 'all':
++            initial_value = _NameConstant(True)
++        else:  # any
++            initial_value = _NameConstant(False)
++        
++        # Initialize result variable
++        self.statements.append(
++            ast.Assign([ast.Name(result_var, ast.Store())], initial_value)
++        )
++        
++        # Create the for loop variable
++        loop_var = self.variable()
++        loop_var_name = loop_var
++        
++        # Create the loop body
++        loop_body = []
++        
++        # Replace the target variable in the element expression with the loop variable
++        element_with_loop_var = self._replace_name_in_ast(element, target.id, loop_var)
++        
++        # Create the loop body content
++        if func_name == 'all':
++            # For all(), assert each element is True
++            # We need to visit the assertion to get proper error messages
++            old_statements = self.statements
++            old_variables = self.variables
++            old_variable_counter = self.variable_counter
++            old_on_failure = self.on_failure
++            old_stack = self.stack
++            
++            self.statements = []
++            self.variables = []
++            # Use a different starting point for variable counter to avoid conflicts
++            self.variable_counter = itertools.count(100)
++            self.on_failure = []
++            self.stack = []
++            self.push_format_context()
++            
++            # Visit the element expression to get proper assertion rewriting
++            element_res, element_expl = self.visit(element_with_loop_var)
++            
++            # Create the assertion failure handling
++            negation = ast.UnaryOp(ast.Not(), element_res)
++            body = self.on_failure
++            
++            # Create failure message
++            assertmsg = ast.Str("")
++            explanation = "assert " + element_expl
++            template = ast.BinOp(assertmsg, ast.Add(), ast.Str(explanation))
++            msg = self.pop_format_context(template)
++            fmt = self.helper("_format_explanation", msg)
++            err_name = ast.Name("AssertionError", ast.Load())
++            exc = ast_Call(err_name, [fmt], [])
++            if sys.version_info[0] >= 3:
++                raise_ = ast.Raise(exc, None)
++            else:
++                raise_ = ast.Raise(exc, None, None)
++            body.append(raise_)
++            
++            # Add the assertion check
++            loop_body.extend(self.statements)
++            loop_body.append(ast.If(negation, body, []))
++            
++            # Clear temporary variables
++            if self.variables:
++                variables = [ast.Name(name, ast.Store()) for name in self.variables]
++                clear = ast.Assign(variables, _NameConstant(None))
++                loop_body.append(clear)
++            
++            # Restore the old context
++            self.statements = old_statements
++            self.variables = old_variables
++            self.variable_counter = old_variable_counter
++            self.on_failure = old_on_failure
++            self.stack = old_stack
++            
++        else:  # any
++            # For any(), if element is True, set result to True and break
++            condition_check = ast.If(
++                test=element_with_loop_var,
++                body=[
++                    ast.Assign([ast.Name(result_var, ast.Store())], _NameConstant(True)),
++                    ast.Break()
++                ],
++                orelse=[]
++            )
++            loop_body.append(condition_check)
++        
++        # Create the for loop
++        for_loop = ast.For(
++            target=ast.Name(loop_var, ast.Store()),
++            iter=iter_res,
++            body=loop_body,
++            orelse=[]
++        )
++        
++        self.statements.append(for_loop)
++        
++        # Return the result variable
++        result_name = ast.Name(result_var, ast.Load())
++        res_expl = self.explanation_param(self.display(result_name))
++        
++        # Create explanation
++        element_expl = self._get_element_explanation(element, target.id)
++        if func_name == 'all':
++            expl = "all(%s for %s in %s)" % (element_expl, target.id, iter_expl)
++        else:
++            expl = "any(%s for %s in %s)" % (element_expl, target.id, iter_expl)
++        
++        outer_expl = "%s\n{%s = %s\n}" % (res_expl, res_expl, expl)
++        return result_name, outer_expl
++    
++    def _get_element_explanation(self, element, target_name):
++        """Get a string representation of the element expression"""
++        if isinstance(element, ast.Name):
++            return element.id
++        elif isinstance(element, ast.Call):
++            if isinstance(element.func, ast.Name):
++                args = []
++                for arg in element.args:
++                    if isinstance(arg, ast.Name):
++                        args.append(arg.id)
++                    else:
++                        args.append("...")
++                return "%s(%s)" % (element.func.id, ", ".join(args))
++        return "..."
++    
++    def _visit_call_default(self, call):
++        """Default call handling - used as fallback"""
++        if sys.version_info >= (3, 5):
++            return self._visit_call_35_default(call)
++        else:
++            return self._visit_call_legacy_default(call)
++    
++    def _visit_call_35_default(self, call):
++        """Default handling for Python 3.5+ calls"""
++        new_func, func_expl = self.visit(call.func)
++        arg_expls = []
++        new_args = []
++        new_kwargs = []
++        for arg in call.args:
++            res, expl = self.visit(arg)
++            arg_expls.append(expl)
++            new_args.append(res)
++        for keyword in call.keywords:
++            res, expl = self.visit(keyword.value)
++            new_kwargs.append(ast.keyword(keyword.arg, res))
++            if keyword.arg:
++                arg_expls.append(keyword.arg + "=" + expl)
++            else:  # **args have `arg` keywords with an .arg of None
++                arg_expls.append("**" + expl)
++
++        expl = "%s(%s)" % (func_expl, ", ".join(arg_expls))
++        new_call = ast.Call(new_func, new_args, new_kwargs)
++        res = self.assign(new_call)
++        res_expl = self.explanation_param(self.display(res))
++        outer_expl = "%s\n{%s = %s\n}" % (res_expl, res_expl, expl)
++        return res, outer_expl
++    
++    def _visit_call_legacy_default(self, call):
++        """Default handling for Python 3.4 and below calls"""
++        new_func, func_expl = self.visit(call.func)
++        arg_expls = []
++        new_args = []
++        new_kwargs = []
++        new_star = new_kwarg = None
++        for arg in call.args:
++            res, expl = self.visit(arg)
++            new_args.append(res)
++            arg_expls.append(expl)
++        for keyword in call.keywords:
++            res, expl = self.visit(keyword.value)
++            new_kwargs.append(ast.keyword(keyword.arg, res))
++            arg_expls.append(keyword.arg + "=" + expl)
++        if call.starargs:
++            new_star, expl = self.visit(call.starargs)
++            arg_expls.append("*" + expl)
++        if call.kwargs:
++            new_kwarg, expl = self.visit(call.kwargs)
++            arg_expls.append("**" + expl)
++        expl = "%s(%s)" % (func_expl, ", ".join(arg_expls))
++        new_call = ast.Call(new_func, new_args, new_kwargs, new_star, new_kwarg)
++        res = self.assign(new_call)
++        res_expl = self.explanation_param(self.display(res))
++        outer_expl = "%s\n{%s = %s\n}" % (res_expl, res_expl, expl)
++        return res, outer_expl
++    
++    def _replace_name_in_ast(self, node, old_name, new_name):
++        """Replace all occurrences of old_name with new_name in the AST node"""
++        class NameReplacer(ast.NodeTransformer):
++            def visit_Name(self, node):
++                if node.id == old_name:
++                    return ast.Name(new_name, node.ctx)
++                return node
++        
++        return NameReplacer().visit(node)
++
+     def visit_Call_35(self, call):
+         """
+         visit `ast.Call` nodes on Python3.5 and after
+         """
++        # Check if this is an all() or any() call with a generator/comprehension
++        if (isinstance(call.func, ast.Name) and 
++            call.func.id in ('all', 'any') and 
++            len(call.args) == 1 and
++            isinstance(call.args[0], (ast.GeneratorExp, ast.ListComp))):
++            return self._visit_all_any_call(call)
++        
+         new_func, func_expl = self.visit(call.func)
+         arg_expls = []
+         new_args = []
+@@ -1001,6 +1260,13 @@ warn_explicit(
+         """
+         visit `ast.Call nodes on 3.4 and below`
+         """
++        # Check if this is an all() or any() call with a generator/comprehension
++        if (isinstance(call.func, ast.Name) and 
++            call.func.id in ('all', 'any') and 
++            len(call.args) == 1 and
++            isinstance(call.args[0], (ast.GeneratorExp, ast.ListComp))):
++            return self._visit_all_any_call(call)
++        
+         new_func, func_expl = self.visit(call.func)
+         arg_expls = []
+         new_args = []

@@ -1,0 +1,24 @@
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 646bf68..7c2797d 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -253,6 +253,7 @@ class ModelFormOptions:
+         self.help_texts = getattr(options, "help_texts", None)
+         self.error_messages = getattr(options, "error_messages", None)
+         self.field_classes = getattr(options, "field_classes", None)
++        self.formfield_callback = getattr(options, "formfield_callback", None)
+ 
+ 
+ class ModelFormMetaclass(DeclarativeFieldsMetaclass):
+@@ -271,6 +272,11 @@ class ModelFormMetaclass(DeclarativeFieldsMetaclass):
+             return new_class
+ 
+         opts = new_class._meta = ModelFormOptions(getattr(new_class, "Meta", None))
++        
++        # Check for formfield_callback in Meta and prioritize it
++        meta_formfield_callback = getattr(opts, "formfield_callback", None)
++        if meta_formfield_callback is not None:
++            formfield_callback = meta_formfield_callback
+ 
+         # We check if a string was passed to `fields` or `exclude`,
+         # which is likely to be a mistake where the user typed ('foo') instead

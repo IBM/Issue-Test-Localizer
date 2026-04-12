@@ -1,0 +1,23 @@
+{
+  "instance_id": "pytest-dev__pytest-5809",
+  "selected_patch": {
+    "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5809/dedup_patch_0.jsonl",
+    "repro_fixes": 6,
+    "repro_total_considered": 9,
+    "regression_passed": 0,
+    "occurrence": 40,
+    "normalized_occurrence": 40
+  },
+  "ranked_groups": {
+    "rank_1": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pytest-dev__pytest-5809/dedup_patch_0.jsonl",
+        "repro_fixes": 6,
+        "repro_total_considered": 9,
+        "regression_passed": 0,
+        "occurrence": 40,
+        "normalized_occurrence": 40
+      }
+    ]
+  }
+}

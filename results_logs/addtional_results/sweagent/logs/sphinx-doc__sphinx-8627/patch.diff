@@ -1,0 +1,97 @@
+diff --git a/sphinx/util/typing.py b/sphinx/util/typing.py
+index 2d4f67bba..9ef181065 100644
+--- a/sphinx/util/typing.py
++++ b/sphinx/util/typing.py
+@@ -146,7 +146,20 @@ def _restify_py37(cls: Optional["Type"]) -> str:
+         if cls.__module__ == 'typing':
+             return ':class:`%s`' % cls.__qualname__
+         else:
+-            return ':class:`%s.%s`' % (cls.__module__, cls.__qualname__)
++            # Check if this is a class from a private module that's exposed through a public module
++            module = cls.__module__
++            if module and module.startswith('_') and hasattr(cls, '__name__'):
++                public_module_name = module[1:]  # Remove leading underscore
++                try:
++                    import sys
++                    if public_module_name in sys.modules:
++                        public_module = sys.modules[public_module_name]
++                        if hasattr(public_module, cls.__name__) and getattr(public_module, cls.__name__) is cls:
++                            # The class is exposed through the public module, use that instead
++                            module = public_module_name
++                except (ImportError, AttributeError):
++                    pass
++            return ':class:`%s.%s`' % (module, cls.__qualname__)
+     elif hasattr(cls, '_name'):
+         # SpecialForm
+         if cls.__module__ == 'typing':
+@@ -174,6 +187,18 @@ def _restify_py36(cls: Optional["Type"]) -> str:
+         else:
+             qualname = repr(cls).replace('typing.', '')
+     elif hasattr(cls, '__qualname__'):
++        # Check if this is a class from a private module that's exposed through a public module
++        if module and module.startswith('_') and hasattr(cls, '__name__'):
++            public_module_name = module[1:]  # Remove leading underscore
++            try:
++                import sys
++                if public_module_name in sys.modules:
++                    public_module = sys.modules[public_module_name]
++                    if hasattr(public_module, cls.__name__) and getattr(public_module, cls.__name__) is cls:
++                        # The class is exposed through the public module, use that instead
++                        module = public_module_name
++            except (ImportError, AttributeError):
++                pass
+         qualname = '%s.%s' % (module, cls.__qualname__)
+     else:
+         qualname = repr(cls)
+@@ -325,7 +350,24 @@ def _stringify_py37(annotation: Any) -> str:
+         else:
+             qualname = stringify(annotation.__origin__)  # ex. Union
+     elif hasattr(annotation, '__qualname__'):
+-        qualname = '%s.%s' % (module, annotation.__qualname__)
++        # Check if this is a class from a private module that's exposed through a public module
++        if module and module.startswith('_') and hasattr(annotation, '__name__'):
++            public_module_name = module[1:]  # Remove leading underscore
++            try:
++                import sys
++                if public_module_name in sys.modules:
++                    public_module = sys.modules[public_module_name]
++                    if hasattr(public_module, annotation.__name__) and getattr(public_module, annotation.__name__) is annotation:
++                        # The class is exposed through the public module, use that instead
++                        qualname = '%s.%s' % (public_module_name, annotation.__qualname__)
++                    else:
++                        qualname = '%s.%s' % (module, annotation.__qualname__)
++                else:
++                    qualname = '%s.%s' % (module, annotation.__qualname__)
++            except (ImportError, AttributeError):
++                qualname = '%s.%s' % (module, annotation.__qualname__)
++        else:
++            qualname = '%s.%s' % (module, annotation.__qualname__)
+     elif hasattr(annotation, '__origin__'):
+         # instantiated generic provided by a user
+         qualname = stringify(annotation.__origin__)
+@@ -379,7 +421,24 @@ def _stringify_py36(annotation: Any) -> str:
+         else:
+             qualname = repr(annotation).replace('typing.', '')
+     elif hasattr(annotation, '__qualname__'):
+-        qualname = '%s.%s' % (module, annotation.__qualname__)
++        # Check if this is a class from a private module that's exposed through a public module
++        if module and module.startswith('_') and hasattr(annotation, '__name__'):
++            public_module_name = module[1:]  # Remove leading underscore
++            try:
++                import sys
++                if public_module_name in sys.modules:
++                    public_module = sys.modules[public_module_name]
++                    if hasattr(public_module, annotation.__name__) and getattr(public_module, annotation.__name__) is annotation:
++                        # The class is exposed through the public module, use that instead
++                        qualname = '%s.%s' % (public_module_name, annotation.__qualname__)
++                    else:
++                        qualname = '%s.%s' % (module, annotation.__qualname__)
++                else:
++                    qualname = '%s.%s' % (module, annotation.__qualname__)
++            except (ImportError, AttributeError):
++                qualname = '%s.%s' % (module, annotation.__qualname__)
++        else:
++            qualname = '%s.%s' % (module, annotation.__qualname__)
+     else:
+         qualname = repr(annotation)
+ 

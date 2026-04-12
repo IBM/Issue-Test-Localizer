@@ -1,0 +1,17 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index 79d7e4f46..7798d9878 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -91,6 +91,12 @@ def type_to_xref(text: str, env: BuildEnvironment = None) -> addnodes.pending_xr
+     else:
+         kwargs = {}
+ 
++    # If the reference is not fully qualified (no dots in the name)
++    # and we have a current module context, mark it as refspecific
++    # to ensure proper lookup in the current module first
++    if '.' not in text and env and env.ref_context.get('py:module'):
++        kwargs['refspecific'] = True
++
+     return pending_xref('', nodes.Text(text),
+                         refdomain='py', reftype=reftype, reftarget=text, **kwargs)
+ 

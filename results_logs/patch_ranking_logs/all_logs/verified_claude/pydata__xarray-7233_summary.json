@@ -1,0 +1,317 @@
+{
+  "instance_id": "pydata__xarray-7233",
+  "container_id": "0c49fb404a2642667095568fe3c07efa50413bfcf7abb4d5c40595b5a9bc4487",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+        "inst": "pydata__xarray-7233",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+        "inst": "pydata__xarray-7233",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+        "inst": "pydata__xarray-7233",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+        "inst": "pydata__xarray-7233",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+        "inst": "pydata__xarray-7233",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+        "inst": "pydata__xarray-7233",
+        "passed": 7,
+        "failed": 0
+      }
+    ],
+    "top_passed": 7,
+    "top_subset_size": 6
+  },
+  "reproduction": {
+    "xarray/tests/test_coarsen.py::test_coarsen_construct#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_coarsen.py::test_coarsen_construct#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_coarsen.py::test_coarsen_construct#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_coarsen.py::test_coarsen_da_reduce#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_coarsen.py::test_coarsen_construct#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_coarsen.py::test_coarsen_construct#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/pydata__xarray-7233/dedup_patch_5.jsonl",
+          "inst": "pydata__xarray-7233",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 4038859cfa..ccf2bd6367 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -1302,6 +1302,22 @@ class Model(metaclass=ModelBase):
+             not settings.is_overridden('DEFAULT_AUTO_FIELD') and
+             not cls._meta.app_config._is_default_auto_field_overridden
+         ):
++            # Check if this model inherits from a parent with an explicit primary key
++            # We need to check the entire inheritance chain, not just direct parents
++            def has_explicit_pk_in_inheritance_chain(model):
++                # Check if any parent in the inheritance chain has an explicit primary key
++                for parent in model._meta.parents:
++                    if not parent._meta.pk.auto_created:
++                        return True
++                    # Recursively check parent's inheritance chain
++                    if has_explicit_pk_in_inheritance_chain(parent):
++                        return True
++                return False
++            
++            if has_explicit_pk_in_inheritance_chain(cls):
++                # Some ancestor has an explicit primary key, so don't warn about this model
++                return []
++            
+             return [
+                 checks.Warning(
+                     f"Auto-created primary key used when not defining a "

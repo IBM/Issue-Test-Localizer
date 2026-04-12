@@ -1,0 +1,541 @@
+{
+  "instance_id": "pydata__xarray-4493",
+  "container_id": "9f60459071d0fdf440349b8520b3fbd04a1a457bdae5cf2ce69cc9020da167ac",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_0.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_1.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_10.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_11.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_13.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_14.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_16.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_18.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_19.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_2.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_20.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_21.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_22.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_23.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_24.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_25.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_26.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_29.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_3.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_30.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_31.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_33.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_35.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_4.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_6.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_8.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_9.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_12.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_5.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_17.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 3,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_36.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 3,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_15.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 2,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_27.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 2,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_28.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 2,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_32.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 2,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_34.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 2,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_7.jsonl",
+        "inst": "pydata__xarray-4493",
+        "passed": 2,
+        "failed": 3
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 27
+  },
+  "reproduction": {
+    "xarray/tests/test_dask.py::TestDataArrayAndDataset::test_dataset_update_preserves_chunks#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_10.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_11.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_13.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_14.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_16.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_18.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_19.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_20.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_21.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_22.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_23.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_24.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_25.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_26.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_29.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_30.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_31.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_33.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_35.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_6.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_8.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_9.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        }
+      ]
+    },
+    "xarray/tests/test_dask.py::test_more_transforms_pass_lazy_array_equiv#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_dask.py::TestDataArrayAndDataset::test_dataset_update_preserves_chunks#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_0.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_1.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_10.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_11.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_13.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_14.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_16.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_18.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_19.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_2.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_20.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_21.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_22.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_23.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_24.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_25.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_26.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_29.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_3.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_30.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_31.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_33.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_35.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_4.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_6.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_8.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_9.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": false
+        }
+      ]
+    },
+    "xarray/tests/test_dask.py::test_optimize#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "xarray/tests/test_dask.py::test_more_transforms_pass_lazy_array_equiv#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new_agentless.py": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_18.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/lite_claude_all_unique_patches/pydata__xarray-4493/dedup_patch_17.jsonl",
+          "inst": "pydata__xarray-4493",
+          "passed": true
+        }
+      ]
+    }
+  }
+}

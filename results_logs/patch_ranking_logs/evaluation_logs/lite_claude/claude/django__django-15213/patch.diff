@@ -1,0 +1,17 @@
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 626b8ab..afbdcea 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -979,6 +979,12 @@ class ExpressionWrapper(SQLiteNumericMixin, Expression):
+         return super().get_group_by_cols()
+ 
+     def as_sql(self, compiler, connection):
++        if hasattr(self.expression, 'resolve_expression'):
++            resolved = self.expression.resolve_expression(query=compiler.query)
++            sql, params = compiler.compile(resolved)
++            if not sql:
++                sql = '1'  # Default true for empty Q objects
++            return sql, params
+         return compiler.compile(self.expression)
+ 
+     def __repr__(self):

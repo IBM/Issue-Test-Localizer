@@ -1,0 +1,44 @@
+diff --git a/django/core/serializers/base.py b/django/core/serializers/base.py
+index da85cb4b92..d1b7eafce7 100644
+--- a/django/core/serializers/base.py
++++ b/django/core/serializers/base.py
+@@ -336,13 +336,32 @@ def build_instance(Model, data, db):
+         and hasattr(default_manager, "get_by_natural_key")
+         and hasattr(Model, "natural_key")
+     ):
+-        natural_key = Model(**data).natural_key()
+-        try:
+-            data[Model._meta.pk.attname] = Model._meta.pk.to_python(
+-                default_manager.db_manager(db).get_by_natural_key(*natural_key).pk
+-            )
+-        except Model.DoesNotExist:
+-            pass
++        # Create a temporary instance to get the natural key
++        instance = Model(**data)
++        
++        # Check if this model has any FK fields that might be used in natural_key
++        has_fk_dependencies = False
++        for field in Model._meta.fields:
++            if field.remote_field and isinstance(field.remote_field, models.ManyToOneRel):
++                # If the FK field is not cached and might be used in natural_key
++                if not hasattr(instance._state, 'fields_cache') or field.name not in instance._state.fields_cache:
++                    has_fk_dependencies = True
++                    break
++        
++        if not has_fk_dependencies:
++            # Only call natural_key if there are no FK dependencies or if they are already resolved
++            try:
++                natural_key = instance.natural_key()
++                try:
++                    data[Model._meta.pk.attname] = Model._meta.pk.to_python(
++                        default_manager.db_manager(db).get_by_natural_key(*natural_key).pk
++                    )
++                except Model.DoesNotExist:
++                    pass
++            except (AttributeError, ObjectDoesNotExist):
++                # If natural_key() fails due to FK dependencies, just continue without it
++                pass
++    
+     return Model(**data)
+ 
+ 

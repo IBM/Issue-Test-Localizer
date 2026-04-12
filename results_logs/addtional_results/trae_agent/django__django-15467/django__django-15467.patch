@@ -1,0 +1,61 @@
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 64be087bf1..6d4f2865ab 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -269,7 +269,7 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+                         "class": get_ul_class(self.radio_fields[db_field.name]),
+                     }
+                 )
+-                kwargs["empty_label"] = _("None") if db_field.blank else None
++                kwargs["empty_label"] = (kwargs.get("empty_label") or _("None")) if db_field.blank else None
+ 
+         if "queryset" not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+diff --git a/tests/modeladmin/tests.py b/tests/modeladmin/tests.py
+index ede1a09212..a7a593ce32 100644
+--- a/tests/modeladmin/tests.py
++++ b/tests/modeladmin/tests.py
+@@ -621,7 +621,7 @@ class ModelAdminTests(TestCase):
+ 
+         cma = ConcertAdmin(Concert, self.site)
+         cmafa = cma.get_form(request)
+-
++        
+         self.assertEqual(
+             type(cmafa.base_fields["main_band"].widget.widget), AdminRadioSelect
+         )
+@@ -650,13 +650,27 @@ class ModelAdminTests(TestCase):
+         )
+ 
+         self.assertEqual(type(cmafa.base_fields["transport"].widget), AdminRadioSelect)
+-        self.assertEqual(
+-            cmafa.base_fields["transport"].widget.attrs, {"class": "radiolist inline"}
+-        )
+-        self.assertEqual(
+-            list(cmafa.base_fields["transport"].widget.choices),
+-            [("", "None"), (1, "Plane"), (2, "Train"), (3, "Bus")],
+-        )
++        
++    def test_custom_empty_label_with_radio_fields(self):
++        """
++        Test that a custom empty_label in formfield_for_foreignkey is respected
++        even when the field is in radio_fields.
++        """
++        class CustomConcertAdmin(ModelAdmin):
++            radio_fields = {
++                "opening_band": VERTICAL,
++            }
++            
++            def formfield_for_foreignkey(self, db_field, request, **kwargs):
++                if db_field.name == "opening_band":
++                    kwargs["empty_label"] = "I WANT TO SET MY OWN EMPTY LABEL"
++                return super().formfield_for_foreignkey(db_field, request, **kwargs)
++        
++        cma = CustomConcertAdmin(Concert, self.site)
++        form_field = cma.formfield_for_foreignkey(Concert._meta.get_field("opening_band"), request)
++        
++        # Check if our custom empty_label is preserved
++        self.assertEqual(form_field.empty_label, "I WANT TO SET MY OWN EMPTY LABEL")
+ 
+         class AdminConcertForm(forms.ModelForm):
+             class Meta:

@@ -1,0 +1,24 @@
+diff --git a/pylint/config/argument.py b/pylint/config/argument.py
+index 58062ab..0d8d9d6 100644
+--- a/pylint/config/argument.py
++++ b/pylint/config/argument.py
+@@ -112,10 +112,16 @@ def _regex_transformer(value: str) -> Pattern[str]:
+ 
+ 
+ def _regexp_csv_transfomer(value: str) -> Sequence[Pattern[str]]:
+-    """Transforms a comma separated list of regular expressions."""
++    """Transforms a comma separated list of regular expressions.
++    
++    Handles commas within regex patterns (e.g. in quantifiers like {1,3}) correctly
++    by parsing as a proper comma-separated list that preserves regex syntax.
++    """
+     patterns: list[Pattern[str]] = []
+-    for pattern in _csv_transformer(value):
+-        patterns.append(_regex_transformer(pattern))
++    # Split on commas that are not within regex quantifiers
++    # Use negative lookbehind/lookahead to avoid splitting {m,n} quantifiers
++    for pattern in re.split(r',(?![^{]*})', value):
++        patterns.append(_regex_transformer(pattern.strip()))
+     return patterns
+ 
+ 

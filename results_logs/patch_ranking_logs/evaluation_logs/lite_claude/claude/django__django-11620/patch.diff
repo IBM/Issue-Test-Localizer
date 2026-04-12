@@ -1,0 +1,22 @@
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 37e3b61..0ab62aa 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -239,6 +239,8 @@ def _route_to_regex(route, is_endpoint=False):
+     return ''.join(parts), converters
+ 
+ 
++from django.http import Http404
++
+ class RoutePattern(CheckURLMixin):
+     regex = LocaleRegexDescriptor('_route')
+ 
+@@ -258,7 +260,7 @@ class RoutePattern(CheckURLMixin):
+                 converter = self.converters[key]
+                 try:
+                     kwargs[key] = converter.to_python(value)
+-                except ValueError:
++                except (ValueError, Http404):
+                     return None
+             return path[match.end():], (), kwargs
+         return None

@@ -1,0 +1,28 @@
+tools:
+  run_tests:
+    signature: "run_tests [<test_names>]"
+    docstring: |
+      Run the pre-defined regression tests for the current instance.
+
+      IMPORTANT: You MUST use this tool to run regression tests. Do NOT try to run tests manually
+      with pytest, django test, or any other command - this tool automatically uses the correct
+      test command for each project (Django uses runtests.py, sympy uses bin/test, etc.).
+
+      This tool runs ONLY the specific tests defined in the regression test suite for this instance.
+      These tests verify that existing functionality is not broken by your changes.
+
+      When called without arguments, it runs all regression tests for the current instance.
+      Returns detailed output including pass/fail status and error messages.
+    arguments:
+      - name: test_names
+        type: string
+        description: "Space-separated list of specific test names to run (optional, runs all instance tests if not specified)"
+        required: false
+
+  list_tests:
+    signature: "list_tests"
+    docstring: |
+      List all regression tests defined for the current instance.
+      Shows the exact test names that will be run by run_tests.
+      Use this to see what tests are available before running them.
+    arguments: []

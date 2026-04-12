@@ -1,0 +1,74 @@
+{
+  "instance_id": "matplotlib__matplotlib-26011",
+  "container_id": "eb12caadd86fca61541f6fc560a0693d112490a75e1af612e2b2a73bdead8d96",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-26011/dedup_patch_1.jsonl",
+        "inst": "matplotlib__matplotlib-26011",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-26011/dedup_patch_2.jsonl",
+        "inst": "matplotlib__matplotlib-26011",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-26011/dedup_patch_0.jsonl",
+        "inst": "matplotlib__matplotlib-26011",
+        "passed": 0,
+        "failed": 4
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_axes.py::test_twin_axis_locators_formatters#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_set_secondary_axis_color#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_axes.py::test_shared_axes_autoscale#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "regression": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

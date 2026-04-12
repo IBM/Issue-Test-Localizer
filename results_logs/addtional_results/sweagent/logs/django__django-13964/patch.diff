@@ -1,0 +1,13 @@
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 2428218696..effe729b5a 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -941,6 +941,8 @@ class Model(metaclass=ModelBase):
+                 # cached relationship.
+                 if getattr(obj, field.target_field.attname) != getattr(self, field.attname):
+                     field.delete_cached_value(self)
++                    # Update the foreign key field to match the related object's pk
++                    setattr(self, field.attname, obj.pk)
+ 
+     def delete(self, using=None, keep_parents=False):
+         using = using or router.db_for_write(self.__class__, instance=self)

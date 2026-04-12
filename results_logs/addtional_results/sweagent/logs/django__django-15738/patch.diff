@@ -1,0 +1,78 @@
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index 03f0f11507..42af2fdb70 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -517,7 +517,7 @@ class BaseDatabaseSchemaEditor:
+         if sql:
+             self.execute(sql)
+ 
+-    def alter_unique_together(self, model, old_unique_together, new_unique_together):
++    def alter_unique_together(self, model, old_unique_together, new_unique_together, old_model=None):
+         """
+         Deal with a model changing its unique_together. The input
+         unique_togethers must be doubly-nested, not the single-nested
+@@ -527,8 +527,11 @@ class BaseDatabaseSchemaEditor:
+         news = {tuple(fields) for fields in new_unique_together}
+         # Deleted uniques
+         for fields in olds.difference(news):
++            # Use old_model for finding constraints to delete if available,
++            # otherwise fall back to the current model
++            constraint_model = old_model if old_model is not None else model
+             self._delete_composed_index(
+-                model,
++                constraint_model,
+                 fields,
+                 {"unique": True, "primary_key": False},
+                 self.sql_delete_unique,
+@@ -538,7 +541,7 @@ class BaseDatabaseSchemaEditor:
+             fields = [model._meta.get_field(field) for field in field_names]
+             self.execute(self._create_unique_sql(model, fields))
+ 
+-    def alter_index_together(self, model, old_index_together, new_index_together):
++    def alter_index_together(self, model, old_index_together, new_index_together, old_model=None):
+         """
+         Deal with a model changing its index_together. The input
+         index_togethers must be doubly-nested, not the single-nested
+@@ -548,8 +551,11 @@ class BaseDatabaseSchemaEditor:
+         news = {tuple(fields) for fields in new_index_together}
+         # Deleted indexes
+         for fields in olds.difference(news):
++            # Use old_model for finding indexes to delete if available,
++            # otherwise fall back to the current model
++            constraint_model = old_model if old_model is not None else model
+             self._delete_composed_index(
+-                model,
++                constraint_model,
+                 fields,
+                 {"index": True, "unique": False},
+                 self.sql_delete_index,
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index 75a3b8b030..110b7ef114 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -562,11 +562,20 @@ class AlterTogetherOptionOperation(ModelOptionOperation):
+         if self.allow_migrate_model(schema_editor.connection.alias, new_model):
+             old_model = from_state.apps.get_model(app_label, self.name)
+             alter_together = getattr(schema_editor, "alter_%s" % self.option_name)
+-            alter_together(
+-                new_model,
+-                getattr(old_model._meta, self.option_name, set()),
+-                getattr(new_model._meta, self.option_name, set()),
+-            )
++            # Check if the method supports old_model parameter (for unique_together and index_together)
++            if self.option_name in ("unique_together", "index_together"):
++                alter_together(
++                    new_model,
++                    getattr(old_model._meta, self.option_name, set()),
++                    getattr(new_model._meta, self.option_name, set()),
++                    old_model=old_model,
++                )
++            else:
++                alter_together(
++                    new_model,
++                    getattr(old_model._meta, self.option_name, set()),
++                    getattr(new_model._meta, self.option_name, set()),
++                )
+ 
+     def database_backwards(self, app_label, schema_editor, from_state, to_state):
+         return self.database_forwards(app_label, schema_editor, from_state, to_state)

@@ -1,0 +1,1711 @@
+{
+  "instance_id": "django__django-15738",
+  "container_id": "a819f8140445cca9eb29790b405ff31e8a8743765a6c40b0f9f4c5740cd9f6e2",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+        "inst": "django__django-15738",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_22.jsonl",
+        "inst": "django__django-15738",
+        "passed": 5,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_9.jsonl",
+        "inst": "django__django-15738",
+        "passed": 5,
+        "failed": 3
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_24.jsonl",
+        "inst": "django__django-15738",
+        "passed": 0,
+        "failed": 8
+      }
+    ],
+    "top_passed": 8,
+    "top_subset_size": 32
+  },
+  "reproduction": {
+    "migrations.test_operations.OperationTests.test_migration_change_fk_to_m2m_with_unique_together#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.OperationTests.test_alter_field_fk_to_m2m_with_unique_together#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.OperationTests.test_alter_unique_together_with_m2m_conversion#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.FieldOperationTests.test_alter_field_fk_to_m2m_with_unique_together#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.FieldOperationTests.test_fk_to_m2m_with_unique_together#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.OperationTests.test_alter_field_fk_to_m2m_with_unique_together_removal#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.OperationTests.test_fk_to_m2m_with_unique_together#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "migrations.test_operations.OperationTests.test_alter_field_m2m_and_remove_unique_together#8": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_operations.FieldOperationTests.test_fk_to_m2m_with_unique_together#9": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    },
+    "migrations.test_autodetector.AutodetectorTests.test_alter_field_m2m_and_remove_unique_together#10": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_0.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_1.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_10.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_11.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_12.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_13.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_14.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_15.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_16.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_17.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_18.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_19.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_2.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_20.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_21.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_23.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_25.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_26.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_27.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_28.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_29.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_3.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_30.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_31.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_32.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_33.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_34.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_4.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_5.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_6.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_7.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/django__django-15738/dedup_patch_8.jsonl",
+          "inst": "django__django-15738",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

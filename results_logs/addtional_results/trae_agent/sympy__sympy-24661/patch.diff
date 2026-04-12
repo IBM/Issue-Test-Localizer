@@ -1,0 +1,43 @@
+diff --git a/sympy/parsing/sympy_parser.py b/sympy/parsing/sympy_parser.py
+index 52711d1324..21e25808e9 100644
+--- a/sympy/parsing/sympy_parser.py
++++ b/sympy/parsing/sympy_parser.py
+@@ -1110,6 +1110,14 @@ class EvaluateFalseTransformer(ast.NodeTransformer):
+         ast.BitAnd: 'And',
+         ast.BitXor: 'Not',
+     }
++    comparison_operators = {
++        ast.Lt: 'Lt',
++        ast.Gt: 'Gt',
++        ast.LtE: 'Le',
++        ast.GtE: 'Ge',
++        ast.Eq: 'Eq',
++        ast.NotEq: 'Ne',
++    }
+     functions = (
+         'Abs', 'im', 're', 'sign', 'arg', 'conjugate',
+         'acos', 'acot', 'acsc', 'asec', 'asin', 'atan',
+@@ -1191,6 +1199,23 @@ def visit_Call(self, node):
+         if isinstance(node.func, ast.Name) and node.func.id in self.functions:
+             new_node.keywords.append(ast.keyword(arg='evaluate', value=ast.NameConstant(value=False, ctx=ast.Load())))
+         return new_node
++        
++    def visit_Compare(self, node):
++        # Handle comparison operators (e.g., <, >, <=, >=, ==, !=)
++        if len(node.ops) == 1 and type(node.ops[0]) in self.comparison_operators:
++            sympy_class = self.comparison_operators[type(node.ops[0])]
++            left = self.visit(node.left)
++            right = self.visit(node.comparators[0])
++            
++            new_node = ast.Call(
++                func=ast.Name(id=sympy_class, ctx=ast.Load()),
++                args=[left, right],
++                keywords=[ast.keyword(arg='evaluate', value=ast.NameConstant(value=False, ctx=ast.Load()))],
++                starargs=None,
++                kwargs=None
++            )
++            return new_node
++        return self.generic_visit(node)
+ 
+ 
+ _transformation = {  # items can be added but never re-ordered

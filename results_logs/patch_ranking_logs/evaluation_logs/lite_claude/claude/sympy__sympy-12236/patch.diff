@@ -1,0 +1,23 @@
+diff --git a/sympy/polys/partfrac.py b/sympy/polys/partfrac.py
+index 03af2f5..cd1b30d 100644
+--- a/sympy/polys/partfrac.py
++++ b/sympy/polys/partfrac.py
+@@ -76,6 +76,18 @@ def apart(f, x=None, full=False, **options):
+         return f
+     else:
+         P, Q = f.as_numer_denom()
++        if P.is_Mul:
++            # Extract any symbolic coefficients that shouldn't be decomposed
++            coeff = S.One
++            newP = S.One
++            for arg in P.args:
++                if arg.is_number or (arg.is_Symbol and x and not arg.has(x)):
++                    coeff *= arg
++                else:
++                    newP *= arg
++            if coeff != S.One:
++                return coeff * apart(newP/Q, x, full=full, **options)
++        P, Q = f.as_numer_denom()
+ 
+     _options = options.copy()
+     options = set_defaults(options, extension=True)

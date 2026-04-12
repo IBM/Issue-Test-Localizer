@@ -1,0 +1,55 @@
+diff --git a/lib/matplotlib/tests/test_widgets.py b/lib/matplotlib/tests/test_widgets.py
+index 71ebd176f..4be41eb64 100644
+--- a/lib/matplotlib/tests/test_widgets.py
++++ b/lib/matplotlib/tests/test_widgets.py
+@@ -280,6 +280,28 @@ def test_span_selector_direction():
+         tool.direction = 'invalid_string'
+ 
+ 
++def test_span_selector_axes_limits():
++    """Test that SpanSelector doesn't change the axes limits."""
++    ax = get_ax()
++    
++    # Set specific limits
++    ax.set_xlim(10, 20)
++    ax.set_ylim(10, 20)
++    
++    xlim_before = ax.get_xlim()
++    ylim_before = ax.get_ylim()
++    
++    # Create a horizontal SpanSelector
++    h_tool = widgets.SpanSelector(ax, lambda min, max: None, 'horizontal', interactive=True)
++    assert ax.get_xlim() == xlim_before
++    assert ax.get_ylim() == ylim_before
++    
++    # Create a vertical SpanSelector
++    v_tool = widgets.SpanSelector(ax, lambda min, max: None, 'vertical', interactive=True)
++    assert ax.get_xlim() == xlim_before
++    assert ax.get_ylim() == ylim_before
++
++
+ def test_tool_line_handle():
+     ax = get_ax()
+ 
+diff --git a/lib/matplotlib/widgets.py b/lib/matplotlib/widgets.py
+index a199e45d4..7f7fff874 100644
+--- a/lib/matplotlib/widgets.py
++++ b/lib/matplotlib/widgets.py
+@@ -2141,10 +2141,16 @@ class SpanSelector(_SelectorWidget):
+         if self.direction == 'horizontal':
+             trans = ax.get_xaxis_transform()
+             w, h = 0, 1
++            # Get current x limits to avoid expanding to include 0
++            xmin, xmax = ax.get_xlim()
++            pos = (xmin, 0)
+         else:
+             trans = ax.get_yaxis_transform()
+             w, h = 1, 0
+-        self._rect = Rectangle((0, 0), w, h,
++            # Get current y limits to avoid expanding to include 0
++            ymin, ymax = ax.get_ylim()
++            pos = (0, ymin)
++        self._rect = Rectangle(pos, w, h,
+                                transform=trans,
+                                visible=False,
+                                **self._rectprops)

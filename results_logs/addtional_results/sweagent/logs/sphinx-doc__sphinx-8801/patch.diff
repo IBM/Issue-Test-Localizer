@@ -1,0 +1,41 @@
+diff --git a/sphinx/ext/autodoc/importer.py b/sphinx/ext/autodoc/importer.py
+index 477aae247..181635ee5 100644
+--- a/sphinx/ext/autodoc/importer.py
++++ b/sphinx/ext/autodoc/importer.py
+@@ -293,6 +293,7 @@ def get_class_members(subject: Any, objpath: List[str], attrgetter: Callable
+             continue
+ 
+     try:
++        # First, collect all annotation-only members from all classes in MRO
+         for cls in getmro(subject):
+             # annotation only member (ex. attr: int)
+             for name in getannotations(cls):
+@@ -300,16 +301,24 @@ def get_class_members(subject: Any, objpath: List[str], attrgetter: Callable
+                 if name and name not in members:
+                     members[name] = ObjectMember(name, INSTANCEATTR, class_=cls)
+ 
+-            # append instance attributes (cf. self.attr1) if analyzer knows
++        # Then, try to find docstrings for all members using ModuleAnalyzer
++        # We need to check all classes in MRO to find docstrings for inherited annotation-only members
++        for cls in getmro(subject):
+             try:
+                 modname = safe_getattr(cls, '__module__')
+                 qualname = safe_getattr(cls, '__qualname__')
+                 analyzer = ModuleAnalyzer.for_module(modname)
+                 analyzer.analyze()
+                 for (ns, name), docstring in analyzer.attr_docs.items():
+-                    if ns == qualname and name not in members:
+-                        members[name] = ObjectMember(name, INSTANCEATTR, class_=cls,
+-                                                     docstring='\n'.join(docstring))
++                    if ns == qualname:
++                        if name not in members:
++                            # This is a new member (instance attribute)
++                            members[name] = ObjectMember(name, INSTANCEATTR, class_=cls,
++                                                         docstring='\n'.join(docstring))
++                        elif members[name].docstring is None:
++                            # This is an existing member without docstring (annotation-only member)
++                            members[name] = ObjectMember(name, INSTANCEATTR, class_=members[name].class_,
++                                                         docstring='\n'.join(docstring))
+             except (AttributeError, PycodeError):
+                 pass
+     except AttributeError:

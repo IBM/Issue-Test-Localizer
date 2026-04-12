@@ -1,0 +1,23 @@
+diff --git a/sklearn/utils/multiclass.py b/sklearn/utils/multiclass.py
+index db3f82e..1d80966 100644
+--- a/sklearn/utils/multiclass.py
++++ b/sklearn/utils/multiclass.py
+@@ -286,6 +286,9 @@ def type_of_target(y, input_name=""):
+         or is_array_api
+     )
+ 
++    nullable_pandas_dtypes = ["Int64", "Float64", "boolean"]
++    if hasattr(y, "dtype") and str(y.dtype) in nullable_pandas_dtypes:
++        y = y.astype(y.dtype.numpy_dtype)
+     if not valid:
+         raise ValueError(
+             "Expected array-like (array or non-string sequence), got %r" % y
+@@ -295,6 +298,8 @@ def type_of_target(y, input_name=""):
+     if sparse_pandas:
+         raise ValueError("y cannot be class 'SparseSeries' or 'SparseArray'")
+ 
++    if hasattr(y, "dtype") and str(y.dtype) in nullable_pandas_dtypes:
++        y = y.astype(y.dtype.numpy_dtype)
+     if is_multilabel(y):
+         return "multilabel-indicator"
+ 

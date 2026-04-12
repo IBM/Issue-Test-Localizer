@@ -1,0 +1,37 @@
+diff --git a/sklearn/feature_extraction/tests/test_text.py b/sklearn/feature_extraction/tests/test_text.py
+index 7b7697ff4..23bbd3efa 100644
+--- a/sklearn/feature_extraction/tests/test_text.py
++++ b/sklearn/feature_extraction/tests/test_text.py
+@@ -96,6 +96,16 @@ def test_strip_accents():
+     a = "this is à test"
+     expected = 'this is a test'
+     assert strip_accents_unicode(a) == expected
++    
++    # Test with pre-normalized NFKD strings
++    # Single code point (LATIN SMALL LETTER N WITH TILDE)
++    s1 = chr(241)
++    # Two code points (LATIN SMALL LETTER N + COMBINING TILDE)
++    s2 = chr(110) + chr(771)
++    
++    # Both should be converted to 'n'
++    assert strip_accents_unicode(s1) == 'n'
++    assert strip_accents_unicode(s2) == 'n'
+ 
+ 
+ def test_to_ascii():
+diff --git a/sklearn/feature_extraction/text.py b/sklearn/feature_extraction/text.py
+index bb5a9d646..11236d958 100644
+--- a/sklearn/feature_extraction/text.py
++++ b/sklearn/feature_extraction/text.py
+@@ -130,10 +130,7 @@ def strip_accents_unicode(s):
+         ASCII equivalent.
+     """
+     normalized = unicodedata.normalize('NFKD', s)
+-    if normalized == s:
+-        return s
+-    else:
+-        return ''.join([c for c in normalized if not unicodedata.combining(c)])
++    return ''.join([c for c in normalized if not unicodedata.combining(c)])
+ 
+ 
+ def strip_accents_ascii(s):

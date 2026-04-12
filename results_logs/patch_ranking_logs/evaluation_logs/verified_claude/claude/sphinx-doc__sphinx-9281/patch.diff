@@ -1,0 +1,16 @@
+diff --git a/sphinx/domains/python.py b/sphinx/domains/python.py
+index da040b3..813b118 100644
+--- a/sphinx/domains/python.py
++++ b/sphinx/domains/python.py
+@@ -122,6 +122,11 @@ def _parse_annotation(annotation: str, env: BuildEnvironment = None) -> List[Nod
+             if node.value is Ellipsis:
+                 return [addnodes.desc_sig_punctuation('', "...")]
+             else:
++                # Handle Enum values more cleanly
++                if hasattr(node.value, '__module__') and hasattr(node.value, '__class__') and \
++                   hasattr(node.value.__class__, '__module__') and \
++                   'enum' in node.value.__class__.__module__.lower():
++                    return [nodes.Text(f"{node.value.__class__.__name__}.{node.value.name}")]
+                 return [nodes.Text(node.value)]
+         elif isinstance(node, ast.Expr):
+             return unparse(node.value)

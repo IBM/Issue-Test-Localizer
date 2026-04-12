@@ -1,0 +1,169 @@
+{
+  "instance_id": "astropy__astropy-6938",
+  "container_id": "c870102c934a1f51a1ddc9a81d3ede4d59d6a692f10115eb27833128b5cc70bf",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+        "inst": "astropy__astropy-6938",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+        "inst": "astropy__astropy-6938",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_0.jsonl",
+        "inst": "astropy__astropy-6938",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_1.jsonl",
+        "inst": "astropy__astropy-6938",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_2.jsonl",
+        "inst": "astropy__astropy-6938",
+        "passed": 0,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_4.jsonl",
+        "inst": "astropy__astropy-6938",
+        "passed": 0,
+        "failed": 1
+      }
+    ],
+    "top_passed": 1,
+    "top_subset_size": 2
+  },
+  "reproduction": {
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_d_exponent_in_ascii_table#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_d_exponent_in_ascii_table#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_d_exponent_in_fits_output#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_d_exponent_handling#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_fitsrec_d_exponent_handling#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_fitsrec_d_exponent_handling#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_fitsrec_d_exponent_handling#7": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_fitsrec_d_exponent_handling#8": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_3.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/astropy__astropy-6938/dedup_patch_5.jsonl",
+          "inst": "astropy__astropy-6938",
+          "passed": false
+        }
+      ]
+    },
+    "astropy/io/fits/tests/test_table.py::TestTableFunctions::test_fitsrec_d_exponent_handling#9": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "astropy/io/fits/tests/test_table.py::test_regression_scalar_indexing#10": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new.py#11": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13584",
+  "container_id": "217f4ada305cb5cfb3687208ffbc6383ce624561bfbb38dbe453634999c29467",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_1.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_10.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_11.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_12.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_13.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_14.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_15.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_16.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_17.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_18.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_2.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_3.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_4.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_5.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_6.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_7.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_8.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      },
+      {
+        "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_9.jsonl",
+        "inst": "scikit-learn__scikit-learn-13584",
+        "passed": 4,
+        "failed": 1
+      }
+    ],
+    "top_passed": 5,
+    "top_subset_size": 1
+  },
+  "reproduction": {
+    "sklearn/tests/test_config.py::test_config_context#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_config.py::test_set_config#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_config.py::test_set_config#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter#7": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter#8": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/tests/test_config.py::test_set_config#9": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/utils/tests/test_pprint.py::test_builtin_prettyprinter#10": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "reproduce_bug_new.py#11": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/lite_gpt4o_all_unique_patches/scikit-learn__scikit-learn-13584/dedup_patch_1.jsonl",
+          "inst": "scikit-learn__scikit-learn-13584",
+          "passed": false
+        }
+      ]
+    }
+  }
+}

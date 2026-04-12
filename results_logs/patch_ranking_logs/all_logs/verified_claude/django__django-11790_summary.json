@@ -1,0 +1,206 @@
+{
+  "instance_id": "django__django-11790",
+  "container_id": "0e630ffbb5ee7416d4cf5965818fc191f5c3d1d11b219395310a51f2b0f4ffa9",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+        "inst": "django__django-11790",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+        "inst": "django__django-11790",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+        "inst": "django__django-11790",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+        "inst": "django__django-11790",
+        "passed": 4,
+        "failed": 0
+      }
+    ],
+    "top_passed": 4,
+    "top_subset_size": 4
+  },
+  "reproduction": {
+    "auth_tests.test_forms.AuthenticationFormTest.test_username_field_max_length_matches_user_model#1": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.AuthenticationFormTest.test_username_field_has_maxlength_html_attribute#2": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.AuthenticationFormTest.test_username_field_max_length_matches_user_model#3": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.UserChangeFormTest.test_authentication_form_username_field_has_max_length_html_attribute#4": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.AuthenticationFormTest.test_username_field_renders_maxlength_attribute#5": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        }
+      ]
+    },
+    "auth_tests.test_forms.AdminPasswordChangeFormTest.test_authentication_form_username_field_has_max_length_attribute#6": {
+      "repro_fails_on_clean": true,
+      "outcomes": [
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_0.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_1.jsonl",
+          "inst": "django__django-11790",
+          "passed": true
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_2.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        },
+        {
+          "patch_file": "all_patches/verified_claude_all_unique_patches/django__django-11790/dedup_patch_3.jsonl",
+          "inst": "django__django-11790",
+          "passed": false
+        }
+      ]
+    },
+    "none": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "patchLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "planner": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "full": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    },
+    "testLoc": {
+      "repro_fails_on_clean": true,
+      "outcomes": []
+    }
+  }
+}

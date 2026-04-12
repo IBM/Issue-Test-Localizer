@@ -1,0 +1,20 @@
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 12ebcde..cd6af6c 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -176,12 +176,13 @@ class MigrationAutodetector:
+         # and generate_added_indexes().
+         self.create_altered_indexes()
+         self.create_altered_constraints()
+-        # Generate index removal operations before field is removed
++        # Generate index and constraint removal operations
+         self.generate_removed_constraints()
+         self.generate_removed_indexes()
++        # Remove fields before any model changes to avoid inheritance conflicts
++        self.generate_removed_fields()
+         # Generate field operations
+         self.generate_renamed_fields()
+-        self.generate_removed_fields()
+         self.generate_added_fields()
+         self.generate_altered_fields()
+         self.generate_altered_unique_together()

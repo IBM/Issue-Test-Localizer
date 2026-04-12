@@ -1,0 +1,326 @@
+diff --git a/pylint/pyreverse/diagrams.py b/pylint/pyreverse/diagrams.py
+index bf9f67af..8449d84c 100644
+--- a/pylint/pyreverse/diagrams.py
++++ b/pylint/pyreverse/diagrams.py
+@@ -84,6 +84,84 @@ class ClassDiagram(Figure, FilterMixIn):
+             for n, m in node.items()
+             if isinstance(m, astroid.FunctionDef) and decorated_with_property(m)
+         ]
++        
++        # Extract type annotations from __init__ method parameters and map them to instance attributes
++        param_type_annotations = {}
++        
++        # First, try to extract type annotations from the source code
++        if '__init__' in node and isinstance(node['__init__'], astroid.FunctionDef):
++            init_method = node['__init__']
++            
++            # Get the source code of the __init__ method to extract type annotations
++            if hasattr(init_method.root(), 'file') and hasattr(init_method, 'lineno'):
++                source_file = init_method.root().file
++                try:
++                    with open(source_file, 'r') as f:
++                        source_lines = f.readlines()
++                    
++                    # Find the __init__ method signature
++                    if init_method.lineno <= len(source_lines):
++                        # Extract parameter type annotations using a simple regex-like approach
++                        import re
++                        
++                        # We need to look at multiple lines for complex signatures
++                        signature_lines = []
++                        
++                        # Find the start of the method signature
++                        line_idx = init_method.lineno - 1  # 0-based index
++                        while line_idx >= 0 and 'def __init__' not in source_lines[line_idx]:
++                            line_idx -= 1
++                            
++                        if line_idx >= 0:
++                            # Found the start of the method signature
++                            init_line = source_lines[line_idx]
++                            signature_lines.append(init_line)
++                            
++                            # Check if the signature spans multiple lines
++                            line_idx += 1
++                            while line_idx < len(source_lines) and ')' not in signature_lines[-1]:
++                                signature_lines.append(source_lines[line_idx])
++                                line_idx += 1
++                        
++                        # Join all signature lines
++                        full_signature = ''.join(signature_lines)
++                        
++                        # Look for patterns like 'param_name: type_name' with possible complex types
++                        # This handles simple types like 'str', 'int', etc.
++                        simple_matches = re.findall(r'(\w+)\s*:\s*(\w+)', full_signature)
++                        for param_name, type_name in simple_matches:
++                            if param_name != 'self':  # Skip 'self' parameter
++                                param_type_annotations[param_name] = type_name
++                        
++                        # Handle more complex types like List[str], Dict[str, int], etc.
++                        complex_matches = re.findall(r'(\w+)\s*:\s*([A-Za-z]+\[[^\]]+\])', full_signature)
++                        for param_name, type_name in complex_matches:
++                            if param_name != 'self':  # Skip 'self' parameter
++                                param_type_annotations[param_name] = type_name
++                        
++                        # Now map parameters to instance attributes by looking at assignments in the method body
++                        if hasattr(init_method, 'body'):
++                            for child in init_method.body:
++                                if isinstance(child, astroid.Assign):
++                                    for target in child.targets:
++                                        if (isinstance(target, astroid.AssignAttr) and 
++                                            hasattr(target, 'attrname') and
++                                            hasattr(target, 'expr') and 
++                                            hasattr(target.expr, 'name') and 
++                                            target.expr.name == 'self' and
++                                            isinstance(child.value, astroid.Name) and
++                                            hasattr(child.value, 'name')):
++                                            
++                                            attr_name = target.attrname
++                                            param_name = child.value.name
++                                            
++                                            if param_name in param_type_annotations:
++                                                # This is assigning a parameter to an instance attribute
++                                                param_type_annotations[attr_name] = param_type_annotations[param_name]
++                except (IOError, IndexError):
++                    pass
++        
++        # Extract type annotations from instance attributes
+         for node_name, associated_nodes in (
+             list(node.instance_attrs_type.items())
+             + list(node.locals_type.items())
+@@ -91,11 +169,77 @@ class ClassDiagram(Figure, FilterMixIn):
+         ):
+             if not self.show_attr(node_name):
+                 continue
+-            names = self.class_names(associated_nodes)
+-            if names:
+-                node_name = "{} : {}".format(node_name, ", ".join(names))
++            
++            # First try to use the parameter annotation if available
++            if node_name in param_type_annotations:
++                node_name = f"{node_name} : {param_type_annotations[node_name]}"
++            else:
++                # Check if this is a NoneType attribute that might have a type annotation
++                names = self.class_names(associated_nodes)
++                if names and 'NoneType' in names:
++                    # For attributes with None default value, try to find a type annotation
++                    # in the source code (already handled above)
++                    if node_name in param_type_annotations:
++                        node_name = f"{node_name} : {param_type_annotations[node_name]}"
++                    else:
++                        node_name = "{} : {}".format(node_name, ", ".join(names))
++                elif names:
++                    node_name = "{} : {}".format(node_name, ", ".join(names))
++                    
+             attrs.append(node_name)
+         return sorted(attrs)
++        
++    def _get_type_annotation(self, node, attr_name):
++        """Extract type annotation for an attribute if available.
++        
++        First checks if the attribute is initialized in __init__ with a parameter
++        that has a type annotation. If not found, checks if the attribute itself
++        has a type annotation in the class body.
++        """
++        # Look for __init__ method
++        if '__init__' in node and isinstance(node['__init__'], astroid.FunctionDef):
++            init_method = node['__init__']
++            
++            # Check assignments in the __init__ method for annotated attributes
++            for child in init_method.body:
++                if isinstance(child, astroid.Assign):
++                    for target in child.targets:
++                        if isinstance(target, astroid.AssignAttr) and target.attrname == attr_name:
++                            # Check if this is assigning a parameter with annotation
++                            if isinstance(child.value, astroid.Name):
++                                param_name = child.value.name
++                                
++                                # Find the parameter in the arguments
++                                if hasattr(init_method.args, 'arguments'):
++                                    args_list = init_method.args.arguments
++                                elif hasattr(init_method.args, 'args'):
++                                    args_list = init_method.args.args
++                                else:
++                                    args_list = []
++                                    
++                                for arg in args_list:
++                                    if not hasattr(arg, 'name'):
++                                        continue
++                                    
++                                    if arg.name == param_name and hasattr(arg, 'annotation') and arg.annotation:
++                                        if isinstance(arg.annotation, astroid.Name):
++                                            return arg.annotation.name
++                                        elif hasattr(arg.annotation, 'as_string'):
++                                            return arg.annotation.as_string()
++                                        else:
++                                            return str(arg.annotation)
++        
++        # Check for class-level annotations (Python 3.6+)
++        for ann_node in node.nodes_of_class(astroid.AnnAssign):
++            if hasattr(ann_node.target, 'name') and ann_node.target.name == attr_name and ann_node.annotation:
++                if isinstance(ann_node.annotation, astroid.Name):
++                    return ann_node.annotation.name
++                elif hasattr(ann_node.annotation, 'as_string'):
++                    return ann_node.annotation.as_string()
++                else:
++                    return str(ann_node.annotation)
++                    
++        return None
+ 
+     def get_methods(self, node):
+         """return visible methods"""
+diff --git a/pylint/pyreverse/inspector.py b/pylint/pyreverse/inspector.py
+index 8fa12202..ee7cc3df 100644
+--- a/pylint/pyreverse/inspector.py
++++ b/pylint/pyreverse/inspector.py
+@@ -233,6 +233,23 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+             values = set(node.infer())
+             current = set(parent.instance_attrs_type[node.attrname])
+             parent.instance_attrs_type[node.attrname] = list(current | values)
++            
++            # Check if this is an assignment in __init__ method from a parameter with type annotation
++            if isinstance(node.parent, astroid.Assign) and isinstance(node.parent.value, astroid.Name):
++                param_name = node.parent.value.name
++                
++                # Look for __init__ method
++                if '__init__' in parent and isinstance(parent['__init__'], astroid.FunctionDef):
++                    init_method = parent['__init__']
++                    
++                    # Look for the parameter
++                    if hasattr(init_method.args, 'args'):
++                        for arg in init_method.args.args:
++                            if hasattr(arg, 'name') and arg.name == param_name and hasattr(arg, 'annotation') and arg.annotation:
++                                # Found a parameter with type annotation that matches the assigned value
++                                # Add the type annotation to the instance_attrs_type
++                                parent.instance_attrs_type[node.attrname].append(arg.annotation)
++                                break
+         except astroid.InferenceError:
+             pass
+ 
+diff --git a/pylint/pyreverse/writer.py b/pylint/pyreverse/writer.py
+index 0d80bb9c..f2c059cf 100644
+--- a/pylint/pyreverse/writer.py
++++ b/pylint/pyreverse/writer.py
+@@ -17,6 +17,7 @@
+ """Utilities for creating VCG and Dot diagrams"""
+ 
+ import os
++import astroid
+ 
+ from pylint.graph import DotBackend
+ from pylint.pyreverse.utils import is_exception
+@@ -134,11 +135,111 @@ class DotWriter(DiagramWriter):
+         if not self.config.only_classnames:
+             label = r"{}|{}\l|".format(label, r"\l".join(obj.attrs))
+             for func in obj.methods:
+-                if func.args.args:
+-                    args = [arg.name for arg in func.args.args if arg.name != "self"]
++                # Get parameter type annotations
++                args = []
++                if hasattr(func.args, 'args'):
++                    for arg in func.args.args:
++                        if not hasattr(arg, 'name') or arg.name == "self":
++                            continue
++                        arg_str = arg.name
++                        if hasattr(arg, 'annotation') and arg.annotation:
++                            annotation_str = None
++                            if isinstance(arg.annotation, astroid.Name):
++                                annotation_str = arg.annotation.name
++                            elif hasattr(arg.annotation, 'as_string'):
++                                annotation_str = arg.annotation.as_string()
++                            else:
++                                annotation_str = str(arg.annotation)
++                            
++                            if annotation_str:
++                                arg_str = f"{arg_str}: {annotation_str}"
++                        args.append(arg_str)
+                 else:
+-                    args = []
+-                label = r"{}{}({})\l".format(label, func.name, ", ".join(args))
++                    # Fallback to just the names without type annotations
++                    if hasattr(func, 'argnames'):
++                        args = [arg for arg in func.argnames if arg != "self"]
++                    elif hasattr(func, 'args') and hasattr(func.args, 'arguments'):
++                        args = [arg.name for arg in func.args.arguments if hasattr(arg, 'name') and arg.name != "self"]
++                
++                # Try to extract parameter type annotations from source code
++                if hasattr(func.root(), 'file') and hasattr(func, 'lineno'):
++                    source_file = func.root().file
++                    try:
++                        with open(source_file, 'r') as f:
++                            source_lines = f.readlines()
++                        
++                        # Find the method signature
++                        if func.lineno <= len(source_lines):
++                            import re
++                            
++                            # We need to look at multiple lines for complex signatures
++                            signature_lines = []
++                            
++                            # Find the start of the method signature
++                            line_idx = func.lineno - 1  # 0-based index
++                            while line_idx >= 0 and f'def {func.name}' not in source_lines[line_idx]:
++                                line_idx -= 1
++                                
++                            if line_idx >= 0:
++                                # Found the start of the method signature
++                                signature_lines.append(source_lines[line_idx])
++                                
++                                # Check if the signature spans multiple lines
++                                line_idx += 1
++                                while line_idx < len(source_lines) and ')' not in signature_lines[-1]:
++                                    signature_lines.append(source_lines[line_idx])
++                                    line_idx += 1
++                            
++                            # Join all signature lines
++                            full_signature = ''.join(signature_lines)
++                            
++                            # Look for patterns like 'param_name: type_name'
++                            param_annotations = {}
++                            
++                            # Simple types like 'str', 'int', etc.
++                            simple_matches = re.findall(r'(\w+)\s*:\s*(\w+)', full_signature)
++                            for param_name, type_name in simple_matches:
++                                if param_name != 'self':  # Skip 'self' parameter
++                                    param_annotations[param_name] = type_name
++                            
++                            # Complex types like List[str], Dict[str, int], etc.
++                            complex_matches = re.findall(r'(\w+)\s*:\s*([A-Za-z]+\[[^\]]+\])', full_signature)
++                            for param_name, type_name in complex_matches:
++                                if param_name != 'self':  # Skip 'self' parameter
++                                    param_annotations[param_name] = type_name
++                            
++                            # Update args with type annotations
++                            if param_annotations:
++                                args = []
++                                for arg in [a for a in func.args.args if hasattr(a, 'name') and a.name != 'self']:
++                                    arg_str = arg.name
++                                    if arg.name in param_annotations:
++                                        arg_str = f"{arg.name}: {param_annotations[arg.name]}"
++                                    args.append(arg_str)
++                    except (IOError, IndexError):
++                        pass
++                
++                # Add method name
++                method_str = func.name
++                
++                # Add return type annotation if available
++                if hasattr(func, 'returns') and func.returns:
++                    return_type = None
++                    if isinstance(func.returns, astroid.Name):
++                        return_type = func.returns.name
++                    elif hasattr(func.returns, 'as_string'):
++                        return_type = func.returns.as_string()
++                    else:
++                        return_type = str(func.returns)
++                    
++                    if return_type:
++                        method_str = f"{method_str}({', '.join(args)}) -> {return_type}"
++                    else:
++                        method_str = f"{method_str}({', '.join(args)})"
++                else:
++                    method_str = f"{method_str}({', '.join(args)})"
++                    
++                label = r"{}{}\l".format(label, method_str)
+             label = "{%s}" % label
+         if is_exception(obj.node):
+             return dict(fontcolor="red", label=label, shape="record")

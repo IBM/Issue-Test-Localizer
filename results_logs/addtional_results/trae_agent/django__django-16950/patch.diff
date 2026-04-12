@@ -1,0 +1,23 @@
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 3fa04b821f..e217ea5022 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -1133,8 +1133,16 @@ class BaseInlineFormSet(BaseModelFormSet):
+         # Set the fk value here so that the form can do its validation.
+         fk_value = self.instance.pk
+         if self.fk.remote_field.field_name != self.fk.remote_field.model._meta.pk.name:
+-            fk_value = getattr(self.instance, self.fk.remote_field.field_name)
+-            fk_value = getattr(fk_value, "pk", fk_value)
++            field_name = self.fk.remote_field.field_name
++            field = self.instance._meta.get_field(field_name)
++            
++            # If the field has a default and the instance is new, use the default value
++            if self.instance._state.adding and field.default is not None and callable(field.default):
++                fk_value = field.default()
++                setattr(self.instance, field_name, fk_value)
++            else:
++                fk_value = getattr(self.instance, field_name)
++                fk_value = getattr(fk_value, "pk", fk_value)
+         setattr(form.instance, self.fk.get_attname(), fk_value)
+         return form
+ 

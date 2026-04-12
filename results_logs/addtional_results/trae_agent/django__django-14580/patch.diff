@@ -1,0 +1,44 @@
+diff --git a/django/db/migrations/serializer.py b/django/db/migrations/serializer.py
+index e19c881cda..072a2efc14 100644
+--- a/django/db/migrations/serializer.py
++++ b/django/db/migrations/serializer.py
+@@ -273,7 +273,7 @@ class TupleSerializer(BaseSequenceSerializer):
+ class TypeSerializer(BaseSerializer):
+     def serialize(self):
+         special_cases = [
+-            (models.Model, "models.Model", []),
++            (models.Model, "models.Model", ["from django.db import models"]),
+             (type(None), 'type(None)', []),
+         ]
+         for case, string, imports in special_cases:
+diff --git a/tests/migrations/test_writer.py b/tests/migrations/test_writer.py
+index a590ff4398..31b58e249a 100644
+--- a/tests/migrations/test_writer.py
++++ b/tests/migrations/test_writer.py
+@@ -706,7 +706,25 @@ class WriterTests(SimpleTestCase):
+                 expected_path = os.path.join(base_dir, *(app.split('.') + ['migrations', '0001_initial.py']))
+                 writer = MigrationWriter(migration)
+                 self.assertEqual(writer.path, expected_path)
+-
++                
++    def test_models_import_with_bases(self):
++        """
++        Test that models.Model is properly imported when used in bases.
++        """
++        class BaseMixin:
++            pass
++            
++        operation = migrations.CreateModel(
++            name='MyModel',
++            fields=[],
++            options={},
++            bases=(BaseMixin, models.Model),
++        )
++        
++        writer = OperationWriter(operation).serialize()
++        imports = writer[1]
++        self.assertIn('from django.db import models', imports)
++        
+     def test_custom_operation(self):
+         migration = type("Migration", (migrations.Migration,), {
+             "operations": [

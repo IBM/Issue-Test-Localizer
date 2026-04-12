@@ -1,0 +1,84 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14983",
+  "container_id": "f3acf98f0159c64b83b08b867767091c55a3008a52c63ff08bd57d4deb222516",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_0.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_2.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_3.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_5.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_6.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_1.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_4.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 0,
+        "failed": 6
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/scikit-learn__scikit-learn-14983/dedup_patch_7.jsonl",
+        "inst": "scikit-learn__scikit-learn-14983",
+        "passed": 0,
+        "failed": 6
+      }
+    ],
+    "top_passed": 6,
+    "top_subset_size": 5
+  },
+  "reproduction": {
+    "sklearn/model_selection/tests/test_split.py::test_build_repr#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/model_selection/tests/test_split.py::test_build_repr#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/model_selection/tests/test_split.py::test_build_repr#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/model_selection/tests/test_split.py::test_get_n_splits_for_repeated_stratified_kfold#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/model_selection/tests/test_split.py::test_get_n_splits_for_repeated_stratified_kfold#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "sklearn/model_selection/tests/test_split.py::test_build_repr#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

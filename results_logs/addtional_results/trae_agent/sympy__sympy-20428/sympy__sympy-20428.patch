@@ -1,0 +1,35 @@
+diff --git a/sympy/polys/polyclasses.py b/sympy/polys/polyclasses.py
+index 238a0f0b25..acced6fe4b 100644
+--- a/sympy/polys/polyclasses.py
++++ b/sympy/polys/polyclasses.py
+@@ -586,6 +586,9 @@ def l1_norm(f):
+     def clear_denoms(f):
+         """Clear denominators, but keep the ground domain. """
+         coeff, F = dmp_clear_denoms(f.rep, f.lev, f.dom)
++        # Ensure the result is properly stripped
++        if F and all(c == f.dom.zero for c in F):
++            F = []
+         return coeff, f.per(F)
+ 
+     def integrate(f, m=1, j=0):
+diff --git a/sympy/polys/tests/test_polytools.py b/sympy/polys/tests/test_polytools.py
+index c774fc41e2..3e0ef90235 100644
+--- a/sympy/polys/tests/test_polytools.py
++++ b/sympy/polys/tests/test_polytools.py
+@@ -1443,6 +1443,16 @@ def test_Poly_clear_denoms():
+         x/3 + sqrt(2), x, domain='EX').clear_denoms(convert=True)
+     assert coeff == 3 and poly == Poly(
+         x + 3*sqrt(2), x, domain='EX') and poly.get_domain() == EX
++        
++    # Test for zero polynomial after clearing denominators
++    from sympy import sympify
++    zero_expr = sympify("-117968192370600*18**(1/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3)) - 15720318185*2**(2/3)*3**(1/3)*(24201 + 253*sqrt(9165))**(2/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3)) + 15720318185*12**(1/3)*(24201 + 253*sqrt(9165))**(2/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3)) + 117968192370600*2**(1/3)*3**(2/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3))")
++    f = Poly(zero_expr, x)
++    coeff, poly = f.clear_denoms()
++    assert poly.is_zero is True
++    assert poly.rep == DMP([], EX, None)
++    # Test methods that previously failed
++    assert poly.terms_gcd() == ((0,), Poly(0, x, domain='EX'))
+ 
+ 
+ def test_Poly_rat_clear_denoms():

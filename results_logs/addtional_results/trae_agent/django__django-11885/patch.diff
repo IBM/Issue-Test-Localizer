@@ -1,0 +1,110 @@
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index ae82d26340..99cfa9933d 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -214,6 +214,9 @@ class Collector:
+         if collect_related:
+             if keep_parents:
+                 parents = set(model._meta.get_parent_list())
++            # Group related objects by model and field
++            related_objects_map = {}
++            
+             for related in get_candidate_relations_to_delete(model._meta):
+                 # Preserve parent reverse relationships if keep_parents=True.
+                 if keep_parents and related.model in parents:
+@@ -221,13 +224,21 @@ class Collector:
+                 field = related.field
+                 if field.remote_field.on_delete == DO_NOTHING:
+                     continue
++                
++                # Group by model and on_delete handler
++                related_model = related.related_model
++                key = (related_model, field.remote_field.on_delete)
++                if key not in related_objects_map:
++                    related_objects_map[key] = []
++                
+                 batches = self.get_del_batches(new_objs, field)
+                 for batch in batches:
+                     sub_objs = self.related_objects(related, batch)
+                     if self.can_fast_delete(sub_objs, from_field=field):
++                        # For fast deletes, we can combine them by model
+                         self.fast_deletes.append(sub_objs)
+                     else:
+-                        related_model = related.related_model
++                        # For non-fast deletes, we need to process them with their field
+                         # Non-referenced fields can be deferred if no signal
+                         # receivers are connected for the related model as
+                         # they'll never be exposed to the user. Skip field
+@@ -242,7 +253,12 @@ class Collector:
+                             ))
+                             sub_objs = sub_objs.only(*tuple(referenced_fields))
+                         if sub_objs:
+-                            field.remote_field.on_delete(self, field, sub_objs, self.using)
++                            related_objects_map[key].append((field, sub_objs))
++            
++            # Process grouped objects
++            for (related_model, on_delete_handler), field_objs in related_objects_map.items():
++                for field, sub_objs in field_objs:
++                    on_delete_handler(self, field, sub_objs, self.using)
+             for field in model._meta.private_fields:
+                 if hasattr(field, 'bulk_related_objects'):
+                     # It's something like generic foreign key.
+@@ -309,17 +325,38 @@ class Collector:
+                         sender=model, instance=obj, using=self.using
+                     )
+ 
+-            # fast deletes
++            # fast deletes - combine by model to reduce queries
++            fast_deletes_by_model = {}
+             for qs in self.fast_deletes:
++                model = qs.model
++                if model not in fast_deletes_by_model:
++                    fast_deletes_by_model[model] = qs
++                else:
++                    # Combine the querysets for the same model
++                    fast_deletes_by_model[model] = fast_deletes_by_model[model] | qs
++            
++            # Execute the combined fast deletes
++            for model, qs in fast_deletes_by_model.items():
+                 count = qs._raw_delete(using=self.using)
+-                deleted_counter[qs.model._meta.label] += count
++                deleted_counter[model._meta.label] += count
+ 
+-            # update fields
++            # update fields - combine updates by model and field
++            combined_updates = {}
+             for model, instances_for_fieldvalues in self.field_updates.items():
++                combined_updates.setdefault(model, {})
++                # Group updates by field
+                 for (field, value), instances in instances_for_fieldvalues.items():
++                    # Use a dictionary with pk as key to ensure uniqueness
++                    combined_updates[model].setdefault((field, value), {})
++                    for obj in instances:
++                        combined_updates[model][(field, value)][obj.pk] = obj
++            
++            # Execute the combined updates
++            for model, field_values in combined_updates.items():
++                for (field, value), pk_obj_map in field_values.items():
+                     query = sql.UpdateQuery(model)
+-                    query.update_batch([obj.pk for obj in instances],
+-                                       {field.name: value}, self.using)
++                    query.update_batch(list(pk_obj_map.keys()),
++                                      {field.name: value}, self.using)
+ 
+             # reverse instance collections
+             for instances in self.data.values():
+@@ -339,10 +376,11 @@ class Collector:
+                         )
+ 
+         # update collected instances
+-        for instances_for_fieldvalues in self.field_updates.values():
+-            for (field, value), instances in instances_for_fieldvalues.items():
+-                for obj in instances:
++        for model, field_values in combined_updates.items():
++            for (field, value), pk_obj_map in field_values.items():
++                for obj in pk_obj_map.values():
+                     setattr(obj, field.attname, value)
++        
+         for model, instances in self.data.items():
+             for instance in instances:
+                 setattr(instance, model._meta.pk.attname, None)

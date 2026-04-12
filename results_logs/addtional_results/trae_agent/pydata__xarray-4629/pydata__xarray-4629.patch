@@ -1,0 +1,43 @@
+diff --git a/xarray/core/merge.py b/xarray/core/merge.py
+index ca4e29b6..dff00804 100644
+--- a/xarray/core/merge.py
++++ b/xarray/core/merge.py
+@@ -501,7 +501,7 @@ def merge_attrs(variable_attrs, combine_attrs):
+     if combine_attrs == "drop":
+         return {}
+     elif combine_attrs == "override":
+-        return variable_attrs[0]
++        return dict(variable_attrs[0])
+     elif combine_attrs == "no_conflicts":
+         result = dict(variable_attrs[0])
+         for attrs in variable_attrs[1:]:
+diff --git a/xarray/tests/test_merge.py b/xarray/tests/test_merge.py
+index 0994ed9a..2175c808 100644
+--- a/xarray/tests/test_merge.py
++++ b/xarray/tests/test_merge.py
+@@ -326,3 +326,25 @@ class TestMergeMethod:
+         da = xr.DataArray(data=1, name="b")
+ 
+         assert_identical(ds.merge(da), xr.merge([ds, da]))
++        
++    def test_merge_attrs_override_copies_attrs(self):
++        """Test that merge with combine_attrs='override' copies attrs and doesn't reference them."""
++        # Create two datasets with attributes
++        ds1 = xr.Dataset(attrs={'a': 'b'})
++        ds2 = xr.Dataset(attrs={'a': 'c'})
++        
++        # Merge with combine_attrs='override'
++        ds3 = xr.merge([ds1, ds2], combine_attrs='override')
++        
++        # Verify initial values
++        assert ds1.attrs['a'] == 'b'
++        assert ds2.attrs['a'] == 'c'
++        assert ds3.attrs['a'] == 'b'  # Should take attrs from first dataset
++        
++        # Modify the merged dataset's attributes
++        ds3.attrs['a'] = 'd'
++        
++        # Verify that the original dataset's attributes are unchanged
++        assert ds1.attrs['a'] == 'b', "Original dataset's attributes should not be affected"
++        assert ds2.attrs['a'] == 'c', "Original dataset's attributes should not be affected"
++        assert ds3.attrs['a'] == 'd', "Modified dataset's attributes should be changed"

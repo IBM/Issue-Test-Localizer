@@ -1,0 +1,46 @@
+diff --git a/django/db/models/fields/related.py b/django/db/models/fields/related.py
+index febaadbb5b..fa65928416 100644
+--- a/django/db/models/fields/related.py
++++ b/django/db/models/fields/related.py
+@@ -1180,6 +1180,10 @@ class ManyToManyField(RelatedField):
+         if symmetrical is None:
+             symmetrical = (to == RECURSIVE_RELATIONSHIP_CONSTANT)
+ 
++        # Store original user-provided values for validation
++        self._user_provided_related_name = related_name
++        self._user_provided_symmetrical = symmetrical
++
+         if through is not None and db_table is not None:
+             raise ValueError(
+                 'Cannot specify a db_table if an intermediary model is used.'
+@@ -1214,6 +1218,7 @@ class ManyToManyField(RelatedField):
+             *self._check_relationship_model(**kwargs),
+             *self._check_ignored_options(**kwargs),
+             *self._check_table_uniqueness(**kwargs),
++            *self._check_symmetrical_related_name(**kwargs),
+         ]
+ 
+     def _check_unique(self, **kwargs):
+@@ -1496,6 +1501,22 @@ class ManyToManyField(RelatedField):
+             ]
+         return []
+ 
++    def _check_symmetrical_related_name(self, **kwargs):
++        """
++        Check that related_name is not specified on symmetrical ManyToManyFields.
++        """
++        if (self._user_provided_symmetrical and 
++            self._user_provided_related_name is not None):
++            return [
++                checks.Error(
++                    'related_name has no effect on ManyToManyField with symmetrical=True.',
++                    hint='Remove the related_name argument or set symmetrical=False.',
++                    obj=self,
++                    id='fields.E341',
++                )
++            ]
++        return []
++
+     def deconstruct(self):
+         name, path, args, kwargs = super().deconstruct()
+         # Handle the simpler arguments.

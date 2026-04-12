@@ -1,0 +1,29 @@
+diff --git a/sympy/sets/sets.py b/sympy/sets/sets.py
+index 917717bb7..d5968d148 100644
+--- a/sympy/sets/sets.py
++++ b/sympy/sets/sets.py
+@@ -1725,6 +1725,24 @@ def reduce(A, B):
+         if isinstance(B, Union):
+             return Intersection(s.complement(A) for s in B.args)
+ 
++        # Special case for FiniteSet containing symbols and numbers with Interval
++        if isinstance(A, FiniteSet) and isinstance(B, Interval):
++            nums = [m for m in A.args if m.is_number]
++            non_nums = [m for m in A.args if not m.is_number]
++            
++            if nums and non_nums:
++                # Filter out numbers that are in the interval
++                nums_in_interval = [n for n in nums if B.contains(n) == True]
++                nums_not_in_interval = [n for n in nums if n not in nums_in_interval]
++                
++                if nums_not_in_interval:
++                    # If we have both numbers outside the interval and non-numeric elements
++                    return Union(FiniteSet(*nums_not_in_interval), 
++                                Complement(FiniteSet(*non_nums), B, evaluate=False))
++                else:
++                    # If we only have non-numeric elements
++                    return Complement(FiniteSet(*non_nums), B, evaluate=False)
++
+         result = B._complement(A)
+         if result != None:
+             return result

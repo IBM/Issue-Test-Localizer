@@ -1,0 +1,14 @@
+diff --git a/sympy/polys/polyclasses.py b/sympy/polys/polyclasses.py
+index 3cf530f..d1d3f02 100644
+--- a/sympy/polys/polyclasses.py
++++ b/sympy/polys/polyclasses.py
+@@ -155,6 +155,9 @@ class DMP(PicklableWithSlots, CantSympify):
+         else:
+             rep, lev = dmp_validate(rep)
+ 
++        # Normalize the representation to handle zero polynomials correctly
++        rep = dmp_normal(rep, lev, dom)
++        
+         self.rep = rep
+         self.lev = lev
+         self.dom = dom

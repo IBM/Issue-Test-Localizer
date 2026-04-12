@@ -1,0 +1,180 @@
+{
+  "instance_id": "matplotlib__matplotlib-25079",
+  "container_id": "4cb963c93d65b84d09cb6151244d1f3ee975cddd4f7b132ce99df2722e52baea",
+  "regression": {
+    "results": [
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_0.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_10.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_11.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_12.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_13.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_14.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_15.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_16.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_17.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_18.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_19.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_2.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_20.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_21.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_22.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_23.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_3.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_4.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_5.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_6.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_7.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_8.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_9.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 30,
+        "failed": 2
+      },
+      {
+        "patch_file": "all_patches/lite_claude_all_unique_patches/matplotlib__matplotlib-25079/dedup_patch_1.jsonl",
+        "inst": "matplotlib__matplotlib-25079",
+        "passed": 29,
+        "failed": 3
+      }
+    ],
+    "top_passed": 30,
+    "top_subset_size": 23
+  },
+  "reproduction": {
+    "lib/matplotlib/tests/test_colorbar.py::test_offset_text_loc#1": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_colorbar.py::test_colorbar_change_lim_scale#2": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_colorbar.py::test_colorbar_change_lim_scale#3": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_colorbar.py::test_colorbar_change_lim_scale#4": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_colorbar.py::test_offset_text_loc#5": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    },
+    "lib/matplotlib/tests/test_colorbar.py::test_colorbar_change_lim_scale#6": {
+      "repro_fails_on_clean": false,
+      "outcomes": []
+    }
+  }
+}

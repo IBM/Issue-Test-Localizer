@@ -1,0 +1,33 @@
+diff --git a/src/_pytest/assertion/util.py b/src/_pytest/assertion/util.py
+index 762e5761d..0470bb205 100644
+--- a/src/_pytest/assertion/util.py
++++ b/src/_pytest/assertion/util.py
+@@ -89,6 +89,10 @@ def istext(x):
+     return isinstance(x, str)
+ 
+ 
++def isbytes(x):
++    return isinstance(x, bytes)
++
++
+ def isdict(x):
+     return isinstance(x, dict)
+ 
+@@ -125,7 +129,7 @@ def assertrepr_compare(config, op, left, right):
+     explanation = None
+     try:
+         if op == "==":
+-            if istext(left) and istext(right):
++            if (istext(left) and istext(right)) or (isbytes(left) and isbytes(right)):
+                 explanation = _diff_text(left, right, verbose)
+             else:
+                 if issequence(left) and issequence(right):
+@@ -146,7 +150,7 @@ def assertrepr_compare(config, op, left, right):
+                     else:
+                         explanation = expl
+         elif op == "not in":
+-            if istext(left) and istext(right):
++            if (istext(left) and istext(right)) or (isbytes(left) and isbytes(right)):
+                 explanation = _notin_text(left, right, verbose)
+     except outcomes.Exit:
+         raise

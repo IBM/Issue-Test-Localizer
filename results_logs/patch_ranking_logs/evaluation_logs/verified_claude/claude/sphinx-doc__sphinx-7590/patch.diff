@@ -1,0 +1,28 @@
+diff --git a/sphinx/domains/cpp.py b/sphinx/domains/cpp.py
+index 71a23bd..8f970c5 100644
+--- a/sphinx/domains/cpp.py
++++ b/sphinx/domains/cpp.py
+@@ -796,6 +796,23 @@ class ASTPointerLiteral(ASTLiteral):
+     def get_id(self, version: int) -> str:
+         return 'LDnE'
+ 
++    def describe_signature(self, signode: TextElement, mode: str,
++                         env: "BuildEnvironment", symbol: "Symbol") -> None:
++        signode += nodes.Text('nullptr')
++
++
++class ASTUserDefinedLiteral(ASTLiteral):
++    def __init__(self, literal: str, suffix: str) -> None:
++        self.literal = literal
++        self.suffix = suffix
++
++    def _stringify(self, transform: StringifyTransform) -> str:
++        return self.literal + self.suffix
++
++    def get_id(self, version: int) -> str:
++        # Use 'Lu' prefix for user-defined literals
++        return 'Lu'
++
+     def describe_signature(self, signode: TextElement, mode: str,
+                            env: "BuildEnvironment", symbol: "Symbol") -> None:
+         signode.append(nodes.Text('nullptr'))

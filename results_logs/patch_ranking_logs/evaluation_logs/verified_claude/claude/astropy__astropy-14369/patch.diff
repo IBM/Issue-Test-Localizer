@@ -1,0 +1,23 @@
+diff --git a/astropy/units/format/cds.py b/astropy/units/format/cds.py
+index 761c4b8..8b162d2 100644
+--- a/astropy/units/format/cds.py
++++ b/astropy/units/format/cds.py
+@@ -185,9 +185,17 @@ class CDS(Base):
+                               | unit_expression DIVISION combined_units
+             """
+             if len(p) == 3:
++                # Case: /unit
+                 p[0] = p[2] ** -1
+             else:
+-                p[0] = p[1] / p[3]
++                # Case: unit/combined_units
++                # For expressions like a/b/c/d, ensure we group as a/(b*c*d)
++                if hasattr(p[3], 'is_division') and p[3].is_division:
++                    # If the right side is already a division, combine with it
++                    p[0] = p[1] * p[3]
++                else:
++                    p[0] = p[1] / p[3]
++                p[0].is_division = True
+ 
+         def p_unit_expression(p):
+             """

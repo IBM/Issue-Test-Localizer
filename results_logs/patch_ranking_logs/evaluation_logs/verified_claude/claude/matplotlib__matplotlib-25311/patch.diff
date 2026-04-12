@@ -1,0 +1,27 @@
+diff --git a/lib/matplotlib/legend.py b/lib/matplotlib/legend.py
+index a038473..77d33be 100644
+--- a/lib/matplotlib/legend.py
++++ b/lib/matplotlib/legend.py
+@@ -72,6 +72,22 @@ class DraggableLegend(DraggableOffsetBox):
+         self._update = update
+ 
+         super().__init__(legend, legend._legend_box, use_blit=use_blit)
++        
++    def __getstate__(self):
++        # Return state without unpicklable Qt components
++        state = self.__dict__.copy()
++        # Remove any Qt-specific attributes that can't be pickled
++        state.pop('_cidpress', None)
++        state.pop('_ciddraw', None)
++        state.pop('_cidrelease', None)
++        state.pop('_cidmotion', None)
++        return state
++        
++    def __setstate__(self, state):
++        # Restore instance attributes
++        self.__dict__.update(state)
++        # Re-initialize the draggable behavior
++        self._init_drag()
+ 
+     def finalize_offset(self):
+         if self._update == "loc":

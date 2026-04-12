@@ -1,0 +1,139 @@
+diff --git a/django/contrib/admin/filters.py b/django/contrib/admin/filters.py
+index d65e01d5e2..f6710f7e68 100644
+--- a/django/contrib/admin/filters.py
++++ b/django/contrib/admin/filters.py
+@@ -198,6 +198,8 @@ class RelatedFieldListFilter(FieldListFilter):
+         related_admin = model_admin.admin_site._registry.get(field.remote_field.model)
+         if related_admin is not None:
+             ordering = related_admin.get_ordering(request)
++        if not ordering:
++            ordering = field.remote_field.model._meta.ordering or ()
+         return field.get_choices(include_blank=False, ordering=ordering)
+ 
+     def choices(self, changelist):
+@@ -419,4 +421,10 @@ FieldListFilter.register(lambda f: True, AllValuesFieldListFilter)
+ class RelatedOnlyFieldListFilter(RelatedFieldListFilter):
+     def field_choices(self, field, request, model_admin):
+         pk_qs = model_admin.get_queryset(request).distinct().values_list('%s__pk' % self.field_path, flat=True)
+-        return field.get_choices(include_blank=False, limit_choices_to={'pk__in': pk_qs})
++        ordering = ()
++        related_admin = model_admin.admin_site._registry.get(field.remote_field.model)
++        if related_admin is not None:
++            ordering = related_admin.get_ordering(request)
++        if not ordering:
++            ordering = field.remote_field.model._meta.ordering or ()
++        return field.get_choices(include_blank=False, limit_choices_to={'pk__in': pk_qs}, ordering=ordering)
+diff --git a/tests/admin_filters/models.py b/tests/admin_filters/models.py
+index ae78282d34..9dcf55d8b0 100644
+--- a/tests/admin_filters/models.py
++++ b/tests/admin_filters/models.py
+@@ -41,7 +41,10 @@ class Book(models.Model):
+ class Department(models.Model):
+     code = models.CharField(max_length=4, unique=True)
+     description = models.CharField(max_length=50, blank=True, null=True)
+-
++    
++    class Meta:
++        ordering = ['description']
++    
+     def __str__(self):
+         return self.description
+ 
+diff --git a/tests/admin_filters/tests.py b/tests/admin_filters/tests.py
+index 4ff7d012e5..7dc3b24da4 100644
+--- a/tests/admin_filters/tests.py
++++ b/tests/admin_filters/tests.py
+@@ -740,6 +740,54 @@ class ListFiltersTests(TestCase):
+         filterspec = changelist.get_filters(request)[0][5]
+         expected = [(self.bob.pk, 'bob'), (self.lisa.pk, 'lisa')]
+         self.assertEqual(sorted(filterspec.lookup_choices), sorted(expected))
++        
++    def test_relatedfieldlistfilter_uses_model_ordering(self):
++        """
++        Ensure that RelatedFieldListFilter uses the related model's ordering
++        when no ordering is defined in ModelAdmin.
++        """
++        # Create a ModelAdmin without ordering defined
++        class EmployeeAdminWithoutOrdering(ModelAdmin):
++            list_filter = ['department']
++        
++        modeladmin = EmployeeAdminWithoutOrdering(Employee, site)
++        request = self.request_factory.get('/')
++        request.user = self.alfred
++        changelist = modeladmin.get_changelist_instance(request)
++        
++        # Get the filter for the department field
++        filterspec = changelist.get_filters(request)[0][0]
++        
++        # The departments should be ordered by description (as defined in Department.Meta.ordering)
++        choices = [choice['display'] for choice in filterspec.choices(changelist)][1:]  # Skip 'All'
++        self.assertEqual(choices, sorted(choices))
++        
++    def test_relatedonlyfieldlistfilter_uses_model_ordering(self):
++        """
++        Ensure that RelatedOnlyFieldListFilter uses the related model's ordering
++        when no ordering is defined in ModelAdmin.
++        """
++        # Create a ModelAdmin with RelatedOnlyFieldListFilter but no ordering
++        class EmployeeAdminWithRelatedOnly(ModelAdmin):
++            list_filter = [('department', RelatedOnlyFieldListFilter)]
++        
++        # Add some employees to ensure we have multiple departments to test with
++        Department.objects.create(code='HR', description='Human Resources')
++        Department.objects.create(code='FIN', description='Finance')
++        Employee.objects.create(name='Jane Smith', department=Department.objects.get(code='HR'))
++        Employee.objects.create(name='John Doe', department=Department.objects.get(code='FIN'))
++        
++        modeladmin = EmployeeAdminWithRelatedOnly(Employee, site)
++        request = self.request_factory.get('/')
++        request.user = self.alfred
++        changelist = modeladmin.get_changelist_instance(request)
++        
++        # Get the filter for the department field
++        filterspec = changelist.get_filters(request)[0][0]
++        
++        # The departments should be ordered by description (as defined in Department.Meta.ordering)
++        choices = [choice['display'] for choice in filterspec.choices(changelist)][1:]  # Skip 'All'
++        self.assertEqual(choices, sorted(choices))
+ 
+     def test_listfilter_genericrelation(self):
+         django_bookmark = Bookmark.objects.create(url='https://www.djangoproject.com/')
+@@ -1185,13 +1233,14 @@ class ListFiltersTests(TestCase):
+         self.assertIs(choices[0]['selected'], True)
+         self.assertEqual(choices[0]['query_string'], '?')
+ 
+-        self.assertEqual(choices[1]['display'], 'Development')
++        # With our fix, departments are ordered by description (alphabetically)
++        self.assertEqual(choices[1]['display'], 'Design')
+         self.assertIs(choices[1]['selected'], False)
+-        self.assertEqual(choices[1]['query_string'], '?department__code__exact=DEV')
++        self.assertEqual(choices[1]['query_string'], '?department__code__exact=DSN')
+ 
+-        self.assertEqual(choices[2]['display'], 'Design')
++        self.assertEqual(choices[2]['display'], 'Development')
+         self.assertIs(choices[2]['selected'], False)
+-        self.assertEqual(choices[2]['query_string'], '?department__code__exact=DSN')
++        self.assertEqual(choices[2]['query_string'], '?department__code__exact=DEV')
+ 
+         # Filter by Department=='Development' --------------------------------
+ 
+@@ -1211,13 +1260,13 @@ class ListFiltersTests(TestCase):
+         self.assertIs(choices[0]['selected'], False)
+         self.assertEqual(choices[0]['query_string'], '?')
+ 
+-        self.assertEqual(choices[1]['display'], 'Development')
+-        self.assertIs(choices[1]['selected'], True)
+-        self.assertEqual(choices[1]['query_string'], '?department__code__exact=DEV')
++        self.assertEqual(choices[1]['display'], 'Design')
++        self.assertIs(choices[1]['selected'], False)
++        self.assertEqual(choices[1]['query_string'], '?department__code__exact=DSN')
+ 
+-        self.assertEqual(choices[2]['display'], 'Design')
+-        self.assertIs(choices[2]['selected'], False)
+-        self.assertEqual(choices[2]['query_string'], '?department__code__exact=DSN')
++        self.assertEqual(choices[2]['display'], 'Development')
++        self.assertIs(choices[2]['selected'], True)
++        self.assertEqual(choices[2]['query_string'], '?department__code__exact=DEV')
+ 
+     def test_lookup_with_dynamic_value(self):
+         """

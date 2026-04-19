@@ -202,44 +202,43 @@ To integrate TestLoc's minimized tests into a different agent framework:
 testloc/
 |-- src/
 |   |-- run_pipeline.py           # End-to-end pipeline runner (recommended entry point)
-|   |-- testloc.py                # Step 1 entry point
-|   |-- localization.py           # Step 1 core: Inspector class, call graph, LLM prompting
-|   |-- test_file_selection.py    # Step 2: LLM-based test file retrieval (top-k)
-|   |-- generate_cov_batch.py     # Step 3: Docker-based coverage generation
-|   |-- test_minimization.py      # Step 4: Greedy set-cover minimization
-|   |-- get_suspicious_funcs.sh   # Shell wrapper for Step 1
-|   |-- minimization.sh           # Shell wrapper for Steps 2-4
+|   |-- testloc.py                
+|   |-- localization.py           # Step 1 Inspector for suspicious functions, call graph, LLM prompting
+|   |-- test_file_selection.py    # Step 2: LLM test file retrieval (top-k)
+|   |-- generate_cov_batch.py     # Step 3: coverage generation
+|   |-- test_minimization.py      # Step 4: Greedy alg.
+|   |-- get_suspicious_funcs.sh   # bash script for step 1
+|   |-- minimization.sh           # bash script for steps 2-4
 |   |-- call_graph_generation.py  # Tree-sitter call graph construction + traversal
-|   |-- model_config.py           # LLM API interface (Claude, OpenAI)
-|   |-- prompts.py                # All LLM prompt templates
-|   |-- query_cov.py              # Coverage data query utility
-|   |-- utils.py                  # Shared utilities (repo prep, file I/O, AST helpers)
-|   |-- locate_tests.py           # AST-based test method finder
-|   |-- patch_selection_multi.py  # Patch validation via Docker
-|   |-- bm25.py                   # BM25 baseline for test ranking
+|   |-- model_config.py           
+|   |-- prompts.py                # prompt templates
+|   |-- query_cov.py              # Coverage data utility
+|   |-- utils.py                  
+|   |-- locate_tests.py           
+|   |-- bm25.py                   # BM25 baseline
 |
 |-- tools/
 |   |-- regression_tests/         # Tool bundle for running minimized tests in agents
 |   |   |-- config.yaml           #   Tool definitions (run_tests, list_tests)
 |   |   |-- bin/run_tests         #   Run regression tests for current instance
-|   |   |-- bin/list_tests        #   List available regression tests
-|   |   |-- lib/test_runner.py    #   Core test runner (multi-framework support)
+|   |   |-- bin/list_tests        
+|   |   |-- lib/test_runner.py    # test runner (adjust different test cmds for different projects)
 |   |-- swe_agent_config.yaml     # SWE-agent config with testing workflow and prompts
 |
-|-- tests/                        # Pre-computed evaluation results
-|   |-- regression_tests/         # Coverage result JSONs (per model x dataset)
-|   |-- reproduction_test/        # Reproduction test results by strategy
+|-- tests/                        # regression tests and reproduction tests
+|   |-- regression_tests/         
+|   |-- reproduction_test/       
 |
 |-- results_logs/
 |   |-- addtional_results/        # Evaluation results from other agents
-|   |   |-- sweagent/             #   SWE-agent baseline (patches, logs, reports)
-|   |   |-- trae_agent/           #   Trae agent baseline (patches, logs, reports)
+|   |   |-- sweagent/             #   SWE-agent baseline 
+|   |   |-- trae_agent/           #   Trae agent baseline 
 |   |-- patch_ranking_logs/       # Patch ranking and selection logs for agentless
-|       |-- all_logs/             #   Execution logs per instance
-|       |-- all_patches/          #   Generated patch files (.jsonl)
-|       |-- evaluation_logs/      #   Test execution results per model/strategy
-|       |-- ranks/                #   Ranking outputs
-|-- requirements.txt              # Python dependencies
+|       |-- all_logs/             
+|       |-- all_patches/          
+|       |-- evaluation_logs/      
+|       |-- ranks/                
+|-- requirements.txt             
 ```
 
 ## Minimization Algorithms

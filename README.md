@@ -1,4 +1,4 @@
-# TestLoc
+# TestPrune
 
 This is the artifact for paper *Can Old Tests do New Tricks for Resolving SWE Issues?* accepted at FSE 2026.
 
